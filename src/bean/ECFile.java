@@ -12,6 +12,7 @@ public class ECFile {
 	private Date deadDate = null;
 	private Integer downLoadTimes = null;
 	private Integer priority = null;
+	private Integer creatorId = null;
 	private String path = null;
 
 	public ECFile() {
@@ -64,6 +65,14 @@ public class ECFile {
 
 	public void setPriority(Integer priority) {
 		this.priority = priority;
+	}
+
+	public Integer getCreatorId() {
+		return creatorId;
+	}
+
+	public void setCreatorId(Integer creatorId) {
+		this.creatorId = creatorId;
 	}
 
 	public String getPath() {

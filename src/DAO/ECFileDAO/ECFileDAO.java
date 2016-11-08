@@ -24,7 +24,7 @@ public interface ECFileDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public ECFile getFileInfo(int fileId) throws SQLException;
+	public ECFile getFileInfo(Integer fileId) throws SQLException;
 
 	/**
 	 * 修改文件
@@ -40,7 +40,7 @@ public interface ECFileDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public ECFile deleteFile(int fileId) throws SQLException;
+	public ECFile deleteFile(Integer fileId) throws SQLException;
 
 
 	/**
@@ -49,7 +49,7 @@ public interface ECFileDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public ArrayList<Integer> getFileIdListByStudentId(int studentId) throws SQLException;
+	public ArrayList<Integer> getFileIdListByStudentId(Integer studentId) throws SQLException;
 
 	/**
 	 * 获取文件id列表，通过教师id
@@ -57,7 +57,7 @@ public interface ECFileDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public ArrayList<Integer> getFileIdListByTeacherId(int teacherId) throws SQLException;
+	public ArrayList<Integer> getFileIdListByTeacherId(Integer teacherId) throws SQLException;
 
 	/**
 	 * 获取文件id列表，通过项目id
@@ -65,7 +65,7 @@ public interface ECFileDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public ArrayList<Integer> getFileIdListByProjectId(int projectId) throws SQLException;
+	public ArrayList<Integer> getFileIdListByProjectId(Integer projectId) throws SQLException;
 
 	/**
 	 * 获取文件id列表，通过团队id
@@ -73,7 +73,7 @@ public interface ECFileDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public ArrayList<Integer> getFileIdListByTeamId(int teamId) throws SQLException;
+	public ArrayList<Integer> getFileIdListByTeamId(Integer teamId) throws SQLException;
 
 	/**
 	 * 获取文件id列表，通过学生id，项目id
@@ -82,7 +82,7 @@ public interface ECFileDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public ArrayList<Integer> getFileIdListByStudentIdProjectId(int studentId, int projectId) throws SQLException;
+	public ArrayList<Integer> getFileIdListByStudentIdProjectId(Integer studentId, Integer projectId) throws SQLException;
 
 	/**
 	 * 获取文件列表，通过教师id，项目id
@@ -91,7 +91,7 @@ public interface ECFileDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public ArrayList<Integer> getFileIdListByTeacherIdProjectId(int teacherId, int projectId) throws SQLException;
+	public ArrayList<Integer> getFileIdListByTeacherIdProjectId(Integer teacherId, Integer projectId) throws SQLException;
 
 	/**
 	 * 获取文件列表，根据团队id，项目id
@@ -100,5 +100,5 @@ public interface ECFileDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public ArrayList<Integer> getFileIdLIstByTeamIdProjectId(int teamId, int projectId) throws SQLException;
+	public ArrayList<Integer> getFileIdLIstByTeamIdProjectId(Integer teamId, Integer projectId) throws SQLException;
 }
