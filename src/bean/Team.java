@@ -1,4 +1,4 @@
-package DAO.teamDAO;
+package bean;
 
 import java.util.Date;
 

@@ -1,20 +1,20 @@
-package DAO.codeDAO;
+package bean;
 
 import java.util.Date;
 
 /**
  * Created by geyao on 2016/11/8.
  */
-public class Code {
+public class ECFile {
 	private Integer id = null;
-	private Integer row = null;
+	private String fileName = null;
 	private Date createDate = null;
 	private Date deadDate = null;
 	private Integer downLoadTimes = null;
-	private Integer score = null;
+	private Integer priority = null;
 	private String path = null;
 
-	public Code() {
+	public ECFile() {
 		super();
 	}
 
@@ -26,12 +26,12 @@ public class Code {
 		this.id = id;
 	}
 
-	public Integer getRow() {
-		return row;
+	public String getFileName() {
+		return fileName;
 	}
 
-	public void setRow(Integer row) {
-		this.row = row;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 	public Date getCreateDate() {
@@ -58,12 +58,12 @@ public class Code {
 		this.downLoadTimes = downLoadTimes;
 	}
 
-	public Integer getScore() {
-		return score;
+	public Integer getPriority() {
+		return priority;
 	}
 
-	public void setScore(Integer score) {
-		this.score = score;
+	public void setPriority(Integer priority) {
+		this.priority = priority;
 	}
 
 	public String getPath() {

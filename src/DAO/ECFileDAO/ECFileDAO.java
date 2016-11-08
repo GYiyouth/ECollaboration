@@ -1,5 +1,7 @@
 package DAO.ECFileDAO;
 
+import bean.ECFile;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 

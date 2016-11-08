@@ -1,4 +1,4 @@
-package DAO.taskDAO;
+package bean;
 
 import java.util.Date;
 

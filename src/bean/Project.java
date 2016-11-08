@@ -1,4 +1,4 @@
-package DAO.projectDAO;
+package bean;
 
 import java.util.Date;
 
