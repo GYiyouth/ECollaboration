@@ -3,6 +3,8 @@ package servlet.com.io;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import smallTools.CheckImg;
+import smallTools.CheckImgImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -54,10 +56,17 @@ public class UploadPhoto extends HttpServlet {
 					String value = item.getString("UTF-8");
 					//value = new String(value.getBytes("iso8859-1"),"UTF-8");
 					System.out.println(name + "=" + value);
+				}
+				else {
+					CheckImg checkImg = new CheckImgImpl();
+					if (!checkImg.isImg((File)item)){
+						//如果不是图片
 					}
-				else{
+
+
 				//如果fileitem中封装的是上传文件
-				//得到上传的文件名称，
+				//得到上传的文件名称
+
 				String filename = item.getName();
 				System.out.println(filename);
 				if(filename==null || filename.trim().equals("")){
