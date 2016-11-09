@@ -1,6 +1,6 @@
 package DAO.teamDAO;
 
-import bean.Team;
+import bean.domain.Team;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

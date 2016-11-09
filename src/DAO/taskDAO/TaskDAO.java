@@ -1,6 +1,6 @@
 package DAO.taskDAO;
 
-import bean.Task;
+import bean.domain.Task;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

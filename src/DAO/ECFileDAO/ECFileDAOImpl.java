@@ -1,7 +1,9 @@
 package DAO.ECFileDAO;
 
 import DAO.com.util.db.DBUtils;
-import bean.ECFile;
+import bean.domain.ECFile;
+import smallTools.Time;
+import smallTools.TimeImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,15 +32,17 @@ public class ECFileDAOImpl implements ECFileDAO {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		String sql = "insert into ECollaboration.ecfile(fileName, createDate, deadDate, downLoadTimes," +
+		String sql = "insert into ECollaborationWeb.ecfile(fileName, createDate, deadDate, downLoadTimes," +
 				"priority, creatorId, path) values(?,?,?,?,?,?,?);";
+		Time time = new TimeImpl();
+		ecFile.setCreateDate(time.getDateStr());
 		try{
 			connection = DBUtils.getConnetction();
 			preparedStatement = connection.prepareStatement(sql);
 //			preparedStatement.setInt(   1,  ecFile.getId());
 			preparedStatement.setString(1,  ecFile.getFileName());
-			preparedStatement.setDate(  2,  (java.sql.Date)ecFile.getCreateDate());
-			preparedStatement.setDate(  3,  (java.sql.Date)ecFile.getDeadDate());
+			preparedStatement.setString(2,  ecFile.getCreateDate());
+			preparedStatement.setString(3,  ecFile.getDeadDate());
 			preparedStatement.setInt(   4,  ecFile.getDownLoadTimes());
 			preparedStatement.setInt(   5,  ecFile.getPriority());
 			preparedStatement.setInt(   6,  ecFile.getCreatorId());
@@ -52,7 +56,7 @@ public class ECFileDAOImpl implements ECFileDAO {
 				preparedStatement.executeQuery();
 				resultSet = preparedStatement.getResultSet();
 				resultSet.next();
-				return resultSet.getInt("id");
+				return resultSet.getInt(1);
 
 			}
 		}catch (SQLException e) {
@@ -77,7 +81,7 @@ public class ECFileDAOImpl implements ECFileDAO {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		String sql = "select * from ECollaboration.ecfile where id = ?;";
+		String sql = "select * from ECollaborationWeb.ecfile where id = ?;";
 		try {
 			connection = DBUtils.getConnetction();
 			preparedStatement = connection.prepareStatement(sql);
@@ -86,13 +90,14 @@ public class ECFileDAOImpl implements ECFileDAO {
 			resultSet = preparedStatement.getResultSet();
 			if (resultSet.next()){
 				ECFile ecFile = new ECFile();
-				ecFile.setCreateDate(   resultSet.getDate("createDate"));
-				ecFile.setDeadDate(     resultSet.getDate("deadDate"));
+				ecFile.setCreateDate(   resultSet.getString("createDate"));
+				ecFile.setDeadDate(     resultSet.getString("deadDate"));
 				ecFile.setDownLoadTimes(resultSet.getInt("downLoadTimes"));
 				ecFile.setId(           resultSet.getInt("id"));
 				ecFile.setFileName(     resultSet.getString("fileName"));
 				ecFile.setPath(         resultSet.getString("path"));
 				ecFile.setPriority(     resultSet.getInt("priority"));
+				ecFile.setCreatorId(     resultSet.getInt("creatorId"));
 				return ecFile;
 			}else
 				return null;
@@ -118,14 +123,14 @@ public class ECFileDAOImpl implements ECFileDAO {
 			return false;
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		String sql = "update ECollaboration.ecfile set fileName = ?, createDate = ?, deadDate = ?, downLoadTimes =?," +
+		String sql = "update ECollaborationWeb.ecfile set fileName = ?, createDate = ?, deadDate = ?, downLoadTimes =?," +
 				"priority = ?, creatorId = ?, path = ? where id = ?;";
 		try {
 			connection =DBUtils.getConnetction();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1,  ecFile.getFileName());
-			preparedStatement.setDate(  2,  (java.sql.Date)ecFile.getCreateDate());
-			preparedStatement.setDate(  3,  (java.sql.Date)ecFile.getDeadDate());
+			preparedStatement.setString(  2,  ecFile.getCreateDate());
+			preparedStatement.setString(  3,  ecFile.getDeadDate());
 			preparedStatement.setInt(   4,  ecFile.getDownLoadTimes());
 			preparedStatement.setInt(   5,  ecFile.getPriority());
 			preparedStatement.setInt(   6,  ecFile.getCreatorId());
@@ -159,7 +164,7 @@ public class ECFileDAOImpl implements ECFileDAO {
 			return ecFile;
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		String sql = "DELETE FROM ECollaboration.ecfile WHERE id = ? ;";
+		String sql = "DELETE FROM ECollaborationWeb.ecfile WHERE id = ? ;";
 		try {
 			connection = DBUtils.getConnetction();
 			preparedStatement = connection.prepareStatement(sql);
@@ -174,6 +179,38 @@ public class ECFileDAOImpl implements ECFileDAO {
 			throw e;
 		}finally {
 			DBUtils.close(null, preparedStatement, connection);
+		}
+	}
+
+	/**
+	 * 获取头像id，通过用户id
+	 * ecfile表中，根据userId和priority = 4来查找
+	 * @param userId
+	 * @return
+	 * @throws SQLException
+	 */
+	@Override
+	public Integer getFileIdByUserId(Integer userId) throws SQLException {
+		if (userId == null)
+			return null;
+		Connection connection =null;
+		PreparedStatement preparedStatement = null;
+		String sql = "select id from ECollaborationWeb.ecfile where creatorId = ? and priority = 4";
+		ResultSet resultSet =null;
+		try {
+			connection = DBUtils.getConnetction();
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt( 1, userId);
+			resultSet = preparedStatement.executeQuery();
+			if (!resultSet.next())
+				return null;
+			else
+				return resultSet.getInt("id");
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}finally {
+			DBUtils.close(resultSet, preparedStatement, connection);
 		}
 	}
 

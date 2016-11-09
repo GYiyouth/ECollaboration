@@ -1,21 +1,20 @@
-package bean;
+package bean.domain;
 
 import java.util.Date;
 
 /**
  * Created by geyao on 2016/11/8.
  */
-public class ECFile {
+public class Code {
 	private Integer id = null;
-	private String fileName = null;
+	private Integer row = null;
 	private Date createDate = null;
 	private Date deadDate = null;
 	private Integer downLoadTimes = null;
-	private Integer priority = null;
-	private Integer creatorId = null;
+	private Integer score = null;
 	private String path = null;
 
-	public ECFile() {
+	public Code() {
 		super();
 	}
 
@@ -27,12 +26,12 @@ public class ECFile {
 		this.id = id;
 	}
 
-	public String getFileName() {
-		return fileName;
+	public Integer getRow() {
+		return row;
 	}
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
+	public void setRow(Integer row) {
+		this.row = row;
 	}
 
 	public Date getCreateDate() {
@@ -59,20 +58,12 @@ public class ECFile {
 		this.downLoadTimes = downLoadTimes;
 	}
 
-	public Integer getPriority() {
-		return priority;
+	public Integer getScore() {
+		return score;
 	}
 
-	public void setPriority(Integer priority) {
-		this.priority = priority;
-	}
-
-	public Integer getCreatorId() {
-		return creatorId;
-	}
-
-	public void setCreatorId(Integer creatorId) {
-		this.creatorId = creatorId;
+	public void setScore(Integer score) {
+		this.score = score;
 	}
 
 	public String getPath() {

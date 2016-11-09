@@ -1,6 +1,6 @@
 package DAO.ECFileDAO;
 
-import bean.ECFile;
+import bean.domain.ECFile;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -41,6 +41,14 @@ public interface ECFileDAO {
 	 * @throws SQLException
 	 */
 	public ECFile deleteFile(Integer fileId) throws SQLException;
+
+	/**
+	 * 获取头像id，通过用户id
+	 * @param userId
+	 * @return
+	 * @throws SQLException
+	 */
+	public Integer getFileIdByUserId(Integer userId) throws SQLException;
 
 
 	/**

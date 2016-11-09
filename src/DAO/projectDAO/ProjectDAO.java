@@ -1,6 +1,6 @@
 package DAO.projectDAO;
 
-import bean.Project;
+import bean.domain.Project;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
