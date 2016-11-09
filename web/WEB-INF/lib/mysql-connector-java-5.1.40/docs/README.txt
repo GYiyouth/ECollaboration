@@ -308,7 +308,7 @@ Chapter 3 Connector/J Installation
    upgrade information in Section 3.3, "Upgrading from an Older
    Version" before continuing.
 
-   Connector/J is also available as part of the Maven project.
+   Connector/J is also available as part of the Maven projectBean.
    For more information and to download the Connector/J JAR
    files, see the Maven repository
    (http://search.maven.org/#search|ga|1|g%3A%22mysql%22%20AND%2
@@ -365,7 +365,7 @@ Chapter 3 Connector/J Installation
    java.sql.Driver.
 
    You can set the CLASSPATH environment variable under Unix,
-   Linux, or OS X either locally for a user within their
+   Linux, or OS X either locally for a userBean within their
    .profile, .login or other login file. You can also set it
    globally by editing the global /etc/profile file.
 
@@ -415,7 +415,7 @@ ATH
    The various MysqlDataSource classes support the following
    parameters (through standard set mutators):
 
-     * user
+     * userBean
 
      * password
 
@@ -502,7 +502,7 @@ Newer
        (http://dev.mysql.com/doc/refman/5.7/en/charset.html),
        for information on this MySQL feature. If you have
        something misconfigured, it will usually show up as an
-       error with a message similar to Illegal mix of
+       error with a messageBean similar to Illegal mix of
        collations.
 
      * Server-side Prepared Statements: Connector/J 3.1 will
@@ -620,7 +620,7 @@ Newer
      * JRE 1.6.x (optional)
 
      * JUnit libraries (available from
-       https://github.com/junit-team/junit/wiki/Download-and-Ins
+       https://github.com/junit-teamBean/junit/wiki/Download-and-Ins
        tall).
 
      * The required .jar files from the Hibernate ORM 4.1 or 4.2
@@ -728,7 +728,7 @@ shell> ant -projecthelp
      * JDK 1.6.x AND JDK 1.5.x.
 
      * JUnit libraries (available from
-       https://github.com/junit-team/junit/wiki/Download-and-Ins
+       https://github.com/junit-teamBean/junit/wiki/Download-and-Ins
        tall).
 
      * The required .jar files from the Hibernate ORM 4.1 or 4.2
@@ -821,7 +821,7 @@ shell> ant -projecthelp
      * The Ant Contrib (version 1.03b is available from
        http://sourceforge.net/projects/ant-contrib/files/ant-con
        trib/1.0b3/) and JUnit (available from
-       https://github.com/junit-team/junit/wiki/Download-and-Ins
+       https://github.com/junit-teamBean/junit/wiki/Download-and-Ins
        tall) libraries.
 
 
@@ -1159,20 +1159,20 @@ jdbc:mysql://address=(protocol=tcp)(host=localhost)(port=3306)/db
    replication). For example:
 # IPv6 Connection URL for a server failover setup:
 jdbc:mysql//address=(protocol=tcp)(host=primaryhost)(port=3306),??
-address=(protocol=tcp)(host=secondaryhost1)(port=3310)(user=test2)/tes
+address=(protocol=tcp)(host=secondaryhost1)(port=3310)(userBean=test2)/tes
 t
 
 # IPv6 Connection URL for load balancing:
 jdbc:mysql:loadbalance://address=(protocol=tcp)(host=localhost)(port=3
-306)(user=test1),??
-address=(protocol=tcp)(host=localhost)(port=3310)(user=test2)/sakila
+306)(userBean=test1),??
+address=(protocol=tcp)(host=localhost)(port=3310)(userBean=test2)/sakila
 
 # IPv6 Connection URL for server replication:
 jdbc:mysql:replication://address=(protocol=tcp)(host=master)(port=3306
-)(user=test1),??
-address=(protocol=tcp)(host=slave1)(port=3310)(user=test2)/test
+)(userBean=test1),??
+address=(protocol=tcp)(host=slave1)(port=3310)(userBean=test2)/test
 
-   Limit the overrides to user, password, network timeouts, and
+   Limit the overrides to userBean, password, network timeouts, and
    statement and metadata cache sizes; the effects of other
    per-host overrides are not defined.
 
@@ -1222,9 +1222,9 @@ Setting Configuration Properties
    Connection/Authentication.
    Properties and Descriptions
 
-   user
+   userBean
 
-   The user to connect as
+   The userBean to connect as
 
    Since version: all versions
 
@@ -1280,7 +1280,7 @@ Setting Configuration Properties
    useConfigs
 
    Load the comma-delimited list of configuration properties
-   before parsing the URL or applying user-specified properties.
+   before parsing the URL or applying userBean-specified properties.
    These configurations are explained in the 'Configurations' of
    the documentation.
 
@@ -2372,7 +2372,7 @@ Setting Configuration Properties
    dumpMetadataOnColumnNotFound
 
    Should the driver dump the field-level metadata of a result
-   set into the exception message when ResultSet.findColumn()
+   set into the exception messageBean when ResultSet.findColumn()
    fails?
 
    Default: false
@@ -2382,7 +2382,7 @@ Setting Configuration Properties
    dumpQueriesOnException
 
    Should the driver dump the contents of the query sent to the
-   server in the message for SQLExceptions?
+   server in the messageBean for SQLExceptions?
 
    Default: false
 
@@ -2526,7 +2526,7 @@ Setting Configuration Properties
 
    connectionAttributes
 
-   A comma-delimited list of user-defined key:value pairs (in
+   A comma-delimited list of userBean-defined key:value pairs (in
    addition to standard MySQL-defined key:value pairs) to be
    passed to MySQL Server for display as connection attributes
    in the PERFORMANCE_SCHEMA.SESSION_CONNECT_ATTRS table.
@@ -2714,7 +2714,7 @@ Setting Configuration Properties
    createDatabaseIfNotExist
 
    Creates the database given in the URL if it doesn't yet
-   exist. Assumes the configured user has permissions to create
+   exist. Assumes the configured userBean has permissions to create
    databases.
 
    Default: false
@@ -2963,7 +2963,7 @@ Setting Configuration Properties
    noAccessToProcedureBodies
 
    When determining procedure parameter types for
-   CallableStatements, and the connected user can't access
+   CallableStatements, and the connected userBean can't access
    procedure bodies through "SHOW CREATE PROCEDURE" or select on
    mysql.proc should the driver instead create basic metadata
    (all parameters reported as IN VARCHARs, but allowing
@@ -3887,7 +3887,7 @@ Number of Encodings Per Connection
    Prior to MySQL Server 4.1, Connector/J supported a single
    character encoding per connection, which could either be
    automatically detected from the server configuration, or
-   could be configured by the user through the useUnicode and
+   could be configured by the userBean through the useUnicode and
    characterEncoding properties.
 
 Setting the Character Encoding
@@ -4505,7 +4505,7 @@ Connection conn = null;
 try {
     conn =
        DriverManager.getConnection("jdbc:mysql://localhost/test?" +
-                                   "user=minty&password=greatsqldb");
+                                   "userBean=minty&password=greatsqldb");
 
     // Do something with the Connection
 
@@ -5888,7 +5888,7 @@ public class ReplicationDriverDemo {
     // We want to load balance between the slaves
     props.put("roundRobinLoadBalance", "true");
 
-    props.put("user", "foo");
+    props.put("userBean", "foo");
     props.put("password", "bar");
 
     //
@@ -6112,7 +6112,7 @@ host) throws SQLException;
     2. A communication exception (SQL State starting with "08")
        is encountered.
 
-    3. When a SQLException matches conditions defined by user,
+    3. When a SQLException matches conditions defined by userBean,
        using the extension points defined by the
        loadBalanceSQLStateFailover,
        loadBalanceSQLExceptionSubclassFailover or
@@ -6147,7 +6147,7 @@ public class NdbLoadBalanceExceptionChecker
  }
 
  private boolean checkNdbException(SQLException ex){
- // Have to parse the message since most NDB errors
+ // Have to parse the messageBean since most NDB errors
  // are mapped to the same DEMC.
   return (ex.getMessage().startsWith("Lock wait timeout exceeded") ||
   (ex.getMessage().startsWith("Got temporary error")
@@ -6223,7 +6223,7 @@ Chapter 9 Using the Connector/J Interceptor Classes
 
    An interceptor is a software design pattern that provides a
    transparent way to extend or modify some aspect of a program,
-   similar to a user exit. No recompiling is required. With
+   similar to a userBean exit. No recompiling is required. With
    Connector/J, the interceptors are enabled and disabled by
    updating the connection string to refer to different sets of
    interceptor classes that you instantiate.
@@ -6401,7 +6401,7 @@ Chapter 11 Using Connector/J with JBoss
         <connection-url>jdbc:mysql://localhost:3306/dbname</connection
 -url>
         <driver-class>com.mysql.jdbc.Driver</driver-class>
-        <user-name>user</user-name>
+        <userBean-name>userBean</userBean-name>
         <password>pass</password>
 
         <min-pool-size>5</min-pool-size>
@@ -6441,7 +6441,7 @@ Chapter 12 Using Connector/J with Spring
    JDBC and Hibernate.
 
    For the examples in this section the MySQL world sample
-   database will be used. The first task is to set up a MySQL
+   database will be used. The first taskBean is to set up a MySQL
    data source through Spring. Components within Spring use the
    "bean" terminology. For example, to configure a connection to
    a MySQL server supporting the world sample database, you
@@ -6697,7 +6697,7 @@ public class Ex3DaoImpl implements Ex3Dao {
 
 
    Now you need to set up the transaction configuration. The
-   first thing you must do is create transaction manager to
+   first thing you must do is create transaction managerBean to
    manage the data source and a specification of what
    transaction properties are required for the dao methods.
 
@@ -6707,16 +6707,16 @@ ger">
     <property name="dataSource" ref="dataSource"/>
 </bean>
 
-<tx:advice id="txAdvice" transaction-manager="transactionManager">
+<tx:advice id="txAdvice" transaction-managerBean="transactionManager">
     <tx:attributes>
         <tx:method name="*"/>
     </tx:attributes>
 </tx:advice>
 
 
-   The preceding code creates a transaction manager that handles
+   The preceding code creates a transaction managerBean that handles
    transactions for the data source provided to it. The txAdvice
-   uses this transaction manager and the attributes specify to
+   uses this transaction managerBean and the attributes specify to
    create a transaction for all methods. Finally you need to
    apply this advice with an AOP pointcut.
 
@@ -6840,9 +6840,9 @@ Chapter 13 Using Connector/J with GlassFish
           + ServerName - The server to connect to. For local
             testing this will be localhost.
 
-          + User - The user name with which to connect to MySQL.
+          + User - The userBean name with which to connect to MySQL.
 
-          + Password - The corresponding password for the user.
+          + Password - The corresponding password for the userBean.
 
           + DatabaseName - The database to connect to, for
             example the sample MySQL database World.
@@ -6866,8 +6866,8 @@ Chapter 13 Using Connector/J with GlassFish
 
           + Table Name - enter DUAL.
    10. To test your connection pool click the Ping button at the
-       top of the frame. A message will be displayed confirming
-       correct operation or otherwise. If an error message is
+       top of the frame. A messageBean will be displayed confirming
+       correct operation or otherwise. If an error messageBean is
        received recheck the previous steps, and ensure that
        MySQL Connector/J has been correctly copied into the
        previously specified location.
@@ -7062,7 +7062,7 @@ ds = (DataSource) ctx.lookup("jdbc/MySQLDataSource");
    the previous section, this example assumes the sample
    database world is installed.
 
-   The project is set up with the following directory structure:
+   The projectBean is set up with the following directory structure:
 index.html
 WEB-INF
    |
@@ -7181,7 +7181,7 @@ public class HelloWebServlet extends HttpServlet {
    located in the servlet init() method. The corresponding
    freeing of resources is located in the destroy method. The
    main functionality of the servlet is located in the doPost()
-   method. If the user enters into the input form a country name
+   method. If the userBean enters into the input form a country name
    that can be located in the database, the population of the
    country is returned. The code is invoked using a POST action
    associated with the input form. The form is defined in the
@@ -7363,7 +7363,7 @@ VendorError: 0
    MySQL Connector/J must use TCP/IP sockets to connect to
    MySQL, as Java does not support Unix Domain Sockets.
    Therefore, when MySQL Connector/J connects to MySQL, the
-   security manager in MySQL server will use its grant tables to
+   security managerBean in MySQL server will use its grant tables to
    determine whether the connection is permitted.
 
    You must add the necessary security credentials to the MySQL
@@ -7759,11 +7759,11 @@ va:411)
    received for several hours. Knowing the period of time since
    Connector/J last received a packet from the server is useful
    information, so if this is not displayed in your exception
-   message, it is recommended that you update Connector/J.
+   messageBean, it is recommended that you update Connector/J.
 
    Further, if the time a packet was last sent/received exceeds
    the wait_timeout or interactive_timeout threshold, this is
-   noted in the exception message.
+   noted in the exception messageBean.
 
    Although network connections can be volatile, the following
    can be helpful in avoiding problems:
@@ -7926,7 +7926,7 @@ Chapter 17 Connector/J Support
 
 17.1 Connector/J Community Support
 
-   Oracle provides assistance to the user community by means of
+   Oracle provides assistance to the userBean community by means of
    its mailing lists. For Connector/J related issues, you can
    get help from experienced users by using the MySQL and Java
    mailing list. Archives and subscription information is
@@ -7952,7 +7952,7 @@ Chapter 17 Connector/J Support
    in to the system, you will also be able to enter new reports.
 
    If you find a sensitive security bug in MySQL Server, please
-   let us know immediately by sending an email message to
+   let us know immediately by sending an email messageBean to
    secalert_us@oracle.com. Exception: Support customers should
    report all problems, including security bugs, to Oracle
    Support at http://support.oracle.com/.
@@ -7975,7 +7975,7 @@ Chapter 17 Connector/J Support
    To report other problems, you can use one of the MySQL
    mailing lists.
 
-   Remember that it is possible for us to respond to a message
+   Remember that it is possible for us to respond to a messageBean
    containing too much information, but not to one containing
    too little. People often omit facts because they think they
    know the cause of a problem and assume that some details do

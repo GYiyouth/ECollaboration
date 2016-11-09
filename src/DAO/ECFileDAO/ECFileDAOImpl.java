@@ -1,8 +1,7 @@
 package DAO.ECFileDAO;
 
 import DAO.com.util.db.DBUtils;
-import bean.domain.ECFile;
-import smallTools.StringCheck;
+import bean.domain.ECFileBean;
 import smallTools.Time;
 import smallTools.TimeImpl;
 
@@ -19,16 +18,16 @@ public class ECFileDAOImpl implements ECFileDAO {
 	/**
 	 * 添加文件，返回id
 	 *
-	 * @param ecFile
+	 * @param ecFileBean
 	 * @return id or null
 	 * @throws SQLException
 	 */
 	@Override
-	public Integer addFile(ECFile ecFile) throws SQLException {
-		if (ecFile == null )
+	public Integer addFile(ECFileBean ecFileBean) throws SQLException {
+		if (ecFileBean == null )
 			return null;
 		else
-			if (getFileInfo( ecFile.getId() ) != null)                              //文件已经存在
+			if (getFileInfo( ecFileBean.getId() ) != null)                              //文件已经存在
 				return null;
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -36,18 +35,18 @@ public class ECFileDAOImpl implements ECFileDAO {
 		String sql = "insert into ECollaborationWeb.ecfile(fileName, createDate, deadDate, downLoadTimes," +
 				"priority, creatorId, path) values(?,?,?,?,?,?,?);";
 		Time time = new TimeImpl();
-		ecFile.setCreateDate(time.getDateStr());
+		ecFileBean.setCreateDate(time.getDateStr());
 		try{
 			connection = DBUtils.getConnetction();
 			preparedStatement = connection.prepareStatement(sql);
-//			preparedStatement.setInt(   1,  ecFile.getId());
-			preparedStatement.setString(1,  ecFile.getFileName());
-			preparedStatement.setString(2,  ecFile.getCreateDate());
-			preparedStatement.setString(3,  ecFile.getDeadDate());
-			preparedStatement.setInt(   4,  ecFile.getDownLoadTimes());
-			preparedStatement.setInt(   5,  ecFile.getPriority());
-			preparedStatement.setInt(   6,  ecFile.getCreatorId());
-			preparedStatement.setString(7,  ecFile.getPath());
+//			preparedStatement.setInt(   1,  ecFileBean.getId());
+			preparedStatement.setString(1,  ecFileBean.getFileName());
+			preparedStatement.setString(2,  ecFileBean.getCreateDate());
+			preparedStatement.setString(3,  ecFileBean.getDeadDate());
+			preparedStatement.setInt(   4,  ecFileBean.getDownLoadTimes());
+			preparedStatement.setInt(   5,  ecFileBean.getPriority());
+			preparedStatement.setInt(   6,  ecFileBean.getCreatorId());
+			preparedStatement.setString(7,  ecFileBean.getPath());
 			int doneFlag = preparedStatement.executeUpdate();
 			if (doneFlag == 0) {
 				throw new SQLException("添加文件进数据库失败");
@@ -71,14 +70,14 @@ public class ECFileDAOImpl implements ECFileDAO {
 	/**
 	 * 添加头像，返回file id,通过用户id
 	 *
-	 * @param ecFile
+	 * @param ecFileBean
 	 * @param userId
 	 * @return
 	 * @throws SQLException
 	 */
 	@Override
-	public Integer addPhoto(ECFile ecFile, Integer userId) throws SQLException {
-		if (ecFile == null)
+	public Integer addPhoto(ECFileBean ecFileBean, Integer userId) throws SQLException {
+		if (ecFileBean == null)
 			return null;
 		try {                                                                   // 删除旧头像
 			if (getPhotoId(userId) != null){
@@ -96,13 +95,13 @@ public class ECFileDAOImpl implements ECFileDAO {
 		try {
 			connection = DBUtils.getConnetction();
 			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(1,  ecFile.getFileName());
-			preparedStatement.setString(2,  ecFile.getCreateDate());
-			preparedStatement.setString(3,  ecFile.getDeadDate());
-			preparedStatement.setInt(   4,  ecFile.getDownLoadTimes());
+			preparedStatement.setString(1,  ecFileBean.getFileName());
+			preparedStatement.setString(2,  ecFileBean.getCreateDate());
+			preparedStatement.setString(3,  ecFileBean.getDeadDate());
+			preparedStatement.setInt(   4,  ecFileBean.getDownLoadTimes());
 			preparedStatement.setInt(   5,  4);
 			preparedStatement.setInt(   6,  userId);
-			preparedStatement.setString(7,  ecFile.getPath());
+			preparedStatement.setString(7,  ecFileBean.getPath());
 			int row = preparedStatement.executeUpdate();
 			if (row != 1){
 				throw new SQLException("添加头像出错");
@@ -155,11 +154,11 @@ public class ECFileDAOImpl implements ECFileDAO {
 	 * 获取文件，通过文件id
 	 *
 	 * @param fileId
-	 * @return ECFile or null
+	 * @return ECFileBean or null
 	 * @throws SQLException
 	 */
 	@Override
-	public ECFile getFileInfo(Integer fileId) throws SQLException {
+	public ECFileBean getFileInfo(Integer fileId) throws SQLException {
 		if (fileId == null)
 			return null;
 		Connection connection = null;
@@ -173,16 +172,16 @@ public class ECFileDAOImpl implements ECFileDAO {
 			preparedStatement.executeQuery();
 			resultSet = preparedStatement.getResultSet();
 			if (resultSet.next()){
-				ECFile ecFile = new ECFile();
-				ecFile.setCreateDate(   resultSet.getString("createDate"));
-				ecFile.setDeadDate(     resultSet.getString("deadDate"));
-				ecFile.setDownLoadTimes(resultSet.getInt("downLoadTimes"));
-				ecFile.setId(           resultSet.getInt("id"));
-				ecFile.setFileName(     resultSet.getString("fileName"));
-				ecFile.setPath(         resultSet.getString("path"));
-				ecFile.setPriority(     resultSet.getInt("priority"));
-				ecFile.setCreatorId(     resultSet.getInt("creatorId"));
-				return ecFile;
+				ECFileBean ecFileBean = new ECFileBean();
+				ecFileBean.setCreateDate(   resultSet.getString("createDate"));
+				ecFileBean.setDeadDate(     resultSet.getString("deadDate"));
+				ecFileBean.setDownLoadTimes(resultSet.getInt("downLoadTimes"));
+				ecFileBean.setId(           resultSet.getInt("id"));
+				ecFileBean.setFileName(     resultSet.getString("fileName"));
+				ecFileBean.setPath(         resultSet.getString("path"));
+				ecFileBean.setPriority(     resultSet.getInt("priority"));
+				ecFileBean.setCreatorId(     resultSet.getInt("creatorId"));
+				return ecFileBean;
 			}else
 				return null;
 		}catch (SQLException e){
@@ -197,13 +196,13 @@ public class ECFileDAOImpl implements ECFileDAO {
 	/**
 	 * 修改文件
 	 *
-	 * @param ecFile
+	 * @param ecFileBean
 	 * @return
 	 * @throws SQLException
 	 */
 	@Override
-	public boolean updateFile(ECFile ecFile) throws SQLException {
-		if (ecFile == null)
+	public boolean updateFile(ECFileBean ecFileBean) throws SQLException {
+		if (ecFileBean == null)
 			return false;
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -212,14 +211,14 @@ public class ECFileDAOImpl implements ECFileDAO {
 		try {
 			connection =DBUtils.getConnetction();
 			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(1,  ecFile.getFileName());
-			preparedStatement.setString(  2,  ecFile.getCreateDate());
-			preparedStatement.setString(  3,  ecFile.getDeadDate());
-			preparedStatement.setInt(   4,  ecFile.getDownLoadTimes());
-			preparedStatement.setInt(   5,  ecFile.getPriority());
-			preparedStatement.setInt(   6,  ecFile.getCreatorId());
-			preparedStatement.setString(7,  ecFile.getPath());
-			preparedStatement.setInt(   8,  ecFile.getId());
+			preparedStatement.setString(1,  ecFileBean.getFileName());
+			preparedStatement.setString(  2,  ecFileBean.getCreateDate());
+			preparedStatement.setString(  3,  ecFileBean.getDeadDate());
+			preparedStatement.setInt(   4,  ecFileBean.getDownLoadTimes());
+			preparedStatement.setInt(   5,  ecFileBean.getPriority());
+			preparedStatement.setInt(   6,  ecFileBean.getCreatorId());
+			preparedStatement.setString(7,  ecFileBean.getPath());
+			preparedStatement.setInt(   8,  ecFileBean.getId());
 			int row = preparedStatement.executeUpdate();
 			if (row == 1)
 				return true;
@@ -242,10 +241,10 @@ public class ECFileDAOImpl implements ECFileDAO {
 	 * @throws SQLException
 	 */
 	@Override
-	public ECFile deleteFile(Integer fileId) throws SQLException {
-		ECFile ecFile = getFileInfo(fileId);
-		if (ecFile == null)
-			return ecFile;
+	public ECFileBean deleteFile(Integer fileId) throws SQLException {
+		ECFileBean ecFileBean = getFileInfo(fileId);
+		if (ecFileBean == null)
+			return ecFileBean;
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		String sql = "DELETE FROM ECollaborationWeb.ecfile WHERE id = ? ;";
@@ -255,7 +254,7 @@ public class ECFileDAOImpl implements ECFileDAO {
 			preparedStatement.setInt(1, fileId);
 			int row = preparedStatement.executeUpdate();
 			if (row == 1)
-				return ecFile;
+				return ecFileBean;
 			else
 				throw new SQLException("删除失败");
 		}catch (SQLException e) {

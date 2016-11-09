@@ -1,6 +1,6 @@
 package DAO.taskDAO;
 
-import bean.domain.Task;
+import bean.domain.TaskBean;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,11 +11,11 @@ import java.util.ArrayList;
 public interface TaskDAO {
 	/**
 	 * 添加任务，获取新任务id
-	 * @param task
+	 * @param taskBean
 	 * @return
 	 * @throws SQLException
 	 */
-	public Integer addTask(Task task) throws SQLException;
+	public Integer addTask(TaskBean taskBean) throws SQLException;
 
 	/**
 	 * 删除任务，获取此任务Task对象
@@ -23,15 +23,15 @@ public interface TaskDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public Task deleteTask(int taskId) throws SQLException;
+	public TaskBean deleteTask(int taskId) throws SQLException;
 
 	/**
 	 * 修改任务，获取bool变量
-	 * @param task
+	 * @param taskBean
 	 * @return
 	 * @throws SQLException
 	 */
-	public boolean updateTask(Task task) throws SQLException;
+	public boolean updateTask(TaskBean taskBean) throws SQLException;
 
 	/**
 	 * 获取Task对象，通过TaskId
@@ -39,7 +39,7 @@ public interface TaskDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public Task getTaskInfo(int taskId) throws SQLException;
+	public TaskBean getTaskInfo(int taskId) throws SQLException;
 
 
 	/**

@@ -1036,7 +1036,7 @@ public class FabricMySQLConnectionProxy extends ConnectionPropertiesImpl impleme
     }
 
     public void changeUser(String userName, String newPassword) throws SQLException {
-        throw SQLError.createSQLException("User change not allowed.", getExceptionInterceptor());
+        throw SQLError.createSQLException("UserBean change not allowed.", getExceptionInterceptor());
     }
 
     /////////////////////////////////////

@@ -21,7 +21,7 @@
   Floor, Boston, MA 02110-1301  USA
 
 -->
-<project name="MySQL Connector/J" default="dist" basedir=".">
+<projectBean name="MySQL Connector/J" default="dist" basedir=".">
     <description>
 Compiling Connector/J
 =====================
@@ -121,7 +121,7 @@ com.mysql.jdbc.testsuite.jvm=&lt;full_path_to_a_jdk_or_jre&gt;
 # - URL to the test database.
 # - Any of the current MySQL versions.
 # - Mandatory for 'test' target.
-com.mysql.jdbc.testsuite.url=jdbc:mysql://&lt;host&gt;:&lt;port&gt;/&lt;testDB&gt;?user=&lt;user&gt;&amp;password=&lt;pwd&gt;
+com.mysql.jdbc.testsuite.url=jdbc:mysql://&lt;host&gt;:&lt;port&gt;/&lt;testDB&gt;?userBean=&lt;userBean&gt;&amp;password=&lt;pwd&gt;
 
 # Multiple JVM/MySQL tests:
 # - Must point to JDK or JRE home directories.
@@ -134,8 +134,8 @@ com.mysql.jdbc.testsuite.jvm.3=&lt;full_path_to_a_jdk_or_jre&gt;
 # - URL to the test database(s).
 # - Any of the current MySQL versions.
 # - Mandatory (at least one, at most eight) for 'test-multijdk' target.
-com.mysql.jdbc.testsuite.url.1=jdbc:mysql://&lt;host1&gt;:&lt;port1&gt;/&lt;testDB1&gt;?user=&lt;user1&gt;&amp;password=&lt;pwd1&gt;
-com.mysql.jdbc.testsuite.url.2=jdbc:mysql://&lt;host2&gt;:&lt;port2&gt;/&lt;testDB2&gt;?user=&lt;user2&gt;&amp;password=&lt;pwd2&gt;
+com.mysql.jdbc.testsuite.url.1=jdbc:mysql://&lt;host1&gt;:&lt;port1&gt;/&lt;testDB1&gt;?userBean=&lt;user1&gt;&amp;password=&lt;pwd1&gt;
+com.mysql.jdbc.testsuite.url.2=jdbc:mysql://&lt;host2&gt;:&lt;port2&gt;/&lt;testDB2&gt;?userBean=&lt;user2&gt;&amp;password=&lt;pwd2&gt;
 
 # Cancels re-compiling between successive test executions.
 # - Implicit in multiple JVM/MySQL in between iterations.
@@ -190,7 +190,7 @@ com.mysql.jdbc.noCleanBetweenCompiles=yes
     <property name="com.mysql.jdbc.jdk5" value="/usr/lib/jvm/jdk1.5" />
     <property name="com.mysql.jdbc.jdk8" value="/usr/lib/jvm/jdk1.8" />
 
-    <!-- The following property allows to point the location of third-party libraries we don't distribute. Default value points to src/lib so user could either
+    <!-- The following property allows to point the location of third-party libraries we don't distribute. Default value points to src/lib so userBean could either
        put these jars there or pass different location via ant -D switch. -->
     <property name="com.mysql.jdbc.extra.libs" value="${sourceDir}/lib" />
 
@@ -217,7 +217,7 @@ com.mysql.jdbc.noCleanBetweenCompiles=yes
         <pathelement location="${buildDir}/${fullProdName}" />
     </path>
 
-    <path id="project.build.classpath">
+    <path id="projectBean.build.classpath">
         <fileset dir="${com.mysql.jdbc.extra.libs}">
             <include name="**/*.jar" />
         </fileset>
@@ -237,14 +237,14 @@ com.mysql.jdbc.noCleanBetweenCompiles=yes
 
     <!-- Check for required external libraries. -->
     <target name="-extra-libs-check">
-        <fail message="The property 'com.mysql.jdbc.extra.libs' must point to a directory that contains the libraries required for build tasks.">
+        <fail messageBean="The property 'com.mysql.jdbc.extra.libs' must point to a directory that contains the libraries required for build tasks.">
             <condition>
                 <not>
                     <available file="${com.mysql.jdbc.extra.libs}" type="dir" />
                 </not>
             </condition>
         </fail>
-        <fail message="Hibernate libraries, required for build tasks, must be in the directory '${com.mysql.jdbc.extra.libs}/hibernate4'.">
+        <fail messageBean="Hibernate libraries, required for build tasks, must be in the directory '${com.mysql.jdbc.extra.libs}/hibernate4'.">
             <condition>
                 <not>
                     <available file="${com.mysql.jdbc.extra.libs}/hibernate4" type="dir" />
@@ -272,7 +272,7 @@ com.mysql.jdbc.noCleanBetweenCompiles=yes
             <arg value="-version" />
         </exec>
 
-        <fail message="Java 5 is required. Set the full path to this JDK home with the property 'com.mysql.jdbc.jdk5'. Default: '/usr/lib/jvm/jdk1.5').
+        <fail messageBean="Java 5 is required. Set the full path to this JDK home with the property 'com.mysql.jdbc.jdk5'. Default: '/usr/lib/jvm/jdk1.5').
 Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this JDK home with the property 'com.mysql.jdbc.jdk8'. Default: '/usr/lib/jvm/jdk1.8'.">
             <condition>
                 <not>
@@ -300,7 +300,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
             <arg value="-version" />
         </exec>
 
-        <fail message="Java 8 (for JDBC 4+ implementation) is required. Set the full path to this JDK home with the property 'com.mysql.jdbc.jdk8'. Default: '/usr/lib/jvm/jdk1.8'.">
+        <fail messageBean="Java 8 (for JDBC 4+ implementation) is required. Set the full path to this JDK home with the property 'com.mysql.jdbc.jdk8'. Default: '/usr/lib/jvm/jdk1.8'.">
             <condition>
                 <not>
                     <and>
@@ -315,7 +315,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
 
     <!-- Check for Java 6 runtime libraries for compilation of JDBC 4.0 and JDBC 4.1 implementations. Ignored if property is undefined. -->
     <target name="-jre6-rtjar-check">
-        <fail message="Invalid or missing Java 6 runtime library pointed by 'com.mysql.jdbc.jre6.rtjar'. ">
+        <fail messageBean="Invalid or missing Java 6 runtime library pointed by 'com.mysql.jdbc.jre6.rtjar'. ">
             <condition>
                 <and>
                     <isset property="com.mysql.jdbc.jre6.rtjar" />
@@ -334,7 +334,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
             <isset property="com.mysql.jdbc.testsuite.url.internal" />
         </condition>
 
-        <fail message="Set the MySQL database connection string for the test suite in one of the properties, 'com.mysql.jdbc.testsuite.url' or 'com.mysql.jdbc.testsuite.url.N', according to desired target.">
+        <fail messageBean="Set the MySQL database connection string for the test suite in one of the properties, 'com.mysql.jdbc.testsuite.url' or 'com.mysql.jdbc.testsuite.url.N', according to desired target.">
             <condition>
                 <not>
                     <or>
@@ -353,7 +353,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
             <isset property="com.mysql.jdbc.compliance.url.internal" />
         </condition>
 
-        <fail message="Set the MySQL database connection string for the compliance tests in one of the properties, 'com.mysql.jdbc.compliance.url' or 'com.mysql.jdbc.compliance.url.N', according to desired target.">
+        <fail messageBean="Set the MySQL database connection string for the compliance tests in one of the properties, 'com.mysql.jdbc.compliance.url' or 'com.mysql.jdbc.compliance.url.N', according to desired target.">
             <condition>
                 <not>
                     <or>
@@ -383,7 +383,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
             <arg value="-version" />
         </exec>
 
-        <fail message="Testing Connector/J requires a JVM 1.5 or higher. Set the path to this JVM (JRE or JDK) home with the property 'com.mysql.jdbc.testsuite.jvm'. Default: '${com.mysql.jdbc.jdk5}'.">
+        <fail messageBean="Testing Connector/J requires a JVM 1.5 or higher. Set the path to this JVM (JRE or JDK) home with the property 'com.mysql.jdbc.testsuite.jvm'. Default: '${com.mysql.jdbc.jdk5}'.">
             <condition>
                 <not>
                     <equals arg1="${jvmcheckexitstatus}" arg2="0" />
@@ -417,10 +417,10 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
         <!-- The following is needed for source distributions as the classpath can't be dynamically altered, and not having this directory present causes the
              build to fail. -->
         <available file="${com.mysql.jdbc.docs.sourceDir}" property="com.mysql.jdbc.docs.sourcesPresent" />
-        <available classname="com.mchange.v2.c3p0.QueryConnectionTester" classpathref="project.build.classpath" property="com.mysql.jdbc.c3p0Present" />
-        <available classname="org.apache.log4j.Logger" classpathref="project.build.classpath" property="com.mysql.jdbc.log4jPresent" />
+        <available classname="com.mchange.v2.c3p0.QueryConnectionTester" classpathref="projectBean.build.classpath" property="com.mysql.jdbc.c3p0Present" />
+        <available classname="org.apache.log4j.Logger" classpathref="projectBean.build.classpath" property="com.mysql.jdbc.log4jPresent" />
         <available classname="org.jboss.resource.adapter.jdbc.ValidConnectionChecker"
-                   classpathref="project.build.classpath"
+                   classpathref="projectBean.build.classpath"
                    property="com.mysql.jdbc.jbossPresent" />
     </target>
 
@@ -625,7 +625,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
         <!-- JDBC 4+ support of service provider mechanism. -->
         <mkdir dir="${buildDir}/${fullProdName}/META-INF/services/" />
         <echo file="${buildDir}/${fullProdName}/META-INF/services/java.sql.Driver"
-              message="com.mysql.jdbc.Driver${line.separator}com.mysql.fabric.jdbc.FabricMySQLDriver" />
+              messageBean="com.mysql.jdbc.Driver${line.separator}com.mysql.fabric.jdbc.FabricMySQLDriver" />
 
         <property name="osgid-version" value="${major_version}.${minor_version}.${subminor_version}" />
 
@@ -657,7 +657,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
         <property name="legacy-exports" value="org.gjt.mm.mysql;version=&quot;${osgid-version}&quot;" />
 
         <manifest file="${buildDir}/${fullProdName}/META-INF/MANIFEST.MF">
-            <attribute name="Built-By" value="${user.name}" />
+            <attribute name="Built-By" value="${userBean.name}" />
             <attribute name="Specification-Title" value="JDBC" />
             <attribute name="Specification-Version" value="4.2" />
             <attribute name="Specification-Vendor" value="Oracle Corporation" />
@@ -865,7 +865,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
             <exclude name="**/FabricMultiTenantConnectionProvider.java" />
             <exclude name="**/HibernateFabric.java" />
             <exclude name="com/mysql/jdbc/exceptions/jdbc4/*" />
-            <classpath refid="project.build.classpath" />
+            <classpath refid="projectBean.build.classpath" />
             <compilerarg line="${javac.compilerarg}" />
         </javac>
     </target>
@@ -892,7 +892,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
             <include name="**/JDBC4*.java" />
             <exclude name="**/JDBC42*.java" />
             <include name="com/mysql/jdbc/exceptions/jdbc4/*" />
-            <classpath refid="project.build.classpath" />
+            <classpath refid="projectBean.build.classpath" />
             <compilerarg line="${javac.compilerarg}" />
         </javac>
 
@@ -908,7 +908,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
                source="1.8"
                target="1.8">
             <include name="**/JDBC42*.java" />
-            <classpath refid="project.build.classpath" />
+            <classpath refid="projectBean.build.classpath" />
             <compilerarg line="${javac.compilerarg}" />
         </javac>
     </target>
@@ -934,7 +934,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
             <include name="testsuite/**" />
             <exclude name="testsuite/requiresNonRedists/**" />
             <exclude name="testsuite/**/jdbc4*/**" />
-            <classpath refid="project.build.classpath" />
+            <classpath refid="projectBean.build.classpath" />
             <compilerarg line="${javac.compilerarg}" />
         </javac>
 
@@ -951,7 +951,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
                source="1.6"
                target="1.6">
             <include name="testsuite/**/jdbc4/**" />
-            <classpath refid="project.build.classpath" />
+            <classpath refid="projectBean.build.classpath" />
             <compilerarg line="${javac.compilerarg}" />
         </javac>
 
@@ -967,7 +967,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
                source="1.8"
                target="1.8">
             <include name="testsuite/**/jdbc42/**" />
-            <classpath refid="project.build.classpath" />
+            <classpath refid="projectBean.build.classpath" />
             <compilerarg line="${javac.compilerarg}" />
         </javac>
     </target>
@@ -995,7 +995,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
                source="1.5"
                target="1.5">
             <include name="com/mysql/jdbc/integration/c3p0/**" />
-            <classpath refid="project.build.classpath" />
+            <classpath refid="projectBean.build.classpath" />
         </javac>
     </target>
 
@@ -1016,7 +1016,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
                source="1.5"
                target="1.5">
             <include name="com/mysql/jdbc/integration/jboss/**" />
-            <classpath refid="project.build.classpath" />
+            <classpath refid="projectBean.build.classpath" />
         </javac>
     </target>
 
@@ -1037,7 +1037,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
                source="1.5"
                target="1.5">
             <include name="com/mysql/jdbc/log/Log4JLogger.java" />
-            <classpath refid="project.build.classpath" />
+            <classpath refid="projectBean.build.classpath" />
         </javac>
     </target>
 
@@ -1116,7 +1116,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
         <antcall target="test-multijvm" />
         <antcall target="test-compliance-multijvm" />
 
-        <fail message="Tests failed. Check logs and/or reports in '${buildDir}/junit'." if="tests.compliance.failed" />
+        <fail messageBean="Tests failed. Check logs and/or reports in '${buildDir}/junit'." if="tests.compliance.failed" />
     </target>
 
 
@@ -1162,19 +1162,19 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
             </and>
         </condition>
 
-        <local name="test.message.jdbc3orcommon" />
-        <condition property="test.message.jdbc3orcommon"
+        <local name="test.messageBean.jdbc3orcommon" />
+        <condition property="test.messageBean.jdbc3orcommon"
                    value="Running JDBC 3 unit tests against '${com.mysql.jdbc.testsuite.url.final}' with jvm '${com.mysql.jdbc3.testsuite.jvm.java}'">
             <not>
                 <isset property="test" />
             </not>
         </condition>
-        <condition property="test.message.jdbc3orcommon"
+        <condition property="test.messageBean.jdbc3orcommon"
                    value="Running JDBC unit test '${test}', method(s) '${methods}' against '${com.mysql.jdbc.testsuite.url.final}' with jvm '${com.mysql.jdbc3.testsuite.jvm.java}'"
                    else="Running JDBC unit test '${test}' against '${com.mysql.jdbc.testsuite.url.final}' with jvm '${com.mysql.jdbc3.testsuite.jvm.java}'">
             <isset property="test.ismethods" />
         </condition>
-        <echo>${test.message.jdbc3orcommon}</echo>
+        <echo>${test.messageBean.jdbc3orcommon}</echo>
 
         <junit printsummary="yes"
                fork="on"
@@ -1218,15 +1218,15 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
             </batchtest>
         </junit>
 
-        <local name="test.message.jdbc4" />
-        <condition property="test.message.jdbc4"
+        <local name="test.messageBean.jdbc4" />
+        <condition property="test.messageBean.jdbc4"
                    value="Running JDBC 4+(&lt;4.2) unit tests against '${com.mysql.jdbc.testsuite.url.final}' with jvm '${com.mysql.jdbc4.testsuite.jvm.java}'"
                    else="">
             <not>
                 <isset property="test" />
             </not>
         </condition>
-        <echo>${test.message.jdbc4}</echo>
+        <echo>${test.messageBean.jdbc4}</echo>
 
         <junit printsummary="yes"
                fork="on"
@@ -1263,15 +1263,15 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
             </batchtest>
         </junit>
 
-        <local name="test.message.jdbc42" />
-        <condition property="test.message.jdbc42"
+        <local name="test.messageBean.jdbc42" />
+        <condition property="test.messageBean.jdbc42"
                    value="Running JDBC 4.2 unit tests against '${com.mysql.jdbc.testsuite.url.final}' with jvm '${com.mysql.jdbc42.testsuite.jvm.java}'"
                    else="">
             <not>
                 <isset property="test" />
             </not>
         </condition>
-        <echo>${test.message.jdbc42}</echo>
+        <echo>${test.messageBean.jdbc42}</echo>
 
         <junit printsummary="yes"
                fork="on"
@@ -1316,7 +1316,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
         </junitreport>
 
         <!-- Don't fail the build if we're doing multi-tests. -->
-        <fail message="Tests failed. Check logs and/or reports in '${junit.results}'.">
+        <fail messageBean="Tests failed. Check logs and/or reports in '${junit.results}'.">
             <condition>
                 <and>
                     <equals arg1="${test.result.prefix}" arg2="" />
@@ -1325,13 +1325,13 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
             </condition>
         </fail>
 
-        <local name="test.message.dontfail" />
-        <condition property="test.message.dontfail" value="Skipping test failures check because of multi-test..." else="">
+        <local name="test.messageBean.dontfail" />
+        <condition property="test.messageBean.dontfail" value="Skipping test failures check because of multi-test..." else="">
             <not>
                 <equals arg1="${test.result.prefix}" arg2="" />
             </not>
         </condition>
-        <echo>${test.message.dontfail}</echo>
+        <echo>${test.messageBean.dontfail}</echo>
     </target>
 
 
@@ -1416,7 +1416,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
         </junitreport>
 
         <!-- Don't fail the build if we're doing multi-tests. -->
-        <fail message="Tests failed. Check logs and/or reports in '${junit.compliance.results}'.">
+        <fail messageBean="Tests failed. Check logs and/or reports in '${junit.compliance.results}'.">
             <condition>
                 <and>
                     <equals arg1="${test.result.prefix}" arg2="" />
@@ -1425,13 +1425,13 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
             </condition>
         </fail>
 
-        <local name="test.message.dontfail" />
-        <condition property="test.message.dontfail" value="Skipping test failures check because of multi-test..." else="">
+        <local name="test.messageBean.dontfail" />
+        <condition property="test.messageBean.dontfail" value="Skipping test failures check because of multi-test..." else="">
             <not>
                 <equals arg1="${test.result.prefix}" arg2="" />
             </not>
         </condition>
-        <echo>${test.message.dontfail}</echo>
+        <echo>${test.messageBean.dontfail}</echo>
     </target>
 
 
@@ -1470,7 +1470,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
         <mkdir dir="${com.mysql.jdbc.coverage.result.dir.final}"/>
         <delete file="${com.mysql.jdbc.coverage.result.dir.final}/template.xml"/>
 
-        <java fork="true" jvm="${com.mysql.jdbc.jdk8}/bin/java" classname="com.sun.tdk.jcov.Instr" classpathref="project.build.classpath">
+        <java fork="true" jvm="${com.mysql.jdbc.jdk8}/bin/java" classname="com.sun.tdk.jcov.Instr" classpathref="projectBean.build.classpath">
             <arg line="-e testsuite.* -e demo.* -t ${com.mysql.jdbc.coverage.result.dir.final}/template.xml -output ${buildDir}/${fullProdName}-instr ${buildDir}/${fullProdName}" />
         </java>
     </target>
@@ -1493,14 +1493,14 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
 
     <target name="report-coverage" depends="-jcov-merge, -set-report-coverage-detaults" description="Merges coverage results and creates HTML coverage report.">
         <mkdir dir="${com.mysql.jdbc.coverage.report.dir.final}"/>
-        <java fork="true" jvm="${com.mysql.jdbc.jdk8}/bin/java" classname="com.sun.tdk.jcov.RepGen" classpathref="project.build.classpath">
+        <java fork="true" jvm="${com.mysql.jdbc.jdk8}/bin/java" classname="com.sun.tdk.jcov.RepGen" classpathref="projectBean.build.classpath">
             <arg line="-e testsuite.* -e demo.* -src ${sourceDir} -o ${com.mysql.jdbc.coverage.report.dir.final} ${com.mysql.jdbc.coverage.merge.result.final}" />
         </java>
     </target>
 
 
     <target name="-jcov-merge" depends="-set-report-coverage-detaults" if="com.mysql.jdbc.coverage.merge.files">
-        <java fork="true" jvm="${com.mysql.jdbc.jdk8}/bin/java" classname="com.sun.tdk.jcov.Merger" classpathref="project.build.classpath">
+        <java fork="true" jvm="${com.mysql.jdbc.jdk8}/bin/java" classname="com.sun.tdk.jcov.Merger" classpathref="projectBean.build.classpath">
             <arg line="-o ${com.mysql.jdbc.coverage.merge.result.final} ${com.mysql.jdbc.coverage.merge.files}" />
         </java>
     </target>
@@ -1593,7 +1593,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
                 <arg value="-version" />
             </exec>
 
-            <fail message="The provided JVM reference is invalid '@{jvm}'. Set the path to a valid JVM(s) (JRE or JDK) home in the properties 'com.mysql.jdbc.testsuite.jvm.[1..8]'.">
+            <fail messageBean="The provided JVM reference is invalid '@{jvm}'. Set the path to a valid JVM(s) (JRE or JDK) home in the properties 'com.mysql.jdbc.testsuite.jvm.[1..8]'.">
                 <condition>
                     <not>
                         <and>
@@ -1760,4 +1760,4 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
             </classpath>
         </java>
     </target>
-</project>
+</projectBean>

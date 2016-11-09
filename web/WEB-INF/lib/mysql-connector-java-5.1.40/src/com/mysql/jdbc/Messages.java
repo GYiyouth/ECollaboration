@@ -75,7 +75,7 @@ public class Messages {
 
         try {
             if (key == null) {
-                throw new IllegalArgumentException("Message key can not be null");
+                throw new IllegalArgumentException("MessageBean key can not be null");
             }
 
             String message = RESOURCE_BUNDLE.getString(key);

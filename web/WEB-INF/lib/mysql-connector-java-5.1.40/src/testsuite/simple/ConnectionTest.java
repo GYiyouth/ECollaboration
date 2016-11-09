@@ -212,7 +212,7 @@ public class ConnectionTest extends BaseTestCase {
             System.out.println("Caught SQLException due to deadlock/lock timeout");
             System.out.println("SQLState: " + sqlEx.getSQLState());
             System.out.println("Vendor error: " + sqlEx.getErrorCode());
-            System.out.println("Message: " + sqlEx.getMessage());
+            System.out.println("MessageBean: " + sqlEx.getMessage());
 
             //
             // Check whether the driver thinks it really is deadlock...

@@ -1,4 +1,4 @@
-<project>
+<projectBean>
   <modelVersion>4.0.0</modelVersion>
   <groupId>mysql</groupId>
   <artifactId>mysql-connector-java</artifactId>
@@ -30,4 +30,4 @@ in this distribution for more details.</comments>
     <name>Oracle Corporation</name>
     <url>http://www.oracle.com</url>
   </organization>
-</project>
+</projectBean>

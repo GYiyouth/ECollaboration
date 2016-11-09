@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by geyao on 2016/11/7.
  */
-public class Task {
+public class TaskBean {
 	private Integer id = null;
 	private String title = null;
 	private String content = null;
@@ -15,7 +15,7 @@ public class Task {
 	private Date beginDate = null;
 	private Date targetDate = null;
 
-	public Task() {
+	public TaskBean() {
 		super();
 	}
 

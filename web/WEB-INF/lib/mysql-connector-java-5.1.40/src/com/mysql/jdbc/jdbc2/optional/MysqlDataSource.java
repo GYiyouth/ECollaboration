@@ -79,7 +79,7 @@ public class MysqlDataSource extends ConnectionPropertiesImpl implements DataSou
     /** The JDBC URL */
     protected String url = null;
 
-    /** User name */
+    /** UserBean name */
     protected String user = null;
 
     /** Should we construct the URL, or has it been set explicitly */
@@ -355,7 +355,7 @@ public class MysqlDataSource extends ConnectionPropertiesImpl implements DataSou
      * Sets the user ID.
      * 
      * @param userID
-     *            the User ID
+     *            the UserBean ID
      */
     public void setUser(String userID) {
         this.user = userID;

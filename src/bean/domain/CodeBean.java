@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by geyao on 2016/11/8.
  */
-public class Code {
+public class CodeBean {
 	private Integer id = null;
 	private Integer row = null;
 	private Date createDate = null;
@@ -14,7 +14,7 @@ public class Code {
 	private Integer score = null;
 	private String path = null;
 
-	public Code() {
+	public CodeBean() {
 		super();
 	}
 

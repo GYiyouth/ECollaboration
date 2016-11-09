@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by geyao on 2016/11/7.
  */
-public class Project {
+public class ProjectBean {
 	private Integer id = null;
 	private String name = null;
 	private Date endDate = null;
@@ -25,7 +25,7 @@ public class Project {
 	private Integer creatorId = null;
 	private Integer teacherId = null;
 
-	public Project(){
+	public ProjectBean(){
 		super();
 	}
 	public Integer getId() {

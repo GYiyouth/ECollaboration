@@ -1658,7 +1658,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
 
                 if (!this.conn.getNoAccessToProcedureBodies() && (procedureDef == null || procedureDef.length() == 0)) {
                     throw SQLError.createSQLException(
-                            "User does not have access to metadata required to determine "
+                            "UserBean does not have access to metadata required to determine "
                                     + "stored procedure parameter types. If rights can not be granted, configure connection with \"noAccessToProcedureBodies=true\" "
                                     + "to have driver generate parameters that represent INOUT strings irregardless of actual parameter types.",
                             SQLError.SQL_STATE_GENERAL_ERROR, getExceptionInterceptor());
@@ -3943,7 +3943,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
                 // FIX for Bug#56305, allowing the code to proceed with empty fields causing NPE later
                 if (!hasResults) {
                     // throw SQLError.createSQLException(
-                    // "User does not have access to metadata required to determine " +
+                    // "UserBean does not have access to metadata required to determine " +
                     // "stored procedure parameter types. If rights can not be granted, configure connection with \"noAccessToProcedureBodies=true\" " +
                     // "to have driver generate parameters that represent INOUT strings irregardless of actual parameter types.",
                     // SQLError.SQL_STATE_GENERAL_ERROR, getExceptionInterceptor());		

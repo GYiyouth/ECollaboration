@@ -1,5 +1,5 @@
 package bean.domain;
 
-public class Message {
+public class UserBean {
 
 }

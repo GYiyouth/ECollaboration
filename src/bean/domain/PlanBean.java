@@ -1,5 +1,5 @@
 package bean.domain;
 
-public class Manager {
+public class PlanBean {
 
 }

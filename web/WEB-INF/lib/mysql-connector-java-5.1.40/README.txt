@@ -149,7 +149,7 @@ Public License permits more lax criteria for linking other code with
 the library.
 
  We call this license the "Lesser" General Public License because it
-does Less to protect the user's freedom than the ordinary General
+does Less to protect the userBean's freedom than the ordinary General
 Public License.  It also provides other free software developers Less
 of an advantage over competing non-free programs.  These disadvantages
 are the reason we use the ordinary General Public License for many
@@ -172,7 +172,7 @@ operating system, as well as its variant, the GNU/Linux operating
 system.
 
  Although the Lesser General Public License is Less protective of the
-users' freedom, it does ensure that the user of a program that is
+users' freedom, it does ensure that the userBean of a program that is
 linked with the Library has the freedom and the wherewithal to run
 that program using a modified version of the Library.
 
@@ -350,7 +350,7 @@ Library is used in it and that the Library and its use are covered by
 this License.  You must supply a copy of this License.  If the work
 during execution displays copyright notices, you must include the
 copyright notice for the Library among them, as well as a reference
-directing the user to the copy of this License.  Also, you must do one
+directing the userBean to the copy of this License.  Also, you must do one
 of these things:
 
    a) Accompany the work with the complete corresponding
@@ -359,22 +359,22 @@ of these things:
    Sections 1 and 2 above); and, if the work is an executable linked
    with the Library, with the complete machine-readable "work that
    uses the Library", as object code and/or source code, so that the
-   user can modify the Library and then relink to produce a modified
+   userBean can modify the Library and then relink to produce a modified
    executable containing the modified Library.  (It is understood
-   that the user who changes the contents of definitions files in the
+   that the userBean who changes the contents of definitions files in the
    Library will not necessarily be able to recompile the application
    to use the modified definitions.)
 
    b) Use a suitable shared library mechanism for linking with the
    Library.  A suitable mechanism is one that (1) uses at run time a
-   copy of the library already present on the user's computer system,
+   copy of the library already present on the userBean's computer system,
    rather than copying library functions into the executable, and (2)
    will operate properly with a modified version of the library, if
-   the user installs one, as long as the modified version is
+   the userBean installs one, as long as the modified version is
    interface-compatible with the version that the work was made with.
 
    c) Accompany the work with a written offer, valid for at
-   least three years, to give the same user the materials
+   least three years, to give the same userBean the materials
    specified in Subsection 6a, above, for a charge no more
    than the cost of performing this distribution.
 
@@ -382,8 +382,8 @@ of these things:
    from a designated place, offer equivalent access to copy the above
    specified materials from the same place.
 
-   e) Verify that the user has already received a copy of these
-   materials or that you have already sent this user a copy.
+   e) Verify that the userBean has already received a copy of these
+   materials or that you have already sent this userBean a copy.
 
  For an executable, the required form of the "work that uses the
 Library" must include any data and utility programs needed for
@@ -836,7 +836,7 @@ the library.
 
 82      
 
-does Less to protect the user's freedom than the ordinary General
+does Less to protect the userBean's freedom than the ordinary General
 
 83      
 
@@ -922,7 +922,7 @@ system.
 
 105         
 
-users' freedom, it does ensure that the user of a program that is
+users' freedom, it does ensure that the userBean of a program that is
 
 106         
 
@@ -1584,7 +1584,7 @@ copyright notice for the Library among them, as well as a reference
 
 283         
 
-directing the user to the copy of this License.  Also, you must do one
+directing the userBean to the copy of this License.  Also, you must do one
 
 284         
 
@@ -1618,7 +1618,7 @@ of these things:
 
 292         
 
-   user can modify the Library and then relink to produce a modified
+   userBean can modify the Library and then relink to produce a modified
 
 293         
 
@@ -1626,7 +1626,7 @@ of these things:
 
 294         
 
-   that the user who changes the contents of definitions files in the
+   that the userBean who changes the contents of definitions files in the
 
 295         
 
@@ -1648,7 +1648,7 @@ of these things:
 
 300         
 
-   copy of the library already present on the user's computer system,
+   copy of the library already present on the userBean's computer system,
 
 301         
 
@@ -1660,7 +1660,7 @@ of these things:
 
 303         
 
-   the user installs one, as long as the modified version is
+   the userBean installs one, as long as the modified version is
 
 304         
 
@@ -1674,7 +1674,7 @@ of these things:
 
 307         
 
-   least three years, to give the same user the materials
+   least three years, to give the same userBean the materials
 
 308         
 
@@ -1702,11 +1702,11 @@ of these things:
 
 315         
 
-   e) Verify that the user has already received a copy of these
+   e) Verify that the userBean has already received a copy of these
 
 316         
 
-   materials or that you have already sent this user a copy.
+   materials or that you have already sent this userBean a copy.
 
 317         
 

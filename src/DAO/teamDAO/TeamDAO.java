@@ -1,6 +1,6 @@
 package DAO.teamDAO;
 
-import bean.domain.Team;
+import bean.domain.TeamBean;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,19 +12,19 @@ import java.util.ArrayList;
 public interface TeamDAO {
 	/**
 	 * 添加团队，返回团队id
-	 * @param team
+	 * @param teamBean
 	 * @return
 	 * @throws SQLException
 	 */
-	public Integer addTeam(Team team) throws SQLException;
+	public Integer addTeam(TeamBean teamBean) throws SQLException;
 
 	/**
 	 * 更新团队信息，返回布尔值
-	 * @param team
+	 * @param teamBean
 	 * @return
 	 * @throws SQLException
 	 */
-	public boolean updateTeam(Team team) throws SQLException;
+	public boolean updateTeam(TeamBean teamBean) throws SQLException;
 
 	/**
 	 * 查询队伍信息，返回team对象
@@ -32,7 +32,7 @@ public interface TeamDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public Team getTeamInfo(int teamId) throws SQLException;
+	public TeamBean getTeamInfo(int teamId) throws SQLException;
 
 	/**
 	 * 删除团队，返回被删除的这个team对象
@@ -40,7 +40,7 @@ public interface TeamDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public Team deleteTeam(int teamId) throws SQLException;
+	public TeamBean deleteTeam(int teamId) throws SQLException;
 
 
 

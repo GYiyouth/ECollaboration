@@ -696,7 +696,7 @@ public class SQLError {
 
             /*
              * +---------+------+---------------------------------------------+ |
-             * Level | Code | Message |
+             * Level | CodeBean | MessageBean |
              * +---------+------+---------------------------------------------+ |
              * Warning | 1265 | Data truncated for column 'field1' at row 1 |
              * +---------+------+---------------------------------------------+
@@ -704,11 +704,11 @@ public class SQLError {
             warnRs = stmt.executeQuery("SHOW WARNINGS");
 
             while (warnRs.next()) {
-                int code = warnRs.getInt("Code");
+                int code = warnRs.getInt("CodeBean");
 
                 if (forTruncationOnly) {
                     if (code == MysqlErrorNumbers.ER_WARN_DATA_TRUNCATED || code == MysqlErrorNumbers.ER_WARN_DATA_OUT_OF_RANGE) {
-                        DataTruncation newTruncation = new MysqlDataTruncation(warnRs.getString("Message"), 0, false, false, 0, 0, code);
+                        DataTruncation newTruncation = new MysqlDataTruncation(warnRs.getString("MessageBean"), 0, false, false, 0, 0, code);
 
                         if (currentWarning == null) {
                             currentWarning = newTruncation;
@@ -718,7 +718,7 @@ public class SQLError {
                     }
                 } else {
                     //String level = warnRs.getString("Level"); 
-                    String message = warnRs.getString("Message");
+                    String message = warnRs.getString("MessageBean");
 
                     SQLWarning newWarning = new SQLWarning(message, SQLError.mysqlToSqlState(code, connection.getUseSqlStateCodes()), code);
 

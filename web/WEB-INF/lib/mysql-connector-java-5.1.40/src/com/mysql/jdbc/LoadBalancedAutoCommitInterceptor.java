@@ -105,7 +105,7 @@ public class LoadBalancedAutoCommitInterceptor implements StatementInterceptorV2
                     }
 
                 } catch (SQLException e) {
-                    // eat this exception, the auto-commit statement completed, but we could not rebalance for some reason.  User may get exception when using
+                    // eat this exception, the auto-commit statement completed, but we could not rebalance for some reason.  UserBean may get exception when using
                     // connection next.
                 }
             }

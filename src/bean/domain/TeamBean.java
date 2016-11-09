@@ -6,13 +6,13 @@ import java.util.Date;
  * 团队bean
  * Created by geyao on 2016/11/7.
  */
-public class Team {
+public class TeamBean {
 	private Integer id = null;
 	private String teamName = null;
 	private Integer creatorId = null;
 	private Date createDate = null;
 
-	public Team() {
+	public TeamBean() {
 		super();
 	}
 

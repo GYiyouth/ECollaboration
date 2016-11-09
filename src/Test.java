@@ -1,8 +1,6 @@
 import DAO.ECFileDAO.ECFileDAO;
 import DAO.ECFileDAO.ECFileDAOImpl;
-import bean.domain.ECFile;
-import smallTools.Time;
-import smallTools.TimeImpl;
+import bean.domain.ECFileBean;
 
 import java.sql.SQLException;
 
@@ -20,13 +18,13 @@ public class Test {
 //		System.out.println(a==b);
 
 		ECFileDAO ecFileDAO = new ECFileDAOImpl();
-		ECFile ecFile = null;
+		ECFileBean ecFileBean = null;
 		try {
 
 
-			ecFile = ecFileDAO.getFileInfo(2);
-			ecFile.setFileName("photo");
-			int id = ecFileDAO.addPhoto(ecFile, 2);
+			ecFileBean = ecFileDAO.getFileInfo(2);
+			ecFileBean.setFileName("photo");
+			int id = ecFileDAO.addPhoto(ecFileBean, 2);
 			System.out.println(id);
 		} catch (SQLException e) {
 			e.printStackTrace();

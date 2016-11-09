@@ -10,7 +10,7 @@ import java.util.Date;
  * 约定优先级，工程实践1，比赛2，个人兴趣3，头像等信息4
  * Created by geyao on 2016/11/8.
  */
-public class ECFile {
+public class ECFileBean {
 	private Integer id = null;
 	private String fileName = null;
 	private String createDate = null;
@@ -20,7 +20,7 @@ public class ECFile {
 	private Integer creatorId = null;
 	private String path = null;
 
-	public ECFile() {
+	public ECFileBean() {
 		super();
 //		Time time = new TimeImpl();
 //		createDate = time.getDateStr();
@@ -92,7 +92,7 @@ public class ECFile {
 
 	@Override
 	public String toString() {
-		return "ECFile{" +
+		return "ECFileBean{" +
 				"id=" + id +
 				", fileName='" + fileName + '\'' +
 				", createDate=" + createDate +

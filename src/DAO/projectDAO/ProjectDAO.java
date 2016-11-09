@@ -1,6 +1,6 @@
 package DAO.projectDAO;
 
-import bean.domain.Project;
+import bean.domain.ProjectBean;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -32,36 +32,36 @@ import java.util.ArrayList;
 public interface ProjectDAO {
 	/**
 	 * 添加项目，内部生成id，返回项目id
-	 * @param project
+	 * @param projectBean
 	 * @return int
 	 * @throws SQLException
 	 */
-	public int addProject(Project project) throws SQLException;
+	public int addProject(ProjectBean projectBean) throws SQLException;
 
 	/**
 	 * 根据id寻找项目，返回project
 	 * @param projectId
-	 * @return Project
+	 * @return ProjectBean
 	 * @throws SQLException
 	 */
-	public Project getProjectInfo(int projectId) throws SQLException;
+	public ProjectBean getProjectInfo(int projectId) throws SQLException;
 
 	/**
 	 * 修改项目的属性，如果project属性不为null，则更新数据库
-	 * @param project
+	 * @param projectBean
 	 * @return boolean
 	 * @throws SQLException
 	 */
-	public boolean updateInfo(Project project) throws SQLException;
+	public boolean updateInfo(ProjectBean projectBean) throws SQLException;
 
 
 	/**
 	 * 删除项目
 	 * @param projectId
-	 * @return Project
+	 * @return ProjectBean
 	 * @throws SQLException
 	 */
-	public Project deleteById(int projectId) throws SQLException;
+	public ProjectBean deleteById(int projectId) throws SQLException;
 
 
 

@@ -635,7 +635,7 @@ public class JDBC4MysqlSQLXML implements SQLXML {
 
     /*
      * The SimpleSaxToReader class is an adaptation of the SAX "Writer"
-     * example from the Apache XercesJ-2 Project. The license for this
+     * example from the Apache XercesJ-2 ProjectBean. The license for this
      * code is as follows:
      * 
      * Licensed to the Apache Software Foundation (ASF) under one or more

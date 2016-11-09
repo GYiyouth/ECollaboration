@@ -67,7 +67,7 @@ public class Client {
         try {
             connection = (HttpURLConnection) this.url.openConnection();
             connection.setRequestMethod("POST");
-            connection.setRequestProperty("User-Agent", "MySQL XML-RPC");
+            connection.setRequestProperty("UserBean-Agent", "MySQL XML-RPC");
             connection.setRequestProperty("Content-Type", "text/xml");
             connection.setUseCaches(false);
             connection.setDoInput(true);

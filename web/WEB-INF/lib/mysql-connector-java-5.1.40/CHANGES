@@ -47,7 +47,7 @@
   - Fix for Bug#22678872, NPE DURING UPDATE WITH FABRIC.
     New property 'loadBalanceHostRemovalGracePeriod' sets the grace period when removing hosts from a load-balanced connection.
 
-  - Fix for Bug#71131 (18068303), Poor error message in CallableStatement.java.
+  - Fix for Bug#71131 (18068303), Poor error messageBean in CallableStatement.java.
 
   - Fix for Bug#59462 (16736619), ConcurrentModificationException inside ConnectionImpl.closeAllOpenStatements().
 
@@ -411,7 +411,7 @@
 
   - Added tests for InnoDB full-text search support introduced in 5.6GA.
 
-  - Extended slow query warning with query execution plan for INSERT, REPLACE, UPDATE and DELETE.
+  - Extended slow query warning with query execution planBean for INSERT, REPLACE, UPDATE and DELETE.
 
   - Added tests for IPv6 functions introduced in 5.6GA.
 
@@ -528,7 +528,7 @@
 
   - Fixed typos in descriptions of properties.
 
-  - Fix for Bug#68011, Invalid error message noDatetimeSync property instead of noDatetimeStringSync.
+  - Fix for Bug#68011, Invalid error messageBean noDatetimeSync property instead of noDatetimeStringSync.
 
 02-04-13 - Version 5.1.23
 
@@ -553,7 +553,7 @@
 
     Note that if container does not support annotations you should add description to web.xml:
        <listener>
-          <listener-class>user.package.YourThreadsListener</listener-class>
+          <listener-class>userBean.package.YourThreadsListener</listener-class>
        </listener>
 
   - Added tests for explicit partition selection syntax introduced in 5.6GA.
@@ -632,7 +632,7 @@
 
   - Fix for Bug#13980303, Auth plugin's confidentiality requirements are not checked after Auth Switch Request.
 
-  - Fix for Bug#64205, Connected through Connector/J 5.1 to MySQL 5.5, the error message is garbled.
+  - Fix for Bug#64205, Connected through Connector/J 5.1 to MySQL 5.5, the error messageBean is garbled.
 
   - Fix for Bug#37931, Null Pointer Exception Thrown When specifying invalid character_set_results enc.
 
@@ -823,7 +823,7 @@
    - Fixed an issue where statement comments set via Connection.setStatementComment()
      weren't represented in autoGenerateTestcaseScript=true output.
      
-   - Added ability to include the current java thread dump in the exception message
+   - Added ability to include the current java thread dump in the exception messageBean
      given for deadlock/wait lock timeout exceptions, enable with 
      "includeThreadDumpInDeadlockExceptions=true" in your JDBC url.
 
@@ -898,7 +898,7 @@
      during connection post-handshake process.
      
    - Patch for problem where "noAccessToProcedureBodies=true" was causing 
-     "underprivileged" user not to have access to procedures created by him.
+     "underprivileged" userBean not to have access to procedures created by him.
 
    - Patch for Bug#56305, unhandled NPE in DatabaseMetaData.java when calling 
      wrong-cased function without access to mysql.proc. Although simple by 
@@ -937,20 +937,20 @@
        
        An example would be:
        
-       jdbc:mysql://address=(protocol=tcp)(host=localhost)(port=3306)(user=test)/db
+       jdbc:mysql://address=(protocol=tcp)(host=localhost)(port=3306)(userBean=test)/db
        
       Any other parameters are treated as host-specific properties that follow 
       the conventions of the JDBC URL properties. This now allows per-host 
       overrides of any configuration property for multi-host connections 
       (failover, loadbalance, replication). We do recommend that the overrides 
-      are limited to user, password, network timeouts and statement and 
+      are limited to userBean, password, network timeouts and statement and
       metadata cache sizes. Unexpected behavior may be observed with other 
       per-host overrides.
 
     - Fix for Bug#56099 - Added support for JDBC4-specific functionality when 
       using load-balanced connections.
 
-    - Fix for Bug#56200 - Added diagnostic information to SQLException message 
+    - Fix for Bug#56200 - Added diagnostic information to SQLException messageBean
       thrown when a closed load-balanced connection is reused.  This 
       information will identify the conditions which caused the connection to 
       be closed.
@@ -1170,14 +1170,14 @@
       metadata.
       
     - Fixed BUG#46637 - When the driver encounters an error condition that causes it to create a 
-      CommunicationsException, it tries to build a friendly error message that helps diagnose 
+      CommunicationsException, it tries to build a friendly error messageBean that helps diagnose
       what is wrong. However, if there has been no network packets received from the server, 
-      the error message contains bogus information like:
+      the error messageBean contains bogus information like:
 
       "The last packet successfully received from the server was 1,249,932,468,916 milliseconds ago.  
       The last packet sent successfully to the server was 0 milliseconds ago."
       
-      Now the error message states that it has never received any packets from the server in this
+      Now the error messageBean states that it has never received any packets from the server in this
       scenario.
       
     - Added a new option, "queryTimeoutKillsConnection", when set to "true" will cause timeouts set
@@ -1215,7 +1215,7 @@
       as multi-value INSERTs so they are rewritten into multi-statements instead.
 
 07-16-09 - Version 5.1.8
-    - Fixed BUG#44588 - Fixed error message for connection exceptions when
+    - Fixed BUG#44588 - Fixed error messageBean for connection exceptions when
       streaming result sets are used.
       
     - Modified/fixed test cases using UnreliableSocketFactory.
@@ -1243,7 +1243,7 @@
     - Fixed some quoting of substituted parameter issues in localized error messages.
     
     - Added a version check around getting the variable 'auto_increment_increment' for
-      servers < 5.0.2, which quiets down a warning message that the driver would log
+      servers < 5.0.2, which quiets down a warning messageBean that the driver would log
       when connecting to MySQL-4.1 or older.
       
     - The driver will automatically disable elideSetAutoCommit and useLocalTransactionState
@@ -1533,8 +1533,8 @@
     - Fixed BUG#33823 - Public interface ResultSetInternalMethods with reference to 
       non-public class com.mysql.jdbc.CachedResultSetMetaData.
       
-    - For any SQLException caused by another Throwable, besides dumping the message or stack
-      trace as a string into the message, set the underlying Throwable as the cause for
+    - For any SQLException caused by another Throwable, besides dumping the messageBean or stack
+      trace as a string into the messageBean, set the underlying Throwable as the cause for
       the SQLException, making it accessible via getCause().  
      
     - Fixed BUG#34093 - Statements with batched values do not return correct values for 
@@ -1739,9 +1739,9 @@
       Implement this interface to be placed "in between" query execution, so that
       you can influence it. (currently experimental).
 
-      StatementInterceptors are "chainable" when configured by the user, the
+      StatementInterceptors are "chainable" when configured by the userBean, the
       results returned by the "current" interceptor will be passed on to the next
-      on in the chain, from left-to-right order, as specified by the user in the
+      on in the chain, from left-to-right order, as specified by the userBean in the
       JDBC configuration property "statementInterceptors".
 
       See the sources (fully javadoc'd) for com.mysql.jdbc.StatementInterceptor
@@ -2040,15 +2040,15 @@ nn-nn-07 - Version 5.0.9
 	  inability to retrieve said metadata, or execute procedures that have certain
 	  comments in them.
 
-	- Give better error message when "streaming" result sets, and the connection
+	- Give better error messageBean when "streaming" result sets, and the connection
 	  gets clobbered because of exceeding net_write_timeout on the server. (which is
-	  basically what the error message says too).
+	  basically what the error messageBean says too).
 
 	- Fixed BUG#26789 - fast date/time parsing doesn't take into
 	  account 00:00:00 as a legal value.
 
 	- Fixed BUG#27317 - ResultSet.get*() with a column index < 1 returns
-	  misleading error message.
+	  misleading error messageBean.
 
 	- Fixed BUG#25517 - Statement.setMaxRows() is not effective on result
 	  sets materialized from cursors.
@@ -2221,7 +2221,7 @@ nn-nn-07 - Version 5.0.9
 	  in-line (/* ... */) comments and therefore can't rewrite batched statements
 	  or reliably detect type of statements when they're used.
 
-	- Fixed BUG#24065 - Better error message when server doesn't return enough
+	- Fixed BUG#24065 - Better error messageBean when server doesn't return enough
 	  information to determine stored procedure/function parameter types.
 
 	- Fixed BUG#21438 - Driver sending nanoseconds to server for timestamps when
@@ -2309,7 +2309,7 @@ nn-nn-07 - Version 5.0.9
 
 	- Take "localSocketAddress" property into account when creating instances
 	  of CommunicationsException when the underyling exception is a
-	  java.net.BindException, so that a friendlier error message is given with
+	  java.net.BindException, so that a friendlier error messageBean is given with
 	  a little internal diagnostics.
 
 	- Fixed some NPEs when cached metadata was used with UpdatableResultSets.
@@ -2418,7 +2418,7 @@ nn-nn-07 - Version 5.0.9
 
     - Added configuration option "noAccessToProcedureBodies" which will
       cause the driver to create basic parameter metadata for
-      CallableStatements when the user does not have access to procedure
+      CallableStatements when the userBean does not have access to procedure
       bodies via "SHOW CREATE PROCEDURE" or selecting from mysql.proc
       instead of throwing an exception. The default value for this option
       is "false".
@@ -2460,7 +2460,7 @@ nn-nn-07 - Version 5.0.9
 	  nature of the interface, we return all prepared XIDs for TMSTARTRSCAN,
 	  and no new XIDs for calls with TMNOFLAGS, or TMENDRSCAN when not in
 	  combination with TMSTARTRSCAN. This change was made for API compliance,
-	  as well as integration with IBM WebSphere's transaction manager.
+	  as well as integration with IBM WebSphere's transaction managerBean.
 
 12-23-05 - Version 5.0.0-beta
 
@@ -3279,7 +3279,7 @@ nn-nn-07 - Version 3.1.15
 	  number of tables referenced in a SELECT.
 
 	- The logging system is now automatically configured. If the value has
-	  been set by the user, via the URL property "logger" or the system
+	  been set by the userBean, via the URL property "logger" or the system
 	  property "com.mysql.jdbc.logger", then use that, otherwise, autodetect
 	  it using the following steps:
 
@@ -3521,10 +3521,10 @@ nn-nn-07 - Version 3.1.15
     - Optimized integer number parsing, enable 'old' slower integer parsing
       using JDK classes via 'useFastIntParsing=false' property.
 
-    - Added 'useOnlyServerErrorMessages' property, which causes message text
+    - Added 'useOnlyServerErrorMessages' property, which causes messageBean text
       in exceptions generated by the server to only contain the text sent by
       the server (as opposed to the SQLState's 'standard' description, followed
-      by the server's error message). This property is set to 'true' by default.
+      by the server's error messageBean). This property is set to 'true' by default.
 
     - Fixed BUG#4689 - ResultSet.wasNull() does not work for primatives if a
       previous null was returned.
@@ -3577,7 +3577,7 @@ nn-nn-07 - Version 3.1.15
 07-07-04 - Version 3.1.3-beta
 
 	- Mangle output parameter names for CallableStatements so they
-	  will not clash with user variable names.
+	  will not clash with userBean variable names.
 
 	- Added support for INOUT parameters in CallableStatements.
 
@@ -4028,10 +4028,10 @@ nn-nn-07 - Version 3.1.15
 	- Add unsigned attribute to DatabaseMetaData.getColumns() output
 	  in the TYPE_NAME column.
 
-	- Added 'failOverReadOnly' property, to allow end-user to configure
+	- Added 'failOverReadOnly' property, to allow end-userBean to configure
 	  state of connection (read-only/writable) when failed over.
 
-	- Backported 'change user' and 'reset server state' functionality
+	- Backported 'change userBean' and 'reset server state' functionality
       from 3.1 branch, to allow clients of MysqlConnectionPoolDataSource
       to reset server state on getConnection() on a pooled connection.
 
@@ -4139,7 +4139,7 @@ nn-nn-07 - Version 3.1.15
     - Don't count quoted id's when inside a 'string' in PreparedStatement
       parsing (fix for BUG#1511).
 
-    - 'Friendlier' exception message for PacketTooLargeException
+    - 'Friendlier' exception messageBean for PacketTooLargeException
        (BUG#1534).
 
     - Backported fix for aliased tables and UpdatableResultSets in
@@ -4177,8 +4177,8 @@ nn-nn-07 - Version 3.1.15
       to always empty any remaining data on the input stream before
       each query.
 
-    - Added more descriptive error message 'Server Configuration Denies
-      Access to DataSource', as well as retrieval of message from server.
+    - Added more descriptive error messageBean 'Server Configuration Denies
+      Access to DataSource', as well as retrieval of messageBean from server.
 
     - Autoreconnect code didn't set catalog upon reconnect if it had been
       changed.
@@ -4539,7 +4539,7 @@ nn-nn-07 - Version 3.1.15
       qualify tables and columns in UpdatableResultSet (requires
       MySQL-4.1 or newer)
 
-    - Allow user to alter behavior of Statement/
+    - Allow userBean to alter behavior of Statement/
       PreparedStatement.executeBatch() via 'continueBatchOnError' property
       (defaults to 'true').
 
@@ -4614,7 +4614,7 @@ nn-nn-07 - Version 3.1.15
 
     - Added com.mysql.jdbc.MiniAdmin class, which allows you to send
       'shutdown' command to MySQL server...Intended to be used when 'embedding'
-      Java and MySQL server together in an end-user application.
+      Java and MySQL server together in an end-userBean application.
 
     - Added 'connectTimeout' parameter that allows users of JDK-1.4 and newer
       to specify a maxium time to wait to establish a connection.
@@ -5278,7 +5278,7 @@ Fixed PreparedStatement parameter checking
        add a day.
        (above fixes thanks to Vincent Partington)
 
-     - Added URL parameter parsing (?user=... etc).
+     - Added URL parameter parsing (?userBean=... etc).
 
 
 8-04-98 - Version 0.9d
@@ -5289,7 +5289,7 @@ Fixed PreparedStatement parameter checking
        me the org.gjt.mm package directory to use, so now
        the driver is in the org.gjt.mm.mysql package scheme.
        I'm "legal" now. Look for more information on Tim's
-       project soon.
+       projectBean soon.
 
      - Now using dynamically sized packets to reduce
        memory usage when sending commands to the DB.
