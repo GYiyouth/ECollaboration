@@ -2,7 +2,7 @@ package DAO.planDAO;
 
 
 
-import bean.domain.Plan;
+import bean.domain.PlanBean;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,11 +10,11 @@ import java.util.ArrayList;
 public interface PlanDAO {
 	/**
 	 * 添加计划，获取新计划id
-	 * @param plan
+	 * @param planBean
 	 * @return
 	 * @throws SQLException
 	 */
-	public Integer addPlan(Plan plan) throws SQLException;
+	public Integer addPlan(PlanBean planBean) throws SQLException;
 
 	/**
 	 * 删除计划，获取此计划Plan对象
@@ -22,15 +22,15 @@ public interface PlanDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public Plan deletePlan(int planId) throws SQLException;
+	public PlanBean deletePlan(int planId) throws SQLException;
 
 	/**
 	 * 修改计划，获取bool变量
-	 * @param plan
+	 * @param planBean
 	 * @return
 	 * @throws SQLException
 	 */
-	public boolean updatePlan(Plan plan) throws SQLException;
+	public boolean updatePlan(PlanBean planBean) throws SQLException;
 
 	/**
 	 * 获取Plan对象，通过PlanId
@@ -38,7 +38,7 @@ public interface PlanDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public Plan getPlanInfo(int planId) throws SQLException;
+	public PlanBean getPlanInfo(int planId) throws SQLException;
 
 
 	/**

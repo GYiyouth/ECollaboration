@@ -148,10 +148,10 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.ht
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../../org/apache/commons/io/IOExceptionWithCause.html#IOExceptionWithCause(java.lang.String,%20java.lang.Throwable)">IOExceptionWithCause</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;message,
+<td class="colOne"><code><strong><a href="../../../../org/apache/commons/io/IOExceptionWithCause.html#IOExceptionWithCause(java.lang.String,%20java.lang.Throwable)">IOExceptionWithCause</a></strong>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;messageBean,
                     <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;cause)</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;</div>
-<div class="block">Constructs a new instance with the given message and cause.</div>
+<div class="block">Constructs a new instance with the given messageBean and cause.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -203,15 +203,15 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.ht
 <ul class="blockList">
 <li class="blockList">
 <h4>IOExceptionWithCause</h4>
-<pre>public&nbsp;IOExceptionWithCause(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;message,
+<pre>public&nbsp;IOExceptionWithCause(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;messageBean,
                     <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a>&nbsp;cause)</pre>
 <div class="block"><span class="strong">Deprecated.</span>&nbsp;</div>
-<div class="block">Constructs a new instance with the given message and cause.
+<div class="block">Constructs a new instance with the given messageBean and cause.
  <p>
- As specified in <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang"><code>Throwable</code></a>, the message in the given <code>cause</code> is not used in this instance's
- message.
+ As specified in <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang"><code>Throwable</code></a>, the messageBean in the given <code>cause</code> is not used in this instance's
+ messageBean.
  </p></div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>message</code> - the message (see <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Throwable.html?is-external=true#getMessage()" title="class or interface in java.lang"><code>Throwable.getMessage()</code></a>)</dd><dd><code>cause</code> - the cause (see <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Throwable.html?is-external=true#getCause()" title="class or interface in java.lang"><code>Throwable.getCause()</code></a>). A <code>null</code> value is allowed.</dd></dl>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>messageBean</code> - the messageBean (see <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Throwable.html?is-external=true#getMessage()" title="class or interface in java.lang"><code>Throwable.getMessage()</code></a>)</dd><dd><code>cause</code> - the cause (see <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Throwable.html?is-external=true#getCause()" title="class or interface in java.lang"><code>Throwable.getCause()</code></a>). A <code>null</code> value is allowed.</dd></dl>
 </li>
 </ul>
 <a name="IOExceptionWithCause(java.lang.Throwable)">
@@ -224,8 +224,8 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.ht
 <div class="block"><span class="strong">Deprecated.</span>&nbsp;</div>
 <div class="block">Constructs a new instance with the given cause.
  <p>
- The message is set to <code>cause==null ? null : cause.toString()</code>, which by default contains the class
- and message of <code>cause</code>. This constructor is useful for call sites that just wrap another throwable.
+ The messageBean is set to <code>cause==null ? null : cause.toString()</code>, which by default contains the class
+ and messageBean of <code>cause</code>. This constructor is useful for call sites that just wrap another throwable.
  </p></div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>cause</code> - the cause (see <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Throwable.html?is-external=true#getCause()" title="class or interface in java.lang"><code>Throwable.getCause()</code></a>). A <code>null</code> value is allowed.</dd></dl>
 </li>

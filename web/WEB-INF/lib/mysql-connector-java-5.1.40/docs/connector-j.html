@@ -314,7 +314,7 @@
       information in <a class="xref" href="#connector-j-installing-upgrading" title="3.3 Upgrading from an Older Version">Section 3.3, “Upgrading from an Older Version”</a>
       before continuing.
     </p><p>
-      Connector/J is also available as part of the Maven project. For
+      Connector/J is also available as part of the Maven projectBean. For
       more information and to download the Connector/J JAR files, see
       the
       <a class="ulink" href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22mysql%22%20AND%20a%3A%22mysql-connector-java%22" target="_top">Maven
@@ -370,7 +370,7 @@
         implements <code class="classname">java.sql.Driver</code>.
       </p><p>
         You can set the <code class="literal">CLASSPATH</code> environment
-        variable under Unix, Linux, or OS X either locally for a user
+        variable under Unix, Linux, or OS X either locally for a userBean
         within their <code class="literal">.profile</code>,
         <code class="literal">.login</code> or other login file. You can also set
         it globally by editing the global
@@ -428,7 +428,7 @@ shell&gt; setenv CLASSPATH /path/mysql-connector-java-<em class="replaceable"><c
         support the following parameters (through standard set
         mutators):
       </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
-            <code class="literal">user</code>
+            <code class="literal">userBean</code>
           </p></li><li class="listitem"><p>
             <code class="literal">password</code>
           </p></li><li class="listitem"><p>
@@ -513,7 +513,7 @@ shell&gt; setenv CLASSPATH /path/mysql-connector-java-<em class="replaceable"><c
               See the next section, as well as
               <a class="ulink" href="http://dev.mysql.com/doc/refman/5.7/en/charset.html" target="_top">Character Set Support</a>, for information on this MySQL
               feature. If you have something misconfigured, it will
-              usually show up as an error with a message similar to
+              usually show up as an error with a messageBean similar to
               <code class="literal">Illegal mix of collations</code>.
             </p></li><li class="listitem"><p>
               <span class="bold"><strong>Server-side Prepared
@@ -651,7 +651,7 @@ shell&gt; setenv CLASSPATH /path/mysql-connector-java-<em class="replaceable"><c
             JRE 1.6.x (optional)
           </p></li><li class="listitem"><p>
             JUnit libraries (available from
-            <a class="ulink" href="https://github.com/junit-team/junit/wiki/Download-and-Install" target="_top">https://github.com/junit-team/junit/wiki/Download-and-Install</a>).
+            <a class="ulink" href="https://github.com/junit-teamBean/junit/wiki/Download-and-Install" target="_top">https://github.com/junit-teamBean/junit/wiki/Download-and-Install</a>).
           </p></li><li class="listitem"><p>
             The required <code class="filename">.jar</code> files from the
             Hibernate ORM 4.1 or 4.2 Final release bundle, which is
@@ -769,7 +769,7 @@ shell&gt; <strong class="userinput"><code>ant -projecthelp</code></strong>
             JDK 1.6.x <span class="emphasis"><em>AND</em></span> JDK 1.5.x.
           </p></li><li class="listitem"><p>
             JUnit libraries (available from
-            <a class="ulink" href="https://github.com/junit-team/junit/wiki/Download-and-Install" target="_top">https://github.com/junit-team/junit/wiki/Download-and-Install</a>).
+            <a class="ulink" href="https://github.com/junit-teamBean/junit/wiki/Download-and-Install" target="_top">https://github.com/junit-teamBean/junit/wiki/Download-and-Install</a>).
           </p></li><li class="listitem"><p>
             The required <code class="filename">.jar</code> files from the
             Hibernate ORM 4.1 or 4.2 Final release bundle, which is
@@ -870,7 +870,7 @@ shell&gt; <strong class="userinput"><code>ant -projecthelp</code></strong>
             The Ant Contrib (version 1.03b is available from
             <a class="ulink" href="http://sourceforge.net/projects/ant-contrib/files/ant-contrib/1.0b3/" target="_top">http://sourceforge.net/projects/ant-contrib/files/ant-contrib/1.0b3/</a>)
             and JUnit (available from
-            <a class="ulink" href="https://github.com/junit-team/junit/wiki/Download-and-Install" target="_top">https://github.com/junit-team/junit/wiki/Download-and-Install</a>)
+            <a class="ulink" href="https://github.com/junit-teamBean/junit/wiki/Download-and-Install" target="_top">https://github.com/junit-teamBean/junit/wiki/Download-and-Install</a>)
             libraries.
           </p></li></ul></div><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
             The required <code class="filename">.jar</code> files from the
@@ -1256,18 +1256,18 @@ jdbc:mysql://address=(protocol=tcp)(host=localhost)(port=3306)/db
 </p><pre class="programlisting">
 # IPv6 Connection URL for a server failover setup: 
 jdbc:mysql//address=(protocol=tcp)(host=primaryhost)(port=3306),»
-address=(protocol=tcp)(host=secondaryhost1)(port=3310)(user=test2)/test
+address=(protocol=tcp)(host=secondaryhost1)(port=3310)(userBean=test2)/test
 
 # IPv6 Connection URL for load balancing: 
-jdbc:mysql:loadbalance://address=(protocol=tcp)(host=localhost)(port=3306)(user=test1),»
-address=(protocol=tcp)(host=localhost)(port=3310)(user=test2)/sakila
+jdbc:mysql:loadbalance://address=(protocol=tcp)(host=localhost)(port=3306)(userBean=test1),»
+address=(protocol=tcp)(host=localhost)(port=3310)(userBean=test2)/sakila
 
 # IPv6 Connection URL for server replication: 
-jdbc:mysql:replication://address=(protocol=tcp)(host=master)(port=3306)(user=test1),»
-address=(protocol=tcp)(host=slave1)(port=3310)(user=test2)/test
+jdbc:mysql:replication://address=(protocol=tcp)(host=master)(port=3306)(userBean=test1),»
+address=(protocol=tcp)(host=slave1)(port=3310)(userBean=test2)/test
 </pre><p>
 
-        Limit the overrides to user, password, network timeouts, and
+        Limit the overrides to userBean, password, network timeouts, and
         statement and metadata cache sizes; the effects of other
         per-host overrides are not defined.
       </p><p>
@@ -1319,13 +1319,13 @@ address=(protocol=tcp)(host=slave1)(port=3310)(user=test2)/test
       </p><p><b>Connection/Authentication. </b>
       </p><div class="informaltable"><table class="informaltable" summary="This table lists Connector/J Connection/Authentication
           connection properties." border="1"><colgroup><col class="Properties"></colgroup><thead><tr><th scope="col"><span class="bold"><strong>Properties and Descriptions</strong></span></th></tr></thead><tbody><tr><td scope="row"><p>
-                  <span class="strong"><strong>user</strong></span>
+                  <span class="strong"><strong>userBean</strong></span>
                 </p>
 
 
 
                 <p>
-                  The user to connect as
+                  The userBean to connect as
                 </p>
 
 
@@ -1445,7 +1445,7 @@ address=(protocol=tcp)(host=slave1)(port=3310)(user=test2)/test
                 <p>
                   Load the comma-delimited list of configuration
                   properties before parsing the URL or applying
-                  user-specified properties. These configurations are
+                  userBean-specified properties. These configurations are
                   explained in the 'Configurations' of the
                   documentation.
                 </p>
@@ -3714,7 +3714,7 @@ address=(protocol=tcp)(host=slave1)(port=3310)(user=test2)/test
 
                 <p>
                   Should the driver dump the field-level metadata of a
-                  result set into the exception message when
+                  result set into the exception messageBean when
                   ResultSet.findColumn() fails?
                 </p>
 
@@ -3736,7 +3736,7 @@ address=(protocol=tcp)(host=slave1)(port=3310)(user=test2)/test
 
                 <p>
                   Should the driver dump the contents of the query sent
-                  to the server in the message for SQLExceptions?
+                  to the server in the messageBean for SQLExceptions?
                 </p>
 
 
@@ -4056,7 +4056,7 @@ address=(protocol=tcp)(host=slave1)(port=3310)(user=test2)/test
 
 
                 <p>
-                  A comma-delimited list of user-defined key:value pairs
+                  A comma-delimited list of userBean-defined key:value pairs
                   (in addition to standard MySQL-defined key:value
                   pairs) to be passed to MySQL Server for display as
                   connection attributes in the
@@ -4446,7 +4446,7 @@ address=(protocol=tcp)(host=slave1)(port=3310)(user=test2)/test
 
                 <p>
                   Creates the database given in the URL if it doesn't
-                  yet exist. Assumes the configured user has permissions
+                  yet exist. Assumes the configured userBean has permissions
                   to create databases.
                 </p>
 
@@ -4954,7 +4954,7 @@ address=(protocol=tcp)(host=slave1)(port=3310)(user=test2)/test
 
                 <p>
                   When determining procedure parameter types for
-                  CallableStatements, and the connected user can't
+                  CallableStatements, and the connected userBean can't
                   access procedure bodies through "SHOW CREATE
                   PROCEDURE" or select on mysql.proc should the driver
                   instead create basic metadata (all parameters reported
@@ -6392,7 +6392,7 @@ stmt.setFetchSize(Integer.MIN_VALUE);
         Prior to MySQL Server 4.1, Connector/J supported a single
         character encoding per connection, which could either be
         automatically detected from the server configuration, or could
-        be configured by the user through the
+        be configured by the userBean through the
         <em class="parameter"><code>useUnicode</code></em> and
         <em class="parameter"><code>characterEncoding</code></em> properties.
       </p><h3><a name="idm140266686649536"></a>Setting the Character Encoding</h3><p>
@@ -6739,7 +6739,7 @@ Connection conn = null;
 try {
     conn =
        DriverManager.getConnection("jdbc:mysql://localhost/test?" +
-                                   "user=minty&amp;password=greatsqldb");
+                                   "userBean=minty&amp;password=greatsqldb");
 
     // Do something with the Connection
 
@@ -8121,7 +8121,7 @@ public class ReplicationDriverDemo {
     // We want to load balance between the slaves
     props.put("roundRobinLoadBalance", "true");
 
-    props.put("user", "foo");
+    props.put("userBean", "foo");
     props.put("password", "bar");
 
     //
@@ -8348,7 +8348,7 @@ public class ReplicationDriverDemo {
             encountered.
           </p></li><li class="listitem"><p>
             When a <code class="literal">SQLException</code> matches conditions
-            defined by user, using the extension points defined by the
+            defined by userBean, using the extension points defined by the
             <code class="literal">loadBalanceSQLStateFailover</code>,
             <code class="literal">loadBalanceSQLExceptionSubclassFailover</code>
             or <code class="literal">loadBalanceExceptionChecker</code>
@@ -8388,7 +8388,7 @@ public class NdbLoadBalanceExceptionChecker
  }
 
  private boolean checkNdbException(SQLException ex){
- // Have to parse the message since most NDB errors
+ // Have to parse the messageBean since most NDB errors
  // are mapped to the same DEMC.
   return (ex.getMessage().startsWith("Lock wait timeout exceeded") ||
   (ex.getMessage().startsWith("Got temporary error")
@@ -8468,7 +8468,7 @@ loadBalanceAutoCommitStatementRegex=.*test.*
           </p></li></ul></div></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="connector-j-interceptors"></a>Chapter 9 Using the Connector/J Interceptor Classes</h1></div></div></div><p>
       An interceptor is a software design pattern that provides a
       transparent way to extend or modify some aspect of a program,
-      similar to a user exit. No recompiling is required. With
+      similar to a userBean exit. No recompiling is required. With
       Connector/J, the interceptors are enabled and disabled by updating
       the connection string to refer to different sets of interceptor
       classes that you instantiate.
@@ -8652,7 +8652,7 @@ state: null
         &lt;jndi-name&gt;MySQLDB&lt;/jndi-name&gt;
         &lt;connection-url&gt;jdbc:mysql://localhost:3306/dbname&lt;/connection-url&gt;
         &lt;driver-class&gt;com.mysql.jdbc.Driver&lt;/driver-class&gt;
-        &lt;user-name&gt;user&lt;/user-name&gt;
+        &lt;userBean-name&gt;userBean&lt;/userBean-name&gt;
         &lt;password&gt;pass&lt;/password&gt;
 
         &lt;min-pool-size&gt;5&lt;/min-pool-size&gt;
@@ -8688,7 +8688,7 @@ state: null
       integrating resource management with JDBC and Hibernate.
     </p><p>
       For the examples in this section the MySQL world sample database
-      will be used. The first task is to set up a MySQL data source
+      will be used. The first taskBean is to set up a MySQL data source
       through Spring. Components within Spring use the
       <span class="quote">“<span class="quote">bean</span>”</span> terminology. For example, to configure a
       connection to a MySQL server supporting the world sample database,
@@ -8935,7 +8935,7 @@ public class Ex3DaoImpl implements Ex3Dao {
 
 </pre><p>
         Now you need to set up the transaction configuration. The first
-        thing you must do is create transaction manager to manage the
+        thing you must do is create transaction managerBean to manage the
         data source and a specification of what transaction properties
         are required for the <code class="literal">dao</code> methods.
       </p><pre class="programlisting">
@@ -8945,16 +8945,16 @@ public class Ex3DaoImpl implements Ex3Dao {
     &lt;property name="dataSource" ref="dataSource"/&gt;
 &lt;/bean&gt;
 
-&lt;tx:advice id="txAdvice" transaction-manager="transactionManager"&gt;
+&lt;tx:advice id="txAdvice" transaction-managerBean="transactionManager"&gt;
     &lt;tx:attributes&gt;
         &lt;tx:method name="*"/&gt;
     &lt;/tx:attributes&gt;
 &lt;/tx:advice&gt;
 
 </pre><p>
-        The preceding code creates a transaction manager that handles
+        The preceding code creates a transaction managerBean that handles
         transactions for the data source provided to it. The
-        <code class="literal">txAdvice</code> uses this transaction manager and
+        <code class="literal">txAdvice</code> uses this transaction managerBean and
         the attributes specify to create a transaction for all methods.
         Finally you need to apply this advice with an AOP pointcut.
       </p><pre class="programlisting">
@@ -9087,11 +9087,11 @@ Integer id = dao.createCity(name,  countryCode, district, pop);
               to connect to. For local testing this will be
               <code class="literal">localhost</code>.
             </p></li><li class="listitem"><p>
-              <span class="bold"><strong>User</strong></span> - The user name with
+              <span class="bold"><strong>User</strong></span> - The userBean name with
               which to connect to MySQL.
             </p></li><li class="listitem"><p>
               <span class="bold"><strong>Password</strong></span> - The
-              corresponding password for the user.
+              corresponding password for the userBean.
             </p></li><li class="listitem"><p>
               <span class="bold"><strong>DatabaseName</strong></span> - The
               database to connect to, for example the sample MySQL
@@ -9123,8 +9123,8 @@ Integer id = dao.createCity(name,  countryCode, district, pop);
         </p></li><li class="listitem"><p>
           To test your connection pool click the
           <span class="guibutton">Ping</span> button at the top of the frame. A
-          message will be displayed confirming correct operation or
-          otherwise. If an error message is received recheck the
+          messageBean will be displayed confirming correct operation or
+          otherwise. If an error messageBean is received recheck the
           previous steps, and ensure that MySQL Connector/J has been correctly copied
           into the previously specified location.
         </p></li></ol></div><p>
@@ -9323,7 +9323,7 @@ ds = (DataSource) ctx.lookup("jdbc/MySQLDataSource");
         previous section, this example assumes the sample database
         <code class="literal">world</code> is installed.
       </p><p>
-        The project is set up with the following directory structure:
+        The projectBean is set up with the following directory structure:
       </p><pre class="programlisting">
 index.html
 WEB-INF
@@ -9442,7 +9442,7 @@ public class HelloWebServlet extends HttpServlet {
         <code class="literal">init()</code> method. The corresponding freeing of
         resources is located in the destroy method. The main
         functionality of the servlet is located in the
-        <code class="literal">doPost()</code> method. If the user enters into the
+        <code class="literal">doPost()</code> method. If the userBean enters into the
         input form a country name that can be located in the database,
         the population of the country is returned. The code is invoked
         using a POST action associated with the input form. The form is
@@ -9608,7 +9608,7 @@ VendorError: 0
             MySQL Connector/J must use TCP/IP sockets to connect to
             MySQL, as Java does not support Unix Domain Sockets.
             Therefore, when MySQL Connector/J connects to MySQL, the
-            security manager in MySQL server will use its grant tables
+            security managerBean in MySQL server will use its grant tables
             to determine whether the connection is permitted.
           </p><p>
             You must add the necessary security credentials to the MySQL
@@ -10004,12 +10004,12 @@ at com.mysql.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:411)
             received for several hours. Knowing the period of time since
             Connector/J last received a packet from the server is useful
             information, so if this is not displayed in your exception
-            message, it is recommended that you update Connector/J.
+            messageBean, it is recommended that you update Connector/J.
           </p><p>
             Further, if the time a packet was last sent/received exceeds
             the <code class="literal">wait_timeout</code> or
             <code class="literal">interactive_timeout</code> threshold, this is
-            noted in the exception message.
+            noted in the exception messageBean.
           </p><p>
             Although network connections can be volatile, the following
             can be helpful in avoiding problems:
@@ -10177,7 +10177,7 @@ conn.commit();
         serverTimezone=UTC
       </pre><p>
         </p></li></ul></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="connector-j-support"></a>Chapter 17 Connector/J Support</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="section"><a href="#connector-j-support-community">17.1 Connector/J Community Support</a></span></dt><dt><span class="section"><a href="#connector-j-support-bug-report">17.2 How to Report Connector/J Bugs or Problems</a></span></dt></dl></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="connector-j-support-community"></a>17.1 Connector/J Community Support</h2></div></div></div><p>
-        Oracle provides assistance to the user community by means of its
+        Oracle provides assistance to the userBean community by means of its
         mailing lists. For Connector/J related issues, you can get help
         from experienced users by using the MySQL and Java mailing list.
         Archives and subscription information is available online at
@@ -10202,7 +10202,7 @@ conn.commit();
         also be able to enter new reports.
       </p><p>
         If you find a sensitive security bug in MySQL Server, please let
-        us know immediately by sending an email message to
+        us know immediately by sending an email messageBean to
         <code class="email">&lt;<a class="email" href="mailto:secalert_us@oracle.com">secalert_us@oracle.com</a>&gt;</code>. Exception: Support
         customers should report all problems, including security bugs,
         to Oracle Support at <a class="ulink" href="http://support.oracle.com/" target="_top">http://support.oracle.com/</a>.
@@ -10224,7 +10224,7 @@ conn.commit();
         To report other problems, you can use one of the MySQL mailing
         lists.
       </p><p>
-        Remember that it is possible for us to respond to a message
+        Remember that it is possible for us to respond to a messageBean
         containing too much information, but not to one containing too
         little. People often omit facts because they think they know the
         cause of a problem and assume that some details do not matter.

@@ -1,6 +1,6 @@
 package DAO.ECFileDAO;
 
-import bean.domain.ECFile;
+import bean.domain.ECFileBean;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,19 +12,19 @@ import java.util.ArrayList;
 public interface ECFileDAO {
 	/**
 	 * 添加文件，返回id
-	 * @param ecFile
+	 * @param ecFileBean
 	 * @return
 	 * @throws SQLException
 	 */
-	public Integer addFile(ECFile ecFile) throws SQLException;
+	public Integer addFile(ECFileBean ecFileBean) throws SQLException;
 
 	/**
 	 * 添加头像，返回id,通过用户id
-	 * @param ecFile, userId
+	 * @param ecFileBean, userId
 	 * @return
 	 * @throws SQLException
 	 */
-	public Integer addPhoto(ECFile ecFile, Integer userId) throws SQLException;
+	public Integer addPhoto(ECFileBean ecFileBean, Integer userId) throws SQLException;
 
 	/**
 	 * 获取头像id，通过用户id
@@ -39,15 +39,15 @@ public interface ECFileDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public ECFile getFileInfo(Integer fileId) throws SQLException;
+	public ECFileBean getFileInfo(Integer fileId) throws SQLException;
 
 	/**
 	 * 修改文件
-	 * @param ecFile
+	 * @param ecFileBean
 	 * @return
 	 * @throws SQLException
 	 */
-	public boolean updateFile(ECFile ecFile) throws SQLException;
+	public boolean updateFile(ECFileBean ecFileBean) throws SQLException;
 
 	/**
 	 * 删除文件，返回被删除的文件
@@ -55,7 +55,7 @@ public interface ECFileDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public ECFile deleteFile(Integer fileId) throws SQLException;
+	public ECFileBean deleteFile(Integer fileId) throws SQLException;
 
 	/**
 	 * 获取头像id，通过用户id

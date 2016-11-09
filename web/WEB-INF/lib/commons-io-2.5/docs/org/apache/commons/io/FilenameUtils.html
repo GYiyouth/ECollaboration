@@ -114,11 +114,11 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  sets of prefixes. See the javadoc of each method for details.
  <p>
  This class defines six components within a filename
- (example C:\dev\project\file.txt):
+ (example C:\dev\projectBean\file.txt):
  <ul>
  <li>the prefix - C:\</li>
- <li>the path - dev\project\</li>
- <li>the full path - C:\dev\project\</li>
+ <li>the path - dev\projectBean\</li>
+ <li>the full path - C:\dev\projectBean\</li>
  <li>the name - file.txt</li>
  <li>the base name - file</li>
  <li>the extension - txt</li>
@@ -141,10 +141,10 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  Unix:
  a/b/c.txt           --&gt; ""          --&gt; relative
  /a/b/c.txt          --&gt; "/"         --&gt; absolute
- ~/a/b/c.txt         --&gt; "~/"        --&gt; current user
- ~                   --&gt; "~/"        --&gt; current user (slash added)
- ~user/a/b/c.txt     --&gt; "~user/"    --&gt; named user
- ~user               --&gt; "~user/"    --&gt; named user (slash added)
+ ~/a/b/c.txt         --&gt; "~/"        --&gt; current userBean
+ ~                   --&gt; "~/"        --&gt; current userBean (slash added)
+ ~userBean/a/b/c.txt     --&gt; "~userBean/"    --&gt; named userBean
+ ~userBean               --&gt; "~userBean/"    --&gt; named userBean (slash added)
  </pre>
  Both prefix styles are matched always, irrespective of the machine that you are
  currently running on.
@@ -839,10 +839,10 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  Unix:
  a/b/c.txt           --&gt; ""          --&gt; relative
  /a/b/c.txt          --&gt; "/"         --&gt; absolute
- ~/a/b/c.txt         --&gt; "~/"        --&gt; current user
- ~                   --&gt; "~/"        --&gt; current user (slash added)
- ~user/a/b/c.txt     --&gt; "~user/"    --&gt; named user
- ~user               --&gt; "~user/"    --&gt; named user (slash added)
+ ~/a/b/c.txt         --&gt; "~/"        --&gt; current userBean
+ ~                   --&gt; "~/"        --&gt; current userBean (slash added)
+ ~userBean/a/b/c.txt     --&gt; "~userBean/"    --&gt; named userBean
+ ~userBean               --&gt; "~userBean/"    --&gt; named userBean (slash added)
  //server/a/b/c.txt  --&gt; "//server/"
  ///a/b/c.txt        --&gt; error, length = -1
  </pre>
@@ -917,10 +917,10 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  Unix:
  a/b/c.txt           --&gt; ""          --&gt; relative
  /a/b/c.txt          --&gt; "/"         --&gt; absolute
- ~/a/b/c.txt         --&gt; "~/"        --&gt; current user
- ~                   --&gt; "~/"        --&gt; current user (slash added)
- ~user/a/b/c.txt     --&gt; "~user/"    --&gt; named user
- ~user               --&gt; "~user/"    --&gt; named user (slash added)
+ ~/a/b/c.txt         --&gt; "~/"        --&gt; current userBean
+ ~                   --&gt; "~/"        --&gt; current userBean (slash added)
+ ~userBean/a/b/c.txt     --&gt; "~userBean/"    --&gt; named userBean
+ ~userBean               --&gt; "~userBean/"    --&gt; named userBean (slash added)
  </pre>
  <p>
  The output will be the same irrespective of the machine that the code is running on.
@@ -1010,8 +1010,8 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  C:\          --&gt; C:\
  ~            --&gt; ~/
  ~/           --&gt; ~/
- ~user        --&gt; ~user/
- ~user/       --&gt; ~user/
+ ~userBean        --&gt; ~userBean/
+ ~userBean/       --&gt; ~userBean/
  </pre>
  <p>
  The output will be the same irrespective of the machine that the code is running on.</div>
@@ -1042,8 +1042,8 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  C:\          --&gt; C:\
  ~            --&gt; ~
  ~/           --&gt; ~
- ~user        --&gt; ~user
- ~user/       --&gt; ~user
+ ~userBean        --&gt; ~userBean
+ ~userBean/       --&gt; ~userBean
  </pre>
  <p>
  The output will be the same irrespective of the machine that the code is running on.</div>

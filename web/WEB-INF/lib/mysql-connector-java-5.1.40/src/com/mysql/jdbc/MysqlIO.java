@@ -833,7 +833,7 @@ public class MysqlIO {
             Buffer packet = new Buffer(packLength);
             packet.writeByte((byte) MysqlDefs.COM_CHANGE_USER);
 
-            // User/Password data
+            // UserBean/Password data
             packet.writeString(userName);
 
             if (this.protocolVersion > 9) {
@@ -1302,7 +1302,7 @@ public class MysqlIO {
                     packet.writeLongInt(this.maxThreeBytes);
                 }
 
-                // User/Password data
+                // UserBean/Password data
                 packet.writeString(user, CODE_PAGE_1252, this.connection);
 
                 if (this.protocolVersion > 9) {
@@ -1338,7 +1338,7 @@ public class MysqlIO {
                     packet.writeLongInt(this.maxThreeBytes);
                 }
 
-                // User/Password data
+                // UserBean/Password data
                 packet.writeString(user);
 
                 if (this.protocolVersion > 9) {
@@ -1577,7 +1577,7 @@ public class MysqlIO {
      * Performs an authentication handshake to authorize connection to a
      * given database as a given MySQL user. This can happen upon initial
      * connection to the server, after receiving Auth Challenge Packet, or
-     * at any moment during the connection life-time via a Change User
+     * at any moment during the connection life-time via a Change UserBean
      * request.
      * 
      * This method is aware of pluggable authentication and will use
@@ -1698,7 +1698,7 @@ public class MysqlIO {
 
                     checkConfidentiality(plugin);
 
-                    // Servers not affected by Bug#70865 expect the Change User Request containing a correct answer
+                    // Servers not affected by Bug#70865 expect the Change UserBean Request containing a correct answer
                     // to seed sent by the server during the initial handshake, thus we reuse it here.
                     // Servers affected by Bug#70865 will just ignore it and send the Auth Switch.
                     fromServer = new Buffer(StringUtils.getBytes(this.seed));
@@ -1773,7 +1773,7 @@ public class MysqlIO {
                     last_sent = new Buffer(packLength + 1);
                     last_sent.writeByte((byte) MysqlDefs.COM_CHANGE_USER);
 
-                    // User/Password data
+                    // UserBean/Password data
                     last_sent.writeString(user, enc, this.connection);
 
                     // 'auth-response-len' is limited to one Byte but, in case of success, COM_CHANGE_USER will be followed by an AuthSwitchRequest anyway
@@ -1835,7 +1835,7 @@ public class MysqlIO {
 
                     last_sent.writeBytesNoNull(new byte[23]);	// Set of bytes reserved for future use.
 
-                    // User/Password data
+                    // UserBean/Password data
                     last_sent.writeString(user, enc, this.connection);
 
                     if ((this.serverCapabilities & CLIENT_PLUGIN_AUTH_LENENC_CLIENT_DATA) != 0) {
@@ -4225,7 +4225,7 @@ public class MysqlIO {
             }
         }
 
-        // User/Password data
+        // UserBean/Password data
         packet.writeString(user, CODE_PAGE_1252, this.connection);
 
         if (password.length() != 0) {
@@ -4376,7 +4376,7 @@ public class MysqlIO {
             }
         }
 
-        // User/Password data
+        // UserBean/Password data
         if (user != null) {
             packet.writeString(user, enc, this.connection);
         }
