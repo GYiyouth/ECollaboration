@@ -24,9 +24,10 @@ public class Test {
 		try {
 
 
-			ecFile = ecFileDAO.getFileInfo(1);
-
-			System.out.println(ecFileDAO.deleteFile(3));
+			ecFile = ecFileDAO.getFileInfo(2);
+			ecFile.setFileName("photo");
+			int id = ecFileDAO.addPhoto(ecFile, 2);
+			System.out.println(id);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

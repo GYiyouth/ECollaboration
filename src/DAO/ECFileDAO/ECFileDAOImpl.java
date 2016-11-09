@@ -2,6 +2,7 @@ package DAO.ECFileDAO;
 
 import DAO.com.util.db.DBUtils;
 import bean.domain.ECFile;
+import smallTools.StringCheck;
 import smallTools.Time;
 import smallTools.TimeImpl;
 
@@ -60,6 +61,89 @@ public class ECFileDAOImpl implements ECFileDAO {
 
 			}
 		}catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		}finally {
+			DBUtils.close(resultSet, preparedStatement, connection);
+		}
+	}
+
+	/**
+	 * 添加头像，返回file id,通过用户id
+	 *
+	 * @param ecFile
+	 * @param userId
+	 * @return
+	 * @throws SQLException
+	 */
+	@Override
+	public Integer addPhoto(ECFile ecFile, Integer userId) throws SQLException {
+		if (ecFile == null)
+			return null;
+		try {                                                                   // 删除旧头像
+			if (getPhotoId(userId) != null){
+				deleteFile(getPhotoId(userId));
+			}
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String sql = "insert into ECollaborationWeb.ecfile(fileName, createDate, deadDate, downLoadTimes," +
+				"priority, creatorId, path) values(?,?,?,?,?,?,?);";
+		try {
+			connection = DBUtils.getConnetction();
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1,  ecFile.getFileName());
+			preparedStatement.setString(2,  ecFile.getCreateDate());
+			preparedStatement.setString(3,  ecFile.getDeadDate());
+			preparedStatement.setInt(   4,  ecFile.getDownLoadTimes());
+			preparedStatement.setInt(   5,  4);
+			preparedStatement.setInt(   6,  userId);
+			preparedStatement.setString(7,  ecFile.getPath());
+			int row = preparedStatement.executeUpdate();
+			if (row != 1){
+				throw new SQLException("添加头像出错");
+			}else {
+				String sql2 = "select LAST_INSERT_ID();";                           //返回id
+				preparedStatement = connection.prepareStatement(sql2);
+				preparedStatement.executeQuery();
+				resultSet = preparedStatement.getResultSet();
+				resultSet.next();
+				return resultSet.getInt(1);
+
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		}finally {
+			DBUtils.close(resultSet, preparedStatement, connection);
+		}
+	}
+
+	/**
+	 * 获取头像id，通过用户id
+	 *
+	 * @param userId
+	 * @return
+	 * @throws SQLException
+	 */
+	@Override
+	public Integer getPhotoId(Integer userId) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String sql = "select id from ECollaborationWeb.ecfile where creatorId = ? and priority = 4";
+		try {
+			connection = DBUtils.getConnetction();
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, userId);
+			resultSet = preparedStatement.executeQuery();
+			resultSet.next();
+			return resultSet.getInt(1);
+		}catch (SQLException e){
 			e.printStackTrace();
 			throw e;
 		}finally {

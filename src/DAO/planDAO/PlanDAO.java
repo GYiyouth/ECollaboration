@@ -1,6 +1,8 @@
 package DAO.planDAO;
 
-import ustc.bean.Plan;
+
+
+import bean.domain.Plan;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

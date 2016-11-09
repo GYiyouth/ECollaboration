@@ -19,6 +19,21 @@ public interface ECFileDAO {
 	public Integer addFile(ECFile ecFile) throws SQLException;
 
 	/**
+	 * 添加头像，返回id,通过用户id
+	 * @param ecFile, userId
+	 * @return
+	 * @throws SQLException
+	 */
+	public Integer addPhoto(ECFile ecFile, Integer userId) throws SQLException;
+
+	/**
+	 * 获取头像id，通过用户id
+	 * @param userId
+	 * @return
+	 * @throws SQLException
+	 */
+	public Integer getPhotoId(Integer userId) throws SQLException;
+	/**
 	 * 获取文件，通过文件id
 	 * @param fileId
 	 * @return
