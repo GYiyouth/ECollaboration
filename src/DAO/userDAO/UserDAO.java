@@ -7,45 +7,54 @@ import bean.domain.UserBean;
 import java.sql.SQLException;
 
 public interface UserDAO {
-	
+
+
+
+	/**
+	 * 用户登录，成功返回User，失败返回空
+	 *
+	 * @param logName,passWord
+	 * @return User
+	 * @throws SQLException
+	 */
+	public UserBean getLogerInfo(String logName,String passWord) throws SQLException;
+
 	/**
 	 * 添加用户，内部生成id，返回用户id
-	 * @param userBean
+	 *
+	 * @param user
 	 * @return int
 	 * @throws SQLException
 	 */
-	public int addUser(UserBean userBean) throws SQLException;
+	public int addUser(UserBean user) throws SQLException;
 
 	/**
-	 * 根据id寻找用户，返回User
+	 * 通过id获取用户信息
+	 *
 	 * @param userId
-	 * @return UserBean
+	 * @return User
 	 * @throws SQLException
 	 */
-	public UserBean getUserInfo(int userId) throws SQLException;
+	public UserBean getUserInfoById(int userId) throws SQLException;
 
 	/**
 	 * 修改用户信息
-	 * @param userBean
+	 *
+	 * @param user
 	 * @return boolean
 	 * @throws SQLException
 	 */
-	public boolean updateInfo(UserBean userBean) throws SQLException;
+	public boolean updateInfo(UserBean user) throws SQLException;
 
 	/**
 	 * 删除用户
+	 *
 	 * @param userId
-	 * @return UserBean
+	 * @return User
 	 * @throws SQLException
 	 */
 	public UserBean deleteById(int userId) throws SQLException;
-	
-	/**
-	 * 通过id获取用户信息
-	 * @param userId
-	 * @return UserBean
-	 * @throws SQLException
-	 */
-	public UserBean getInfoById(int userId) throws SQLException;
-	
+
+
 }
+

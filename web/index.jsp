@@ -11,6 +11,10 @@
     <title>$Title$</title>
   </head>
   <body>
-  $END$
+  <script type="text/javascript">
+
+    window.location.href="log/login.jsp";
+
+  </script>
   </body>
 </html>

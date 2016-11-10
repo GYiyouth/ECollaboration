@@ -4,4 +4,10 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/application_6.xsd"
              version="6">
 
+    <module id="ECollaboration-Web">
+        <web>
+            <web-uri>web.war</web-uri>
+            <context-root>ECollaborationWeb</context-root>
+        </web>
+    </module>
 </application>
