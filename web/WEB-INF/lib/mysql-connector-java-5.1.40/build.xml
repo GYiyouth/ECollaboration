@@ -135,7 +135,7 @@ com.mysql.jdbc.testsuite.jvm.3=&lt;full_path_to_a_jdk_or_jre&gt;
 # - Any of the current MySQL versions.
 # - Mandatory (at least one, at most eight) for 'test-multijdk' target.
 com.mysql.jdbc.testsuite.url.1=jdbc:mysql://&lt;host1&gt;:&lt;port1&gt;/&lt;testDB1&gt;?userBean=&lt;user1&gt;&amp;password=&lt;pwd1&gt;
-com.mysql.jdbc.testsuite.url.2=jdbc:mysql://&lt;host2&gt;:&lt;port2&gt;/&lt;testDB2&gt;?userBean=&lt;user2&gt;&amp;password=&lt;pwd2&gt;
+com.mysql.jdbc.testsuite.url.2=jdbc:mysql://&lt;host2&gt;:&lt;port2&gt;/&lt;testDB2&gt;?userBean=&lt;userBean2&gt;&amp;password=&lt;pwd2&gt;
 
 # Cancels re-compiling between successive test executions.
 # - Implicit in multiple JVM/MySQL in between iterations.

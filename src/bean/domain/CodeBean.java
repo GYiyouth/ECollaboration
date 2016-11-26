@@ -1,6 +1,7 @@
 package bean.domain;
 
-import java.util.Date;
+import smallTools.Time;
+import smallTools.TimeImpl;
 
 /**
  * Created by geyao on 2016/11/8.
@@ -8,14 +9,61 @@ import java.util.Date;
 public class CodeBean {
 	private Integer id = null;
 	private Integer row = null;
-	private Date createDate = null;
-	private Date deadDate = null;
+	private String createDate = null;
+	private String deadDate = null;
 	private Integer downLoadTimes = null;
 	private Integer score = null;
+
+	@Override
+	public String toString() {
+		return "CodeBean{" +
+				"id=" + id +
+				", row=" + row +
+				", createDate='" + createDate + '\'' +
+				", deadDate='" + deadDate + '\'' +
+				", downLoadTimes=" + downLoadTimes +
+				", score=" + score +
+				", path='" + path + '\'' +
+				", studentId=" + studentId +
+				", teamId=" + teamId +
+				", projectId=" + projectId +
+				'}';
+	}
+
 	private String path = null;
+	private Integer studentId = null;
+	private Integer teamId = null;
+	private Integer projectId = null;
+
+	public Integer getStudentId() {
+		return studentId;
+	}
+
+	public void setStudentId(Integer studentId) {
+		this.studentId = studentId;
+	}
+
+	public Integer getTeamId() {
+		return teamId;
+	}
+
+	public void setTeamId(Integer teamId) {
+		this.teamId = teamId;
+	}
+
+	public Integer getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(Integer projectId) {
+		this.projectId = projectId;
+	}
 
 	public CodeBean() {
 		super();
+		Time time = new TimeImpl();
+		this.createDate = time.getDateStr();
+		this.deadDate = time.getDeadDateStr();
 	}
 
 	public Integer getId() {
@@ -34,19 +82,19 @@ public class CodeBean {
 		this.row = row;
 	}
 
-	public Date getCreateDate() {
+	public String getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
 
-	public Date getDeadDate() {
+	public String getDeadDate() {
 		return deadDate;
 	}
 
-	public void setDeadDate(Date deadDate) {
+	public void setDeadDate(String deadDate) {
 		this.deadDate = deadDate;
 	}
 

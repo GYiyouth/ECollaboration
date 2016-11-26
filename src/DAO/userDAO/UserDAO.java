@@ -4,6 +4,8 @@ package DAO.userDAO;
 
 import bean.domain.UserBean;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
 public interface UserDAO {
@@ -11,7 +13,7 @@ public interface UserDAO {
 
 
 	/**
-	 * 用户登录，成功返回User，失败返回空
+	 * 鑾峰彇UserBean锛岄�氳繃鐧诲綍鍚嶏紝瀵嗙爜
 	 *
 	 * @param logName,passWord
 	 * @return User
@@ -20,7 +22,7 @@ public interface UserDAO {
 	public UserBean getLogerInfo(String logName,String passWord) throws SQLException;
 
 	/**
-	 * 添加用户，内部生成id，返回用户id
+	 * 娣诲姞鐢ㄦ埛锛屽唴閮ㄧ敓鎴恑d锛岃繑鍥炵敤鎴穒d
 	 *
 	 * @param user
 	 * @return int
@@ -29,7 +31,7 @@ public interface UserDAO {
 	public int addUser(UserBean user) throws SQLException;
 
 	/**
-	 * 通过id获取用户信息
+	 * 閫氳繃id鑾峰彇鐢ㄦ埛淇℃伅
 	 *
 	 * @param userId
 	 * @return User
@@ -38,7 +40,7 @@ public interface UserDAO {
 	public UserBean getUserInfoById(int userId) throws SQLException;
 
 	/**
-	 * 修改用户信息
+	 * 淇敼鐢ㄦ埛淇℃伅
 	 *
 	 * @param user
 	 * @return boolean
@@ -47,7 +49,7 @@ public interface UserDAO {
 	public boolean updateInfo(UserBean user) throws SQLException;
 
 	/**
-	 * 删除用户
+	 * 鍒犻櫎鐢ㄦ埛
 	 *
 	 * @param userId
 	 * @return User
@@ -55,6 +57,22 @@ public interface UserDAO {
 	 */
 	public UserBean deleteById(int userId) throws SQLException;
 
+	/**
+	 * 璁剧疆鐢ㄦ埛澶村儚锛屾牴鎹畊serBean锛宖ile
+	 * @param userBean
+	 * @param file
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean setUserPhoto(UserBean userBean, File file) throws SQLException, FileNotFoundException;
+
+	/**
+	 * 鑾峰彇File锛屽ご鍍忥紝閫氳繃UserBean
+	 * @param userBean
+	 * @return
+	 * @throws SQLException
+	 */
+	public File getUserPhoto(UserBean userBean) throws SQLException,FileNotFoundException;
 
 }
 

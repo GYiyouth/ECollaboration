@@ -3,6 +3,10 @@ package DAO.userDAO;
 import DAO.com.util.db.DBUtils;
 import bean.domain.UserBean;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.sql.*;
 
 /**
@@ -10,12 +14,12 @@ import java.sql.*;
  */
 public class UserDAOImpl implements UserDAO{
 
-	/**
-     * 用户登录，成功返回User，失败返回空
-     *
-     * @param logName
+
+    /**
+     * 鑾峰彇UserBean锛岄�氳繃鐧诲綍鍚嶏紝瀵嗙爜
+     * @param logName,passWord
      * @param passWord
-     * @return User
+     * @return
      * @throws SQLException
      */
     @Override
@@ -59,7 +63,7 @@ public class UserDAOImpl implements UserDAO{
     }
 
     /**
-     * 添加用户，内部生成id，返回用户id
+     * 娣诲姞鐢ㄦ埛锛屽唴閮ㄧ敓鎴恑d锛岃繑鍥炵敤鎴穒d
      *
      * @param user
      * @return int
@@ -72,7 +76,7 @@ public class UserDAOImpl implements UserDAO{
 
 
     /**
-     * 根据id寻找用户，返回User
+     * 鏍规嵁id瀵绘壘鐢ㄦ埛锛岃繑鍥濽ser
      *
      * @param userId@return User
      * @throws SQLException
@@ -118,8 +122,7 @@ public class UserDAOImpl implements UserDAO{
     }
 
     /**
-     * 修改用户信息
-     *
+     * 淇敼鐢ㄦ埛淇℃伅
      * @param user
      * @return boolean
      * @throws SQLException
@@ -130,7 +133,7 @@ public class UserDAOImpl implements UserDAO{
     }
 
     /**
-     * 删除用户
+     *
      *
      * @param userId
      * @return User
@@ -141,4 +144,51 @@ public class UserDAOImpl implements UserDAO{
         return null;
     }
 
+    /**
+     * 璁剧疆鐢ㄦ埛澶村儚锛屾牴鎹畊serBean锛宖ile
+     *
+     * @param userBean
+     * @param file
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public boolean setUserPhoto(UserBean userBean, File file) throws SQLException , FileNotFoundException{
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+//        ResultSet resultSet = null;
+        String sql = "UPDATE ECollaborationweb.user SET photo = ? WHERE id = ?;";
+        try {
+            InputStream inputStream = new FileInputStream(file);
+            connection = DBUtils.getConnetction();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setBinaryStream(  1, inputStream, file.length());
+            preparedStatement.setInt(           2, userBean.getId());
+            int flag = preparedStatement.executeUpdate();
+            if (flag == 1)
+                return true;
+            else
+                return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }finally {
+            DBUtils.close(null, preparedStatement, connection);
+        }
+
+
+
+    }
+
+    /**
+     * 鑾峰彇File锛屽ご鍍忥紝閫氳繃UserBean
+     *
+     * @param userBean
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public File getUserPhoto(UserBean userBean) throws SQLException,FileNotFoundException {
+        return null;
+    }
 }

@@ -98,7 +98,7 @@ function setUpController() {
     // settings is an object that supports the following properties:
     //    - id : the id of the element for the plugin
     //    - context : the context to create the plugin host for
-    //    - title : the user-visible caption for the plugin
+    //    - title : the userBean-visible caption for the plugin
     // ---------------------------------------------
     _player.createPluginHost = function (settings) {
         // right now we only understand an interface context

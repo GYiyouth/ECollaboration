@@ -39,7 +39,7 @@ $.fn.splitter = function(args){
       function startSplitMouse(evt) {
          if ( opts.outline )
             zombie = zombie || bar.clone(false).insertAfter(A);
-         panes.css("-webkit-user-select", "none");   // Safari selects A/B text on a move
+         panes.css("-webkit-userBean-select", "none");   // Safari selects A/B text on a move
          bar.addClass(opts.activeClass);
          $('<div class="splitterMask"></div>').insertAfter(bar);
          A._posSplit = A[0][opts.pxSplit] - evt[opts.eventPos];
@@ -63,7 +63,7 @@ $.fn.splitter = function(args){
             zombie.remove(); zombie = null;
             resplit(newPos);
          }
-         panes.css("-webkit-user-select", "text");   // let Safari select text again
+         panes.css("-webkit-userBean-select", "text");   // let Safari select text again
          $(document)
             .unbind("mousemove", doSplitMouse)
             .unbind("mouseup", endSplitMouse);
@@ -140,8 +140,8 @@ $.fn.splitter = function(args){
       var bar = $(panes[2] || '<div></div>')
          .insertAfter(A).css("z-index", "100").append(focuser)
          .attr({"class": opts.splitbarClass, unselectable: "on"})
-         .css({position: "absolute",   "user-select": "none", "-webkit-user-select": "none",
-            "-khtml-user-select": "none", "-moz-user-select": "none", "top": "0px"})
+         .css({position: "absolute",   "userBean-select": "none", "-webkit-userBean-select": "none",
+            "-khtml-userBean-select": "none", "-moz-userBean-select": "none", "top": "0px"})
          .bind("mousedown", startSplitMouse);
       // Use our cursor unless the style specifies a non-default cursor
       if ( /^(auto|default|)$/.test(bar.css("cursor")) )

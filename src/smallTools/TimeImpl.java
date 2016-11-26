@@ -66,13 +66,20 @@ public class TimeImpl implements Time{
 	public String getDateStr() {
 
 		Time time = new TimeImpl();
-		return time.getYear()+time.getMonth()+ time.getDay();
+		return (time.getYear()+time.getMonth()+ time.getDay());
 
 	}
 
 	@Override
 	public Date getDate() {
 		return new Date();
+	}
+
+	@Override
+	public String getDeadDateStr() {
+		String deadDate = getDateStr();
+		int deadDateInt = Integer.parseInt(deadDate) + 100000;
+		return ("" + deadDateInt);
 	}
 
 	@Override

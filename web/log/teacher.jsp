@@ -9,7 +9,7 @@
       String path = request.getContextPath();
       String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 //      HttpSession session = request.getSession();
-      String photo = "/WEB-INF/upload/user/photo/u27.jpg";
+      String photo = "/WEB-INF/upload/userBean/photo/u27.jpg";
       Object sessionValueName = session.getAttribute("name");
       Object sessionValueStaffId = session.getAttribute("schoolId");
       String name = sessionValueName.toString();

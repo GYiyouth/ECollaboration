@@ -1,5 +1,7 @@
 package DAO.codeDAO;
 
+import bean.domain.CodeBean;
+
 import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,36 +13,36 @@ import java.util.ArrayList;
 public interface CodeDAO {
 	/**
 	 * 添加文件，返回id
-	 * @param file
+	 * @param codeBean
 	 * @return
 	 * @throws SQLException
 	 */
-	public Integer add(File file) throws SQLException;
+	public Integer add(CodeBean codeBean) throws SQLException;
 
 	/**
 	 * 获取文件，通过id
-	 * @param fileId
+	 * @param codeId
 	 * @return
 	 * @throws SQLException
 	 */
-	public File getFileInfo(int fileId) throws SQLException;
+	public CodeBean getCodeInfo(int codeId) throws SQLException;
 
 	/**
-	 * 修改文件，通过file,id
-	 * @param file
-	 * @param fileId
+	 * 修改文件，通过CodeBean,id
+	 * @param codeId
+	 * @param codeBean
 	 * @return
 	 * @throws SQLException
 	 */
-	public boolean updateFile(File file, int fileId) throws SQLException;
+	public boolean updateCode(CodeBean codeBean, int codeId) throws SQLException;
 
 	/**
 	 * 删除文件，通过id
-	 * @param fileId
+	 * @param codeId
 	 * @return
 	 * @throws SQLException
 	 */
-	public File deleteFile(int fileId) throws SQLException;
+	public CodeBean deleteCode(int codeId) throws SQLException;
 
 	/**
 	 * 获取代码id列表，通过学生id

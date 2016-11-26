@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
+ * 注意，改了一下，photo不再返回路径，而是把头像存储在数据库中
+ * 接口，实现，都还没改
  * Created by geyao on 2016/11/8.
  */
 public class ECFileDAOImpl implements ECFileDAO {

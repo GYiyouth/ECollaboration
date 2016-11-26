@@ -37,6 +37,16 @@
         <servlet-class>servlet.teacher.userinfo.TeacherUpdateHimselfServlet</servlet-class>
     </servlet>
 
+
+    <servlet-mapping>
+        <servlet-name>ImageUploadTestServlet</servlet-name>
+        <url-pattern>/servlet.test.ImageUploadTestServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ImageUploadTestServlet</servlet-name>
+        <servlet-class>servlet.test.ImageUploadTestServlet</servlet-class>
+    </servlet>
+
     <welcome-file-list>
         <welcome-file>/myIndex.html</welcome-file>
     </welcome-file-list>
