@@ -36,8 +36,8 @@ public class Test {
 //		ECFileDAO ecFileDAO = new ECFileDAOImpl();
 //		ECFileBean ecFileBean = null;
 //		try {
-//
-//发生的hahahah
+//15:44test
+//发生的hahaha
 //			ecFileBean = ecFileDAO.getFileInfo(2);
 //			ecFileBean.setFileName("photo");
 //			int id = ecFileDAO.addPhoto(ecFileBean, 2);
