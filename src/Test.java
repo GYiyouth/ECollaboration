@@ -37,6 +37,7 @@ public class Test {
 //		ECFileBean ecFileBean = null;
 //		try {
 //15:44test
+//15:46test1
 //发生的hahaha
 //			ecFileBean = ecFileDAO.getFileInfo(2);
 //			ecFileBean.setFileName("photo");
