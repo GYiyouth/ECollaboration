@@ -37,7 +37,7 @@ public class Test {
 //		ECFileBean ecFileBean = null;
 //		try {
 //
-//
+//二位热无若翁
 //			ecFileBean = ecFileDAO.getFileInfo(2);
 //			ecFileBean.setFileName("photo");
 //			int id = ecFileDAO.addPhoto(ecFileBean, 2);
