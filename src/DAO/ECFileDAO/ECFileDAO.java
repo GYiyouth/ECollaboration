@@ -57,22 +57,15 @@ public interface ECFileDAO {
 	 */
 	public ECFileBean deleteFile(Integer fileId) throws SQLException;
 
-	/**
-	 * 获取头像id，通过用户id
-	 * @param userId
-	 * @return
-	 * @throws SQLException
-	 */
-	public Integer getFileIdByUserId(Integer userId) throws SQLException;
 
 
 	/**
 	 * 获取文件id列表，通过学生id
-	 * @param studentId
+	 * @param creatorId
 	 * @return
 	 * @throws SQLException
 	 */
-	public ArrayList<Integer> getFileIdListByStudentId(Integer studentId) throws SQLException;
+	public ArrayList<Integer> getFileIdListByCreatorId(Integer creatorId) throws SQLException;
 
 	/**
 	 * 获取文件id列表，通过教师id

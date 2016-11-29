@@ -19,6 +19,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Created by geyao on 2016/11/9.
@@ -67,37 +68,47 @@ public class Test {
 //		} catch (SQLException e) {
 //			e.printStackTrace();
 //		}
-		UserDAO  userDAO = new UserDAOImpl();
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
+//		UserDAO  userDAO = new UserDAOImpl();
+//		Connection connection = null;
+//		PreparedStatement preparedStatement = null;
+//		ResultSet resultSet = null;
+//		try {
+//			UserBean userBean = userDAO.getUserInfoById(1);
+//			String sql = "SELECT photo FROM ECollaborationWeb.user WHERE id = 1";
+//			connection = DBUtils.getConnetction();
+//
+//			preparedStatement = connection.prepareStatement(sql);
+//			resultSet = preparedStatement.executeQuery();
+//			resultSet.next();
+//			int id = userBean.getId();
+//			File file = new File("/User/geyao/Desktop/" + id +".jpg");
+//			if (file.exists()){
+//				file.delete();
+//			}
+//			BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream("/Users/geyao/Desktop/" + id + ".jpg"));
+//			byte[] buf=new byte[1024];
+//			BufferedInputStream bufferedInputStream = new BufferedInputStream(resultSet.getBinaryStream(1));
+//			int count = -1;
+//			while ((count = bufferedInputStream.read(buf, 0, 1024)) != -1 ){
+//				bufferedOutputStream.write(buf, 0, count);
+//			}
+//			bufferedOutputStream.flush();
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//
+//		}finally {
+//			DBUtils.close(resultSet, preparedStatement, connection);
+//		}
+
+		ECFileDAO ecFileDAO = new ECFileDAOImpl();
 		try {
-			UserBean userBean = userDAO.getUserInfoById(1);
-			String sql = "SELECT photo FROM ECollaborationWeb.user WHERE id = 1";
-			connection = DBUtils.getConnetction();
-
-			preparedStatement = connection.prepareStatement(sql);
-			resultSet = preparedStatement.executeQuery();
-			resultSet.next();
-			int id = userBean.getId();
-			File file = new File("/User/geyao/Desktop/" + id +".jpg");
-			if (file.exists()){
-				file.delete();
-			}
-			BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream("/Users/geyao/Desktop/" + id + ".jpg"));
-			byte[] buf=new byte[1024];
-			BufferedInputStream bufferedInputStream = new BufferedInputStream(resultSet.getBinaryStream(1));
-			int count = -1;
-			while ((count = bufferedInputStream.read(buf, 0, 1024)) != -1 ){
-				bufferedOutputStream.write(buf, 0, count);
-			}
-			bufferedOutputStream.flush();
-
-		} catch (Exception e) {
+			ArrayList<Integer> fileList = ecFileDAO.getFileIdListByCreatorId(1);
+			Integer id = ecFileDAO.getPhotoId(1);
+			System.out.println(fileList);
+			System.out.println(id);
+		} catch (SQLException e) {
 			e.printStackTrace();
-
-		}finally {
-			DBUtils.close(resultSet, preparedStatement, connection);
 		}
 	}
 }

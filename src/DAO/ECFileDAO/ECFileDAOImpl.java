@@ -274,46 +274,61 @@ public class ECFileDAOImpl implements ECFileDAO {
 	 * @return
 	 * @throws SQLException
 	 */
+//	@Override
+//	public getPhotoId(Integer userId) throws SQLException {
+//		if (userId == null)
+//			return null;
+//		Connection connection =null;
+//		PreparedStatement preparedStatement = null;
+//		String sql = "select id from ECollaborationWeb.ecfile where creatorId = ? and priority = 4";
+//		ResultSet resultSet =null;
+//		try {
+//			connection = DBUtils.getConnetction();
+//			preparedStatement = connection.prepareStatement(sql);
+//			preparedStatement.setInt( 1, userId);
+//			resultSet = preparedStatement.executeQuery();
+//			if (!resultSet.next())
+//				return null;
+//			else
+//				return resultSet.getInt("id");
+//		}catch (SQLException e){
+//			e.printStackTrace();
+//			throw e;
+//		}finally {
+//			DBUtils.close(resultSet, preparedStatement, connection);
+//		}
+//	}
+
+	/**
+	 * 获取文件id列表，通过学生id
+	 *
+	 * @param creatorId
+	 * @return
+	 * @throws SQLException
+	 */
 	@Override
-	public Integer getFileIdByUserId(Integer userId) throws SQLException {
-		if (userId == null)
-			return null;
-		Connection connection =null;
+	public ArrayList<Integer> getFileIdListByCreatorId(Integer creatorId) throws SQLException {
+		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		String sql = "select id from ECollaborationWeb.ecfile where creatorId = ? and priority = 4";
-		ResultSet resultSet =null;
+		ResultSet resultSet = null;
+		String sql = "SELECT id FROM ecollaborationweb.ecfile WHERE creatorId = ?";
+		ArrayList<Integer> fileIdList = new ArrayList<>();
 		try {
 			connection = DBUtils.getConnetction();
 			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt( 1, userId);
+			preparedStatement.setInt(   1, creatorId);
 			resultSet = preparedStatement.executeQuery();
-			if (!resultSet.next())
-				return null;
-			else
-				return resultSet.getInt("id");
+			while (resultSet.next()){
+				Integer i = resultSet.getInt(1);
+				fileIdList.add(i);
+			}
+			return fileIdList;
 		}catch (SQLException e){
 			e.printStackTrace();
 			throw e;
 		}finally {
 			DBUtils.close(resultSet, preparedStatement, connection);
 		}
-	}
-
-	/**
-	 * 获取文件id列表，通过学生id
-	 *
-	 * @param studentId
-	 * @return
-	 * @throws SQLException
-	 */
-	@Override
-	public ArrayList<Integer> getFileIdListByStudentId(Integer studentId) throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-		String sql = "";
-		ArrayList<Integer> fileIdList = null;
-
 	}
 
 	/**
