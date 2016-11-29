@@ -37,7 +37,7 @@ public class Test {
 //		ECFileBean ecFileBean = null;
 //		try {
 //
-//发生的发生324234沃尔沃二
+//发生的
 //			ecFileBean = ecFileDAO.getFileInfo(2);
 //			ecFileBean.setFileName("photo");
 //			int id = ecFileDAO.addPhoto(ecFileBean, 2);
