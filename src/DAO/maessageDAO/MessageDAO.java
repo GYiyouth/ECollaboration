@@ -75,5 +75,5 @@ public interface MessageDAO {
 	 */
 	
 	public ArrayList<UserBean> getReceiverInfoByMessageId(int messageId) throws SQLException;
-	
+
 }

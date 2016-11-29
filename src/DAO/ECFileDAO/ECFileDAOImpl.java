@@ -308,7 +308,12 @@ public class ECFileDAOImpl implements ECFileDAO {
 	 */
 	@Override
 	public ArrayList<Integer> getFileIdListByStudentId(Integer studentId) throws SQLException {
-		return null;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String sql = "";
+		ArrayList<Integer> fileIdList = null;
+
 	}
 
 	/**
