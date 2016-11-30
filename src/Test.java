@@ -1,25 +1,7 @@
 import DAO.ECFileDAO.ECFileDAO;
 import DAO.ECFileDAO.ECFileDAOImpl;
-import DAO.codeDAO.CodeDAO;
-import DAO.codeDAO.CodeDAOImpl;
-import DAO.com.util.db.DBUtils;
-import DAO.userDAO.UserDAO;
-import DAO.userDAO.UserDAOImpl;
-import bean.domain.CodeBean;
-import bean.domain.ECFileBean;
-import bean.domain.UserBean;
-import smallTools.Time;
-import smallTools.TimeImpl;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 /**
  * Created by geyao on 2016/11/9.
@@ -103,10 +85,14 @@ public class Test {
 
 		ECFileDAO ecFileDAO = new ECFileDAOImpl();
 		try {
-			ArrayList<Integer> fileList = ecFileDAO.getFileIdListByCreatorId(1);
-			Integer id = ecFileDAO.getPhotoId(1);
-			System.out.println(fileList);
-			System.out.println(id);
+			System.out.println(ecFileDAO.getFileIdListByProjectId(1));
+			System.out.println(ecFileDAO.getFileIdListByTeacherId(1));
+			System.out.println(ecFileDAO.getFileIdListByTeamId(1));
+			System.out.println(ecFileDAO.getFileIdListByCreatorIdProjectId(1, 1));
+			System.out.println(ecFileDAO.getFileIdListByTeacherIdProjectId(1, 1));
+			System.out.println(ecFileDAO.getFileIdLIstByTeamIdProjectId(1, 1));
+//			System.out.println(fileList);
+//			System.out.println(id);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

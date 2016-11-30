@@ -5,6 +5,7 @@ import bean.domain.ECFileBean;
 import smallTools.Time;
 import smallTools.TimeImpl;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -340,7 +341,29 @@ public class ECFileDAOImpl implements ECFileDAO {
 	 */
 	@Override
 	public ArrayList<Integer> getFileIdListByTeacherId(Integer teacherId) throws SQLException {
-		return null;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String sql = "SELECT fileid FROM ecollaborationweb.student_project_file AS spf, " +
+				"ecollaborationweb.teacher_project AS tp " +
+				"WHERE spf.projectId = tp.projectId AND tp.teacherId = ? ;";
+		ArrayList<Integer> fileIdList = new ArrayList<>();
+		try {
+			connection = DBUtils.getConnetction();
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(   1, teacherId);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()){
+				Integer i = resultSet.getInt(1);
+				fileIdList.add(i);
+			}
+			return fileIdList;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}finally {
+			DBUtils.close(resultSet, preparedStatement, connection);
+		}
 	}
 
 	/**
@@ -352,7 +375,26 @@ public class ECFileDAOImpl implements ECFileDAO {
 	 */
 	@Override
 	public ArrayList<Integer> getFileIdListByProjectId(Integer projectId) throws SQLException {
-		return null;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String sql = "SELECT fileId FROM ecollaborationweb.student_project_file WHERE projectId = ?";
+		ArrayList<Integer> fileIdList = new ArrayList<>();
+		try{
+			connection = DBUtils.getConnetction();
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(   1,  projectId);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()){
+				fileIdList.add(resultSet.getInt(1));
+			}
+			return fileIdList;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}finally {
+			DBUtils.close(resultSet, preparedStatement, connection);
+		}
 	}
 
 	/**
@@ -364,20 +406,69 @@ public class ECFileDAOImpl implements ECFileDAO {
 	 */
 	@Override
 	public ArrayList<Integer> getFileIdListByTeamId(Integer teamId) throws SQLException {
-		return null;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String sql =
+				"SELECT fileId " +
+				"FROM ecollaborationweb.student_project_file AS spf," +
+					"ecollaborationweb.team_project AS tp " +
+				"WHERE spf.projectId = tp.projectId " +
+					"AND spf.teamId = ? " +
+					"AND tp.teamId = ?";
+		ArrayList<Integer> fileIdList = new ArrayList<>();
+		try {
+			connection = DBUtils.getConnetction();
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(   1, teamId);
+			preparedStatement.setInt(   2, teamId);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()){
+				fileIdList.add(resultSet.getInt(1));
+			}
+			return fileIdList;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}finally {
+			DBUtils.close(resultSet, preparedStatement, connection);
+		}
 	}
 
 	/**
-	 * 获取文件id列表，通过学生id，项目id
+	 * 获取文件id列表，通过创建者id，项目id
 	 *
-	 * @param studentId
+	 * @param creatorId
 	 * @param projectId
 	 * @return
 	 * @throws SQLException
 	 */
 	@Override
-	public ArrayList<Integer> getFileIdListByStudentIdProjectId(Integer studentId, Integer projectId) throws SQLException {
-		return null;
+	public ArrayList<Integer> getFileIdListByCreatorIdProjectId(Integer creatorId, Integer projectId) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String sql =
+				"SELECT fileId FROM ecollaborationweb.student_project_file " +
+				"WHERE projectId = ? " +
+				"AND creatorId = ?";
+		ArrayList<Integer> fileIdList = new ArrayList<>();
+		try{
+			connection = DBUtils.getConnetction();
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(   1,  projectId);
+			preparedStatement.setInt(   2,  creatorId);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()){
+				fileIdList.add(resultSet.getInt(1));
+			}
+			return fileIdList;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}finally {
+			DBUtils.close(resultSet, preparedStatement, connection);
+		}
 	}
 
 	/**
@@ -390,7 +481,34 @@ public class ECFileDAOImpl implements ECFileDAO {
 	 */
 	@Override
 	public ArrayList<Integer> getFileIdListByTeacherIdProjectId(Integer teacherId, Integer projectId) throws SQLException {
-		return null;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String sql =
+				"SELECT fileId " +
+				"FROM ecollaborationweb.student_project_file AS spf," +
+				"ecollaborationweb.teacher_project AS tp " +
+				"WHERE spf.projectId = ? " +
+				"AND tp.projectId = ? " +
+				"AND  tp.teacherId = ?;";
+		ArrayList<Integer> fileIdList = new ArrayList<>();
+		try {
+			connection = DBUtils.getConnetction();
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(   1, projectId);
+			preparedStatement.setInt(   2, projectId);
+			preparedStatement.setInt(   3, teacherId);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()){
+				fileIdList.add(resultSet.getInt(1));
+			}
+			return fileIdList;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}finally {
+			DBUtils.close(resultSet, preparedStatement, connection);
+		}
 	}
 
 	/**
@@ -403,7 +521,29 @@ public class ECFileDAOImpl implements ECFileDAO {
 	 */
 	@Override
 	public ArrayList<Integer> getFileIdLIstByTeamIdProjectId(Integer teamId, Integer projectId) throws SQLException {
-		return null;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String sql = "SELECT fileId " +
+				"FROM ecollaborationweb.student_project_file " +
+				"WHERE teamId = ? AND projectId = ? ;";
+		ArrayList<Integer> fileList = new ArrayList<>();
+		try {
+			connection = DBUtils.getConnetction();
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1  ,teamId);
+			preparedStatement.setInt(2  ,projectId);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()){
+				fileList.add(resultSet.getInt(1));
+			}
+			return fileList ;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}finally {
+			DBUtils.close(resultSet, preparedStatement, connection);
+		}
 	}
 }
 

@@ -69,6 +69,7 @@ public interface ECFileDAO {
 
 	/**
 	 * 获取文件id列表，通过教师id
+	 *
 	 * @param teacherId
 	 * @return
 	 * @throws SQLException
@@ -92,13 +93,13 @@ public interface ECFileDAO {
 	public ArrayList<Integer> getFileIdListByTeamId(Integer teamId) throws SQLException;
 
 	/**
-	 * 获取文件id列表，通过学生id，项目id
-	 * @param studentId
+	 * 获取文件id列表，通过创建者id，项目id
+	 * @param creatorId
 	 * @param projectId
 	 * @return
 	 * @throws SQLException
 	 */
-	public ArrayList<Integer> getFileIdListByStudentIdProjectId(Integer studentId, Integer projectId) throws SQLException;
+	public ArrayList<Integer> getFileIdListByCreatorIdProjectId(Integer creatorId, Integer projectId) throws SQLException;
 
 	/**
 	 * 获取文件列表，通过教师id，项目id
