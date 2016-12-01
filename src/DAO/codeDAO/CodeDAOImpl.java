@@ -46,7 +46,7 @@ public class CodeDAOImpl implements CodeDAO {
 
 			if (flag == 1){
 				//添加成功，返回id
-				sql = "SELECT LAST_INSERT_ID()";
+				sql = "SELECT LAST_INSERT_ID();";
 				preparedStatement = connection.prepareStatement(sql);
 				resultSet = preparedStatement.executeQuery();
 				if ( resultSet.next() ){

@@ -103,7 +103,7 @@ public class TeacherDAOImpl implements TeacherDAO {
 	 */
 	@Override
 	public boolean updateInfo(TeacherBean teacherBean) throws SQLException {
-		return false;
+		return updateInfoByTeacher(teacherBean);
 	}
 
 	/**

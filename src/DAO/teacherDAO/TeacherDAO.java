@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public interface TeacherDAO {
 
 	/**
-	 * 添加老师，返回老师id
+	 * 娣诲姞鑰佸笀
 	 * @param teacherBean
 	 * @return Integer
 	 * @throws SQLException
@@ -15,7 +15,7 @@ public interface TeacherDAO {
 	public Integer addTeacher(TeacherBean teacherBean) throws SQLException;
 //
 //	/**
-//	 * 根据id寻找老师，返回Teacher
+//	 * 锟斤拷锟斤拷id寻锟斤拷锟斤拷师锟斤拷锟斤拷锟斤拷Teacher
 //	 * @param teacherId
 //	 * @return TeacherBean
 //	 * @throws SQLException
@@ -23,7 +23,7 @@ public interface TeacherDAO {
 //	public TeacherBean getTeacherInfo(Integer teacherId) throws SQLException;
 
 	/**
-	 * 修改老师信息
+	 * 鏇存柊鑰佸笀淇℃伅
 	 * @param teacherBean
 	 * @return boolean
 	 * @throws SQLException
@@ -33,7 +33,7 @@ public interface TeacherDAO {
 	public boolean updateInfoByTeacher(TeacherBean teacherBean) throws SQLException;
 
 	/**
-	 * 删除老师
+	 * 鍒犻櫎鑰佸笀淇℃伅
 	 * @param teacherId
 	 * @return TeacherBean
 	 * @throws SQLException
@@ -41,7 +41,7 @@ public interface TeacherDAO {
 	public TeacherBean deleteById(Integer teacherId) throws SQLException;
 	
 	/**
-	 * 通过id获取老师信息
+	 * 鑾峰彇TeacherBean锛岄�氳繃teacherId
 	 * @param teacherId
 	 * @return TeacherBean
 	 * @throws SQLException

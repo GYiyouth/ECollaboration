@@ -1,5 +1,12 @@
 import DAO.ECFileDAO.ECFileDAO;
 import DAO.ECFileDAO.ECFileDAOImpl;
+import DAO.com.smallTools.ComGetListValueDAO;
+import DAO.com.smallTools.ComGetListValueDAOImpl;
+import DAO.com.smallTools.ComGetSingleValueDAO;
+import DAO.com.smallTools.ComGetSingleValueDAOImpl;
+import DAO.teamDAO.TeamDAO;
+import DAO.teamDAO.TeamDAOImpl;
+import bean.domain.TeamBean;
 
 import java.sql.SQLException;
 
@@ -84,15 +91,33 @@ public class Test {
 //		}
 
 		ECFileDAO ecFileDAO = new ECFileDAOImpl();
+		TeamDAO teamDAO = new TeamDAOImpl();
+		TeamBean teamBean = new TeamBean();
+		teamBean.setTeamName("青葱岁月");
+		teamBean.setCreatorId(13);
+		teamBean.setCreateDate("20161201");
+		teamBean.setId(1);
 		try {
-			System.out.println(ecFileDAO.getFileIdListByProjectId(1));
-			System.out.println(ecFileDAO.getFileIdListByTeacherId(1));
-			System.out.println(ecFileDAO.getFileIdListByTeamId(1));
-			System.out.println(ecFileDAO.getFileIdListByCreatorIdProjectId(1, 1));
-			System.out.println(ecFileDAO.getFileIdListByTeacherIdProjectId(1, 1));
-			System.out.println(ecFileDAO.getFileIdLIstByTeamIdProjectId(1, 1));
+//			System.out.println(ecFileDAO.getFileIdListByProjectId(1));
+//			System.out.println(ecFileDAO.getFileIdListByTeacherId(1));
+//			System.out.println(ecFileDAO.getFileIdListByTeamId(1));
+//			System.out.println(ecFileDAO.getFileIdListByCreatorIdProjectId(1, 1));
+//			System.out.println(ecFileDAO.getFileIdListByTeacherIdProjectId(1, 1));
+//			System.out.println(ecFileDAO.getFileIdLIstByTeamIdProjectId(1, 1));
+//			int i = teamDAO.addTeam(teamBean);
+//			teamBean.setId(i);
+//			System.out.println(i);
+//			System.out.println(teamDAO.deleteTeam(teamBean.getId()));
 //			System.out.println(fileList);
 //			System.out.println(id);
+			ComGetSingleValueDAO<String, Integer> comGetSingleValueDAO = new ComGetSingleValueDAOImpl<>();
+			String str = comGetSingleValueDAO.getAbyIntBfromC("teamName", "id", 1, "team");
+			System.out.println(str);
+			ComGetListValueDAO<String, Integer> comGetListValueDAO = new ComGetListValueDAOImpl<>();
+			System.out.println(comGetListValueDAO.getListAfromBbyC("teamName", "id", 1, "team"));
+			System.out.println(comGetListValueDAO.getListAfromBbyC("teamName", "creatorId", 12, "team"));
+
+			System.out.println(teamDAO.getTeamIdListByProjectId(2));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
