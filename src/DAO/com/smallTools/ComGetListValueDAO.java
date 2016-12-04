@@ -17,4 +17,5 @@ public interface ComGetListValueDAO<V, F> {
 	 * @throws SQLException
 	 */
 	public ArrayList<V> getListAfromBbyC(String columnA, String columnB, F valueB, String tableC) throws SQLException;
+
 }
