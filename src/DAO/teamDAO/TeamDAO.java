@@ -65,11 +65,11 @@ public interface TeamDAO {
 	/**
 	 * 获取团队id列表，通过学生id，代码id
 	 * @param studentId
-	 * @param projectId
+	 * @param codeId
 	 * @return
 	 * @throws SQLException
 	 */
-	public ArrayList<Integer> getTeamIdListByStudentIdCodeId(int studentId, int projectId) throws SQLException;
+	public ArrayList<Integer> getTeamIdListByStudentIdCodeId(int studentId, int codeId) throws SQLException;
 
 	/**
 	 * 获取团队id列表，通过学生ID，项目id

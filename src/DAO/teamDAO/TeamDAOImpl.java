@@ -1,5 +1,7 @@
 package DAO.teamDAO;
 
+import DAO.com.smallTools.ComGetListBy2DAO;
+import DAO.com.smallTools.ComGetListBy2DAOImpl;
 import DAO.com.smallTools.ComGetListValueDAO;
 import DAO.com.smallTools.ComGetListValueDAOImpl;
 import DAO.com.util.db.DBUtils;
@@ -11,6 +13,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Created by geyao on 2016/12/1.
@@ -190,25 +194,41 @@ public class TeamDAOImpl implements TeamDAO {
 	 */
 	@Override
 	public ArrayList<Integer> getTeamIdListByStudentId(int studentId) throws SQLException {
-		return null;
+		try {
+			ArrayList<Integer> list = new ArrayList<>();
+			ComGetListValueDAO comGetListValueDAO = new ComGetListValueDAOImpl<Integer, Integer>();
+			list = comGetListValueDAO.getListAfromBbyC("teamId", "studentId", studentId, "student_team");
+			return list;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	/**
 	 * 获取团队id列表，通过学生id，代码id
 	 *
 	 * @param studentId
-	 * @param projectId
+	 * @param codeId
 	 * @return
 	 * @throws SQLException
 	 */
 	@Override
-	public ArrayList<Integer> getTeamIdListByStudentIdCodeId(int studentId, int projectId) throws SQLException {
-		return null;
+	public ArrayList<Integer> getTeamIdListByStudentIdCodeId(int studentId, int codeId) throws SQLException {
+		try {
+			ArrayList<Integer> list = new ArrayList<>();
+			ComGetListBy2DAO comGetListBy2DAO = new ComGetListBy2DAOImpl<Integer, Integer, Integer>();
+			list = comGetListBy2DAO.getListAfromBbyC("teamId", "studentId", studentId, "id", codeId, "code");
+			return list;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	/**
 	 * 获取团队id列表，通过学生ID，项目id
-	 *
+	 *  这个SQL写不好，因为返回的表里包含有相同的团队id，这里采用了转化为哈希集合，再转为列表的方式解决。
 	 * @param studentId
 	 * @param projectId
 	 * @return
@@ -216,7 +236,35 @@ public class TeamDAOImpl implements TeamDAO {
 	 */
 	@Override
 	public ArrayList<Integer> getTeamIdListByStudentIdProjectId(int studentId, int projectId) throws SQLException {
-		return null;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		ArrayList<Integer> list = new ArrayList<>();
+		String sql = "SELECT tp.teamId FROM ECollaborationWeb.student_team AS st , ECollaborationWeb.team_project AS tp " +
+				" WHERE st.studentId = ? AND tp.projectId = ? AND  tp.teamId = tp.teamId;";
+		try {
+			connection = DBUtils.getConnetction();
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, studentId);
+			preparedStatement.setInt(2, projectId);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()){
+
+				list.add(resultSet.getInt(1));
+			}
+			if (list.size() > 0){
+				//去除重复的teamId
+				HashSet h = new HashSet(list);
+				list.clear();
+				list.addAll(h);
+				return list;
+			}else{
+				return null;
+			}
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	/**
@@ -228,7 +276,15 @@ public class TeamDAOImpl implements TeamDAO {
 	 */
 	@Override
 	public ArrayList<Integer> getTeamIdListByCodeId(int codeId) throws SQLException {
-		return null;
+		ArrayList<Integer> list = null;
+		ComGetListValueDAO comGetListValueDAO = new ComGetListValueDAOImpl<Integer, Integer>();
+		try {
+			list = comGetListValueDAO.getListAfromBbyC("teamId", "id", codeId, "code");
+			return list;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	/**
@@ -240,7 +296,15 @@ public class TeamDAOImpl implements TeamDAO {
 	 */
 	@Override
 	public ArrayList<Integer> getTeamIdListByTeacherId(int teacherId) throws SQLException {
-		return null;
+		ArrayList<Integer> list = null;
+		ComGetListValueDAO comGetListValueDAO = new ComGetListValueDAOImpl<Integer, Integer>();
+		try {
+			list = comGetListValueDAO.getListAfromBbyC("teamId", "teacherId", teacherId, "teacher_team");
+			return list;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	/**
@@ -253,7 +317,15 @@ public class TeamDAOImpl implements TeamDAO {
 	 */
 	@Override
 	public ArrayList<Integer> getTeamIdListByTeacherIdProjectId(int teacherId, int projectId) throws SQLException {
-		return null;
+		ArrayList<Integer> list = null;
+		ComGetListBy2DAO comGetListBy2DAO = new ComGetListBy2DAOImpl<Integer, Integer, Integer>();
+		try {
+			list = comGetListBy2DAO.getListAfromBbyC("teamId", "teacherId", teacherId, "projectId", projectId, "teacher_team");
+			return list;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	/**
@@ -266,7 +338,37 @@ public class TeamDAOImpl implements TeamDAO {
 	 */
 	@Override
 	public ArrayList<Integer> getTeamIdListByTeacherIdTaskId(int teacherId, int taskId) throws SQLException {
-		return null;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		ArrayList<Integer> list = new ArrayList<>();
+		String sql = "SELECT teachert.teamId FROM ECollaborationWeb.teacher_team AS teachert  " +
+				" , ECollaborationWeb.team_task AS taskt " +
+				" WHERE teachert.teamId  = taskt.teamId " +
+				"AND teachert.teacherId = ? " +
+				"AND teachert.teacherId = ? AND taskt.taskId = ?;";
+		try {
+			connection = DBUtils.getConnetction();
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, teacherId);
+			preparedStatement.setInt(2, teacherId);
+			preparedStatement.setInt(3, taskId);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()){
+				list.add(resultSet.getInt(1));
+			}
+			if (list.size() > 0){
+				//去除重复的teamId
+				HashSet h = new HashSet(list);
+				list.clear();
+				list.addAll(h);
+				return list;
+			}else
+				return null;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	/**
@@ -280,7 +382,34 @@ public class TeamDAOImpl implements TeamDAO {
 	 */
 	@Override
 	public ArrayList<Integer> getTeamIdListByTeacherIdTaskIdProjectId(int teacherId, int taskId, int projectId) throws SQLException {
-		return null;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		ArrayList<Integer> list = new ArrayList<>();
+		String sql = "SELECT teamId FROM ECollaborationWeb.team_task " +
+				"WHERE teacherId = ? AND taskId = ? AND  projectId = ? ;";
+		try{
+			connection = DBUtils.getConnetction();
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, teacherId);
+			preparedStatement.setInt(2, taskId);
+			preparedStatement.setInt(3, projectId);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()){
+				list.add(resultSet.getInt(1));
+			}
+			if (list.size() > 0){
+				//去除重复的teamId
+				HashSet h = new HashSet(list);
+				list.clear();
+				list.addAll(h);
+				return list;
+			}else
+				return null;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	/**
@@ -292,7 +421,14 @@ public class TeamDAOImpl implements TeamDAO {
 	 */
 	@Override
 	public ArrayList<Integer> getTeamIdListByTaskId(int taskId) throws SQLException {
-		return null;
+		ComGetListValueDAO comGetListValueDAO = new ComGetListValueDAOImpl<Integer, Integer>();
+		try {
+			ArrayList<Integer> list = comGetListValueDAO.getListAfromBbyC("teamId", "taskId", taskId, "team_project");
+			return list;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	/**

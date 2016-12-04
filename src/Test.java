@@ -89,14 +89,14 @@ public class Test {
 //		}finally {
 //			DBUtils.close(resultSet, preparedStatement, connection);
 //		}
-
-		ECFileDAO ecFileDAO = new ECFileDAOImpl();
+//
+//		ECFileDAO ecFileDAO = new ECFileDAOImpl();
 		TeamDAO teamDAO = new TeamDAOImpl();
-		TeamBean teamBean = new TeamBean();
-		teamBean.setTeamName("青葱岁月");
-		teamBean.setCreatorId(13);
-		teamBean.setCreateDate("20161201");
-		teamBean.setId(1);
+//		TeamBean teamBean = new TeamBean();
+//		teamBean.setTeamName("青葱岁月");
+//		teamBean.setCreatorId(13);
+//		teamBean.setCreateDate("20161201");
+//		teamBean.setId(1);
 		try {
 //			System.out.println(ecFileDAO.getFileIdListByProjectId(1));
 //			System.out.println(ecFileDAO.getFileIdListByTeacherId(1));
@@ -110,14 +110,22 @@ public class Test {
 //			System.out.println(teamDAO.deleteTeam(teamBean.getId()));
 //			System.out.println(fileList);
 //			System.out.println(id);
-			ComGetSingleValueDAO<String, Integer> comGetSingleValueDAO = new ComGetSingleValueDAOImpl<>();
-			String str = comGetSingleValueDAO.getAbyIntBfromC("teamName", "id", 1, "team");
-			System.out.println(str);
-			ComGetListValueDAO<String, Integer> comGetListValueDAO = new ComGetListValueDAOImpl<>();
-			System.out.println(comGetListValueDAO.getListAfromBbyC("teamName", "id", 1, "team"));
-			System.out.println(comGetListValueDAO.getListAfromBbyC("teamName", "creatorId", 12, "team"));
-
-			System.out.println(teamDAO.getTeamIdListByProjectId(2));
+//			ComGetSingleValueDAO<String, Integer> comGetSingleValueDAO = new ComGetSingleValueDAOImpl<>();
+//			String str = comGetSingleValueDAO.getAbyIntBfromC("teamName", "id", 1, "team");
+//			System.out.println(str);
+//			ComGetListValueDAO<String, Integer> comGetListValueDAO = new ComGetListValueDAOImpl<>();
+//			System.out.println(comGetListValueDAO.getListAfromBbyC("teamName", "id", 1, "team"));
+//			System.out.println(comGetListValueDAO.getListAfromBbyC("teamName", "creatorId", 12, "team"));
+//
+//			System.out.println(teamDAO.getTeamIdListByProjectId(2));
+			System.out.println(teamDAO.getTeamIdListByStudentId(123));
+			System.out.println(teamDAO.getTeamIdListByStudentIdCodeId(123, 1));
+			System.out.println(teamDAO.getTeamIdListByStudentIdProjectId(1, 1));
+			System.out.println(teamDAO.getTeamIdListByCodeId(1));
+			System.out.println(teamDAO.getTeamIdListByTeacherId(1));
+			System.out.println(teamDAO.getTeamIdListByTeacherIdTaskId(1, 1));
+			System.out.println(teamDAO.getTeamIdListByTeacherIdProjectId(1, 1));
+			System.out.println(teamDAO.getTeamIdListByTeacherIdTaskIdProjectId(1, 1, 1));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

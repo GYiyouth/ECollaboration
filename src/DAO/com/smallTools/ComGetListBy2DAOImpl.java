@@ -27,7 +27,7 @@ public class ComGetListBy2DAOImpl<V, F1, F2> implements ComGetListBy2DAO {
 	 */
 	private static String SchemaName = "ecollaborationweb.";
 	@Override
-	public ArrayList getListAfromBbyC(String columnA, String column1, Object value1, String column2, Object value2, String tableC) throws SQLException {
+	public ArrayList<V> getListAfromBbyC(String columnA, String column1, Object value1, String column2, Object value2, String tableC) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -55,17 +55,17 @@ public class ComGetListBy2DAOImpl<V, F1, F2> implements ComGetListBy2DAO {
 		}
 	}
 
-	public static void main(String[] args) {
-		ComGetSingleBy2DAO comGetSingleBy2DAO = new ComGetSingleBy2DAOImpl<String, Integer, Integer>();
-		ComGetListBy2DAO comGetListBy2DAO = new ComGetListBy2DAOImpl<String, Integer, Integer>();
-		try {
-			ArrayList<String> one = comGetListBy2DAO.getListAfromBbyC("teamName", "id", 1, "creatorId", 12, "team");
-			String two = (String) comGetSingleBy2DAO.getListAfromBbyC("teamName", "id", 1, "creatorId", 12, "team");
-
-			System.out.println(one);
-			System.out.println(two);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+//	public static void main(String[] args) {
+//		ComGetSingleBy2DAO comGetSingleBy2DAO = new ComGetSingleBy2DAOImpl<String, Integer, Integer>();
+//		ComGetListBy2DAO comGetListBy2DAO = new ComGetListBy2DAOImpl<String, Integer, Integer>();
+//		try {
+//			ArrayList<String> one = comGetListBy2DAO.getListAfromBbyC("teamName", "id", 1, "creatorId", 12, "team");
+//			String two = (String) comGetSingleBy2DAO.getListAfromBbyC("teamName", "id", 1, "creatorId", 12, "team");
+//
+//			System.out.println(one);
+//			System.out.println(two);
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//	}
 }
