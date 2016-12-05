@@ -69,9 +69,9 @@ public class StudentDaoImpl implements StudentDAO{
         Connection conn=null;
         PreparedStatement ps = null;
 
-        String sql = "UPDATE student set studentId = '?',name = '?',grade = ?,isOnproject = ?,isNeedProject = ?," +
+        String sql = " UPDATE student set studentId = '?',name = '?',grade = ?,isOnproject = ?,isNeedProject = ?," +
                 "finalScore = ?,properties1 = '?',properties2 = '?',worked = ?,isPunished = ?,graduatedSchool = '?'," +
-                "tecKeyWord = '?',homePageUrl = '?' where id = ?";
+                "tecKeyWord = '?',homePageUrl = '?' where id = ?;";
 
         try{
             conn = DBUtils.getConnetction();

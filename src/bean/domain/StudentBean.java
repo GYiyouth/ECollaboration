@@ -8,7 +8,7 @@ public class StudentBean {
     private String studentId = null;
     private String name = null;
     private Integer grade = null;  //?
-    private Integer isOnProject = null;    //什么值对应什么意思?
+    private Integer isOnProject = null;    //什么值对应什么意思??
     private Integer isNeedProject = null;  //同上
     private Integer finalScore = null;
     private String properties1 = null; //??这是什么?

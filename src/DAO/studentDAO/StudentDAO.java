@@ -6,7 +6,7 @@ import bean.domain.TeacherBean;
 import java.sql.SQLException;
 
 /**
- * Created by GR on 2016/12/4.
+ * Created by GR on 2016/12/4.?
  */
 public interface StudentDAO {
 
