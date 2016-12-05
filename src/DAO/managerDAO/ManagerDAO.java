@@ -1,51 +1,50 @@
 package DAO.managerDAO;
 
-
-
 import bean.domain.ManagerBean;
 
 import java.sql.SQLException;
 
-public interface ManagerDAO {
+/**
+ * Created by GR on 2016/12/5.
+ */
+public interface ManagerDao {
+    /**
+     * æ·»åŠ ç®¡ç†å‘˜ï¼Œè¿”å›ç®¡ç†å‘˜id
+     * @param managerBean
+     * @return int
+     * @throws SQLException
+     */
+    public int addManager(ManagerBean managerBean) throws SQLException;
 
-	/**
-	 * Ìí¼Ó¹ÜÀíÔ±£¬·µ»Ø¹ÜÀíÔ±id
-	 * @param managerBean
-	 * @return int
-	 * @throws SQLException
-	 */
-	public int addManager(ManagerBean managerBean) throws SQLException;
+    /**
+     * æ ¹æ®idå¯»æ‰¾ç®¡ç†å‘˜ï¼Œè¿”å›Manager
+     * @param managerId
+     * @return ManagerBean
+     * @throws SQLException
+     */
+    public ManagerBean getManagerInfo(int managerId) throws SQLException;
 
-	/**
-	 * ¸ù¾İidÑ°ÕÒ¹ÜÀíÔ±£¬·µ»ØManager
-	 * @param managerId
-	 * @return ManagerBean
-	 * @throws SQLException
-	 */
-	public ManagerBean getManagerInfo(int managerId) throws SQLException;
+    /**
+     * ä¿®æ”¹ç®¡ç†å‘˜ä¿¡æ¯
+     * @param managerBean
+     * @return boolean
+     * @throws SQLException
+     */
+    public boolean updateInfo(ManagerBean managerBean) throws SQLException;
 
-	/**
-	 * ĞŞ¸Ä¹ÜÀíÔ±ĞÅÏ¢
-	 * @param managerBean
-	 * @return boolean
-	 * @throws SQLException
-	 */
-	public boolean updateInfo(ManagerBean managerBean) throws SQLException;
+    /**
+     * åˆ é™¤ç®¡ç†å‘˜
+     * @param managerId
+     * @return ManagerBean
+     * @throws SQLException
+     */
+    public ManagerBean deleteById(int managerId) throws SQLException;
 
-	/**
-	 * É¾³ı¹ÜÀíÔ±
-	 * @param managerId
-	 * @return ManagerBean
-	 * @throws SQLException
-	 */
-	public ManagerBean deleteById(int managerId) throws SQLException;
-	
-	/**
-	 * Í¨¹ıid»ñÈ¡¹ÜÀíÔ±ĞÅÏ¢
-	 * @param managerId
-	 * @return ManagerBean
-	 * @throws SQLException
-	 */
-	public ManagerBean getInfoById(int managerId) throws SQLException;
-	
+    /**
+     * é€šè¿‡idè·å–ç®¡ç†å‘˜ä¿¡æ¯
+     * @param managerId
+     * @return ManagerBean
+     * @throws SQLException
+     */
+    public ManagerBean getInfoById(int managerId) throws SQLException;
 }
