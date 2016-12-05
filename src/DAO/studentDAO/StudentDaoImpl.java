@@ -26,7 +26,7 @@ public class StudentDaoImpl implements StudentDAO{
         PreparedStatement ps=null;
         String sql= "insert into student (id,studentId,name,grade,isOnproject,isNeedProject,finalScore," +
                 "properties1,properties2,worked,isPunished,graduatedSchool,tecKeyWord,homePageUrl) " +
-                "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
         try {
             conn=DBUtils.getConnetction();
             ps=conn.prepareStatement(sql);
@@ -69,9 +69,9 @@ public class StudentDaoImpl implements StudentDAO{
         Connection conn=null;
         PreparedStatement ps = null;
 
-        String sql = " UPDATE student set studentId = '?',name = '?',grade = ?,isOnproject = ?,isNeedProject = ?," +
-                "finalScore = ?,properties1 = '?',properties2 = '?',worked = ?,isPunished = ?,graduatedSchool = '?'," +
-                "tecKeyWord = '?',homePageUrl = '?' where id = ?;";
+        String sql = " UPDATE student set studentId = ?,name = ?,grade = ?,isOnproject = ?,isNeedProject = ?," +
+                "finalScore = ?,properties1 = ? ,properties2 = ?,worked = ?,isPunished = ?,graduatedSchool = ?," +
+                "tecKeyWord = ?,homePageUrl = ? where id = ?;";
 
         try{
             conn = DBUtils.getConnetction();
@@ -180,6 +180,6 @@ public class StudentDaoImpl implements StudentDAO{
             }
 
             return student;
-        }
     }
 }
+

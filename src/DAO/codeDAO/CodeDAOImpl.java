@@ -1,5 +1,9 @@
 package DAO.codeDAO;
 
+import DAO.com.smallTools.ComGetListBy2DAO;
+import DAO.com.smallTools.ComGetListBy2DAOImpl;
+import DAO.com.smallTools.ComGetListValueDAO;
+import DAO.com.smallTools.ComGetListValueDAOImpl;
 import DAO.com.util.db.DBUtils;
 import bean.domain.CodeBean;
 
@@ -186,7 +190,15 @@ public class CodeDAOImpl implements CodeDAO {
 	 */
 	@Override
 	public ArrayList<Integer> getCodeIdListByStudentId(int studentId) throws SQLException {
-		return null;
+		ArrayList<Integer> list = new ArrayList<>();
+		ComGetListValueDAO comGetListValueDAO = new ComGetListValueDAOImpl<Integer, Integer>();
+		try {
+			list = comGetListValueDAO.getListAfromBbyC("id", "studentId", studentId, "code");
+			return list;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	/**
@@ -198,7 +210,15 @@ public class CodeDAOImpl implements CodeDAO {
 	 */
 	@Override
 	public ArrayList<Integer> getCodeIdListByProjectId(int projectId) throws SQLException {
-		return null;
+		ArrayList<Integer> list = null;
+		ComGetListValueDAO comGetListValueDAO = new ComGetListValueDAOImpl<Integer, Integer>();
+		try {
+			list = comGetListValueDAO.getListAfromBbyC("id", "projectId", projectId, "code");
+			return list;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	/**
@@ -210,7 +230,15 @@ public class CodeDAOImpl implements CodeDAO {
 	 */
 	@Override
 	public ArrayList<Integer> getCodeIdListByTeamId(int teamId) throws SQLException {
-		return null;
+		ArrayList<Integer> list = null;
+		ComGetListValueDAO comGetListValueDAO = new ComGetListValueDAOImpl<Integer, Integer>();
+		try {
+			list = comGetListValueDAO.getListAfromBbyC("id", "teamId", teamId, "code");
+			return list;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	/**
@@ -223,7 +251,15 @@ public class CodeDAOImpl implements CodeDAO {
 	 */
 	@Override
 	public ArrayList<Integer> getCodeIdListByStudentIdProjectId(int studentId, int projectId) throws SQLException {
-		return null;
+		ArrayList<Integer> list = null;
+		ComGetListBy2DAO comGetListBy2DAO = new ComGetListBy2DAOImpl<Integer, Integer, Integer>();
+		try {
+			list = comGetListBy2DAO.getListAfromBbyC("id", "studentId", studentId, "projectId", projectId, "code");
+			return list;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	/**
@@ -236,7 +272,15 @@ public class CodeDAOImpl implements CodeDAO {
 	 */
 	@Override
 	public ArrayList<Integer> getCodeIdListByStudentIdTeamId(int studentId, int teamId) throws SQLException {
-		return null;
+		ArrayList<Integer> list = null;
+		ComGetListBy2DAO comGetListBy2DAO = new ComGetListBy2DAOImpl<Integer, Integer, Integer>();
+		try {
+			list = comGetListBy2DAO.getListAfromBbyC("id", "studentId", studentId, "teamId", teamId, "code");
+			return list;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	/**
@@ -249,7 +293,15 @@ public class CodeDAOImpl implements CodeDAO {
 	 */
 	@Override
 	public ArrayList<Integer> getCodeIdListByProjectIdTeamId(int projectId, int teamId) throws SQLException {
-		return null;
+		ArrayList<Integer> list = null;
+		ComGetListBy2DAO comGetListBy2DAO = new ComGetListBy2DAOImpl<Integer, Integer, Integer>();
+		try {
+			list = comGetListBy2DAO.getListAfromBbyC("id", "projectId", projectId, "teamId", teamId, "code");
+			return list;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	/**
@@ -263,6 +315,28 @@ public class CodeDAOImpl implements CodeDAO {
 	 */
 	@Override
 	public ArrayList<Integer> getCodeIdListByProjectIdTeamIdStudentId(int projectId, int teamId, int studentId) throws SQLException {
-		return null;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String sql = "SELECT id FROM ECollaborationWeb.code WHERE projectId = ? AND teamId = ? AND  studentId = ? ;";
+		ArrayList<Integer> arrayList = new ArrayList<>();
+		try {
+			connection = DBUtils.getConnetction();
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, projectId);
+			preparedStatement.setInt(2, teamId);
+			preparedStatement.setInt(3, studentId);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()){
+				arrayList.add(resultSet.getInt(1));
+			}
+			if (arrayList.size() > 0){
+				return arrayList;
+			}else
+				return null;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}
 	}
 }
