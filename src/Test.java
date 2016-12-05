@@ -1,5 +1,7 @@
 import DAO.ECFileDAO.ECFileDAO;
 import DAO.ECFileDAO.ECFileDAOImpl;
+import DAO.codeDAO.CodeDAO;
+import DAO.codeDAO.CodeDAOImpl;
 import DAO.com.smallTools.ComGetListValueDAO;
 import DAO.com.smallTools.ComGetListValueDAOImpl;
 import DAO.com.smallTools.ComGetSingleValueDAO;
@@ -118,6 +120,7 @@ public class Test {
 //			System.out.println(comGetListValueDAO.getListAfromBbyC("teamName", "creatorId", 12, "team"));
 //
 //			System.out.println(teamDAO.getTeamIdListByProjectId(2));
+			CodeDAO codeDAO = new CodeDAOImpl();
 			System.out.println(teamDAO.getTeamIdListByStudentId(123));
 			System.out.println(teamDAO.getTeamIdListByStudentIdCodeId(123, 1));
 			System.out.println(teamDAO.getTeamIdListByStudentIdProjectId(1, 1));
@@ -126,6 +129,13 @@ public class Test {
 			System.out.println(teamDAO.getTeamIdListByTeacherIdTaskId(1, 1));
 			System.out.println(teamDAO.getTeamIdListByTeacherIdProjectId(1, 1));
 			System.out.println(teamDAO.getTeamIdListByTeacherIdTaskIdProjectId(1, 1, 1));
+			System.out.println(codeDAO.getCodeIdListByStudentId(123));
+			System.out.println(codeDAO.getCodeIdListByProjectId(1));
+			System.out.println(codeDAO.getCodeIdListByTeamId(1));
+			System.out.println(codeDAO.getCodeIdListByStudentIdProjectId(123, 123));
+			System.out.println(codeDAO.getCodeIdListByStudentIdTeamId(123, 1));
+			System.out.println(codeDAO.getCodeIdListByProjectIdTeamId(1, 1));
+			System.out.println(codeDAO.getCodeIdListByProjectIdTeamIdStudentId(123, 555, 123));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
