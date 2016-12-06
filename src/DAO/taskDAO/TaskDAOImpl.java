@@ -46,7 +46,8 @@ public class TaskDAOImpl implements TaskDAO {
                 sql = "SELECT LAST_INSERT_ID()";
                 preparedStatement = connection.prepareStatement(sql);
                 resultSet = preparedStatement.executeQuery();
-                return resultSet.getInt(1);
+                if (resultSet.next())
+                    return resultSet.getInt(1);
             }
             return null;
         } catch (SQLException e) {
@@ -284,8 +285,8 @@ public class TaskDAOImpl implements TaskDAO {
         String sql = "SELECT taskId FROM ECollaborationWeb.project_task AS pjt, " +
                 " ECollaborationWeb.teacher_project AS  tcp, " +
                 " ECollaborationWeb.team_project AS  tp " +
-                " WHERE tp.teamId = ? AND tcp.teacherId = ? AND tp.teamId = tcp = teamId " +
-                " AND pjt.projectId = tcp.projectId AND pjt.projectId = tp.projectId;";
+                " WHERE tp.teamId = ? AND tcp.teacherId = ? AND tp.projectId = pjt.projectId " +
+                " AND tp.projectId = tcp.projectId AND pjt.projectId = tp.projectId;";
         try {
             connection = DBUtils.getConnetction();
             preparedStatement = connection.prepareStatement(sql);

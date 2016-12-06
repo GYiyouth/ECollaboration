@@ -80,4 +80,18 @@ public class TaskBean {
 	public void setTargetDate(String targetDate) {
 		this.targetDate = targetDate;
 	}
+
+	@Override
+	public String toString() {
+		return "TaskBean{" +
+				"id=" + id +
+				", title='" + title + '\'' +
+				", content='" + content + '\'' +
+				", creatorId=" + creatorId +
+				", createDate='" + createDate + '\'' +
+				", modifyDate='" + modifyDate + '\'' +
+				", beginDate='" + beginDate + '\'' +
+				", targetDate='" + targetDate + '\'' +
+				'}';
+	}
 }
