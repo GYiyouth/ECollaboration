@@ -32,8 +32,8 @@ public class CodeDAOImpl implements CodeDAO {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		String sql = "INSERT INTO ECollaborationWeb.Code(" +
-				"codeRows, createDate, deadDate, downLoadTimes, score, studentId, projectId, teamId, path)" +
-				"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+				"codeRows, createDate, deadDate, downLoadTimes,  studentId, projectId, teamId, path)" +
+				"VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 		try {
 			connection = DBUtils.getConnetction();
 			preparedStatement = connection.prepareStatement(sql);
@@ -41,11 +41,11 @@ public class CodeDAOImpl implements CodeDAO {
 			preparedStatement.setString(2,  codeBean.getCreateDate());
 			preparedStatement.setString(3,  codeBean.getDeadDate());
 			preparedStatement.setInt(   4,  codeBean.getDownLoadTimes());
-			preparedStatement.setInt(   5,  codeBean.getScore());
-			preparedStatement.setInt(   6,  codeBean.getStudentId());
-			preparedStatement.setInt(   7,  codeBean.getProjectId());
-			preparedStatement.setInt(   8,  codeBean.getTeamId());
-			preparedStatement.setString(9,  codeBean.getPath());
+//			preparedStatement.setInt(   5,  codeBean.getScore());
+			preparedStatement.setInt(   5,  codeBean.getStudentId());
+			preparedStatement.setInt(   6,  codeBean.getProjectId());
+			preparedStatement.setInt(   7,  codeBean.getTeamId());
+			preparedStatement.setString(8,  codeBean.getPath());
 			int flag = preparedStatement.executeUpdate();
 
 			if (flag == 1){
@@ -89,7 +89,7 @@ public class CodeDAOImpl implements CodeDAO {
 				CodeBean codeBean = new CodeBean();
 				codeBean.setRow(            resultSet.getInt("codeRows"));
 				codeBean.setTeamId(         resultSet.getInt("teamId"));
-				codeBean.setScore(          resultSet.getInt("score"));
+//				codeBean.setScore(          resultSet.getInt("score"));
 				codeBean.setProjectId(      resultSet.getInt("projectId"));
 				codeBean.setId(             resultSet.getInt("id"));
 				codeBean.setStudentId(      resultSet.getInt("studentId"));
@@ -123,7 +123,7 @@ public class CodeDAOImpl implements CodeDAO {
 		ResultSet resultSet = null;
 		String sql = "UPDATE ECollaborationWeb.code " +
 				"set codeRows = ?, createDate = ?, deadDate = ?," +
-				"downLoadTimes = ?, score = ?, studentId = ?," +
+				"downLoadTimes = ?, studentId = ?," +
 				"projectId = ?, teamId = ?, path = ? WHERE id = ?;";
 		try {
 			connection = DBUtils.getConnetction();
@@ -132,12 +132,12 @@ public class CodeDAOImpl implements CodeDAO {
 			preparedStatement.setString(2, codeBean.getCreateDate());
 			preparedStatement.setString(3, codeBean.getDeadDate());
 			preparedStatement.setInt(   4, codeBean.getDownLoadTimes());
-			preparedStatement.setInt(   5, codeBean.getScore());
-			preparedStatement.setInt(   6, codeBean.getStudentId());
-			preparedStatement.setInt(   7, codeBean.getProjectId());
-			preparedStatement.setInt(   8, codeBean.getTeamId());
-			preparedStatement.setString(9, codeBean.getPath());
-			preparedStatement.setInt(   10, codeId);
+//			preparedStatement.setInt(   5, codeBean.getScore());
+			preparedStatement.setInt(   5, codeBean.getStudentId());
+			preparedStatement.setInt(   6, codeBean.getProjectId());
+			preparedStatement.setInt(   7, codeBean.getTeamId());
+			preparedStatement.setString(8, codeBean.getPath());
+			preparedStatement.setInt(   9, codeId);
 			int flag = preparedStatement.executeUpdate();
 			if (flag == 1 ){
 				return true;
