@@ -3,8 +3,6 @@ package bean.domain;
 
 public class TeacherBean {
 	private Integer id = null;
-	private String staffid = null;
-	private String name = null;
 	private String homePageUrl = null;
 	private Integer needStudentsFlag = null;
 
@@ -14,22 +12,6 @@ public class TeacherBean {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getStaffid() {
-		return staffid;
-	}
-
-	public void setStaffid(String staffid) {
-		this.staffid = staffid;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getHomePageUrl() {

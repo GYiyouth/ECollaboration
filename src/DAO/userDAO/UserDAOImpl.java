@@ -105,6 +105,7 @@ public class UserDAOImpl implements UserDAO{
                 user.setLogName(rs.getString("logName"));
                 user.setPassWord(rs.getString("passWord"));
                 user.setCreateDate(rs.getString("createDate"));
+
                 user.setLastLogTime(rs.getString("lastLogTime"));
                 user.setActiveBefore(rs.getString("activeBefore"));
                 user.setNewFlag(rs.getInt("newsFlag"));
