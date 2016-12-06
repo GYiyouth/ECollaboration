@@ -4,14 +4,14 @@ public class UserBean {
     private Integer id;
     private String schoolId;
     private String name;
-    private Integer sex;	//1:男 2：女
-    private Integer character;//
+    private Integer sex;	//1:男 0：女
+    private Integer character;//1管理员，2教师，3学生
     private String email;
     private String phoneNumber;
     private String logName;
     private String passWord;
     private String createDate;
-    private String photo;
+    private String photo; //路径，默认放在web.upload.temp.headPhotos下
     private String lastLogTime;
     private String activeBefore;
     private int newFlag;

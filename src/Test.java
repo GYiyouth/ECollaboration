@@ -128,7 +128,7 @@ public class Test {
 			System.out.println(teamDAO.getTeamIdListByTeacherId(1));
 			System.out.println(teamDAO.getTeamIdListByTeacherIdTaskId(1, 1));
 			System.out.println(teamDAO.getTeamIdListByTeacherIdProjectId(1, 1));
-			System.out.println(teamDAO.getTeamIdListByTeacherIdTaskIdProjectId(1, 1, 1));
+//			System.out.println(teamDAO.getTeamIdListByTeacherIdTaskIdProjectId(1, 1, 1));
 			System.out.println(codeDAO.getCodeIdListByStudentId(123));
 			System.out.println(codeDAO.getCodeIdListByProjectId(1));
 			System.out.println(codeDAO.getCodeIdListByTeamId(1));
@@ -136,6 +136,8 @@ public class Test {
 			System.out.println(codeDAO.getCodeIdListByStudentIdTeamId(123, 1));
 			System.out.println(codeDAO.getCodeIdListByProjectIdTeamId(1, 1));
 			System.out.println(codeDAO.getCodeIdListByProjectIdTeamIdStudentId(123, 555, 123));
+			System.out.println(teamDAO.getTeamIdListByTeacherId(1));
+			System.out.println(teamDAO.getTeamIdListByTeacherIdProjectId(1, 1));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -19,7 +19,7 @@ public interface UserDAO {
 	 * @return User
 	 * @throws SQLException
 	 */
-	public UserBean getLogerInfo(String logName,String passWord) throws SQLException;
+	public UserBean getLogInfo(String logName, String passWord) throws SQLException;
 
 	/**
 	 * 添加用户，内部生成id，返回用户id

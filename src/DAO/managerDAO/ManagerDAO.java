@@ -7,7 +7,7 @@ import java.sql.SQLException;
 /**
  * Created by GR on 2016/12/5.
  */
-public interface ManagerDao {
+public interface ManagerDAO {
     /**
      * 添加管理员，返回管理员id
      * @param managerBean

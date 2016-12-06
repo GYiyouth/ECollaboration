@@ -23,7 +23,7 @@ public class UserDAOImpl implements UserDAO{
      * @throws SQLException
      */
     @Override
-    public UserBean getLogerInfo(String logName, String passWord) throws SQLException {
+    public UserBean getLogInfo(String logName, String passWord) throws SQLException {
 
         UserBean user = new UserBean();
         Connection connection = null;
