@@ -5,7 +5,6 @@ import bean.domain.ECFileBean;
 import smallTools.Time;
 import smallTools.TimeImpl;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
