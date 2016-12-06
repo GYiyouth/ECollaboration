@@ -1,7 +1,10 @@
 package DAO.managerDAO;
 
+import DAO.com.util.db.DBUtils;
 import bean.domain.ManagerBean;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
@@ -16,8 +19,28 @@ public class ManagerDAOImpl implements ManagerDAO {
      * @throws SQLException
      */
     @Override
-    public int addManager(ManagerBean managerBean) throws SQLException {
-        return 0;
+    public boolean addManager(ManagerBean managerBean) throws SQLException {
+        boolean flag = true;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String sql = "insert into student (id,schoolId,name,character) values(?,?,?,?);";
+        try {
+            conn = DBUtils.getConnetction();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, managerBean.getId());
+            ps.setString(2, managerBean.getSchoolId());
+            ps.setString(3, managerBean.getName());
+            ps.setInt(4, managerBean.getCharacter());
+            int i = ps.executeUpdate();
+            if (i == 0) {
+                flag = false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.close(null, ps, conn);
+        }
+        return flag;
     }
 
     /**
