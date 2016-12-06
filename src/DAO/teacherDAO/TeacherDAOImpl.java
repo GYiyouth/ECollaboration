@@ -13,53 +13,37 @@ import java.sql.SQLException;
  */
 public class TeacherDAOImpl implements TeacherDAO {
 	/**
-	 * 添加老师，返回老师id
+	 * 添加老师
 	 *
 	 * @param teacherBean
-	 * @return Integer
+	 * @return boolean
 	 * @throws SQLException
 	 */
 	@Override
-	public Integer addTeacher(TeacherBean teacherBean) throws SQLException {
-		return null;
+	public boolean addTeacher(TeacherBean teacherBean) throws SQLException {
+
+		boolean flag = true;
+		Connection conn = null;
+		PreparedStatement ps = null;
+		String sql = "insert into ecollaborationweb.teacher (id,homePageUrl,needStudentsFlag)values(?,?,?);";
+		try {
+			conn = DBUtils.getConnetction();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, teacherBean.getId());
+			ps.setString(2, teacherBean.getHomePageUrl());
+			ps.setInt(3, teacherBean.getNeedStudentsFlag());
+			int i = ps.executeUpdate();
+			if (i == 0) {
+				flag = false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtils.close(null, ps, conn);
+		}
+		return flag;
 	}
 
-//	/**
-//	 * 根据id寻找老师，返回Teacher
-//	 *
-//	 * @param teacherId
-//	 * @return TeacherBean
-//	 * @throws SQLException
-//	 */
-//	@Override
-//	public TeacherBean getTeacherInfo(Integer teacherId) throws SQLException {
-//		if (teacherId == null)
-//			return null;
-//		TeacherBean teacherBean = null;
-//		Connection connection = null;
-//		PreparedStatement preparedStatement = null;
-//		ResultSet resultSet = null;
-//		String sql = "select * from ECollaborationWeb.teacher WHERE id = ?";
-//		try {
-//			connection = DBUtils.getConnetction();
-//			preparedStatement = connection.prepareStatement(sql);
-//			preparedStatement.setInt(1, teacherId);
-//			resultSet = preparedStatement.executeQuery();
-//			if (!resultSet.next())
-//				return null;
-//			teacherBean.setHomePageUrl(     resultSet.getString("HomePageUrl"));
-//			teacherBean.setId(              resultSet.getInt("id"));
-//			teacherBean.setName(            resultSet.getString("name"));
-//			teacherBean.setNeedStudentsFlag(resultSet.getInt("NeedStudentsFlag"));
-//			teacherBean.setStaffid(         resultSet.getInt("staffId"));
-//			return teacherBean;
-//		}catch (SQLException e){
-//			e.printStackTrace();
-//			throw e;
-//		}finally {
-//			DBUtils.close(resultSet, preparedStatement, connection);
-//		}
-//	}
 
 	/**
 	 * 修改老师信息
@@ -69,18 +53,19 @@ public class TeacherDAOImpl implements TeacherDAO {
 	 * @throws SQLException
 	 */
 	@Override
-	public boolean updateInfoByTeacher(TeacherBean teacherBean) throws SQLException {
-		if (teacherBean == null)
-			return false;
+	public boolean updateInfo(TeacherBean teacherBean) throws SQLException {
+		/*if (teacherBean == null)
+			return false;*/
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
-		String sql = "UPDATE ECollaborationWeb set homePageUrl = ? WHERE id = ?";
+		String sql = "UPDATE ecollaborationweb.teacher set homePageUrl = ?,needStudentsFlag= ? WHERE id = ?";
 		try{
 			connection = DBUtils.getConnetction();
 			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(1,  teacherBean.getHomePageUrl());
-			preparedStatement.setInt(   2,  teacherBean.getId());
+			preparedStatement.setString(1,teacherBean.getHomePageUrl());
+			preparedStatement.setInt(2,teacherBean.getNeedStudentsFlag());
+			preparedStatement.setInt(3,teacherBean.getId());
 			int row = preparedStatement.executeUpdate();
 			if (row != 1)
 				return false;
@@ -95,18 +80,6 @@ public class TeacherDAOImpl implements TeacherDAO {
 	}
 
 	/**
-	 * 修改老师信息
-	 *
-	 * @param teacherBean
-	 * @return boolean
-	 * @throws SQLException
-	 */
-	@Override
-	public boolean updateInfo(TeacherBean teacherBean) throws SQLException {
-		return updateInfoByTeacher(teacherBean);
-	}
-
-	/**
 	 * 删除老师
 	 *
 	 * @param teacherId
@@ -114,8 +87,27 @@ public class TeacherDAOImpl implements TeacherDAO {
 	 * @throws SQLException
 	 */
 	@Override
-	public TeacherBean deleteById(Integer teacherId) throws SQLException {
-		return null;
+	public boolean deleteById(Integer teacherId) throws SQLException {
+		boolean flag = true;
+		Connection conn = null;
+		PreparedStatement ps = null;
+		String sql = "delete from ecollaborationweb.teacher where id=?";
+
+		try {
+			conn = DBUtils.getConnetction();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, teacherId);
+			int i = ps.executeUpdate();
+			if (i == 0) {
+				flag = false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtils.close(null, ps, conn);
+		}
+
+		return flag;
 	}
 
 	/**
@@ -143,8 +135,6 @@ public class TeacherDAOImpl implements TeacherDAO {
 
 
 				teacherBean.setId(resultSet.getInt("id"));
-				teacherBean.setStaffid(resultSet.getString("staffId"));
-				teacherBean.setName(resultSet.getString("name"));
 				teacherBean.setHomePageUrl(resultSet.getString("homePageUrl"));
 				teacherBean.setNeedStudentsFlag(resultSet.getInt("NeedStudentsFlag"));
 

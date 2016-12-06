@@ -23,14 +23,12 @@ public class ManagerDAOImpl implements ManagerDAO {
         boolean flag = true;
         Connection conn = null;
         PreparedStatement ps = null;
-        String sql = "insert into student (id,schoolId,name,character) values(?,?,?,?);";
+        String sql = "insert into student (id,character) values(?,?);";
         try {
             conn = DBUtils.getConnetction();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, managerBean.getId());
-            ps.setString(2, managerBean.getSchoolId());
-            ps.setString(3, managerBean.getName());
-            ps.setInt(4, managerBean.getCharacter());
+            ps.setInt(2, managerBean.getCharacter());
             int i = ps.executeUpdate();
             if (i == 0) {
                 flag = false;

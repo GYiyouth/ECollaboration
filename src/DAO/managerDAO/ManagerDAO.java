@@ -14,7 +14,7 @@ public interface ManagerDAO {
      * @return int
      * @throws SQLException
      */
-    public int addManager(ManagerBean managerBean) throws SQLException;
+    public boolean addManager(ManagerBean managerBean) throws SQLException;
 
     /**
      * 根据id寻找管理员，返回Manager
