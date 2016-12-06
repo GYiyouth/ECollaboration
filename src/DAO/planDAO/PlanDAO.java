@@ -8,7 +8,7 @@ import java.util.ArrayList;
         /**
          * 添加计划，获取新计划id
          * @param planBean
-         * @return
+         * @return planId
          * @throws SQLException
          */
         public Integer addPlan(PlanBean planBean) throws SQLException;

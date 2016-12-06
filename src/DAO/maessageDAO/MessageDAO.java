@@ -13,6 +13,7 @@ import java.util.List;
 public interface MessageDAO {
     /**
      * 添加消息，内部生成id，返回消息id
+     *
      * @param messageBean
      * @return messageId
      * @throws SQLException
@@ -21,31 +22,35 @@ public interface MessageDAO {
 
     /**
      * 添加到 消息-收件人 的关系表中，
+     *
      * @param messageId,receiverId
      * @return boolean
      * @throws SQLException
      */
-    public boolean addMessageReceiver(int messageId,List<Integer> receiverIds) throws SQLException;
+    public boolean addMessageReceiver(int messageId, List<Integer> receiverIds) throws SQLException;
 
     /**
      * 获取MessageBean，通过messageId
+     *
      * @param messageId
      * @return MessageBean
      * @throws SQLException
      */
-    public MessageBean getMessageInfo(int messageId) throws SQLException;
+    public MessageBean getMessageInfoByMessageId(int messageId) throws SQLException;
 
     /**
      * 判断该消息是否已经被所有的人阅读，，通过messageId
+     *
      * @param messageId
-     * @return boolean
+     * @return Integer
      * @throws SQLException
      */
 
-    public boolean getReadFlagOfAllReceiverByMessageId(int messageId) throws SQLException;
+    public Integer getReadFlagOfAllReceiverByMessageId(int messageId) throws SQLException;
 
     /**
      * 获取SenderId，通过messageId
+     *
      * @param messageId
      * @return int
      * @throws SQLException
@@ -54,16 +59,38 @@ public interface MessageDAO {
     public Integer getSenderIdByMessageId(int messageId) throws SQLException;
 
     /**
-     * 获取发送者UserBean，通过messageId
-     * @param messageId
-     * @return UserBean
+     * 获取messageId，通过SenderId
+     *
+     * @param senderId
+     * @return int
      * @throws SQLException
      */
 
-    public UserBean getSenderInfoByMessageId(int messageId) throws SQLException;
+    public ArrayList<Integer> getMessageIdBySenderId(int senderId) throws SQLException;
+
+    /**
+     * 通过receiverId,获取所有消息id
+     *
+     * @param receiverId
+     * @return messageId
+     * @throws SQLException
+     */
+
+    public ArrayList<Integer> getMessageIdByReceiverId(int receiverId) throws SQLException;
+
+    /**
+     * 通过receiverId,获取所有未读消息id
+     *
+     * @param receiverId
+     * @return messageId
+     * @throws SQLException
+     */
+
+    public ArrayList<Integer> getNotReadMessageIdByReceiverId(int receiverId) throws SQLException;
 
     /**
      * 获取接受人Id列表，通过messageId
+     *
      * @param messageId
      * @return ArrayList<Integer>
      * @throws SQLException
@@ -72,12 +99,13 @@ public interface MessageDAO {
     public ArrayList<Integer> getReceiverIdByMessageId(int messageId) throws SQLException;
 
     /**
-     * 获取接收人UserBean列表，通过消息Id
-     * @param messageId
-     * @return ArrayList<UserBean>
+     * 根据receiverId设置已读消息
+     *
+     * @param receiverId,messageId
+     * @return boolean
      * @throws SQLException
      */
 
-    public ArrayList<UserBean> getReceiverInfoByMessageId(int messageId) throws SQLException;
+    public boolean updateReadFlagByReceiverId(int receiverId, int messageId) throws SQLException;
 
 }

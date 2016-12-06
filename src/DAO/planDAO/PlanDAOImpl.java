@@ -13,7 +13,7 @@ public class PlanDAOImpl implements PlanDAO{
      * 添加计划，获取新计划id
      *
      * @param planBean
-     * @return
+     * @return planId
      * @throws SQLException
      */
     @Override

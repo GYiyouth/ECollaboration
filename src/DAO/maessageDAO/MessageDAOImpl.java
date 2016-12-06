@@ -54,10 +54,9 @@ public class MessageDAOImpl implements MessageDAO {
             e.printStackTrace();
             throw e;
         } finally {
-            DBUtils.close(null, ps, conn);
+            DBUtils.close(rs, ps, conn);
         }
     }
-
 
 
     /**
@@ -70,10 +69,8 @@ public class MessageDAOImpl implements MessageDAO {
      */
     @Override
     public boolean addMessageReceiver(int messageId, List<Integer> receiverIds) throws SQLException {
-        boolean flag = true;
         Connection conn = null;
         PreparedStatement ps = null;
-        ResultSet rs = null;
         String sql = "insert into ecollaborationweb.message_receiver (messageId, receiverId, readFlag) values(?,?,?);";
         try {
             conn = DBUtils.getConnetction();
@@ -89,10 +86,10 @@ public class MessageDAOImpl implements MessageDAO {
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            throw e;
         } finally {
-            DBUtils.close(rs, ps, conn);
+            DBUtils.close(null, ps, conn);
         }
-        return flag;
     }
 
 
@@ -104,20 +101,68 @@ public class MessageDAOImpl implements MessageDAO {
      * @throws SQLException
      */
     @Override
-    public MessageBean getMessageInfo(int messageId) throws SQLException {
-        return null;
+    public MessageBean getMessageInfoByMessageId(int messageId) throws SQLException {
+        MessageBean messageBean = new MessageBean();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "select * from ecollaborationweb.message where id = ?";
+
+        try {
+            conn = DBUtils.getConnetction();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, messageId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                messageBean.setId(rs.getInt("id"));
+                messageBean.setTitle(rs.getString("title"));
+                messageBean.setContent(rs.getString("content"));
+                messageBean.setCreateTime(rs.getString("createTime"));
+                messageBean.setSenderId(rs.getInt("senderId"));
+                messageBean.setReadFlag(rs.getInt("readFlag"));
+                messageBean.setDeadDate(rs.getString("deadDate"));
+                return messageBean;
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            DBUtils.close(rs, ps, conn);
+        }
     }
 
     /**
      * 判断该消息是否已经被所有的人阅读，，通过messageId
      *
      * @param messageId
-     * @return boolean
+     * @return Integer
      * @throws SQLException
      */
     @Override
-    public boolean getReadFlagOfAllReceiverByMessageId(int messageId) throws SQLException {
-        return false;
+    public Integer getReadFlagOfAllReceiverByMessageId(int messageId) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "select readFlag from ecollaborationweb.message where id = ?";
+
+        try {
+            conn = DBUtils.getConnetction();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, messageId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("readFlag");
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            DBUtils.close(rs, ps, conn);
+        }
     }
 
     /**
@@ -129,19 +174,124 @@ public class MessageDAOImpl implements MessageDAO {
      */
     @Override
     public Integer getSenderIdByMessageId(int messageId) throws SQLException {
-        return 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "select senderId from ecollaborationweb.message where id = ?";
+
+        try {
+            conn = DBUtils.getConnetction();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, messageId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("senderId");
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            DBUtils.close(rs, ps, conn);
+        }
     }
 
     /**
-     * 获取发送者UserBean，通过messageId
+     * 获取messageId，通过SenderId
      *
-     * @param messageId
-     * @return UserBean
+     * @param senderId
+     * @return int
      * @throws SQLException
      */
     @Override
-    public UserBean getSenderInfoByMessageId(int messageId) throws SQLException {
-        return null;
+    public ArrayList<Integer> getMessageIdBySenderId(int senderId) throws SQLException {
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "select id from ecollaborationweb.message where senderId = ?";
+
+        try {
+            conn = DBUtils.getConnetction();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, senderId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getInt("id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            DBUtils.close(rs, ps, conn);
+        }
+        return list;
+    }
+
+
+    /**
+     * 通过receiverId,获取所有消息id
+     *
+     * @param receiverId
+     * @return messageId
+     * @throws SQLException
+     */
+    @Override
+    public ArrayList<Integer> getMessageIdByReceiverId(int receiverId) throws SQLException {
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "select id from ecollaborationweb.message_receiver where receiverId = ?";
+
+        try {
+            conn = DBUtils.getConnetction();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, receiverId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getInt("id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            DBUtils.close(rs, ps, conn);
+        }
+        return list;
+    }
+
+    /**
+     * 通过receiverId,获取所有未读消息id
+     *
+     * @param receiverId
+     * @return messageId
+     * @throws SQLException
+     */
+    @Override
+    public ArrayList<Integer> getNotReadMessageIdByReceiverId(int receiverId) throws SQLException {
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "select id from ecollaborationweb.message_receiver where receiverId = ? and readFlag = 0";
+
+        try {
+            conn = DBUtils.getConnetction();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, receiverId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getInt("id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            DBUtils.close(rs, ps, conn);
+        }
+        return list;
     }
 
     /**
@@ -153,18 +303,56 @@ public class MessageDAOImpl implements MessageDAO {
      */
     @Override
     public ArrayList<Integer> getReceiverIdByMessageId(int messageId) throws SQLException {
-        return null;
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "select receiverId from ecollaborationweb.message_receiver where messageId = ?";
+
+        try {
+            conn = DBUtils.getConnetction();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, messageId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getInt("receiverId"));
+            }
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            DBUtils.close(rs, ps, conn);
+        }
     }
 
+
     /**
-     * 获取接收人UserBean列表，通过消息Id
+     * 根据receiverId设置已读消息
      *
-     * @param messageId
-     * @return ArrayList<UserBean>
+     * @param receiverId
+     * @return boolean
      * @throws SQLException
      */
     @Override
-    public ArrayList<UserBean> getReceiverInfoByMessageId(int messageId) throws SQLException {
-        return null;
+    public boolean updateReadFlagByReceiverId(int receiverId, int messageId) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String sql = "update ecollaborationweb.message_receiver set readFlag=1 where receiverId = ? and messageId=?;";
+        try {
+            conn = DBUtils.getConnetction();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, receiverId);
+            ps.setInt(2, messageId);
+            if (ps.executeUpdate() == 0)
+                return false;
+            else
+                return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            DBUtils.close(null, ps, conn);
+        }
     }
 }
