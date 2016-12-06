@@ -5,6 +5,7 @@ import bean.domain.ManagerBean;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -23,12 +24,12 @@ public class ManagerDAOImpl implements  ManagerDao{
         boolean flag = true;
         Connection conn = null;
         PreparedStatement ps = null;
-        String sql = "insert into student (id,character) values(?,?);";
+        String sql = "insert into ecollaborationweb.manager (id,role) values(?,?);";
         try {
             conn = DBUtils.getConnetction();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, managerBean.getId());
-            ps.setInt(2, managerBean.getCharacter());
+            ps.setInt(2, managerBean.getRole());
             int i = ps.executeUpdate();
             if (i == 0) {
                 flag = false;
@@ -42,18 +43,6 @@ public class ManagerDAOImpl implements  ManagerDao{
     }
 
     /**
-     * 根据id寻找管理员，返回Manager
-     *
-     * @param managerId
-     * @return ManagerBean
-     * @throws SQLException
-     */
-    @Override
-    public ManagerBean getManagerInfo(int managerId) throws SQLException {
-        return null;
-    }
-
-    /**
      * 修改管理员信息
      *
      * @param managerBean
@@ -62,19 +51,59 @@ public class ManagerDAOImpl implements  ManagerDao{
      */
     @Override
     public boolean updateInfo(ManagerBean managerBean) throws SQLException {
-        return false;
+        boolean flag = true;
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String sql = " UPDATE ecollaborationweb.manager set role = ? where id = ?;";
+
+        try {
+            conn = DBUtils.getConnetction();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, managerBean.getRole());
+            ps.setInt(2, managerBean.getId());
+            int i = ps.executeUpdate();
+            if (i == 0) {
+                flag = false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            DBUtils.close(null, ps, conn);
+        }
+        return flag;
     }
 
     /**
      * 删除管理员
      *
      * @param managerId
-     * @return ManagerBean
+     * @return boolean
      * @throws SQLException
      */
     @Override
-    public ManagerBean deleteById(int managerId) throws SQLException {
-        return null;
+    public boolean deleteById(int managerId) throws SQLException {
+        boolean flag = true;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String sql = "delete from ecollaborationweb.manager where id=?";
+
+        try {
+            conn = DBUtils.getConnetction();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, managerId);
+            int i = ps.executeUpdate();
+            if (i == 0) {
+                flag = false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.close(null, ps, conn);
+        }
+
+        return flag;
     }
 
     /**
@@ -86,6 +115,29 @@ public class ManagerDAOImpl implements  ManagerDao{
      */
     @Override
     public ManagerBean getInfoById(int managerId) throws SQLException {
-        return null;
+        ManagerBean manager = new ManagerBean();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "select * from ecollaborationweb.manager where id = ?";
+
+        try {
+            conn = DBUtils.getConnetction();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, managerId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                manager.setId(rs.getInt("id"));
+                manager.setRole(rs.getInt("role"));
+                return manager;
+            }else{
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            DBUtils.close(rs, ps, conn);
+        }
     }
 }

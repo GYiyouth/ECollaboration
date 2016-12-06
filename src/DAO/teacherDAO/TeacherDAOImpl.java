@@ -83,7 +83,7 @@ public class TeacherDAOImpl implements TeacherDAO {
 	 * 删除老师
 	 *
 	 * @param teacherId
-	 * @return TeacherBean
+	 * @return boolean
 	 * @throws SQLException
 	 */
 	@Override
