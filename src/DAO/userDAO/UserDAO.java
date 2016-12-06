@@ -19,7 +19,7 @@ public interface UserDAO {
 	 * @return User
 	 * @throws SQLException
 	 */
-	public UserBean getLogerInfo(String logName,String passWord) throws SQLException;
+	public UserBean getLogInfo(String logName, String passWord) throws SQLException;
 
 	/**
 	 * 添加用户，内部生成id，返回用户id
@@ -28,7 +28,7 @@ public interface UserDAO {
 	 * @return int
 	 * @throws SQLException
 	 */
-	public int addUser(UserBean user) throws SQLException;
+	public Integer addUser(UserBean user) throws SQLException;
 
 	/**
 	 * 通过id获取用户信息
@@ -52,10 +52,10 @@ public interface UserDAO {
 	 * 删除用户
 	 *
 	 * @param userId
-	 * @return User
+	 * @return boolean
 	 * @throws SQLException
 	 */
-	public UserBean deleteById(int userId) throws SQLException;
+	public boolean deleteById(int userId) throws SQLException;
 
 	/**
 	 * 设置用户头像，根据userBean，file

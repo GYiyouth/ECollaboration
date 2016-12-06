@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.*;
+import java.util.TreeMap;
 
 /**
  * Created by GR on 2016/11/9.
@@ -17,13 +18,14 @@ public class UserDAOImpl implements UserDAO{
 
     /**
      * 获取UserBean，通过登录名，密码
+     * 获取到的信息不含头像信息。
      * @param logName,passWord
      * @param passWord
      * @return
      * @throws SQLException
      */
     @Override
-    public UserBean getLogerInfo(String logName, String passWord) throws SQLException {
+    public UserBean getLogInfo(String logName, String passWord) throws SQLException {
 
         UserBean user = new UserBean();
         Connection connection = null;
@@ -40,7 +42,7 @@ public class UserDAOImpl implements UserDAO{
                 user.setSchoolId(rs.getString("schoolId"));
                 user.setName(rs.getString("name"));
                 user.setSex(rs.getInt("sex"));
-                user.setCharacter(rs.getInt("character"));
+                user.setCharacter(rs.getInt("role"));
                 user.setEmail(rs.getString("email"));
                 user.setPhoneNumber(rs.getString("phoneNumber"));
                 user.setLogName(rs.getString("logName"));
@@ -70,8 +72,48 @@ public class UserDAOImpl implements UserDAO{
      * @throws SQLException
      */
     @Override
-    public int addUser(UserBean user) throws SQLException {
-        return 0;
+    public Integer addUser(UserBean user) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet= null;
+        Integer id = null;
+        String sql = "INSERT INTO ECollaborationWeb.user ( " +
+                " schoolId, name, sex, role, email, phoneNumber, " +
+                " logName, passWord, createDate, " +
+                " lastLogTime, activeBefore, newsFlag) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";
+        try {
+            connection = DBUtils.getConnetction();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, user.getSchoolId());
+            preparedStatement.setString(2, user.getName());
+            preparedStatement.setInt(   3, user.getSex());
+            preparedStatement.setInt(   4, user.getCharacter());
+            preparedStatement.setString(5, user.getEmail());
+            preparedStatement.setString(6, user.getPhoneNumber());
+            preparedStatement.setString(7, user.getLogName());
+            preparedStatement.setString(8, user.getPassWord());
+            preparedStatement.setString(9, user.getCreateDate());
+//            preparedStatement.setString(10, user.getPhoto());
+            preparedStatement.setString(10, user.getLastLogTime());
+            preparedStatement.setString(11, user.getActiveBefore());
+            preparedStatement.setInt(   12, user.getNewFlag());
+            int flag = preparedStatement.executeUpdate();
+            if (flag == 1){
+                sql = "SELECT LAST_INSERT_ID();";
+	            preparedStatement = connection.prepareStatement(sql);
+                resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()){
+                    return resultSet.getInt(1);
+                }
+            }
+            return null;
+        }catch (SQLException e){
+            e.printStackTrace();
+            throw e;
+        }finally {
+            DBUtils.close(resultSet, preparedStatement, connection);
+        }
+
     }
 
 
@@ -99,7 +141,7 @@ public class UserDAOImpl implements UserDAO{
                 user.setSchoolId(rs.getString("schoolId"));
                 user.setName(rs.getString("name"));
                 user.setSex(rs.getInt("sex"));
-                user.setCharacter(rs.getInt("character"));
+                user.setCharacter(rs.getInt("role"));
                 user.setEmail(rs.getString("email"));
                 user.setPhoneNumber(rs.getString("phoneNumber"));
                 user.setLogName(rs.getString("logName"));
@@ -130,20 +172,75 @@ public class UserDAOImpl implements UserDAO{
      */
     @Override
     public boolean updateInfo(UserBean user) throws SQLException {
-        return false;
+	    Connection connection = null;
+	    PreparedStatement preparedStatement = null;
+	    ResultSet resultSet= null;
+	    Integer id = null;
+	    String sql = "UPDATE ECollaborationWeb.user SET " +
+			    " schoolId = ?, name = ?, sex = ?, role = ?, email = ?, phoneNumber = ?, " +
+			    " logName = ?, passWord = ?, createDate = ?, " +
+			    " lastLogTime = ?, activeBefore = ?, newsFlag = ? WHERE id = ? ;";
+	    try {
+		    connection = DBUtils.getConnetction();
+		    preparedStatement = connection.prepareStatement(sql);
+		    preparedStatement.setString(1, user.getSchoolId());
+		    preparedStatement.setString(2, user.getName());
+		    preparedStatement.setInt(   3, user.getSex());
+		    preparedStatement.setInt(   4, user.getCharacter());
+		    preparedStatement.setString(5, user.getEmail());
+		    preparedStatement.setString(6, user.getPhoneNumber());
+		    preparedStatement.setString(7, user.getLogName());
+		    preparedStatement.setString(8, user.getPassWord());
+		    preparedStatement.setString(9, user.getCreateDate());
+//            preparedStatement.setString(10, user.getPhoto());
+		    preparedStatement.setString(10, user.getLogName());
+		    preparedStatement.setString(11, user.getActiveBefore());
+		    preparedStatement.setInt(   12, user.getNewFlag());
+		    preparedStatement.setInt(   13, user.getId());
+		    int flag = preparedStatement.executeUpdate();
+		    if (flag == 1){
+			    return true;
+		    }
+		    return false;
+	    }catch (SQLException e){
+		    e.printStackTrace();
+		    throw e;
+	    }finally {
+		    DBUtils.close(resultSet, preparedStatement, connection);
+	    }
+
     }
 
     /**
      *
      *
      * @param userId
-     * @return User
+     * @return boolean
      * @throws SQLException
      */
     @Override
-    public UserBean deleteById(int userId) throws SQLException {
-        return null;
-    }
+    public boolean deleteById(int userId) throws SQLException {
+        Connection connection = null;
+	    PreparedStatement preparedStatement = null;
+//	    ResultSet resultSet = null;
+	    String sql = "DELETE FROM ECollaborationWeb.user WHERE id = ?;";
+	    UserBean userBean = null;
+	    try {
+		    connection = DBUtils.getConnetction();
+		    preparedStatement = connection.prepareStatement(sql);
+		    preparedStatement.setInt(1, userId);
+		    int flag = preparedStatement.executeUpdate();
+		    if (flag == 1){
+			    return true;
+		    }
+		    else return false;
+	    }catch (SQLException e){
+		    e.printStackTrace();
+		    throw e;
+	    }finally {
+		    DBUtils.close(null, preparedStatement, connection);
+	    }
+	}
 
     /**
      * 设置用户头像，根据userBean，file

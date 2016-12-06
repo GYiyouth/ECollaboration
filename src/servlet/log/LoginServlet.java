@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet {
 		try {
 			System.out.println("logName"+logName+"aaa");
 			System.out.println("passWord"+passWord+"aaa");
-			user = userdaoimpl.getLogerInfo(logName,passWord);
+			user = userdaoimpl.getLogInfo(logName,passWord);
 			//用户存在
 			if(user!=null){
 

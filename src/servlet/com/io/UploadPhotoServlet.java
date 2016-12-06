@@ -143,18 +143,14 @@ public class UploadPhotoServlet extends HttpServlet {
 
 						//添加新头像，删除旧头像
 						ECFileDAO ecFileDAO = new ECFileDAOImpl();
-						int oldFileId = ecFileDAO.getPhotoId(creatorId);
-						ecFileDAO.addPhoto(ecFileBean, creatorId);
-						ecFileDAO.deleteFile(oldFileId);
+//						int oldFileId = ecFileDAO.getPhotoId(creatorId);
+//						ecFileDAO.addPhoto(ecFileBean, creatorId);
+//						ecFileDAO.deleteFile(oldFileId);
 						//修改user里photo信息
 						UserDAO userDAO = new UserDAOImpl();
 						UserBean userBean = userDAO.getUserInfoById(creatorId);
 						String photo = savePath + filename;
 						userBean.setPhoto(photo);
-
-
-
-
 
 						request.setAttribute("photo", photo);
 
