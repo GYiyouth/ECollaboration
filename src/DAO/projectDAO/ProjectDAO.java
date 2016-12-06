@@ -36,7 +36,7 @@ public interface ProjectDAO {
 	 * @return int
 	 * @throws SQLException
 	 */
-	public int addProject(ProjectBean projectBean) throws SQLException;
+	public Integer addProject(ProjectBean projectBean) throws SQLException;
 
 	/**
 	 * 根据id寻找项目，返回project
@@ -49,10 +49,11 @@ public interface ProjectDAO {
 	/**
 	 * 修改项目的属性，如果project属性不为null，则更新数据库
 	 * @param projectBean
+	 * @param id
 	 * @return boolean
 	 * @throws SQLException
 	 */
-	public boolean updateInfo(ProjectBean projectBean) throws SQLException;
+	public boolean updateInfo(ProjectBean projectBean, int id) throws SQLException;
 
 
 	/**
@@ -61,7 +62,7 @@ public interface ProjectDAO {
 	 * @return ProjectBean
 	 * @throws SQLException
 	 */
-	public ProjectBean deleteById(int projectId) throws SQLException;
+	public boolean deleteById(int projectId) throws SQLException;
 
 
 
@@ -81,23 +82,23 @@ public interface ProjectDAO {
 	 */
 	public ArrayList<Integer> getProjectIdListByFileId(int fileId) throws SQLException;
 
-	/**
-	 * 获取项目id列表，通过文件id，教师id
-	 * @param fileId
-	 * @param teacherId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getProjectIdListByFileIdTeacherId(int fileId, int teacherId) throws SQLException;
-
-	/**
-	 * 获取项目id列表，通过文件id，学生id
-	 * @param fileId
-	 * @param studentId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getProjectIdListByFileIdStudentId(int fileId, int studentId) throws SQLException;
+//	/**
+//	 * 获取项目id列表，通过文件id，教师id
+//	 * @param fileId
+//	 * @param teacherId
+//	 * @return
+//	 * @throws SQLException
+//	 */
+//	public ArrayList<Integer> getProjectIdListByFileIdTeacherId(int fileId, int teacherId) throws SQLException;
+//
+//	/**
+//	 * 获取项目id列表，通过文件id，学生id
+//	 * @param fileId
+//	 * @param studentId
+//	 * @return
+//	 * @throws SQLException
+//	 */
+//	public ArrayList<Integer> getProjectIdListByFileIdStudentId(int fileId, int studentId) throws SQLException;
 
 	/**
 	 * 获取项目id列表，通过计划id
@@ -107,23 +108,23 @@ public interface ProjectDAO {
 	 */
 	public ArrayList<Integer> getProjectIdListByPlanId(int planId) throws SQLException;
 
-	/**
-	 * 获取项目id列表，通过计划id，教师id
-	 * @param planId
-	 * @param teacherId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getProjectIdListByPlanIdTeacherId(int planId, int teacherId) throws SQLException;
-
-	/**
-	 * 获取项目id列表，通过计划id，学生id
-	 * @param planId
-	 * @param studentId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getProjectIdListByPlanIdStudentId(int planId, int studentId) throws SQLException;
+//	/**
+//	 * 获取项目id列表，通过计划id，教师id
+//	 * @param planId
+//	 * @param teacherId
+//	 * @return
+//	 * @throws SQLException
+//	 */
+//	public ArrayList<Integer> getProjectIdListByPlanIdTeacherId(int planId, int teacherId) throws SQLException;
+//
+//	/**
+//	 * 获取项目id列表，通过计划id，学生id
+//	 * @param planId
+//	 * @param studentId
+//	 * @return
+//	 * @throws SQLException
+//	 */
+//	public ArrayList<Integer> getProjectIdListByPlanIdStudentId(int planId, int studentId) throws SQLException;
 
 	/**
 	 * 获取项目id列表，通过学生id
@@ -141,14 +142,14 @@ public interface ProjectDAO {
 	 */
 	public ArrayList<Integer> getProjectIdListByCodeId(int codeId) throws SQLException;
 
-	/**
-	 * 获取项目id列表，通过代码id，学生id
-	 * @param codeId
-	 * @param StudentId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getProjectIdListByCodeIdStudentId(int codeId, int StudentId) throws SQLException;
+//	/**
+//	 * 获取项目id列表，通过代码id，学生id
+//	 * @param codeId
+//	 * @param StudentId
+//	 * @return
+//	 * @throws SQLException
+//	 */
+//	public ArrayList<Integer> getProjectIdListByCodeIdStudentId(int codeId, int StudentId) throws SQLException;
 
 	/**
 	 * 获取项目id列表，通过团队id
@@ -166,33 +167,34 @@ public interface ProjectDAO {
 	 */
 	public ArrayList<Integer> getProjectIdListByTaskId(int taskId) throws SQLException;
 
-	/**
-	 * 获取项目id列表，通过任务id，团队id
-	 * @param taskId
-	 * @param teamId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getProjectIdListByTaskIdTeamId(int taskId, int teamId) throws SQLException;
+	//因为一个项目下的不同团队，面临的任务都是相同的，所以这里不需要这个DAO了
+//	/**
+//	 * 获取项目id列表，通过任务id，团队id
+//	 * @param taskId
+//	 * @param teamId
+//	 * @return
+//	 * @throws SQLException
+//	 */
+//	public ArrayList<Integer> getProjectIdListByTaskIdTeamId(int taskId, int teamId) throws SQLException;
 
-	/**
-	 * 获取项目id列表，通过任务id，教师id
-	 * @param taskId
-	 * @param teacherId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getProjectIdListByTaskIdTeacherId(int taskId, int teacherId) throws SQLException;
+//	/**
+//	 * 获取项目id列表，通过任务id，教师id
+//	 * @param taskId
+//	 * @param teacherId
+//	 * @return
+//	 * @throws SQLException
+//	 */
+//	public ArrayList<Integer> getProjectIdListByTaskIdTeacherId(int taskId, int teacherId) throws SQLException;
 
-	/**
-	 * 获取项目id列表，通过任务id，教师id，团队id
-	 * @param taskId
-	 * @param teacherId
-	 * @param teamId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getProjectIdListByTaskIdTeacherIdTeamId(int taskId, int teacherId, int teamId)throws SQLException;
+//	/**
+//	 * 获取项目id列表，通过任务id，教师id，团队id
+//	 * @param taskId
+//	 * @param teacherId
+//	 * @param teamId
+//	 * @return
+//	 * @throws SQLException
+//	 */
+//	public ArrayList<Integer> getProjectIdListByTaskIdTeacherIdTeamId(int taskId, int teacherId, int teamId)throws SQLException;
 
 	/**
 	 * 获取项目id列表，通过教师id，团队id
@@ -205,107 +207,4 @@ public interface ProjectDAO {
 
 
 
-
-
-	/**
-	 * 获取团队id列表，通过项目id
-	 * @param projectId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getTeamIdList(int projectId) throws SQLException;
-
-	/**
-	 * 获取任务id列表，通过项目id
-	 * @param projectId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getAllTaskIdList(int projectId) throws SQLException;
-
-	/**
-	 * 获取任务id列表，通过项目id，团队id
-	 * @param projectId
-	 * @param teamId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getTaskIdListOfOneTeam(int projectId, int teamId) throws SQLException;
-
-	/**
-	 * 获取教师id列表，通过项目id，如果没有则返回0
-	 * @param projectId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getTeacherId(int projectId) throws SQLException;
-
-
-	/**
-	 * 获取代码id列表，通过项目id
-	 * @param projectId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getAllCodeIdList(int projectId) throws SQLException;
-
-	/**
-	 * 获取代码id列表，通过项目id，团队id
-	 * @param projectId
-	 * @param teamId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getCodeIdListOfOneTeam (int projectId, int teamId) throws SQLException;
-
-	/**
-	 * 获取代码id列表，通过项目id，团队id
-	 * @param projectId
-	 * @param teamId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getCodeIdListOfOneStudent (int projectId, int teamId) throws SQLException;
-
-	/**
-	 * 获取学生id列表，通过项目id
-	 * @param projectId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getStudentIdList(int projectId) throws SQLException;
-
-	/**
-	 * 获取计划id列表，通过项目id，学生id
-	 * @param projectId
-	 * @param studentId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getPlanIdListByStudentId(int projectId, int studentId) throws SQLException;
-
-	/**
-	 * 获取计划id列表，通过项目id
-	 * @param projectId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getAllPlanIdList(int projectId) throws SQLException;
-
-	/**
-	 * 获取文件id列表，通过项目id，学生id
-	 * @param projectId
-	 * @param studentId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getFileIdListByStudentId(int projectId, int studentId) throws SQLException;
-
-	/**
-	 * 获取文件id列表，通过项目id
-	 * @param projectId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getAllFileIdList(int projectId) throws SQLException;
 }

@@ -6,8 +6,11 @@ import DAO.com.smallTools.ComGetListValueDAO;
 import DAO.com.smallTools.ComGetListValueDAOImpl;
 import DAO.com.smallTools.ComGetSingleValueDAO;
 import DAO.com.smallTools.ComGetSingleValueDAOImpl;
+import DAO.projectDAO.ProjectDAO;
+import DAO.projectDAO.ProjectDAOImpl;
 import DAO.teamDAO.TeamDAO;
 import DAO.teamDAO.TeamDAOImpl;
+import bean.domain.ProjectBean;
 import bean.domain.TeamBean;
 
 import java.sql.SQLException;
@@ -138,6 +141,10 @@ public class Test {
 			System.out.println(codeDAO.getCodeIdListByProjectIdTeamIdStudentId(123, 555, 123));
 			System.out.println(teamDAO.getTeamIdListByTeacherId(1));
 			System.out.println(teamDAO.getTeamIdListByTeacherIdProjectId(1, 1));
+			ProjectBean projectBean = new ProjectBean();
+			projectBean.setName("123");
+			ProjectDAO projectDAO = new ProjectDAOImpl();
+			System.out.println(projectDAO.addProject(projectBean));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
