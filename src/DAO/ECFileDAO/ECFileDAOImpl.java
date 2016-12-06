@@ -36,7 +36,7 @@ public class ECFileDAOImpl implements ECFileDAO {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		String sql = "insert into ECollaborationWeb.ecfile(fileName, createDate, deadDate, downLoadTimes," +
-				"priority, creatorId, path) values(?,?,?,?,?,?,?);";
+				" creatorId, path) values(?,?,?,?,?,?);";
 		Time time = new TimeImpl();
 		ecFileBean.setCreateDate(time.getDateStr());
 		try{
@@ -47,9 +47,9 @@ public class ECFileDAOImpl implements ECFileDAO {
 			preparedStatement.setString(2,  ecFileBean.getCreateDate());
 			preparedStatement.setString(3,  ecFileBean.getDeadDate());
 			preparedStatement.setInt(   4,  ecFileBean.getDownLoadTimes());
-			preparedStatement.setInt(   5,  ecFileBean.getPriority());
-			preparedStatement.setInt(   6,  ecFileBean.getCreatorId());
-			preparedStatement.setString(7,  ecFileBean.getPath());
+//			preparedStatement.setInt(   5,  ecFileBean.getPriority());
+			preparedStatement.setInt(   5,  ecFileBean.getCreatorId());
+			preparedStatement.setString(6,  ecFileBean.getPath());
 			int doneFlag = preparedStatement.executeUpdate();
 			if (doneFlag == 0) {
 				throw new SQLException("添加文件进数据库失败");
@@ -78,52 +78,52 @@ public class ECFileDAOImpl implements ECFileDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	@Override
-	public Integer addPhoto(ECFileBean ecFileBean, Integer userId) throws SQLException {
-		if (ecFileBean == null)
-			return null;
-		try {                                                                   // 删除旧头像
-			if (getPhotoId(userId) != null){
-				deleteFile(getPhotoId(userId));
-			}
-		}catch (SQLException e){
-			e.printStackTrace();
-			throw e;
-		}
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-		String sql = "insert into ECollaborationWeb.ecfile(fileName, createDate, deadDate, downLoadTimes," +
-				"priority, creatorId, path) values(?,?,?,?,?,?,?);";
-		try {
-			connection = DBUtils.getConnetction();
-			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(1,  ecFileBean.getFileName());
-			preparedStatement.setString(2,  ecFileBean.getCreateDate());
-			preparedStatement.setString(3,  ecFileBean.getDeadDate());
-			preparedStatement.setInt(   4,  ecFileBean.getDownLoadTimes());
-			preparedStatement.setInt(   5,  4);
-			preparedStatement.setInt(   6,  userId);
-			preparedStatement.setString(7,  ecFileBean.getPath());
-			int row = preparedStatement.executeUpdate();
-			if (row != 1){
-				throw new SQLException("添加头像出错");
-			}else {
-				String sql2 = "select LAST_INSERT_ID();";                           //返回id
-				preparedStatement = connection.prepareStatement(sql2);
-				preparedStatement.executeQuery();
-				resultSet = preparedStatement.getResultSet();
-				resultSet.next();
-				return resultSet.getInt(1);
-
-			}
-		}catch (SQLException e) {
-			e.printStackTrace();
-			throw e;
-		}finally {
-			DBUtils.close(resultSet, preparedStatement, connection);
-		}
-	}
+//	@Override
+//	public Integer addPhoto(ECFileBean ecFileBean, Integer userId) throws SQLException {
+//		if (ecFileBean == null)
+//			return null;
+//		try {                                                                   // 删除旧头像
+//			if (getPhotoId(userId) != null){
+//				deleteFile(getPhotoId(userId));
+//			}
+//		}catch (SQLException e){
+//			e.printStackTrace();
+//			throw e;
+//		}
+//		Connection connection = null;
+//		PreparedStatement preparedStatement = null;
+//		ResultSet resultSet = null;
+//		String sql = "insert into ECollaborationWeb.ecfile(fileName, createDate, deadDate, downLoadTimes," +
+//				"priority, creatorId, path) values(?,?,?,?,?,?,?);";
+//		try {
+//			connection = DBUtils.getConnetction();
+//			preparedStatement = connection.prepareStatement(sql);
+//			preparedStatement.setString(1,  ecFileBean.getFileName());
+//			preparedStatement.setString(2,  ecFileBean.getCreateDate());
+//			preparedStatement.setString(3,  ecFileBean.getDeadDate());
+//			preparedStatement.setInt(   4,  ecFileBean.getDownLoadTimes());
+//			preparedStatement.setInt(   5,  4);
+//			preparedStatement.setInt(   6,  userId);
+//			preparedStatement.setString(7,  ecFileBean.getPath());
+//			int row = preparedStatement.executeUpdate();
+//			if (row != 1){
+//				throw new SQLException("添加头像出错");
+//			}else {
+//				String sql2 = "select LAST_INSERT_ID();";                           //返回id
+//				preparedStatement = connection.prepareStatement(sql2);
+//				preparedStatement.executeQuery();
+//				resultSet = preparedStatement.getResultSet();
+//				resultSet.next();
+//				return resultSet.getInt(1);
+//
+//			}
+//		}catch (SQLException e) {
+//			e.printStackTrace();
+//			throw e;
+//		}finally {
+//			DBUtils.close(resultSet, preparedStatement, connection);
+//		}
+//	}
 
 	/**
 	 * 获取头像id，通过用户id
@@ -132,26 +132,26 @@ public class ECFileDAOImpl implements ECFileDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	@Override
-	public Integer getPhotoId(Integer userId) throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-		String sql = "select id from ECollaborationWeb.ecfile where creatorId = ? and priority = 4";
-		try {
-			connection = DBUtils.getConnetction();
-			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1, userId);
-			resultSet = preparedStatement.executeQuery();
-			resultSet.next();
-			return resultSet.getInt(1);
-		}catch (SQLException e){
-			e.printStackTrace();
-			throw e;
-		}finally {
-			DBUtils.close(resultSet, preparedStatement, connection);
-		}
-	}
+//	@Override
+//	public Integer getPhotoId(Integer userId) throws SQLException {
+//		Connection connection = null;
+//		PreparedStatement preparedStatement = null;
+//		ResultSet resultSet = null;
+//		String sql = "select id from ECollaborationWeb.ecfile where creatorId = ? and priority = 4";
+//		try {
+//			connection = DBUtils.getConnetction();
+//			preparedStatement = connection.prepareStatement(sql);
+//			preparedStatement.setInt(1, userId);
+//			resultSet = preparedStatement.executeQuery();
+//			resultSet.next();
+//			return resultSet.getInt(1);
+//		}catch (SQLException e){
+//			e.printStackTrace();
+//			throw e;
+//		}finally {
+//			DBUtils.close(resultSet, preparedStatement, connection);
+//		}
+//	}
 
 	/**
 	 * 获取文件，通过文件id
@@ -182,7 +182,7 @@ public class ECFileDAOImpl implements ECFileDAO {
 				ecFileBean.setId(           resultSet.getInt("id"));
 				ecFileBean.setFileName(     resultSet.getString("fileName"));
 				ecFileBean.setPath(         resultSet.getString("path"));
-				ecFileBean.setPriority(     resultSet.getInt("priority"));
+//				ecFileBean.setPriority(     resultSet.getInt("priority"));
 				ecFileBean.setCreatorId(     resultSet.getInt("creatorId"));
 				return ecFileBean;
 			}else
@@ -210,7 +210,7 @@ public class ECFileDAOImpl implements ECFileDAO {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		String sql = "update ECollaborationWeb.ecfile set fileName = ?, createDate = ?, deadDate = ?, downLoadTimes =?," +
-				"priority = ?, creatorId = ?, path = ? where id = ?;";
+				" creatorId = ?, path = ? where id = ?;";
 		try {
 			connection =DBUtils.getConnetction();
 			preparedStatement = connection.prepareStatement(sql);
@@ -218,10 +218,10 @@ public class ECFileDAOImpl implements ECFileDAO {
 			preparedStatement.setString(  2,  ecFileBean.getCreateDate());
 			preparedStatement.setString(  3,  ecFileBean.getDeadDate());
 			preparedStatement.setInt(   4,  ecFileBean.getDownLoadTimes());
-			preparedStatement.setInt(   5,  ecFileBean.getPriority());
-			preparedStatement.setInt(   6,  ecFileBean.getCreatorId());
-			preparedStatement.setString(7,  ecFileBean.getPath());
-			preparedStatement.setInt(   8,  ecFileBean.getId());
+//			preparedStatement.setInt(   5,  ecFileBean.getPriority());
+			preparedStatement.setInt(   5,  ecFileBean.getCreatorId());
+			preparedStatement.setString(6,  ecFileBean.getPath());
+			preparedStatement.setInt(   7,  ecFileBean.getId());
 			int row = preparedStatement.executeUpdate();
 			if (row == 1)
 				return true;
@@ -344,7 +344,7 @@ public class ECFileDAOImpl implements ECFileDAO {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		String sql = "SELECT fileid FROM ecollaborationweb.student_project_file AS spf, " +
+		String sql = "SELECT fileid FROM ecollaborationweb.student_team_project_file AS spf, " +
 				"ecollaborationweb.teacher_project AS tp " +
 				"WHERE spf.projectId = tp.projectId AND tp.teacherId = ? ;";
 		ArrayList<Integer> fileIdList = new ArrayList<>();
@@ -378,7 +378,7 @@ public class ECFileDAOImpl implements ECFileDAO {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		String sql = "SELECT fileId FROM ecollaborationweb.student_project_file WHERE projectId = ?";
+		String sql = "SELECT fileId FROM ecollaborationweb.student_team_project_file WHERE projectId = ?";
 		ArrayList<Integer> fileIdList = new ArrayList<>();
 		try{
 			connection = DBUtils.getConnetction();
@@ -411,7 +411,7 @@ public class ECFileDAOImpl implements ECFileDAO {
 		ResultSet resultSet = null;
 		String sql =
 				"SELECT fileId " +
-				"FROM ecollaborationweb.student_project_file AS spf," +
+				"FROM ecollaborationweb.student_team_project_file AS spf," +
 					"ecollaborationweb.team_project AS tp " +
 				"WHERE spf.projectId = tp.projectId " +
 					"AND spf.teamId = ? " +
@@ -449,7 +449,7 @@ public class ECFileDAOImpl implements ECFileDAO {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		String sql =
-				"SELECT fileId FROM ecollaborationweb.student_project_file " +
+				"SELECT fileId FROM ecollaborationweb.student_team_project_file " +
 				"WHERE projectId = ? " +
 				"AND creatorId = ?";
 		ArrayList<Integer> fileIdList = new ArrayList<>();
@@ -486,7 +486,7 @@ public class ECFileDAOImpl implements ECFileDAO {
 		ResultSet resultSet = null;
 		String sql =
 				"SELECT fileId " +
-				"FROM ecollaborationweb.student_project_file AS spf," +
+				"FROM ecollaborationweb.student_team_project_file AS spf," +
 				"ecollaborationweb.teacher_project AS tp " +
 				"WHERE spf.projectId = ? " +
 				"AND tp.projectId = ? " +
@@ -525,7 +525,7 @@ public class ECFileDAOImpl implements ECFileDAO {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		String sql = "SELECT fileId " +
-				"FROM ecollaborationweb.student_project_file " +
+				"FROM ecollaborationweb.student_team_project_file " +
 				"WHERE teamId = ? AND projectId = ? ;";
 		ArrayList<Integer> fileList = new ArrayList<>();
 		try {

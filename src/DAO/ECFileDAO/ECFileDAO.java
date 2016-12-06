@@ -24,7 +24,7 @@ public interface ECFileDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public Integer addPhoto(ECFileBean ecFileBean, Integer userId) throws SQLException;
+//	public Integer addPhoto(ECFileBean ecFileBean, Integer userId) throws SQLException;
 
 	/**
 	 * 获取头像id，通过用户id
@@ -32,7 +32,7 @@ public interface ECFileDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public Integer getPhotoId(Integer userId) throws SQLException;
+//	public Integer getPhotoId(Integer userId) throws SQLException;
 	/**
 	 * 获取文件，通过文件id
 	 * @param fileId
