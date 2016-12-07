@@ -16,7 +16,7 @@ public class ProjectBean {
 	private String grade = null;
 	private String keyWord = null;
 	private String info = null;
-	private String require = null;
+	private String requirement = null;
 	private String gain = null;
 	private Integer priority = null;
 	private Integer status = null;
@@ -122,12 +122,12 @@ public class ProjectBean {
 		this.info = info;
 	}
 
-	public String getRequire() {
-		return require;
+	public String getRequirement() {
+		return requirement;
 	}
 
-	public void setRequire(String require) {
-		this.require = require;
+	public void setRequirement(String requirement) {
+		this.requirement = requirement;
 	}
 
 	public String getGain() {
@@ -185,7 +185,7 @@ public class ProjectBean {
 				", grade='" + grade + '\'' +
 				", keyWord='" + keyWord + '\'' +
 				", info='" + info + '\'' +
-				", require='" + require + '\'' +
+				", requirement='" + requirement + '\'' +
 				", gain='" + gain + '\'' +
 				", priority=" + priority +
 				", status=" + status +

@@ -32,7 +32,7 @@ public class ProjectDAOImpl implements ProjectDAO{
                 " (name, applyBeforeDate, finishDate, " +
                 " survivalDate, teamNumber, teamMax, memberMax, " +
                 " createDate, grade, keyWord, info, " +
-                " require, gain, priority, status, " +
+                " requirement, gain, priority, status, " +
                 " creatorId, teacherId) " +
                 " VALUES (?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?) ;";
         try {
@@ -52,7 +52,7 @@ public class ProjectDAOImpl implements ProjectDAO{
             preparedStatement.setString(10, projectBean.getKeyWord());
             preparedStatement.setString(11, projectBean.getInfo());
 
-            preparedStatement.setString(12, projectBean.getRequire());
+            preparedStatement.setString(12, projectBean.getRequirement());
             preparedStatement.setString(13, projectBean.getGain());
             preparedStatement.setInt(   14, projectBean.getPriority());
             preparedStatement.setInt(   15, projectBean.getStatus());
@@ -109,7 +109,7 @@ public class ProjectDAOImpl implements ProjectDAO{
                 projectBean.setGrade(           resultSet.getString("grade"));
                 projectBean.setKeyWord(         resultSet.getString("keyWord"));
                 projectBean.setInfo(            resultSet.getString("info"));
-                projectBean.setRequire(         resultSet.getString("require"));
+                projectBean.setRequirement(         resultSet.getString("requirement"));
                 projectBean.setGain(            resultSet.getString("gain"));
                 projectBean.setPriority(        resultSet.getInt("priority"));
                 projectBean.setStatus(          resultSet.getInt("status"));
@@ -142,7 +142,7 @@ public class ProjectDAOImpl implements ProjectDAO{
         String sql = "UPDATE ECollaborationWeb.project SET name = ?, applyBeforeDate =?, finishDate = ?, " +
                 " survivalDate = ?, teamNumber = ?, teamMax = ?, memberMax = ?, " +
                 " createDate = ?, grade = ?, keyWord = ?, info = ?, " +
-                " require = ?, gain = ?, priority = ?, status = ?, " +
+                " requirement = ?, gain = ?, priority = ?, status = ?, " +
                 " creatorId = ?, teacherId = ? WHERE id = ?;";
         try {
             connection = DBUtils.getConnetction();
@@ -161,7 +161,7 @@ public class ProjectDAOImpl implements ProjectDAO{
             preparedStatement.setString(10, projectBean.getKeyWord());
             preparedStatement.setString(11, projectBean.getInfo());
 
-            preparedStatement.setString(12, projectBean.getRequire());
+            preparedStatement.setString(12, projectBean.getRequirement());
             preparedStatement.setString(13, projectBean.getGain());
             preparedStatement.setInt(   14, projectBean.getPriority());
             preparedStatement.setInt(   15, projectBean.getStatus());
