@@ -463,5 +463,123 @@ public class TeamDAOImpl implements TeamDAO {
 			throw e;
 		}
 	}
+
+
+	/**
+	 * 接下来是关系表的操作
+	 */
+
+	/**
+	 * 添加关系
+	 *
+	 * @param teamId
+	 * @param projectId
+	 * @return
+	 */
+	@Override
+	public boolean setTeamProject(int teamId, int projectId) throws SQLException{
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String sql = "INSERT INTO ECollaborationWeb.team_project (teamId, projectId) VALUES (?,?);";
+		try {
+			connection = DBUtils.getConnetction();
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, teamId);
+			preparedStatement.setInt(2, projectId);
+			int flag = preparedStatement.executeUpdate();
+			if (flag ==1 ){
+				return true;
+			}
+			return false;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}finally {
+			DBUtils.close(null, preparedStatement, connection);
+		}
+	}
+
+	/**
+	 * 删除关系
+	 *
+	 * @param teamId
+	 * @param projectId
+	 * @return
+	 */
+	@Override
+	public boolean deleteTeamProject(int teamId, int projectId) throws SQLException{
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String sql = "DELETE FROM ECollaborationWeb.team_project WHERE teamId =? AND projectId = ?;";
+		try {
+			connection = DBUtils.getConnetction();
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, teamId);
+			preparedStatement.setInt(2, projectId);
+			int flag = preparedStatement.executeUpdate();
+			if (flag >= 1)
+				return true;
+			return false;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}finally {
+			DBUtils.close(null, preparedStatement, connection);
+		}
+	}
+
+	/**
+	 * 删除关系
+	 *
+	 * @param teamId
+	 * @return
+	 */
+	@Override
+	public boolean deleteTeam_Project(int teamId) throws SQLException{
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String sql = "DELETE FROM ECollaborationWeb.team_project WHERE teamId =?;";
+		try {
+			connection = DBUtils.getConnetction();
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, teamId);
+			if (preparedStatement.executeUpdate() >= 1){
+				return true;
+			}
+			return false;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}finally {
+			DBUtils.close(null, preparedStatement, connection);
+		}
+	}
+
+	/**
+	 * 删除关系
+	 *
+	 * @param projectId
+	 * @return
+	 */
+	@Override
+	public boolean deleteProject_Team(int projectId) throws SQLException{
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String sql = "DELETE FROM ECollaborationWeb.team_project WHERE projectId =?;";
+		try {
+			connection = DBUtils.getConnetction();
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, projectId);
+			if (preparedStatement.executeUpdate() >= 1){
+				return true;
+			}
+			return false;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}finally {
+			DBUtils.close(null, preparedStatement, connection);
+		}
+	}
 }
 

@@ -173,5 +173,135 @@ public class StudentDaoImpl implements StudentDAO {
 
 
     }
+
+    /**
+     * 设定文件关系表
+     *
+     * @param studentId
+     * @param teamId
+     * @param projectId
+     * @param fileId
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public boolean setFile(int studentId, int teamId, int projectId, int fileId) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        String sql = "INSERT INTO ECollaborationWeb.student_team_project_file " +
+                " (creatorId, projectId, fileId, teamId) VALUES (?,?,?,?);";
+        try {
+            connection = DBUtils.getConnetction();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, studentId);
+            preparedStatement.setInt(2, projectId);
+            preparedStatement.setInt(3, fileId);
+            preparedStatement.setInt(4, teamId);
+            int flag = preparedStatement.executeUpdate();
+            if (flag ==1 ){
+                return true;
+            }
+            return false;
+        }catch (SQLException e){
+            e.printStackTrace();
+            throw e;
+        }finally {
+            DBUtils.close(null, preparedStatement, connection);
+        }
+    }
+
+    /**
+     * 设定计划关系表
+     *
+     * @param studentId
+     * @param teamId
+     * @param projectId
+     * @param planId
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public boolean setPlan(int studentId, int teamId, int projectId, int planId) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        String sql = "INSERT INTO ECollaborationWeb.student_team_project_plan " +
+                " (studentId, projectId, planId, teamId) VALUES (?,?,?,?);";
+        try {
+            connection = DBUtils.getConnetction();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, studentId);
+            preparedStatement.setInt(2, projectId);
+            preparedStatement.setInt(3, planId);
+            preparedStatement.setInt(4, teamId);
+            int flag = preparedStatement.executeUpdate();
+            if (flag ==1 ){
+                return true;
+            }
+            return false;
+        }catch (SQLException e){
+            e.printStackTrace();
+            throw e;
+        }finally {
+            DBUtils.close(null, preparedStatement, connection);
+        }
+    }
+
+    /**
+     * 删除文件关系，因为这个表的关键就是文件，所以不通过别的来删除了。
+     *
+     * @param fileId
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public boolean deleteFile(int fileId) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        String sql = "DELETE FROM ECollaborationWeb.student_team_project_file " +
+                "WHERE fileId =? ;";
+        try {
+            connection = DBUtils.getConnetction();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, fileId);
+            int flag = preparedStatement.executeUpdate();
+            if (flag >= 1)
+                return true;
+            return false;
+        }catch (SQLException e){
+            e.printStackTrace();
+            throw e;
+        }finally {
+            DBUtils.close(null, preparedStatement, connection);
+        }
+    }
+
+    /**
+     * 删除计划关系
+     *
+     * @param planId
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public boolean deletePlan(int planId) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        String sql = "DELETE FROM ECollaborationWeb.student_team_project_plan " +
+                " WHERE planId = ?;";
+        try {
+            connection = DBUtils.getConnetction();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, planId);
+            int flag = preparedStatement.executeUpdate();
+            if (flag >= 1)
+                return true;
+            return false;
+        }catch (SQLException e){
+            e.printStackTrace();
+            throw e;
+        }finally {
+            DBUtils.close(null, preparedStatement, connection);
+        }
+    }
 }
 

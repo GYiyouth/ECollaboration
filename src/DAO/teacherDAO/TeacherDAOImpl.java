@@ -147,5 +147,93 @@ public class TeacherDAOImpl implements TeacherDAO {
 			DBUtils.close(resultSet, preparedStatement, connection);
 		}
 	}
+
+	/**
+	 * 设定教师项目关系
+	 *
+	 * @param teacherId
+	 * @param projectId
+	 * @return
+	 * @throws SQLException
+	 */
+	@Override
+	public boolean setTeacherProject(int teacherId, int projectId) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String sql = "INSERT INTO ECollaborationWeb.teacher_project (teacherId, projectId) " +
+				" VALUES (?,?);";
+		try {
+			connection = DBUtils.getConnetction();
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, teacherId);
+			preparedStatement.setInt(2, projectId);
+			int flag = preparedStatement.executeUpdate();
+			if (flag >= 1 ){
+				return true;
+			}
+			return false;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}finally {
+			DBUtils.close(null, preparedStatement, connection);
+		}
+	}
+
+	/**
+	 * 删除关系，通过projectId
+	 *
+	 * @param projectId
+	 * @return
+	 * @throws SQLException
+	 */
+	@Override
+	public boolean deleteProject_Teacher(int projectId) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String sql = "DELETE FROM ECollaborationWeb.teacher_project WHERE projectId = ?;";
+		try {
+			connection = DBUtils.getConnetction();
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, projectId);
+			int flag = preparedStatement.executeUpdate();
+			if (flag >= 1)
+				return true;
+			return false;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}finally {
+			DBUtils.close(null, preparedStatement, connection);
+		}
+	}
+
+	/**
+	 * 删除关系，通过teacherId
+	 *
+	 * @param teacherId
+	 * @return
+	 * @throws SQLException
+	 */
+	@Override
+	public boolean deleteTeacher_Project(int teacherId) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String sql = "DELETE FROM ECollaborationWeb.teacher_project WHERE teacherId = ?;";
+		try {
+			connection = DBUtils.getConnetction();
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, teacherId);
+			int flag = preparedStatement.executeUpdate();
+			if (flag >= 1)
+				return true;
+			return false;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}finally {
+			DBUtils.close(null, preparedStatement, connection);
+		}
+	}
 }
 

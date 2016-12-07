@@ -144,4 +144,34 @@ public interface TeamDAO {
 	public ArrayList<Integer> getTeamIdListByTaskId(int taskId) throws SQLException;
 
 
+	/**
+	 * 添加关系
+	 * @param teamId
+	 * @param projectId
+	 * @return
+	 */
+	public boolean setTeamProject(int teamId, int projectId) throws SQLException;
+
+	/**
+	 * 删除关系
+	 * @param teamId
+	 * @param projectId
+	 * @return
+	 */
+	public boolean deleteTeamProject(int teamId, int projectId) throws SQLException;
+
+	/**
+	 * 删除关系
+	 * @param teamId
+	 * @return
+	 */
+	public boolean deleteTeam_Project(int teamId) throws SQLException;
+
+	/**
+	 * 删除关系
+	 * @param teamId
+	 * @return
+	 */
+	public boolean deleteProject_Team(int teamId) throws SQLException;
+
 }
