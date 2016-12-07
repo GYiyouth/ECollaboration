@@ -28,63 +28,20 @@ public class ProjectDAOImpl implements ProjectDAO{
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        String sql = "INSERT INTO ECollaborationWeb.project " +
-                " (name, applyBeforeDate, finishDate, " +
-                " survivalDate, teamNumber, teamMax, memberMax, " +
-                " createDate, grade, keyWord, info, " +
-                " requirement, gain, priority, status, " +
-                " creatorId, teacherId) " +
-                " VALUES (?,?,?, ?,?,?,?, ?,?,?,?, ?,?,?,?, ?,?) ;";
+        String sql = "INSERT INTO ECollaborationWeb.project (name) VALUES (?);";
         try {
             connection = DBUtils.getConnetction();
             preparedStatement = connection.prepareStatement(sql);
-            System.out.println(sql);
             preparedStatement.setString(1, projectBean.getName());
-            preparedStatement.setString(2, projectBean.getApplyBeforeDate());
-            preparedStatement.setString(3, projectBean.getFinishDate());
-
-            preparedStatement.setString(4, projectBean.getSurvivalDate());
-            if(projectBean.getTeamMax()==null) {
-                preparedStatement.setNull(5, projectBean.getTeamNumber());
-            }else{
-                preparedStatement.setInt(   5, projectBean.getTeamNumber());
-            }
-            preparedStatement.setNull(6, projectBean.getTeamNumber());
-            preparedStatement.setNull(7, projectBean.getTeamNumber());
-            preparedStatement.setNull(8, projectBean.getTeamNumber());
-            preparedStatement.setNull(9, projectBean.getTeamNumber());
-            preparedStatement.setNull(10, projectBean.getTeamNumber());
-            preparedStatement.setNull(11, projectBean.getTeamNumber());
-            preparedStatement.setNull(12, projectBean.getTeamNumber());
-            preparedStatement.setNull(13, projectBean.getTeamNumber());
-            preparedStatement.setNull(14, projectBean.getTeamNumber());
-            preparedStatement.setNull(15, projectBean.getTeamNumber());
-            preparedStatement.setNull(16, projectBean.getTeamNumber());
-            preparedStatement.setNull(17, projectBean.getTeamNumber());
-
-           /* preparedStatement.setInt(   6, projectBean.getTeamMax());
-            preparedStatement.setInt(   7, projectBean.getMemberMax());
-
-            preparedStatement.setString(8, projectBean.getCreateDate());
-            preparedStatement.setString(9, projectBean.getGrade());
-            preparedStatement.setString(10, projectBean.getKeyWord());
-            preparedStatement.setString(11, projectBean.getInfo());
-
-            preparedStatement.setString(12, projectBean.getRequirement());
-            preparedStatement.setString(13, projectBean.getGain());
-            preparedStatement.setInt(   14, projectBean.getPriority());
-            preparedStatement.setInt(   15, projectBean.getStatus());
-
-            preparedStatement.setInt(   16, projectBean.getCreatorId());
-            preparedStatement.setInt(   17, projectBean.getTeacherId());*/
             int flag = preparedStatement.executeUpdate();
-
             if (flag == 1){
                 sql = "SELECT LAST_INSERT_ID();";
                 preparedStatement = connection.prepareStatement(sql);
                 resultSet = preparedStatement.executeQuery();
-                if (resultSet.next())
-                    return resultSet.getInt(1);
+                if (resultSet.next()) {
+                    projectBean.setId(resultSet.getInt(1));
+                    updateInfo(projectBean, projectBean.getId());
+                }
             }
             return null;
         }catch (SQLException e){
@@ -158,36 +115,63 @@ public class ProjectDAOImpl implements ProjectDAO{
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        String sql = "UPDATE ECollaborationWeb.project SET name = ?, applyBeforeDate =?, finishDate = ?, " +
-                " survivalDate = ?, teamNumber = ?, teamMax = ?, memberMax = ?, " +
-                " createDate = ?, grade = ?, keyWord = ?, info = ?, " +
-                " requirement = ?, gain = ?, priority = ?, status = ?, " +
-                " creatorId = ?, teacherId = ? WHERE id = ?;";
+        String sql = "UPDATE ECollaborationWeb.project SET ";
         try {
             connection = DBUtils.getConnetction();
+            if (projectBean.getName() != null){
+                sql = sql + "name = '" + projectBean.getName() + "' ,";
+            }
+            if (projectBean.getApplyBeforeDate() != null ){
+                sql = sql + "applyBeforeDate = '" + projectBean.getApplyBeforeDate() + "' ,";
+            }
+            if (projectBean.getFinishDate() != null){
+                sql = sql + "finishDate = '" + projectBean.getFinishDate() + "' ,";
+            }
+            if (projectBean.getSurvivalDate() != null){
+                sql = sql + "survivalDate = '" + projectBean.getSurvivalDate() + "' ;";
+            }
+            if (projectBean.getTeamNumber() !=null ){
+                sql = sql + "teamNumber = " + projectBean.getTeamNumber() + " ,";
+            }
+            if (projectBean.getTeamMax() != null){
+                sql = sql + "teamMax = " + projectBean.getTeamMax() + " ,";
+            }
+            if (projectBean.getMemberMax() != null){
+                sql = sql + "memberMax = " + projectBean.getMemberMax() + " ,";
+            }
+            if (projectBean.getCreateDate() != null){
+                sql = sql + "createDate = '" + projectBean.getCreateDate() + "' ,";
+            }
+            if (projectBean.getGrade() != null){
+                sql = sql + "grade = '" + projectBean.getGrade() + "' ,";
+            }
+            if (projectBean.getKeyWord() != null){
+                sql = sql + "keyWord = '" + projectBean.getKeyWord() + "' ,";
+            }
+            if (projectBean.getInfo() != null){
+                sql = sql + "info = '" + projectBean.getInfo() + "' ,";
+            }
+            if (projectBean.getRequirement() != null){
+                sql = sql + "require = '" + projectBean.getRequirement() + "' ,";
+            }
+            if (projectBean.getGain() != null){
+                sql = sql + "gain = '" + projectBean.getGain() + "' ,";
+            }
+            if (projectBean.getPriority() != null){
+                sql = sql + "priority = " + projectBean.getPriority() + " ,";
+            }
+            if (projectBean.getStatus() != null){
+                sql = sql + "status = " + projectBean.getStatus() + " ,";
+            }
+            if (projectBean.getCreatorId() != null){
+                sql = sql + "creatorId = " + projectBean.getCreatorId() + " ,";
+            }
+            if (projectBean.getTeacherId() != null){
+                sql = sql + "teacherId = " + projectBean.getTeacherId() + " ,";
+            }
+            sql = sql.substring(0, sql.lastIndexOf(","));
+            sql = sql + "where id = " + id;
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, projectBean.getName());
-            preparedStatement.setString(2, projectBean.getApplyBeforeDate());
-            preparedStatement.setString(3, projectBean.getFinishDate());
-
-            preparedStatement.setString(4, projectBean.getSurvivalDate());
-            preparedStatement.setInt(   5, projectBean.getTeamNumber());
-            preparedStatement.setInt(   6, projectBean.getTeamMax());
-            preparedStatement.setInt(   7, projectBean.getMemberMax());
-
-            preparedStatement.setString(8, projectBean.getCreateDate());
-            preparedStatement.setString(9, projectBean.getGrade());
-            preparedStatement.setString(10, projectBean.getKeyWord());
-            preparedStatement.setString(11, projectBean.getInfo());
-
-            preparedStatement.setString(12, projectBean.getRequirement());
-            preparedStatement.setString(13, projectBean.getGain());
-            preparedStatement.setInt(   14, projectBean.getPriority());
-            preparedStatement.setInt(   15, projectBean.getStatus());
-
-            preparedStatement.setInt(   16, projectBean.getCreatorId());
-            preparedStatement.setInt(   17, projectBean.getTeacherId());
-            preparedStatement.setInt(   18, id);
             int flag = preparedStatement.executeUpdate();
             if (flag == 1){
                 return true;
@@ -493,5 +477,121 @@ public class ProjectDAOImpl implements ProjectDAO{
         }
     }
 
+    /**
+     * 设定项目和任务的关系
+     *
+     * @param projectId
+     * @param taskId
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public boolean setProjectTask(int projectId, int taskId) throws SQLException {
 
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        String sql = "INSERT INTO ECollaborationWeb.project_task (projectId, taskId) VALUES (?,?);";
+        try {
+            connection = DBUtils.getConnetction();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, projectId);
+            preparedStatement.setInt(2, taskId);
+            int flag = preparedStatement.executeUpdate();
+            if (flag ==1 ){
+                return true;
+            }
+            return false;
+        }catch (SQLException e){
+            e.printStackTrace();
+            throw e;
+        }finally {
+            DBUtils.close(null, preparedStatement, connection);
+        }
+    }
+
+    /**
+     * 删除关系
+     *
+     * @param projectId
+     * @param taskId
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public boolean deleteProjectTask(int projectId, int taskId) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        String sql = "DELETE FROM ECollaborationWeb.project_task WHERE taskId =? AND projectId = ?;";
+        try {
+            connection = DBUtils.getConnetction();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, taskId);
+            preparedStatement.setInt(2, projectId);
+            int flag = preparedStatement.executeUpdate();
+            if (flag == 1)
+                return true;
+            return false;
+        }catch (SQLException e){
+            e.printStackTrace();
+            throw e;
+        }finally {
+            DBUtils.close(null, preparedStatement, connection);
+        }
+    }
+
+    /**
+     * 删除关系，通过projectId
+     *
+     * @param projectId
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public boolean deleteProject_Task(int projectId) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        String sql = "DELETE FROM ECollaborationWeb.project_task WHERE projectId =?;";
+        try {
+            connection = DBUtils.getConnetction();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, projectId);
+            if (preparedStatement.executeUpdate() == 1){
+                return true;
+            }
+            return false;
+        }catch (SQLException e){
+            e.printStackTrace();
+            throw e;
+        }finally {
+            DBUtils.close(null, preparedStatement, connection);
+        }
+    }
+
+    /**
+     * 删除关系，通过taskId
+     *
+     * @param taskId
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public boolean deleteTask_Project(int taskId) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        String sql = "DELETE FROM ECollaborationWeb.project_task WHERE taskId =?;";
+        try {
+            connection = DBUtils.getConnetction();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, taskId);
+            if (preparedStatement.executeUpdate() == 1){
+                return true;
+            }
+            return false;
+        }catch (SQLException e){
+            e.printStackTrace();
+            throw e;
+        }finally {
+            DBUtils.close(null, preparedStatement, connection);
+        }
+    }
 }

@@ -205,6 +205,38 @@ public interface ProjectDAO {
 	 */
 	public ArrayList<Integer> getProjectIdListByTeacherIdTeamId(int teacherId, int teamId) throws SQLException;
 
+	/**
+	 * 设定项目和任务的关系
+	 * @param projectId
+	 * @param taskId
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean setProjectTask(int projectId, int taskId) throws SQLException;
 
+	/**
+	 * 删除关系
+	 * @param projectId
+	 * @param taskId
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean deleteProjectTask(int projectId, int taskId) throws SQLException;
+
+	/**
+	 * 删除关系，通过projectId
+	 * @param projectId
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean deleteProject_Task(int projectId) throws SQLException;
+
+	/**
+	 * 删除关系，通过taskId
+	 * @param taskId
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean deleteTask_Project(int taskId) throws SQLException;
 
 }
