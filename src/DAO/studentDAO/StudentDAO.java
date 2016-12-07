@@ -43,4 +43,41 @@ public interface StudentDAO {
      */
     public StudentBean getInfoById(Integer id) throws SQLException;
 
+    /**
+     * 设定文件关系表
+     * @param studentId
+     * @param teamId
+     * @param projectId
+     * @param fileId
+     * @return
+     * @throws SQLException
+     */
+    public boolean setFile(int studentId, int teamId, int projectId, int fileId) throws SQLException;
+
+    /**
+     * 设定计划关系表
+     * @param studentId
+     * @param teamId
+     * @param projectId
+     * @param planId
+     * @return
+     * @throws SQLException
+     */
+    public boolean setPlan(int studentId, int teamId, int projectId, int planId) throws SQLException;
+
+    /**
+     * 删除文件关系，因为这个表的关键就是文件，所以不通过别的来删除了。
+     * @param fileId
+     * @return
+     * @throws SQLException
+     */
+    public boolean deleteFile(int fileId) throws SQLException;
+
+    /**
+     * 删除计划关系
+     * @param planId
+     * @return
+     * @throws SQLException
+     */
+    public boolean deletePlan(int planId) throws SQLException;
 }

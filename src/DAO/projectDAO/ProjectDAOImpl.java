@@ -528,7 +528,7 @@ public class ProjectDAOImpl implements ProjectDAO{
             preparedStatement.setInt(1, taskId);
             preparedStatement.setInt(2, projectId);
             int flag = preparedStatement.executeUpdate();
-            if (flag == 1)
+            if (flag >= 1)
                 return true;
             return false;
         }catch (SQLException e){
@@ -555,7 +555,7 @@ public class ProjectDAOImpl implements ProjectDAO{
             connection = DBUtils.getConnetction();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, projectId);
-            if (preparedStatement.executeUpdate() == 1){
+            if (preparedStatement.executeUpdate() >= 1){
                 return true;
             }
             return false;
@@ -583,7 +583,7 @@ public class ProjectDAOImpl implements ProjectDAO{
             connection = DBUtils.getConnetction();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, taskId);
-            if (preparedStatement.executeUpdate() == 1){
+            if (preparedStatement.executeUpdate() >= 1){
                 return true;
             }
             return false;

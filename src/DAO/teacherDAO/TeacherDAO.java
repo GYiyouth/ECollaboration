@@ -40,4 +40,28 @@ public interface TeacherDAO {
 	 */
 	public TeacherBean getInfoById(Integer teacherId) throws SQLException;
 
+	/**
+	 * 设定教师项目关系
+	 * @param teacherId
+	 * @param projectId
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean setTeacherProject(int teacherId, int projectId)throws SQLException;
+
+	/**
+	 * 删除关系，通过projectId
+	 * @param projectId
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean deleteProject_Teacher(int projectId) throws SQLException;
+
+	/**
+	 * 删除关系，通过teacherId
+	 * @param teacherId
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean deleteTeacher_Project(int teacherId) throws SQLException;
 }

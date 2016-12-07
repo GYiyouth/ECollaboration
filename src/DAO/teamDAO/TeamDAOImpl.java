@@ -480,7 +480,6 @@ public class TeamDAOImpl implements TeamDAO {
 	public boolean setTeamProject(int teamId, int projectId) throws SQLException{
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-//		ResultSet resultSet = null;
 		String sql = "INSERT INTO ECollaborationWeb.team_project (teamId, projectId) VALUES (?,?);";
 		try {
 			connection = DBUtils.getConnetction();
@@ -518,7 +517,7 @@ public class TeamDAOImpl implements TeamDAO {
 			preparedStatement.setInt(1, teamId);
 			preparedStatement.setInt(2, projectId);
 			int flag = preparedStatement.executeUpdate();
-			if (flag == 1)
+			if (flag >= 1)
 				return true;
 			return false;
 		}catch (SQLException e){
@@ -544,7 +543,7 @@ public class TeamDAOImpl implements TeamDAO {
 			connection = DBUtils.getConnetction();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, teamId);
-			if (preparedStatement.executeUpdate() == 1){
+			if (preparedStatement.executeUpdate() >= 1){
 				return true;
 			}
 			return false;
@@ -571,7 +570,7 @@ public class TeamDAOImpl implements TeamDAO {
 			connection = DBUtils.getConnetction();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, projectId);
-			if (preparedStatement.executeUpdate() == 1){
+			if (preparedStatement.executeUpdate() >= 1){
 				return true;
 			}
 			return false;
