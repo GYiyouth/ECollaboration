@@ -85,7 +85,7 @@ public class ProjectDAOImpl implements ProjectDAO{
                 projectBean.setGrade(           resultSet.getString("grade"));
                 projectBean.setKeyWord(         resultSet.getString("keyWord"));
                 projectBean.setInfo(            resultSet.getString("info"));
-                projectBean.setRequire(         resultSet.getString("require"));
+                projectBean.setRequirement(     resultSet.getString("require"));
                 projectBean.setGain(            resultSet.getString("gain"));
                 projectBean.setPriority(        resultSet.getInt("priority"));
                 projectBean.setStatus(          resultSet.getInt("status"));
@@ -151,8 +151,8 @@ public class ProjectDAOImpl implements ProjectDAO{
             if (projectBean.getInfo() != null){
                 sql = sql + "info = '" + projectBean.getInfo() + "' ,";
             }
-            if (projectBean.getRequire() != null){
-                sql = sql + "require = '" + projectBean.getRequire() + "' ,";
+            if (projectBean.getRequirement() != null){
+                sql = sql + "require = '" + projectBean.getRequirement() + "' ,";
             }
             if (projectBean.getGain() != null){
                 sql = sql + "gain = '" + projectBean.getGain() + "' ,";
