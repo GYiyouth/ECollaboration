@@ -201,7 +201,7 @@ public class NoticeDAOImpl implements NoticeDAO {
      */
     @Override
     public ArrayList<Integer> getNoticeIdByCreatorId(int creatorId) throws SQLException {
-        ArrayList<Integer> list = new ArrayList<Integer>();
+        ArrayList<Integer> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -265,7 +265,7 @@ public class NoticeDAOImpl implements NoticeDAO {
      */
     @Override
     public ArrayList<Integer> getNoticeIdByReceiverId(int receiverId) throws SQLException {
-        ArrayList<Integer> list = new ArrayList<Integer>();
+        ArrayList<Integer> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -361,7 +361,7 @@ public class NoticeDAOImpl implements NoticeDAO {
      * @throws SQLException
      */
     @Override
-    public boolean updateReadFlagByReceiverId(int receiverId, int noticeId) throws SQLException {
+    public boolean updateReadFlagByReceiverIdNoticeId(int receiverId, int noticeId) throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
         String sql = "update ecollaborationweb.notice_receiver set readFlag=1 where receiverId = ? and noticeId=?;";

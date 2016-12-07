@@ -117,7 +117,7 @@ public interface NoticeDAO {
      * @throws SQLException
      */
 
-    public boolean updateReadFlagByReceiverId(int receiverId, int noticeId) throws SQLException;
+    public boolean updateReadFlagByReceiverIdNoticeId(int receiverId, int noticeId) throws SQLException;
 
 
 }
