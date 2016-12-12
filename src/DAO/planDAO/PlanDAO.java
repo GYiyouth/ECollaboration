@@ -17,16 +17,25 @@ public interface PlanDAO {
     public Integer addPlan(PlanBean planBean) throws SQLException;
 
     /**
-     * 发计划给学生自己
+     * 添加计划给某个学生
      *
      * @param planId,projectId,studentId
      * @return boolean
      * @throws SQLException
      */
-    public boolean addPlanToStudentSelf(int planId, int studentId, int projectId) throws SQLException;
+    public boolean addPlanToStudent(int planId, int studentId, int projectId) throws SQLException;
 
     /**
-     * 发计划给团队
+     * 添加计划给某个项目(发布人应该是老师)
+     *
+     * @param planId,projectId
+     * @return boolean
+     * @throws SQLException
+     */
+    public boolean addPlanToProject(int planId, int projectId) throws SQLException;
+
+    /**
+     * 发计划给团队(组长)
      *
      * @param planId,teamId,projectId
      * @return boolean
@@ -55,8 +64,8 @@ public interface PlanDAO {
     /**
      * 通过creatorId,获取所有计划id
      *
-     * @param planId
-     * @return noticeId
+     * @param creatorId
+     * @return planId
      * @throws SQLException
      */
     public ArrayList<Integer> getPlanIdByCreatorId(int creatorId) throws SQLException;
@@ -71,6 +80,33 @@ public interface PlanDAO {
     public ArrayList<Integer> getPlanIdByStudentId(int studentId) throws SQLException;
 
     /**
+     * 通过studentId,projectId 获取所有计划id
+     *
+     * @param studentId,projectId
+     * @return planId
+     * @throws SQLException
+     */
+    public ArrayList<Integer> getPlanIdByStudentIdProjectId(int studentId, int projectId) throws SQLException;
+
+    /**
+     * 通过projectId,获取所有计划id
+     *
+     * @param projectId
+     * @return planId
+     * @throws SQLException
+     */
+    public ArrayList<Integer> getPlanIdByProjectId(int projectId) throws SQLException;
+
+    /**
+     * 通过projectId,teacherId获取所有计划id
+     *  老师发给某个项目的所有planid
+     * @param projectId,teacherId
+     * @return planId
+     * @throws SQLException
+     */
+    public ArrayList<Integer> getPlanIdByProjectIdTeacherId(int projectId, int teacherId) throws SQLException;
+
+    /**
      * 通过teamId,获取所有计划id
      *
      * @param teamId
@@ -80,13 +116,22 @@ public interface PlanDAO {
     public ArrayList<Integer> getPlanIdByTeamId(int teamId) throws SQLException;
 
     /**
-     * 老师发给某个项目的所有计划
-     *
-     * @param projectId,teacherId
+     *  组长发给某个团队的所有planid
+     * @param studentId,teamId
      * @return planId
      * @throws SQLException
      */
-    public ArrayList<Integer> getPlanIdByProjectIdTeacherId(int projectId, int teacherId) throws SQLException;
+    public ArrayList<Integer> getPlanIdByTeamIdStudentId(int teamId, int studentId) throws SQLException;
+
+    /**
+     * 获取计划id列表，通过团队id，项目id
+     *
+     * @param teamId
+     * @param projectId
+     * @return
+     * @throws SQLException
+     */
+    public ArrayList<Integer> getPlanIdListByTeamIdProjectId(int teamId, int projectId) throws SQLException;
 
     /**
      * 删除计划
@@ -106,6 +151,32 @@ public interface PlanDAO {
      */
     public boolean deletePlanInrelationByPlanId(int planId) throws SQLException;
 
+    /**
+     * 删除发给某个项目所有计划
+     *
+     * @param projectId
+     * @return boolean
+     * @throws SQLException
+     */
+    public boolean deletePlanToProjectByPlanId(int projectId) throws SQLException;
+
+    /**
+     * 删除发给某个团队所有计划
+     *
+     * @param teamId
+     * @return boolean
+     * @throws SQLException
+     */
+    public boolean deletePlanToTeamByPlanId(int teamId) throws SQLException;
+
+    /**
+     * 删除发给某个学生所有计划
+     *
+     * @param studentId
+     * @return boolean
+     * @throws SQLException
+     */
+    public boolean deletePlanToStudentByPlanId(int studentId) throws SQLException;
 
     /**
      * 修改计划
@@ -117,163 +188,32 @@ public interface PlanDAO {
     public boolean updatePlanByPlanBean(PlanBean planBean) throws SQLException;
 
     /**
-     * 获取计划id列表，通过团队id
+     * 修改计划发给某个项目的学生
      *
-     * @param teamId
-     * @return
+     * @param planId,projectId,studentId
+     * @return boolean
      * @throws SQLException
      */
-    public ArrayList<Integer> getPlanIdListByTeamId(int teamId) throws SQLException;
+    public boolean updatePlanToStudent(int planId, int studentId, int projectId) throws SQLException;
 
     /**
-     * 获取计划id列表，通过项目id
+     * 修改计划发给某个团队
      *
-     * @param projectId
-     * @return
+     * @param planId,projectId,teamId
+     * @return boolean
      * @throws SQLException
      */
-    public ArrayList<Integer> getPlanIdListByProjectId(int projectId) throws SQLException;
+    public boolean updatePlanToTeam(int planId, int teamId, int projectId) throws SQLException;
 
     /**
-     * 获取计划id列表，通过团队id，项目id
+     * 修改计划发给某个项目
      *
-     * @param teamId
-     * @param projectId
-     * @return
+     * @param planId,projectId
+     * @return boolean
      * @throws SQLException
      */
-    public ArrayList<Integer> getPlanIdListByTeamIdProjectId(int teamId, int projectId) throws SQLException;
+    public boolean updatePlanToProject(int planId, int projectId) throws SQLException;
 
-
-//    /**
-//     * 获取团队id列表，通过计划id
-//     *
-//     * @param planId
-//     * @return
-//     * @throws SQLException
-//     */
-//    public ArrayList<Integer> getTeamIdList(int planId) throws SQLException;
-
-//    /**
-//     * 获取团队id列表，通过计划id,项目id
-//     *
-//     * @param planId
-//     * @param projectId
-//     * @return
-//     * @throws SQLException
-//     */
-//    public ArrayList<Integer> getTeamIdListByProjectId(int planId, int projectId) throws SQLException;
-
-//    /**
-//     * 获取团队id列表，通过计划id，教师id
-//     *
-//     * @param planId
-//     * @param teacherId
-//     * @return
-//     * @throws SQLException
-//     */
-//    public ArrayList<Integer> getTeamIdListByTeacherId(int planId, int teacherId) throws SQLException;
-
-//    /**
-//     * 获取团队id列表，通过计划id，教师id，项目id
-//     *
-//     * @param planId
-//     * @param teacherId
-//     * @param projectId
-//     * @return
-//     * @throws SQLException
-//     */
-//    public ArrayList<Integer> getTeamIdListByTeacherIdProjectId(int planId, int teacherId, int projectId) throws SQLException;
-
-//    /**
-//     * 获取教师id列表，通过计划id
-//     *
-//     * @param planId
-//     * @return
-//     * @throws SQLException
-//     */
-//    public ArrayList<Integer> getTeacherIdList(int planId) throws SQLException;
-//
-//    /**
-//     * 获取教师id列表，通过计划id，团队id
-//     *
-//     * @param planId
-//     * @param teamId
-//     * @return
-//     * @throws SQLException
-//     */
-//    public ArrayList<Integer> getTeacherIdListByTeamId(int planId, int teamId) throws SQLException;
-//
-//    /**
-//     * 获取教师id列表，通过计划id，项目id
-//     *
-//     * @param planId
-//     * @param projectId
-//     * @return
-//     * @throws SQLException
-//     */
-//    public ArrayList<Integer> getTeacherIdListByProjectId(int planId, int projectId) throws SQLException;
-//
-//    /**
-//     * 获取教师id列表，通过计划id，团队id，项目id
-//     *
-//     * @param planId
-//     * @param teamId
-//     * @param projectId
-//     * @return
-//     * @throws SQLException
-//     */
-//    public ArrayList<Integer> getTeacherIdListByTeamIdProjectId(int planId, int teamId, int projectId) throws SQLException;
-//
-//    /**
-//     * 获取项目id列表，通过计划id
-//     *
-//     * @param planId
-//     * @return
-//     * @throws SQLException
-//     */
-//    public ArrayList<Integer> getProjectIdList(int planId) throws SQLException;
-//
-//    /**
-//     * 获取项目id列表，通过计划id，项目id
-//     *
-//     * @param planId
-//     * @param teamId
-//     * @return
-//     * @throws SQLException
-//     */
-//    public ArrayList<Integer> getProjectIdListByTeamId(int planId, int teamId) throws SQLException;
-//
-//    /**
-//     * 获取项目id列表，通过计划id，教师id
-//     *
-//     * @param planId
-//     * @param teacherId
-//     * @return
-//     * @throws SQLException
-//     */
-//    public ArrayList<Integer> getProjectIdListByTeacherId(int planId, int teacherId) throws SQLException;
-//
-//    /**
-//     * 获取项目id列表，通过计划id，团队id，教师id
-//     *
-//     * @param planId
-//     * @param teamId
-//     * @param teacherId
-//     * @return
-//     * @throws SQLException
-//     */
-//    public ArrayList<Integer> getProjectIdListByTeamIdTeacherId(int planId, int teamId, int teacherId) throws SQLException;
-//
-//    /**
-//     * 获取项目id列表，通过计划id,团队id
-//     *
-//     * @param planId
-//     * @param teamId
-//     * @return
-//     * @throws SQLException
-//     */
-//    public ArrayList<Integer> getProjectIdListByTeamIdPlanId(int planId, int teamId) throws SQLException;
 }
 
 

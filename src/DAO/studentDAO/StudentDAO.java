@@ -4,6 +4,7 @@ import bean.domain.StudentBean;
 import bean.domain.TeacherBean;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Created by GR on 2016/12/4.?
@@ -80,4 +81,45 @@ public interface StudentDAO {
      * @throws SQLException
      */
     public boolean deletePlan(int planId) throws SQLException;
+
+    /**
+     * 添加学生进某个团队
+     * @param studentId,teamId,leaderFlag
+     * @return boolean
+     * @throws SQLException
+     */
+    public boolean addStudentToTeam(int studentId, int teamId, int leaderFlag) throws SQLException;
+
+    /**
+     * 获得学生所在团队
+     * @param studentId
+     * @return teamId
+     * @throws SQLException
+     */
+    public ArrayList<Integer> getTeamIdByStudentId(int studentId) throws SQLException;
+
+    /**
+     * 修改学生所在团队
+     * @param studentId,teamId,leaderFlag
+     * @return boolean
+     * @throws SQLException
+     */
+    public boolean updateStudentToTeam(int studentId, int teamId, int leaderFlag) throws SQLException;
+
+    /**
+     * 删除团队某个学生
+     *
+     * @param teamId,studentId
+     * @return
+     * @throws SQLException
+     */
+    public boolean deleteStudentFormTeam(int teamId, int studentId) throws SQLException;
+    /**
+     * 删除团队所有学生
+     *
+     * @param teamId
+     * @return
+     * @throws SQLException
+     */
+    public boolean deleteAllStudentFormTeam(int teamId) throws SQLException;
 }

@@ -58,14 +58,14 @@ public class PlanDAOImpl implements PlanDAO {
     }
 
     /**
-     * 发计划给学生自己
+     * 添加自己的计划
      *
      * @param planId,projectId,studentId
      * @return boolean
      * @throws SQLException
      */
     @Override
-    public boolean addPlanToStudentSelf(int planId, int studentId,int projectId) throws SQLException {
+    public boolean addPlanToStudent(int planId, int studentId,int projectId) throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
         String sql = "insert into ecollaborationweb.student_team_project_plan (planId, studentId, projectId) values(?,?,?);";
@@ -88,6 +88,45 @@ public class PlanDAOImpl implements PlanDAO {
     }
 
     /**
+     * 添加计划给某个项目(发布人应该是老师)
+     *
+     * @param planId
+     * @param projectId
+     * @return boolean
+     * @throws SQLException
+     */
+    @Override
+    public boolean addPlanToProject(int planId, int projectId) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String sql = "insert into ecollaborationweb.student_team_project_plan (planId, projectId) values(?,?);";
+        try {
+            conn = DBUtils.getConnetction();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, planId);
+            ps.setInt(2, projectId);
+            if (ps.executeUpdate() == 0) {
+                return false;
+            }
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            DBUtils.close(null, ps, conn);
+        }
+    }
+
+    /**
+     * 添加计划给某个团队(组长)
+     *
+     * @param planId
+     * @param teamId
+     * @return boolean
+     * @throws SQLException
+     */
+
+    /**
      * 组长发计划给团队
      *
      * @param planId,teamId,projectId
@@ -98,7 +137,7 @@ public class PlanDAOImpl implements PlanDAO {
     public boolean addPlanToTeam(int planId, int teamId, int projectId) throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
-        String sql = "insert into ecollaborationweb.student_team_project_plan (planId, studentId, projectId) values(?,?,?);";
+        String sql = "insert into ecollaborationweb.student_team_project_plan (planId, teamId, projectId) values(?,?,?);";
         try {
             conn = DBUtils.getConnetction();
             ps = conn.prepareStatement(sql);
@@ -255,6 +294,108 @@ public class PlanDAOImpl implements PlanDAO {
     }
 
     /**
+     * 通过studentId,projectId 获取所有计划id
+     *
+     * @param studentId
+     * @param projectId
+     * @return planId
+     * @throws SQLException
+     */
+    @Override
+    public ArrayList<Integer> getPlanIdByStudentIdProjectId(int studentId, int projectId) throws SQLException {
+        ArrayList<Integer> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "select planId from ecollaborationweb.student_team_project_plan where studentId = ? and projectId = ?";
+
+        try {
+            conn = DBUtils.getConnetction();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, studentId);
+            ps.setInt(2, projectId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getInt("planId"));
+            }
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            DBUtils.close(rs, ps, conn);
+        }
+    }
+
+    /**
+     * 通过projectId,获取所有计划id
+     *
+     * @param projectId
+     * @return planId
+     * @throws SQLException
+     */
+    @Override
+    public ArrayList<Integer> getPlanIdByProjectId(int projectId) throws SQLException {
+        ArrayList<Integer> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "select planId from ecollaborationweb.student_team_project_plan where projectId = ?";
+
+        try {
+            conn = DBUtils.getConnetction();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, projectId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getInt("planId"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            DBUtils.close(rs, ps, conn);
+        }
+        return list;
+    }
+
+    /**
+     * 通过projectId,teacherId获取所有计划id
+     * 老师发给某个项目的所有planid
+     * @param projectId
+     * @param teacherId
+     * @return planId
+     * @throws SQLException
+     */
+    @Override
+    public ArrayList<Integer> getPlanIdByProjectIdTeacherId(int projectId, int teacherId) throws SQLException {
+//        SELECT planId from plan,student_team_project_plan where plan.id=student_team_project_plan.planId and student_team_project_plan.projectId = 1 and plan.creatorId=1
+        ArrayList<Integer> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT planId from plan,student_team_project_plan where plan.id=student_team_project_plan.planId " +
+                "and student_team_project_plan.projectId = ? and plan.creatorId = ?";
+
+        try {
+            conn = DBUtils.getConnetction();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, projectId);
+            ps.setInt(2, teacherId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getInt("planId"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            DBUtils.close(rs, ps, conn);
+        }
+        return list;
+    }
+
+    /**
      * 通过teamId,获取所有计划id
      *
      * @param teamId
@@ -287,28 +428,27 @@ public class PlanDAOImpl implements PlanDAO {
     }
 
     /**
-     * 老师发给某个项目的所有计划
+     * 组长发给某个团队的所有planid
      *
-     * @param projectId
-     * @param teacherId
+     * @param teamId
+     * @param studentId
      * @return planId
      * @throws SQLException
      */
     @Override
-    public ArrayList<Integer> getPlanIdByProjectIdTeacherId(int projectId, int teacherId) throws SQLException {
+    public ArrayList<Integer> getPlanIdByTeamIdStudentId(int teamId, int studentId) throws SQLException {
         ArrayList<Integer> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "select * from plan,student_team_project_plan " +
-                "WHERE plan.id=student_team_project_plan.planId " +
-                "and plan.creatorId = ? and projectId = ?";
+        String sql = "SELECT planId from plan,student_team_project_plan where plan.id=student_team_project_plan.planId " +
+                "and student_team_project_plan.teamId = ? and plan.creatorId = ?";
 
         try {
             conn = DBUtils.getConnetction();
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, teacherId);
-            ps.setInt(2, projectId);
+            ps.setInt(1, teamId);
+            ps.setInt(2, studentId);
             rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(rs.getInt("planId"));
@@ -323,37 +463,37 @@ public class PlanDAOImpl implements PlanDAO {
     }
 
     /**
-     * 老师、组长发给某个团队的所有计划
+     * 获取计划id列表，通过团队id，项目id
      *
-     * @param teamID,userId
-     * @return planId
+     * @param teamId
+     * @param projectId
+     * @return
      * @throws SQLException
      */
-    public ArrayList<Integer> getPlanIdByTeamIdTeacherId(int teamID, int userId) throws SQLException {
+    @Override
+    public ArrayList<Integer> getPlanIdListByTeamIdProjectId(int teamId, int projectId) throws SQLException {
         ArrayList<Integer> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "select * from plan,student_team_project_plan " +
-                "WHERE plan.id=student_team_project_plan.planId " +
-                "and plan.creatorId = ? and teamID = ?";
+        String sql = "select planId from ecollaborationweb.student_team_project_plan where teamId = ? and projectId = ?";
 
         try {
             conn = DBUtils.getConnetction();
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, userId);
-            ps.setInt(2, teamID);
+            ps.setInt(1, teamId);
+            ps.setInt(2, projectId);
             rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(rs.getInt("planId"));
             }
+            return list;
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;
         } finally {
             DBUtils.close(rs, ps, conn);
         }
-        return list;
     }
 
     /**
@@ -417,6 +557,96 @@ public class PlanDAOImpl implements PlanDAO {
     }
 
     /**
+     * 删除发给某个项目所有计划
+     *
+     * @param projectId
+     * @return boolean
+     * @throws SQLException
+     */
+    @Override
+    public boolean deletePlanToProjectByPlanId(int projectId) throws SQLException {
+        boolean flag = true;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String sql = "delete from ecollaborationweb.student_team_project_plan where projectId=?";
+
+        try {
+            conn = DBUtils.getConnetction();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, projectId);
+            int i = ps.executeUpdate();
+            if (i == 0) {
+                flag = false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.close(null, ps, conn);
+        }
+        return flag;
+    }
+
+    /**
+     * 删除发给某个团队所有计划
+     *
+     * @param teamId
+     * @return boolean
+     * @throws SQLException
+     */
+    @Override
+    public boolean deletePlanToTeamByPlanId(int teamId) throws SQLException {
+        boolean flag = true;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String sql = "delete from ecollaborationweb.student_team_project_plan where teamId=?";
+
+        try {
+            conn = DBUtils.getConnetction();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, teamId);
+            int i = ps.executeUpdate();
+            if (i == 0) {
+                flag = false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.close(null, ps, conn);
+        }
+        return flag;
+    }
+
+    /**
+     * 删除发给某个学生所有计划
+     *
+     * @param studentId
+     * @return boolean
+     * @throws SQLException
+     */
+    @Override
+    public boolean deletePlanToStudentByPlanId(int studentId) throws SQLException {
+        boolean flag = true;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String sql = "delete from ecollaborationweb.student_team_project_plan where studentId=?";
+
+        try {
+            conn = DBUtils.getConnetction();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, studentId);
+            int i = ps.executeUpdate();
+            if (i == 0) {
+                flag = false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.close(null, ps, conn);
+        }
+        return flag;
+    }
+
+    /**
      * 修改计划
      *
      * @param planBean
@@ -457,102 +687,108 @@ public class PlanDAOImpl implements PlanDAO {
     }
 
     /**
-     * 获取计划id列表，通过团队id
+     * 修改计划发给某个项目的学生
      *
-     * @param teamId
-     * @return
+     * @param planId
+     * @param studentId
+     * @param projectId @return boolean
      * @throws SQLException
      */
     @Override
-    public ArrayList<Integer> getPlanIdListByTeamId(int teamId) throws SQLException {
-        ArrayList<Integer> list = new ArrayList<>();
+    public boolean updatePlanToStudent(int planId, int studentId, int projectId) throws SQLException {
+        boolean flag = true;
         Connection conn = null;
         PreparedStatement ps = null;
-        ResultSet rs = null;
-        String sql = "select planId from ecollaborationweb.student_team_project_file where teamId = ?";
+
+        String sql = " UPDATE ecollaborationweb.student_team_project_plan set studentId = ?," +
+                "projectId = ? where planId = ?";
 
         try {
             conn = DBUtils.getConnetction();
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, teamId);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(rs.getInt("planId"));
+            ps.setInt(1, studentId);
+            ps.setInt(2, projectId);
+            ps.setInt(3, planId);
+            int i = ps.executeUpdate();
+            if (i == 0) {
+                flag = false;
             }
-            return list;
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;
         } finally {
-            DBUtils.close(rs, ps, conn);
+            DBUtils.close(null, ps, conn);
         }
-    }
-
-
-    /**
-     * 获取计划id列表，通过项目id
-     *
-     * @param projectId
-     * @return
-     * @throws SQLException
-     */
-    @Override
-    public ArrayList<Integer> getPlanIdListByProjectId(int projectId) throws SQLException {
-        ArrayList<Integer> list = new ArrayList<>();
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        String sql = "select planId from ecollaborationweb.student_team_project_file where projectId = ?";
-
-        try {
-            conn = DBUtils.getConnetction();
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, projectId);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(rs.getInt("planId"));
-            }
-            return list;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw e;
-        } finally {
-            DBUtils.close(rs, ps, conn);
-        }
+        return flag;
     }
 
     /**
-     * 获取计划id列表，通过团队id，项目id
+     * 修改计划发给某个团队
      *
+     * @param planId
      * @param teamId
-     * @param projectId
-     * @return
+     * @param projectId @return boolean
      * @throws SQLException
      */
     @Override
-    public ArrayList<Integer> getPlanIdListByTeamIdProjectId(int teamId, int projectId) throws SQLException {
-        ArrayList<Integer> list = new ArrayList<>();
+    public boolean updatePlanToTeam(int planId, int teamId, int projectId) throws SQLException {
+        boolean flag = true;
         Connection conn = null;
         PreparedStatement ps = null;
-        ResultSet rs = null;
-        String sql = "select planId from ecollaborationweb.student_team_project_file where teamId = ? and projectId = ?";
+
+        String sql = " UPDATE ecollaborationweb.student_team_project_plan set teamId = ?," +
+                "projectId = ? where planId = ?";
 
         try {
             conn = DBUtils.getConnetction();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, teamId);
             ps.setInt(2, projectId);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(rs.getInt("planId"));
+            ps.setInt(3, planId);
+            int i = ps.executeUpdate();
+            if (i == 0) {
+                flag = false;
             }
-            return list;
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;
         } finally {
-            DBUtils.close(rs, ps, conn);
+            DBUtils.close(null, ps, conn);
         }
+        return flag;
     }
 
+    /**
+     * 修改计划发给某个项目
+     *
+     * @param planId
+     * @param projectId
+     * @return boolean
+     * @throws SQLException
+     */
+    @Override
+    public boolean updatePlanToProject(int planId, int projectId) throws SQLException {
+        boolean flag = true;
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String sql = " UPDATE ecollaborationweb.student_team_project_plan SET projectId = ? where planId = ?";
+
+        try {
+            conn = DBUtils.getConnetction();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, projectId);
+            ps.setInt(2, planId);
+            int i = ps.executeUpdate();
+            if (i == 0) {
+                flag = false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            DBUtils.close(null, ps, conn);
+        }
+        return flag;
+    }
 }

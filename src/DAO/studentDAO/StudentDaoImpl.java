@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Created by GR on 2016/12/4.
@@ -302,6 +303,168 @@ public class StudentDaoImpl implements StudentDAO {
         }finally {
             DBUtils.close(null, preparedStatement, connection);
         }
+    }
+
+    /**
+     * 添加学生进某个团队
+     *
+     * @param studentId
+     * @param teamId
+     * @param leaderFlag
+     * @return boolean
+     * @throws SQLException
+     */
+    @Override
+    public boolean addStudentToTeam(int studentId, int teamId, int leaderFlag) throws SQLException {
+        boolean flag = true;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String sql = "insert into ecollaborationweb.student_team (studentId, teamId, leaderFlag) VALUES (?,?,?)";
+        try {
+            conn = DBUtils.getConnetction();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, studentId);
+            ps.setInt(2, teamId);
+            ps.setInt(3, leaderFlag);
+            int i = ps.executeUpdate();
+            if (i == 0) {
+                flag = false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.close(null, ps, conn);
+        }
+        return flag;
+    }
+
+    /**
+     * 获得学生所在团队
+     *
+     * @param studentId
+     * @return teamId
+     * @throws SQLException
+     */
+    @Override
+    public ArrayList<Integer> getTeamIdByStudentId(int studentId) throws SQLException {
+        ArrayList<Integer> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "select teamId from ecollaborationweb.student_team where studentId = ?";
+
+        try {
+            conn = DBUtils.getConnetction();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, studentId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getInt("planId"));
+            }
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            DBUtils.close(rs, ps, conn);
+        }
+    }
+
+    /**
+     * 修改学生所在团队
+     *
+     * @param studentId
+     * @param teamId
+     * @param leaderFlag @return boolean
+     * @throws SQLException
+     */
+    @Override
+    public boolean updateStudentToTeam(int studentId, int teamId, int leaderFlag) throws SQLException {
+        boolean flag = true;
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String sql = " UPDATE ecollaborationweb.student_team set teamId = ?,leaderFlag = ? WHERE studentId = ?;";
+
+        try {
+            conn = DBUtils.getConnetction();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, teamId);
+            ps.setInt(2, leaderFlag);
+            ps.setInt(3, studentId);
+            int i = ps.executeUpdate();
+            if (i == 0) {
+                flag = false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            DBUtils.close(null, ps, conn);
+        }
+        return flag;
+    }
+
+    /**
+     * 删除团队某个学生
+     *
+     * @param teamId
+     * @param studentId
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public boolean deleteStudentFormTeam(int teamId, int studentId) throws SQLException {
+        boolean flag = true;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String sql = "delete from ecollaborationweb.student_team where studentId=? AND  teamId = ?";
+
+        try {
+            conn = DBUtils.getConnetction();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, studentId);
+            ps.setInt(2, teamId);
+            int i = ps.executeUpdate();
+            if (i == 0) {
+                flag = false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.close(null, ps, conn);
+        }
+        return flag;
+    }
+
+    /**
+     * 删除团队所有学生
+     *
+     * @param teamId
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public boolean deleteAllStudentFormTeam(int teamId) throws SQLException {
+        boolean flag = true;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String sql = "delete from ecollaborationweb.student_team where teamId = ?";
+
+        try {
+            conn = DBUtils.getConnetction();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, teamId);
+            int i = ps.executeUpdate();
+            if (i == 0) {
+                flag = false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtils.close(null, ps, conn);
+        }
+        return flag;
     }
 }
 
