@@ -17,7 +17,12 @@
             <result name="success"></result>
         </action>
 
-        <action name="createTeam" class="actions.team.CreateTeamAction" method="creatorTeam">
+        <action name="createTeam" class="actions.team.CreateTeamAction" method="createTeam">
+            <result name="success">/这里放置登录以后界面</result>
+            <result name="fail">/登录失败又去哪？</result>
+        </action>
+
+        <action name="appCreateTeam" class="actions.team.CreateTeamAction" method="appCreateTeam">
             <result name="success">/这里放置登录以后界面</result>
             <result name="fail">/登录失败又去哪？</result>
         </action>

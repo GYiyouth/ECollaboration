@@ -85,18 +85,26 @@ public class LogAction implements ServletRequestAware, ServletResponseAware{
 	}
 
 	public String appLog() throws Exception{
+		JSONArray jsonArray = new JSONArray();
+		JSONObject jsonObject = new JSONObject();
+
 		if (log().equals("success")){
-			JSONArray jsonArray = new JSONArray();
-			JSONObject jsonObject = new JSONObject();
+
 			jsonObject.put("userBean", getUserBean());
 			jsonObject.put("photoPath", getUserBean().getPhoto());
+			jsonObject.put("result", "success");
 			jsonArray.add(jsonObject);
 
 			this.response.setCharacterEncoding("UTF-8");
 			this.response.getWriter().write(jsonArray.toString());
 			return "success";
-		}else
+		}else {
+			jsonObject.put("result", "success");
+			jsonArray.add(jsonObject);
+			this.response.setCharacterEncoding("UTF-8");
+			this.response.getWriter().write(jsonArray.toString());
 			return "fail";
+		}
 	}
 }
 
