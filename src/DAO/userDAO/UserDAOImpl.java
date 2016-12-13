@@ -3,10 +3,7 @@ package DAO.userDAO;
 import DAO.com.util.db.DBUtils;
 import bean.domain.UserBean;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.sql.*;
 import java.util.TreeMap;
 
@@ -286,7 +283,42 @@ public class UserDAOImpl implements UserDAO{
      * @throws SQLException
      */
     @Override
-    public File getUserPhoto(UserBean userBean) throws SQLException,FileNotFoundException {
-        return null;
+    public File getUserPhoto(UserBean userBean) throws SQLException,FileNotFoundException, IOException {
+	    Connection connection = null;
+	    PreparedStatement preparedStatement = null;
+	    ResultSet resultSet = null;
+	    String sql = "SELECT photo FROM ECollaborationWeb.user WHERE id = 1";
+	    try {
+
+
+		    connection = DBUtils.getConnetction();
+
+		    preparedStatement = connection.prepareStatement(sql);
+		    resultSet = preparedStatement.executeQuery();
+		    resultSet.next();
+		    int id = userBean.getId();
+		    File file = new File("/Users/geyao/IdeaProjects/ECollaborationGit/web/askedFiles/headPhotos" + id +".jpg");
+		    if (file.exists()){
+			    file.delete();
+		    }
+		    BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream("/Users/geyao/Desktop/" + id + ".jpg"));
+		    byte[] buf=new byte[1024];
+		    BufferedInputStream bufferedInputStream = new BufferedInputStream(resultSet.getBinaryStream(1));
+		    int count = -1;
+		    while ((count = bufferedInputStream.read(buf, 0, 1024)) != -1 ){
+			    bufferedOutputStream.write(buf, 0, count);
+		    }
+		    bufferedOutputStream.flush();
+		    return file;
+	    }catch (SQLException e){
+		    e.printStackTrace();
+		    throw e;
+	    }catch (IOException e){
+		    e.printStackTrace();
+		    throw e;
+	    }finally {
+		    DBUtils.close(resultSet, preparedStatement, connection);
+	    }
+
     }
 }

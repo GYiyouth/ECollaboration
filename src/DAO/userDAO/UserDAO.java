@@ -6,6 +6,7 @@ import bean.domain.UserBean;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.SQLException;
 
 public interface UserDAO {
@@ -72,7 +73,7 @@ public interface UserDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public File getUserPhoto(UserBean userBean) throws SQLException,FileNotFoundException;
+	public File getUserPhoto(UserBean userBean) throws SQLException,FileNotFoundException, IOException;
 
 }
 

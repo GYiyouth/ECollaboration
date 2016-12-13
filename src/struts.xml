@@ -8,5 +8,13 @@
     <constant name="struts.devMode" value="true"/>
     <package name="log" extends="struts-default">
 
+        <action name="log" class="actions.log.LogAction" method="log">
+            <result name="success">/这里放置登录以后界面</result>
+            <result name="fail">/登录失败又去哪？</result>
+        </action>
+
+        <action name="appLog" class="actions.log.LogAction" method="appLog">
+            <result name="success"></result>
+        </action>
     </package>
 </struts>
