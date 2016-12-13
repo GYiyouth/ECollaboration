@@ -10,8 +10,12 @@ import DAO.projectDAO.ProjectDAO;
 import DAO.projectDAO.ProjectDAOImpl;
 import DAO.teamDAO.TeamDAO;
 import DAO.teamDAO.TeamDAOImpl;
+import DAO.userDAO.UserDAOImpl;
 import bean.domain.ProjectBean;
 import bean.domain.TeamBean;
+import bean.domain.UserBean;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import java.sql.SQLException;
 
@@ -141,10 +145,18 @@ public class Test {
 			System.out.println(codeDAO.getCodeIdListByProjectIdTeamIdStudentId(123, 555, 123));
 			System.out.println(teamDAO.getTeamIdListByTeacherId(1));
 			System.out.println(teamDAO.getTeamIdListByTeacherIdProjectId(1, 1));
-			ProjectBean projectBean = new ProjectBean();
-			projectBean.setName("123");
-			ProjectDAO projectDAO = new ProjectDAOImpl();
-			System.out.println(projectDAO.addProject(projectBean));
+//			ProjectBean projectBean = new ProjectBean();
+//			projectBean.setName("123");
+//			ProjectDAO projectDAO = new ProjectDAOImpl();
+//			System.out.println(projectDAO.addProject(projectBean));
+			JSONArray jsonArray = new JSONArray();
+			JSONObject jsonObject = new JSONObject();
+			UserBean userBean = new UserDAOImpl().getUserInfoById(1);
+			userBean.setPhoto("我是photo路径");
+			jsonObject.put("userBean", userBean);
+			jsonArray.add(jsonObject);
+			System.out.println(jsonObject);
+			System.out.println(jsonArray);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -35,14 +35,22 @@ public class TeamDAOImpl implements TeamDAO {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		String sql = "INSERT INTO ecollaborationweb.team " +
-				"(teamName, creatorId, createDate) " +
-				"VALUES (?, ?, ?);";
+				"(teamName, creatorId, createDate, memberMax, description) " +
+				"VALUES (?, ?, ?, ?, ?);";
 		try {
 			connection = DBUtils.getConnetction();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(    1, teamBean.getTeamName());
 			preparedStatement.setInt(       2, teamBean.getCreatorId());
 			preparedStatement.setString(    3, teamBean.getCreateDate());
+			if (teamBean.getMemberMax() != null)
+				preparedStatement.setInt(4, teamBean.getMemberMax());
+			else
+				preparedStatement.setInt(4, 0);
+			if (teamBean.getDescription() != null)
+				preparedStatement.setString(5, teamBean.getDescription());
+			else
+				preparedStatement.setString(5, "");
 			int flag = preparedStatement.executeUpdate();
 			if (flag == 1) {
 				sql = "SELECT LAST_INSERT_ID();";
@@ -74,7 +82,7 @@ public class TeamDAOImpl implements TeamDAO {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		String sql = "UPDATE ecollaborationweb.team " +
-				"SET teamName = ?, creatorId = ?, createDate = ? " +
+				"SET teamName = ?, creatorId = ?, createDate = ?, memberMax = ?, description = ? " +
 				"WHERE id = ?;";
 		try {
 			connection = DBUtils.getConnetction();
@@ -82,7 +90,9 @@ public class TeamDAOImpl implements TeamDAO {
 			preparedStatement.setString(1, teamBean.getTeamName());
 			preparedStatement.setInt(   2, teamBean.getCreatorId());
 			preparedStatement.setString(3, teamBean.getCreateDate());
-			preparedStatement.setInt(   4, teamBean.getId());
+			preparedStatement.setInt(   4, teamBean.getMemberMax());
+			preparedStatement.setString(5, teamBean.getDescription());
+			preparedStatement.setInt(   6, teamBean.getId());
 			int flag = preparedStatement.executeUpdate();
 			if (flag ==1 )
 				return true;
@@ -119,6 +129,8 @@ public class TeamDAOImpl implements TeamDAO {
 				teamBean.setCreateDate(resultSet.getString("createDate"));
 				teamBean.setCreatorId(  resultSet.getInt("creatorId"));
 				teamBean.setTeamName(   resultSet.getString("teamName"));
+				teamBean.setMemberMax(  resultSet.getInt("memberMax"));
+				teamBean.setDescription(resultSet.getString("description"));
 				teamBean.setId(resultSet.getInt("id"));
 				return teamBean;
 			}else

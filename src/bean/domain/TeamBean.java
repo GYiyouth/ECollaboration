@@ -11,6 +11,24 @@ public class TeamBean {
 	private String teamName = null;
 	private Integer creatorId = null;
 	private String createDate = null;
+	private Integer memberMax;
+	private String description;
+
+	public Integer getMemberMax() {
+		return memberMax;
+	}
+
+	public void setMemberMax(int memberMax) {
+		this.memberMax = memberMax;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	public TeamBean() {
 		super();
