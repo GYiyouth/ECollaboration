@@ -16,5 +16,10 @@
         <action name="appLog" class="actions.log.LogAction" method="appLog">
             <result name="success"></result>
         </action>
+
+        <action name="createTeam" class="actions.team.CreateTeamAction" method="creatorTeam">
+            <result name="success">/这里放置登录以后界面</result>
+            <result name="fail">/登录失败又去哪？</result>
+        </action>
     </package>
 </struts>
