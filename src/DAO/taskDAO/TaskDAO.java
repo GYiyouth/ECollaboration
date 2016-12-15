@@ -67,6 +67,14 @@ public interface TaskDAO {
 	 */
 	public ArrayList<Integer> getTaskIdListByProjectId(int projectId) throws SQLException;
 
+	/**
+	 * 获取当前执行中任务id，通过项目id
+	 * @param projectId
+	 * @return
+	 * @throws SQLException
+	 */
+	public Integer getExecutingTaskIdByProjectId(int projectId) throws SQLException;
+
 //	/**
 //	 * 获取任务id列表，通过团队id，项目id
 //	 * @param teamId
@@ -84,6 +92,15 @@ public interface TaskDAO {
 	 * @throws SQLException
 	 */
 	public ArrayList<Integer> getTaskIdListByTeamIdTeacherId(int teamId, int teacherId) throws SQLException;
+
+//	/**
+//	 * 获取任务id
+//	 * @param teamId
+//	 * @param projectId
+//	 * @return
+//	 * @throws SQLException
+//	 */
+//	public ArrayList<Integer> getTaskIdListByTeamIdProjectId(int teamId, int projectId) throws SQLException;
 
 //	/**
 //	 * 获取任务Id, 通过项目id，教师id

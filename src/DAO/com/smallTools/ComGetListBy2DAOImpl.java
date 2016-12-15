@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.StringJoiner;
 
 /**
  * Created by geyao on 2016/12/4.
@@ -35,7 +34,7 @@ public class ComGetListBy2DAOImpl<V, F1, F2> implements ComGetListBy2DAO {
 				" WHERE " + column1 + " = ? AND " + column2 + " = ?;";
 		ArrayList<V>list = new ArrayList<V>();
 		try{
-			connection = DBUtils.getConnetction();
+			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setObject(1, value1);
 			preparedStatement.setObject(2, value2);

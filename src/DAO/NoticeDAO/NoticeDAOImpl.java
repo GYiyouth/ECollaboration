@@ -30,7 +30,7 @@ public class NoticeDAOImpl implements NoticeDAO {
         String sql = "insert into ecollaborationweb.notice (title,content,creatorId," +
                 "publishId,createTime) values(?,?,?,?,?)";
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, noticeBean.getTitle());
             ps.setString(2, noticeBean.getContent());
@@ -70,7 +70,7 @@ public class NoticeDAOImpl implements NoticeDAO {
         PreparedStatement ps = null;
         String sql = "insert into ecollaborationweb.notice_receiver (noticeId, receiverId, readFlag) values(?,?,?);";
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             for (int i = 0; i < receiverIds.size(); i++) {
                 ps = conn.prepareStatement(sql);
                 ps.setInt(1, noticeId);
@@ -105,7 +105,7 @@ public class NoticeDAOImpl implements NoticeDAO {
         String sql = "select * from ecollaborationweb.notice where id = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, noticeId);
             rs = ps.executeQuery();
@@ -143,7 +143,7 @@ public class NoticeDAOImpl implements NoticeDAO {
         String sql = "select creatorId from ecollaborationweb.notice where id = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, noticeId);
             rs = ps.executeQuery();
@@ -175,7 +175,7 @@ public class NoticeDAOImpl implements NoticeDAO {
         String sql = "select publishId from ecollaborationweb.notice where id = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, noticeId);
             rs = ps.executeQuery();
@@ -208,7 +208,7 @@ public class NoticeDAOImpl implements NoticeDAO {
         String sql = "select id from ecollaborationweb.notice where creatorId = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, creatorId);
             rs = ps.executeQuery();
@@ -240,7 +240,7 @@ public class NoticeDAOImpl implements NoticeDAO {
         String sql = "select id from ecollaborationweb.notice where publishId = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, publishId);
             rs = ps.executeQuery();
@@ -272,7 +272,7 @@ public class NoticeDAOImpl implements NoticeDAO {
         String sql = "select noticeId from ecollaborationweb.notice_receiver where receiverId = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, receiverId);
             rs = ps.executeQuery();
@@ -304,7 +304,7 @@ public class NoticeDAOImpl implements NoticeDAO {
         String sql = "select noticeId from ecollaborationweb.notice_receiver where receiverId = ? and readFlag = 0";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, receiverId);
             rs = ps.executeQuery();
@@ -336,7 +336,7 @@ public class NoticeDAOImpl implements NoticeDAO {
         String sql = "select receiverId from ecollaborationweb.notice_receiver where noticeId = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, noticeId);
             rs = ps.executeQuery();
@@ -366,7 +366,7 @@ public class NoticeDAOImpl implements NoticeDAO {
         PreparedStatement ps = null;
         String sql = "update ecollaborationweb.notice_receiver set readFlag=1 where receiverId = ? and noticeId=?;";
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, receiverId);
             ps.setInt(2, noticeId);

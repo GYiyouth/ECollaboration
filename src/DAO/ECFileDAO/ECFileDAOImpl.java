@@ -39,7 +39,7 @@ public class ECFileDAOImpl implements ECFileDAO {
 		Time time = new TimeImpl();
 		ecFileBean.setCreateDate(time.getDateStr());
 		try{
-			connection = DBUtils.getConnetction();
+			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
 //			preparedStatement.setInt(   1,  ecFileBean.getId());
 			preparedStatement.setString(1,  ecFileBean.getFileName());
@@ -95,7 +95,7 @@ public class ECFileDAOImpl implements ECFileDAO {
 //		String sql = "insert into ECollaborationWeb.ecfile(fileName, createDate, deadDate, downLoadTimes," +
 //				"priority, creatorId, path) values(?,?,?,?,?,?,?);";
 //		try {
-//			connection = DBUtils.getConnetction();
+//			connection = DBUtils.getConnection();
 //			preparedStatement = connection.prepareStatement(sql);
 //			preparedStatement.setString(1,  ecFileBean.getFileName());
 //			preparedStatement.setString(2,  ecFileBean.getCreateDate());
@@ -138,7 +138,7 @@ public class ECFileDAOImpl implements ECFileDAO {
 //		ResultSet resultSet = null;
 //		String sql = "select id from ECollaborationWeb.ecfile where creatorId = ? and priority = 4";
 //		try {
-//			connection = DBUtils.getConnetction();
+//			connection = DBUtils.getConnection();
 //			preparedStatement = connection.prepareStatement(sql);
 //			preparedStatement.setInt(1, userId);
 //			resultSet = preparedStatement.executeQuery();
@@ -168,7 +168,7 @@ public class ECFileDAOImpl implements ECFileDAO {
 		ResultSet resultSet = null;
 		String sql = "select * from ECollaborationWeb.ecfile where id = ?;";
 		try {
-			connection = DBUtils.getConnetction();
+			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, fileId);
 			preparedStatement.executeQuery();
@@ -196,6 +196,40 @@ public class ECFileDAOImpl implements ECFileDAO {
 	}
 
 	/**
+	 * 某个学生该项目的文件总数
+	 *
+	 * @param studentId
+	 * @param projectId
+	 * @return
+	 * @throws SQLException
+	 */
+	@Override
+	public Integer getFileSum(int studentId, int projectId) throws SQLException {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql = "select count(*) from student_team_project_file where creatorId = ? and projectId = ?";
+
+		try {
+			conn = DBUtils.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, studentId);
+			ps.setInt(2, projectId);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				return rs.getInt(1);
+			} else {
+				return null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			DBUtils.close(rs, ps, conn);
+		}
+	}
+
+	/**
 	 * 修改文件
 	 *
 	 * @param ecFileBean
@@ -211,7 +245,7 @@ public class ECFileDAOImpl implements ECFileDAO {
 		String sql = "update ECollaborationWeb.ecfile set fileName = ?, createDate = ?, deadDate = ?, downLoadTimes =?," +
 				" creatorId = ?, path = ? where id = ?;";
 		try {
-			connection =DBUtils.getConnetction();
+			connection =DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1,  ecFileBean.getFileName());
 			preparedStatement.setString(  2,  ecFileBean.getCreateDate());
@@ -251,7 +285,7 @@ public class ECFileDAOImpl implements ECFileDAO {
 		PreparedStatement preparedStatement = null;
 		String sql = "DELETE FROM ECollaborationWeb.ecfile WHERE id = ? ;";
 		try {
-			connection = DBUtils.getConnetction();
+			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, fileId);
 			int row = preparedStatement.executeUpdate();
@@ -283,7 +317,7 @@ public class ECFileDAOImpl implements ECFileDAO {
 //		String sql = "select id from ECollaborationWeb.ecfile where creatorId = ? and priority = 4";
 //		ResultSet resultSet =null;
 //		try {
-//			connection = DBUtils.getConnetction();
+//			connection = DBUtils.getConnection();
 //			preparedStatement = connection.prepareStatement(sql);
 //			preparedStatement.setInt( 1, userId);
 //			resultSet = preparedStatement.executeQuery();
@@ -314,7 +348,7 @@ public class ECFileDAOImpl implements ECFileDAO {
 		String sql = "SELECT id FROM ecollaborationweb.ecfile WHERE creatorId = ?";
 		ArrayList<Integer> fileIdList = new ArrayList<>();
 		try {
-			connection = DBUtils.getConnetction();
+			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(   1, creatorId);
 			resultSet = preparedStatement.executeQuery();
@@ -348,7 +382,7 @@ public class ECFileDAOImpl implements ECFileDAO {
 				"WHERE spf.projectId = tp.projectId AND tp.teacherId = ? ;";
 		ArrayList<Integer> fileIdList = new ArrayList<>();
 		try {
-			connection = DBUtils.getConnetction();
+			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(   1, teacherId);
 			resultSet = preparedStatement.executeQuery();
@@ -380,7 +414,7 @@ public class ECFileDAOImpl implements ECFileDAO {
 		String sql = "SELECT fileId FROM ecollaborationweb.student_team_project_file WHERE projectId = ?";
 		ArrayList<Integer> fileIdList = new ArrayList<>();
 		try{
-			connection = DBUtils.getConnetction();
+			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(   1,  projectId);
 			resultSet = preparedStatement.executeQuery();
@@ -417,7 +451,7 @@ public class ECFileDAOImpl implements ECFileDAO {
 					"AND tp.teamId = ?";
 		ArrayList<Integer> fileIdList = new ArrayList<>();
 		try {
-			connection = DBUtils.getConnetction();
+			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(   1, teamId);
 			preparedStatement.setInt(   2, teamId);
@@ -453,7 +487,7 @@ public class ECFileDAOImpl implements ECFileDAO {
 				"AND creatorId = ?";
 		ArrayList<Integer> fileIdList = new ArrayList<>();
 		try{
-			connection = DBUtils.getConnetction();
+			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(   1,  projectId);
 			preparedStatement.setInt(   2,  creatorId);
@@ -492,7 +526,7 @@ public class ECFileDAOImpl implements ECFileDAO {
 				"AND  tp.teacherId = ?;";
 		ArrayList<Integer> fileIdList = new ArrayList<>();
 		try {
-			connection = DBUtils.getConnetction();
+			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(   1, projectId);
 			preparedStatement.setInt(   2, projectId);
@@ -528,7 +562,7 @@ public class ECFileDAOImpl implements ECFileDAO {
 				"WHERE teamId = ? AND projectId = ? ;";
 		ArrayList<Integer> fileList = new ArrayList<>();
 		try {
-			connection = DBUtils.getConnetction();
+			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1  ,teamId);
 			preparedStatement.setInt(2  ,projectId);

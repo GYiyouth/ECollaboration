@@ -26,7 +26,7 @@ public class ManagerDAOImpl implements ManagerDAO {
         PreparedStatement ps = null;
         String sql = "insert into ecollaborationweb.manager (id,role) values(?,?);";
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, managerBean.getId());
             ps.setInt(2, managerBean.getRole());
@@ -58,7 +58,7 @@ public class ManagerDAOImpl implements ManagerDAO {
         String sql = " UPDATE ecollaborationweb.manager set role = ? where id = ?;";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, managerBean.getRole());
             ps.setInt(2, managerBean.getId());
@@ -90,7 +90,7 @@ public class ManagerDAOImpl implements ManagerDAO {
         String sql = "delete from ecollaborationweb.manager where id=?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, managerId);
             int i = ps.executeUpdate();
@@ -122,7 +122,7 @@ public class ManagerDAOImpl implements ManagerDAO {
         String sql = "select * from ecollaborationweb.manager where id = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, managerId);
             rs = ps.executeQuery();

@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 /**
  * Created by geyao on 2016/12/4.
@@ -34,7 +33,7 @@ public class ComGetSingleBy2DAOImpl<V, F1, F2> implements ComGetSingleBy2DAO {
 				" WHERE " + column1 + " = ? AND " + column2 + " = ?;";
 		V v = null;
 		try{
-			connection = DBUtils.getConnetction();
+			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setObject(1, value1);
 			preparedStatement.setObject(2, value2);

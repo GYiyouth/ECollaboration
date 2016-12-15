@@ -1,8 +1,12 @@
 package actions.team;
 
+import DAO.messageDAO.MessageDAOImpl;
 import DAO.studentDAO.StudentDaoImpl;
 import DAO.teamDAO.TeamDAOImpl;
-import bean.domain.TeamBean;
+import DAO.userDAO.UserDAOImpl;
+import bean.domain.MessageBean;
+import bean.domain.StudentBean;
+import bean.domain.UserBean;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.struts2.interceptor.ServletRequestAware;
@@ -10,8 +14,11 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
+ * 加入团队
  * Created by GR on 2016/12/13.
  */
 public class JoinTeamAction implements ServletRequestAware, ServletResponseAware {
@@ -63,8 +70,57 @@ public class JoinTeamAction implements ServletRequestAware, ServletResponseAware
     public String appJoinTeam() throws Exception{
         JSONArray jsonArray = new JSONArray();
         JSONObject jsonObject = new JSONObject();
-        System.out.println(joinTeam()+"?");
-        return null;
+        if (joinTeam().equals("success")){
+            TeamDAOImpl teamDaoImpl = new TeamDAOImpl();
+            MessageDAOImpl messageDaoImpl = new MessageDAOImpl();
+            StudentDaoImpl studentDaoImpl = new StudentDaoImpl();
+            UserDAOImpl userDaoImpl = new UserDAOImpl();
+
+            UserBean user = new UserBean();
+            MessageBean message = new MessageBean();
+            StudentBean student = new StudentBean();
+
+            //发消息
+            student = studentDaoImpl.getInfoById(studentId);
+            user = userDaoImpl.getUserInfoById(student.getId());
+            int teamCreatorId = teamDaoImpl.getCreatorIdByTeamId(teamId);
+
+            message.setTitle("anybody join！");
+            message.setContent(user.getName()+"join in");
+            //消息保存一个月
+            SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+            Calendar cal = Calendar.getInstance();
+
+            String createTime = format.format(cal.getTime());
+            message.setCreateTime(createTime);
+
+            cal.add(Calendar.MONTH, 1);
+            String deadTime = format.format(cal.getTime());
+            message.setDeadDate(deadTime);
+
+            System.out.println(createTime);
+            message.setCreateTime(createTime);
+            message.setSenderId(1);
+            message.setReadFlag(0);
+
+
+            int messageId = messageDaoImpl.addMessage(message);
+            messageDaoImpl.addMessageOneReceiver(messageId,teamCreatorId);
+
+
+            jsonObject.put("result", "success");
+            jsonArray.add(jsonObject);
+            this.response.setCharacterEncoding("UTF-8");
+            this.response.getWriter().write(jsonArray.toString());
+            System.out.println(jsonObject.toString());
+            return "success";
+        }else {
+            jsonObject.put("result", "fail");
+            jsonArray.add(jsonObject);
+            this.response.setCharacterEncoding("UTF-8");
+            this.response.getWriter().write(jsonArray.toString());
+            return "fail";
+        }
     }
 
 }

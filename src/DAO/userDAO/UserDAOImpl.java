@@ -5,7 +5,6 @@ import bean.domain.UserBean;
 
 import java.io.*;
 import java.sql.*;
-import java.util.TreeMap;
 
 /**
  * Created by GR on 2016/11/9.
@@ -30,7 +29,7 @@ public class UserDAOImpl implements UserDAO{
         ResultSet rs = null;
         String sql = "select * from user where logName = '"+ logName +"'and passWord = '"+ passWord +"'";
         try{
-            connection = DBUtils.getConnetction();
+            connection = DBUtils.getConnection();
             //preparedStatement = connection.prepareStatement(sql);
             state = connection.prepareStatement(sql);
             rs = state.executeQuery();
@@ -79,7 +78,7 @@ public class UserDAOImpl implements UserDAO{
                 " logName, passWord, createDate, " +
                 " lastLogTime, activeBefore, newsFlag) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";
         try {
-            connection = DBUtils.getConnetction();
+            connection = DBUtils.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, user.getSchoolId());
             preparedStatement.setString(2, user.getName());
@@ -129,7 +128,7 @@ public class UserDAOImpl implements UserDAO{
         ResultSet rs = null;
         String sql = "select * from user where id = " + userId;
         try{
-            connection = DBUtils.getConnetction();
+            connection = DBUtils.getConnection();
             //preparedStatement = connection.prepareStatement(sql);
             state = connection.prepareStatement(sql);
             rs = state.executeQuery();
@@ -178,7 +177,7 @@ public class UserDAOImpl implements UserDAO{
 			    " logName = ?, passWord = ?, createDate = ?, " +
 			    " lastLogTime = ?, activeBefore = ?, newsFlag = ? WHERE id = ? ;";
 	    try {
-		    connection = DBUtils.getConnetction();
+		    connection = DBUtils.getConnection();
 		    preparedStatement = connection.prepareStatement(sql);
 		    preparedStatement.setString(1, user.getSchoolId());
 		    preparedStatement.setString(2, user.getName());
@@ -223,7 +222,7 @@ public class UserDAOImpl implements UserDAO{
 	    String sql = "DELETE FROM ECollaborationWeb.user WHERE id = ?;";
 	    UserBean userBean = null;
 	    try {
-		    connection = DBUtils.getConnetction();
+		    connection = DBUtils.getConnection();
 		    preparedStatement = connection.prepareStatement(sql);
 		    preparedStatement.setInt(1, userId);
 		    int flag = preparedStatement.executeUpdate();
@@ -255,7 +254,7 @@ public class UserDAOImpl implements UserDAO{
         String sql = "UPDATE ECollaborationweb.user SET photo = ? WHERE id = ?;";
         try {
             InputStream inputStream = new FileInputStream(file);
-            connection = DBUtils.getConnetction();
+            connection = DBUtils.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setBinaryStream(  1, inputStream, file.length());
             preparedStatement.setInt(           2, userBean.getId());
@@ -291,7 +290,7 @@ public class UserDAOImpl implements UserDAO{
 	    try {
 
 
-		    connection = DBUtils.getConnetction();
+		    connection = DBUtils.getConnection();
 
 		    preparedStatement = connection.prepareStatement(sql);
 		    resultSet = preparedStatement.executeQuery();

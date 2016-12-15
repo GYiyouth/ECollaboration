@@ -8,7 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by GR on 2016/12/5.
@@ -27,15 +26,15 @@ public class PlanDAOImpl implements PlanDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
         String sql = "insert into ecollaborationweb.plan (title,content,creatorId," +
-                "createDate,modifyDate,beginDate,targetDate) values(?,?,?,?,?,?,?)";
+                "createDate,finishDate,beginDate,targetDate) values(?,?,?,?,?,?,?)";
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, planBean.getTitle());
             ps.setString(2, planBean.getContent());
             ps.setInt(3, planBean.getCreatorId());
             ps.setString(4, planBean.getCreateDate());
-            ps.setString(5, planBean.getModifyDate());
+            ps.setString(5, planBean.getFinishDate());
             ps.setString(6, planBean.getBeginDate());
             ps.setString(7, planBean.getTargetDate());
             int i = ps.executeUpdate();
@@ -70,7 +69,7 @@ public class PlanDAOImpl implements PlanDAO {
         PreparedStatement ps = null;
         String sql = "insert into ecollaborationweb.student_team_project_plan (planId, studentId, projectId) values(?,?,?);";
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, planId);
             ps.setInt(2, studentId);
@@ -101,7 +100,7 @@ public class PlanDAOImpl implements PlanDAO {
         PreparedStatement ps = null;
         String sql = "insert into ecollaborationweb.student_team_project_plan (planId, projectId) values(?,?);";
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, planId);
             ps.setInt(2, projectId);
@@ -139,7 +138,7 @@ public class PlanDAOImpl implements PlanDAO {
         PreparedStatement ps = null;
         String sql = "insert into ecollaborationweb.student_team_project_plan (planId, teamId, projectId) values(?,?,?);";
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, planId);
             ps.setInt(2, teamId);
@@ -172,7 +171,7 @@ public class PlanDAOImpl implements PlanDAO {
         String sql = "select * from ecollaborationweb.plan where id = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, planId);
             rs = ps.executeQuery();
@@ -182,7 +181,7 @@ public class PlanDAOImpl implements PlanDAO {
                 planBean.setContent(rs.getString("content"));
                 planBean.setCreatorId(rs.getInt("creatorId"));
                 planBean.setCreateDate(rs.getString("createDate"));
-                planBean.setModifyDate(rs.getString("modifyDate"));
+                planBean.setFinishDate(rs.getString("finishDate"));
                 planBean.setBeginDate(rs.getString("beginDate"));
                 planBean.setTargetDate(rs.getString("targetDate"));
                 return planBean;
@@ -212,7 +211,7 @@ public class PlanDAOImpl implements PlanDAO {
         String sql = "select creatorId from ecollaborationweb.plan where id = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, planId);
             rs = ps.executeQuery();
@@ -245,7 +244,7 @@ public class PlanDAOImpl implements PlanDAO {
         String sql = "select id from ecollaborationweb.plan where creatorId = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, creatorId);
             rs = ps.executeQuery();
@@ -277,7 +276,7 @@ public class PlanDAOImpl implements PlanDAO {
         String sql = "select planId from ecollaborationweb.student_team_project_plan where studentId = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, studentId);
             rs = ps.executeQuery();
@@ -310,7 +309,7 @@ public class PlanDAOImpl implements PlanDAO {
         String sql = "select planId from ecollaborationweb.student_team_project_plan where studentId = ? and projectId = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, studentId);
             ps.setInt(2, projectId);
@@ -343,7 +342,7 @@ public class PlanDAOImpl implements PlanDAO {
         String sql = "select planId from ecollaborationweb.student_team_project_plan where projectId = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, projectId);
             rs = ps.executeQuery();
@@ -378,7 +377,7 @@ public class PlanDAOImpl implements PlanDAO {
                 "and student_team_project_plan.projectId = ? and plan.creatorId = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, projectId);
             ps.setInt(2, teacherId);
@@ -411,7 +410,7 @@ public class PlanDAOImpl implements PlanDAO {
         String sql = "select planId from ecollaborationweb.student_team_project_plan where teamId = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, teamId);
             rs = ps.executeQuery();
@@ -445,7 +444,7 @@ public class PlanDAOImpl implements PlanDAO {
                 "and student_team_project_plan.teamId = ? and plan.creatorId = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, teamId);
             ps.setInt(2, studentId);
@@ -476,16 +475,17 @@ public class PlanDAOImpl implements PlanDAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "select planId from ecollaborationweb.student_team_project_plan where teamId = ? and projectId = ?";
+        String sql = "select p.id from ecollaborationweb.student_team_project_plan as stpp,ecollaborationweb.plan as p " +
+                "where stpp.planId = p.id and stpp.teamId = ? and stpp.projectId = ? ORDER BY p.targetDate";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, teamId);
             ps.setInt(2, projectId);
             rs = ps.executeQuery();
             while (rs.next()) {
-                list.add(rs.getInt("planId"));
+                list.add(rs.getInt("id"));
             }
             return list;
         } catch (SQLException e) {
@@ -511,7 +511,7 @@ public class PlanDAOImpl implements PlanDAO {
         String sql = "delete from ecollaborationweb.plan where id=?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, planId);
             int i = ps.executeUpdate();
@@ -541,7 +541,7 @@ public class PlanDAOImpl implements PlanDAO {
         String sql = "delete from ecollaborationweb.student_team_project_plan where planId=?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, planId);
             int i = ps.executeUpdate();
@@ -571,7 +571,7 @@ public class PlanDAOImpl implements PlanDAO {
         String sql = "delete from ecollaborationweb.student_team_project_plan where projectId=?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, projectId);
             int i = ps.executeUpdate();
@@ -601,7 +601,7 @@ public class PlanDAOImpl implements PlanDAO {
         String sql = "delete from ecollaborationweb.student_team_project_plan where teamId=?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, teamId);
             int i = ps.executeUpdate();
@@ -631,7 +631,7 @@ public class PlanDAOImpl implements PlanDAO {
         String sql = "delete from ecollaborationweb.student_team_project_plan where studentId=?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, studentId);
             int i = ps.executeUpdate();
@@ -660,16 +660,16 @@ public class PlanDAOImpl implements PlanDAO {
         PreparedStatement ps = null;
 
         String sql = " UPDATE ecollaborationweb.plan set title=?,content=?,creatorId=?," +
-                "createDate=?,modifyDate=?,beginDate=?,targetDate=? where id = ?";
+                "createDate=?,finishDate=?,beginDate=?,targetDate=? where id = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, planBean.getTitle());
             ps.setString(2, planBean.getContent());
             ps.setInt(3, planBean.getCreatorId());
             ps.setString(4, planBean.getCreateDate());
-            ps.setString(5, planBean.getModifyDate());
+            ps.setString(5, planBean.getFinishDate());
             ps.setString(6, planBean.getBeginDate());
             ps.setString(7, planBean.getTargetDate());
             ps.setInt(8, planBean.getId());
@@ -704,7 +704,7 @@ public class PlanDAOImpl implements PlanDAO {
                 "projectId = ? where planId = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, studentId);
             ps.setInt(2, projectId);
@@ -740,7 +740,7 @@ public class PlanDAOImpl implements PlanDAO {
                 "projectId = ? where planId = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, teamId);
             ps.setInt(2, projectId);
@@ -775,7 +775,7 @@ public class PlanDAOImpl implements PlanDAO {
         String sql = " UPDATE ecollaborationweb.student_team_project_plan SET projectId = ? where planId = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, projectId);
             ps.setInt(2, planId);
@@ -790,5 +790,45 @@ public class PlanDAOImpl implements PlanDAO {
             DBUtils.close(null, ps, conn);
         }
         return flag;
+    }
+
+    /**
+     * 获取某个时间段之间的，某个人在某个项目所有完成的计划
+     *
+     * @param beginTime
+     * @param endTime
+     * @param studentId
+     * @param projectId @return
+     */
+    @Override
+    public ArrayList<Integer> getPlanIdBetweenATimeBTime(String beginTime, String endTime, int studentId, int projectId) throws Exception {
+        ArrayList<Integer> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "select * from plan,student_team_project_plan " +
+                "WHERE plan.finishDate BETWEEN ? AND ? " +
+                "AND plan.id = student_team_project_plan.planId " +
+                "AND student_team_project_plan.studentId = ? " +
+                "AND student_team_project_plan.projectId = ?";
+
+        try {
+            conn = DBUtils.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1,beginTime);
+            ps.setString(2,endTime);
+            ps.setInt(3, studentId);
+            ps.setInt(4, projectId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getInt("planId"));
+            }
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            DBUtils.close(rs, ps, conn);
+        }
     }
 }

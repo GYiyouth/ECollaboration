@@ -30,7 +30,7 @@ public class ProjectDAOImpl implements ProjectDAO{
         ResultSet resultSet = null;
         String sql = "INSERT INTO ECollaborationWeb.project (name) VALUES (?);";
         try {
-            connection = DBUtils.getConnetction();
+            connection = DBUtils.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, projectBean.getName());
             int flag = preparedStatement.executeUpdate();
@@ -67,7 +67,7 @@ public class ProjectDAOImpl implements ProjectDAO{
         ProjectBean projectBean = null;
         String sql = "SELECT * FROM ECollaborationWeb.project WHERE id = ?;";
         try {
-            connection = DBUtils.getConnetction();
+            connection = DBUtils.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, projectId);
             resultSet = preparedStatement.executeQuery();
@@ -117,7 +117,7 @@ public class ProjectDAOImpl implements ProjectDAO{
         ResultSet resultSet = null;
         String sql = "UPDATE ECollaborationWeb.project SET ";
         try {
-            connection = DBUtils.getConnetction();
+            connection = DBUtils.getConnection();
             if (projectBean.getName() != null){
                 sql = sql + "name = '" + projectBean.getName() + "' ,";
             }
@@ -198,7 +198,7 @@ public class ProjectDAOImpl implements ProjectDAO{
         PreparedStatement preparedStatement = null;
         String sql = "DELETE FROM ECollaborationWeb.project WHERE id = ?";
         try {
-            connection = DBUtils.getConnetction();
+            connection = DBUtils.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, projectId);
             int flag = preparedStatement.executeUpdate();
@@ -322,7 +322,7 @@ public class ProjectDAOImpl implements ProjectDAO{
                 " ECollaborationWeb.student_team AS st " +
                 "WHERE st.studentId = ? AND tp.teamId = st.teamId;";
         try {
-            connection = DBUtils.getConnetction();
+            connection = DBUtils.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, studentId);
             resultSet = preparedStatement.executeQuery();
@@ -454,7 +454,7 @@ public class ProjectDAOImpl implements ProjectDAO{
                 " ECollaborationWeb.teacher_project AS tcp " +
                 " WHERE tcp.teacherId = ? AND tmp.teamId = ? AND tmp.projectId = tcp.projectId;";
         try {
-            connection = DBUtils.getConnetction();
+            connection = DBUtils.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, teacherId);
             preparedStatement.setInt(2, teamId);
@@ -492,7 +492,7 @@ public class ProjectDAOImpl implements ProjectDAO{
         PreparedStatement preparedStatement = null;
         String sql = "INSERT INTO ECollaborationWeb.project_task (projectId, taskId) VALUES (?,?);";
         try {
-            connection = DBUtils.getConnetction();
+            connection = DBUtils.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, projectId);
             preparedStatement.setInt(2, taskId);
@@ -523,7 +523,7 @@ public class ProjectDAOImpl implements ProjectDAO{
         PreparedStatement preparedStatement = null;
         String sql = "DELETE FROM ECollaborationWeb.project_task WHERE taskId =? AND projectId = ?;";
         try {
-            connection = DBUtils.getConnetction();
+            connection = DBUtils.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, taskId);
             preparedStatement.setInt(2, projectId);
@@ -552,7 +552,7 @@ public class ProjectDAOImpl implements ProjectDAO{
         PreparedStatement preparedStatement = null;
         String sql = "DELETE FROM ECollaborationWeb.project_task WHERE projectId =?;";
         try {
-            connection = DBUtils.getConnetction();
+            connection = DBUtils.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, projectId);
             if (preparedStatement.executeUpdate() >= 1){
@@ -580,7 +580,7 @@ public class ProjectDAOImpl implements ProjectDAO{
         PreparedStatement preparedStatement = null;
         String sql = "DELETE FROM ECollaborationWeb.project_task WHERE taskId =?;";
         try {
-            connection = DBUtils.getConnetction();
+            connection = DBUtils.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, taskId);
             if (preparedStatement.executeUpdate() >= 1){

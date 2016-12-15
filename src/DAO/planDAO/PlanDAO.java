@@ -214,6 +214,16 @@ public interface PlanDAO {
      */
     public boolean updatePlanToProject(int planId, int projectId) throws SQLException;
 
+    /**
+     * 获取某个时间段之间的，某个人在某个项目所有完成的计划
+     * @param beginTime
+     * @param endTime
+     * @param beginTime
+     * @param endTime
+     * @return
+     */
+    public ArrayList<Integer> getPlanIdBetweenATimeBTime(String beginTime, String endTime,int studentId, int projectId) throws Exception;
+
 }
 
 

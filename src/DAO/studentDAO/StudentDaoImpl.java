@@ -29,7 +29,7 @@ public class StudentDaoImpl implements StudentDAO {
                 "graduatedSchool,tecKeyWord,homePageUrl,codeScore1,codeScore2,presentationScore,finalScore) " +
                 "values(?,?,?,?,?,?,?,?,?,?,?);";
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, studentBean.getId());
             ps.setString(2, studentBean.getGrade());
@@ -72,7 +72,7 @@ public class StudentDaoImpl implements StudentDAO {
                 "presentationScore = ?,finalScore = ? where id = ?;";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, studentBean.getGrade());
             ps.setInt(2, studentBean.getIsOnProject());
@@ -113,7 +113,7 @@ public class StudentDaoImpl implements StudentDAO {
         String sql = "delete from ecollaborationweb.student where id=?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             int i = ps.executeUpdate();
@@ -146,7 +146,7 @@ public class StudentDaoImpl implements StudentDAO {
         String sql = "select * from ecollaborationweb.student where id = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -192,7 +192,7 @@ public class StudentDaoImpl implements StudentDAO {
         String sql = "INSERT INTO ECollaborationWeb.student_team_project_file " +
                 " (creatorId, projectId, fileId, teamId) VALUES (?,?,?,?);";
         try {
-            connection = DBUtils.getConnetction();
+            connection = DBUtils.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, studentId);
             preparedStatement.setInt(2, projectId);
@@ -228,7 +228,7 @@ public class StudentDaoImpl implements StudentDAO {
         String sql = "INSERT INTO ECollaborationWeb.student_team_project_plan " +
                 " (studentId, projectId, planId, teamId) VALUES (?,?,?,?);";
         try {
-            connection = DBUtils.getConnetction();
+            connection = DBUtils.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, studentId);
             preparedStatement.setInt(2, projectId);
@@ -261,7 +261,7 @@ public class StudentDaoImpl implements StudentDAO {
         String sql = "DELETE FROM ECollaborationWeb.student_team_project_file " +
                 "WHERE fileId =? ;";
         try {
-            connection = DBUtils.getConnetction();
+            connection = DBUtils.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, fileId);
             int flag = preparedStatement.executeUpdate();
@@ -290,7 +290,7 @@ public class StudentDaoImpl implements StudentDAO {
         String sql = "DELETE FROM ECollaborationWeb.student_team_project_plan " +
                 " WHERE planId = ?;";
         try {
-            connection = DBUtils.getConnetction();
+            connection = DBUtils.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, planId);
             int flag = preparedStatement.executeUpdate();
@@ -321,7 +321,7 @@ public class StudentDaoImpl implements StudentDAO {
         PreparedStatement ps = null;
         String sql = "insert into ecollaborationweb.student_team (studentId, teamId, leaderFlag) VALUES (?,?,?)";
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, studentId);
             ps.setInt(2, teamId);
@@ -336,6 +336,40 @@ public class StudentDaoImpl implements StudentDAO {
             DBUtils.close(null, ps, conn);
         }
         return flag;
+    }
+
+    /**
+     * 获得组长id或组员id
+     *
+     * @param teamId
+     * @param leaderFlag
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public ArrayList<Integer> getTeamLeaderOrMemberByTeamIdLeaderFlag(int teamId, int leaderFlag) throws Exception {
+        ArrayList<Integer> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "select studentId from ecollaborationweb.student_team where teamId = ? and leaderFlag = ?";
+
+        try {
+            conn = DBUtils.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, teamId);
+            ps.setInt(2, leaderFlag);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getInt("studentId"));
+            }
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            DBUtils.close(rs, ps, conn);
+        }
     }
 
     /**
@@ -354,12 +388,44 @@ public class StudentDaoImpl implements StudentDAO {
         String sql = "select teamId from ecollaborationweb.student_team where studentId = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, studentId);
             rs = ps.executeQuery();
             while (rs.next()) {
-                list.add(rs.getInt("planId"));
+                list.add(rs.getInt("teamId"));
+            }
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            DBUtils.close(rs, ps, conn);
+        }
+    }
+
+    /**
+     * 获得团队所有学生
+     *
+     * @param teamId
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public ArrayList<Integer> getStudentIdByTeamId(int teamId) throws SQLException {
+        ArrayList<Integer> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "select studentId from ecollaborationweb.student_team where teamId = ?";
+
+        try {
+            conn = DBUtils.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, teamId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getInt("studentId"));
             }
             return list;
         } catch (SQLException e) {
@@ -387,7 +453,7 @@ public class StudentDaoImpl implements StudentDAO {
         String sql = " UPDATE ecollaborationweb.student_team set teamId = ?,leaderFlag = ? WHERE studentId = ?;";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, teamId);
             ps.setInt(2, leaderFlag);
@@ -421,7 +487,7 @@ public class StudentDaoImpl implements StudentDAO {
         String sql = "delete from ecollaborationweb.student_team where studentId=? AND  teamId = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, studentId);
             ps.setInt(2, teamId);
@@ -452,7 +518,7 @@ public class StudentDaoImpl implements StudentDAO {
         String sql = "delete from ecollaborationweb.student_team where teamId = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, teamId);
             int i = ps.executeUpdate();
@@ -465,6 +531,42 @@ public class StudentDaoImpl implements StudentDAO {
             DBUtils.close(null, ps, conn);
         }
         return flag;
+    }
+
+    /**
+     * 获取学生id，通过项目  团队
+     *
+     * @param teamId
+     * @param projectId
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public ArrayList<Integer> getStudentIdByTeamIdProjectId(int teamId, int projectId) throws Exception {
+        ArrayList<Integer> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "select studentId from team_project,student_team " +
+                "where team_project.teamId = student_team.teamId and student_team.teamId = ? " +
+                "AND team_project.projectId = ? ORDER BY student_team.leaderFlag DESC";
+
+        try {
+            conn = DBUtils.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, teamId);
+            ps.setInt(2, projectId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getInt("studentId"));
+            }
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            DBUtils.close(rs, ps, conn);
+        }
     }
 }
 

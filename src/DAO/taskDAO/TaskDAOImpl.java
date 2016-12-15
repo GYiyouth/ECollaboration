@@ -32,7 +32,7 @@ public class TaskDAOImpl implements TaskDAO {
                 " (title, content, creatorId, createDate, " +
                 " modifyDate, beginDate, targetDate) VALUES (?,?,?,?,?,?,?);";
         try {
-            connection = DBUtils.getConnetction();
+            connection = DBUtils.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, taskBean.getTitle());
             preparedStatement.setString(2, taskBean.getContent());
@@ -71,7 +71,7 @@ public class TaskDAOImpl implements TaskDAO {
         PreparedStatement preparedStatement = null;
         String sql = "DELETE FROM ECollaborationWeb.task WHERE id = ?;";
         try {
-            connection = DBUtils.getConnetction();
+            connection = DBUtils.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, taskId);
             int flag = preparedStatement.executeUpdate();
@@ -102,7 +102,7 @@ public class TaskDAOImpl implements TaskDAO {
                 " content = ?, creatorId = ?, createDate = ?, modifyDate = ?, " +
                 "beginDate = ?, targetDate = ? WHERE id = ?;";
         try {
-            connection = DBUtils.getConnetction();
+            connection = DBUtils.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, taskBean.getTitle());
             preparedStatement.setString(2, taskBean.getContent());
@@ -140,7 +140,7 @@ public class TaskDAOImpl implements TaskDAO {
         TaskBean taskBean = new TaskBean();
         String sql = "SELECT * FROM  ECollaborationWeb.task WHERE id = ?;";
         try {
-            connection = DBUtils.getConnetction();
+            connection = DBUtils.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, taskId);
             resultSet = preparedStatement.executeQuery();
@@ -164,6 +164,9 @@ public class TaskDAOImpl implements TaskDAO {
         }
     }
 
+
+
+
     /**
      * 获取任务id列表，通过团队id
      *
@@ -181,7 +184,7 @@ public class TaskDAOImpl implements TaskDAO {
                 " ECollaborationWeb.team_project AS tp " +
                 " WHERE pt.projectId = tp.projectId AND tp.teamId = ?;";
         try {
-            connection = DBUtils.getConnetction();
+            connection = DBUtils.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, teamId);
             resultSet = preparedStatement.executeQuery();
@@ -220,7 +223,7 @@ public class TaskDAOImpl implements TaskDAO {
                 " ECollaborationWeb.teacher_project AS tp " +
                 " WHERE pt.projectId = tp.projectId AND tp.teacherId = ?;";
         try {
-            connection = DBUtils.getConnetction();
+            connection = DBUtils.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, teacherId);
             resultSet = preparedStatement.executeQuery();
@@ -255,18 +258,38 @@ public class TaskDAOImpl implements TaskDAO {
         return comGetListValueDAO.getListAfromBbyC("id", "projectId", projectId, "project_task");
     }
 
-//    /**
-//     * 获取任务id列表，通过团队id，项目id
-//     *
-//     * @param teamId
-//     * @param projectId
-//     * @return
-//     * @throws SQLException
-//     */
-//    @Override
-//    public ArrayList<Integer> getTaskIdListByTeamIdProjectId(int teamId, int projectId) throws SQLException {
-//        return null;
-//    }
+    /**
+     * 获取当前执行中任务id，通过项目id
+     *
+     * @param projectId
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public Integer getExecutingTaskIdByProjectId(int projectId) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        ArrayList<Integer> list = new ArrayList<>();
+        String sql = "SELECT t.id FROM ecollaborationweb.task as t , " +
+                "ecollaborationweb.project_task as pt where now() BETWEEN beginDate and targetDate " +
+                "and t.id = pt.taskId and pt.projectId = ?";
+        try {
+            connection = DBUtils.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, projectId);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("id");
+            }
+            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            DBUtils.close(resultSet, preparedStatement, connection);
+        }
+    }
 
     /**
      * 获取任务id列表，通过团队id，教师id
@@ -288,7 +311,7 @@ public class TaskDAOImpl implements TaskDAO {
                 " WHERE tp.teamId = ? AND tcp.teacherId = ? AND tp.projectId = pjt.projectId " +
                 " AND tp.projectId = tcp.projectId AND pjt.projectId = tp.projectId;";
         try {
-            connection = DBUtils.getConnetction();
+            connection = DBUtils.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, teamId);
             preparedStatement.setInt(2, teacherId);
@@ -338,4 +361,40 @@ public class TaskDAOImpl implements TaskDAO {
 //        return null;
 //    }
 
+
+    /**
+     * 获取任务id
+     *
+     * @param teamId
+     * @param projectId
+     * @return
+     * @throws SQLException
+     */
+//    @Override
+//    public ArrayList<Integer> getTaskIdListByTeamIdProjectId(int teamId, int projectId) throws SQLException {
+//        ArrayList<Integer> list = new ArrayList<>();
+//        Connection conn = null;
+//        PreparedStatement ps = null;
+//        ResultSet rs = null;
+//        String sql = "select studentId from team_project,student_team " +
+//                "where team_project.teamId = student_team.teamId and student_team.teamId = ? AND team_project.projectId = ?";
+//
+//        try {
+//            conn = DBUtils.getConnection();
+//            ps = conn.prepareStatement(sql);
+//            ps.setInt(1, teamId);
+//            ps.setInt(2, projectId);
+//            rs = ps.executeQuery();
+//            while (rs.next()) {
+//                list.add(rs.getInt("studentId"));
+//            }
+//            return list;
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            throw e;
+//        } finally {
+//            DBUtils.close(rs, ps, conn);
+//        }
+//    }
+//    }
 }

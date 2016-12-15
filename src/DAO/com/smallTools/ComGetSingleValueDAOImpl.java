@@ -6,8 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * Created by geyao on 2016/12/1.
@@ -33,7 +31,7 @@ public class ComGetSingleValueDAOImpl<V, F> implements ComGetSingleValueDAO {
 
 		String sql = "SELECT " + columnA + " FROM "  + SchemaName + tableC + " WHERE " + columnB + " = ?;";
 		try {
-			connection = DBUtils.getConnetction();
+			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setObject(1, (F)valueB);
 			resultSet = preparedStatement.executeQuery();

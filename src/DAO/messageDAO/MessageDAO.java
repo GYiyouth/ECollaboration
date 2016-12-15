@@ -1,7 +1,6 @@
-package DAO.maessageDAO;
+package DAO.messageDAO;
 
 import bean.domain.MessageBean;
-import bean.domain.UserBean;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,13 +20,22 @@ public interface MessageDAO {
     public Integer addMessage(MessageBean messageBean) throws SQLException;
 
     /**
-     * 添加到 消息-收件人 的关系表中，
+     * 添加到 消息-收件人(多个) 的关系表中，
      *
      * @param messageId,receiverId
      * @return boolean
      * @throws SQLException
      */
     public boolean addMessageReceiver(int messageId, List<Integer> receiverIds) throws SQLException;
+
+    /**
+     * 添加到 消息-收件人(一个) 的关系表中，
+     *
+     * @param messageId,receiverId
+     * @return boolean
+     * @throws SQLException
+     */
+    public boolean addMessageOneReceiver(int messageId, int receiverId) throws SQLException;
 
     /**
      * 获取MessageBean，通过messageId

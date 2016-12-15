@@ -1,8 +1,7 @@
-package DAO.maessageDAO;
+package DAO.messageDAO;
 
 import DAO.com.util.db.DBUtils;
 import bean.domain.MessageBean;
-import bean.domain.UserBean;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,7 +30,7 @@ public class MessageDAOImpl implements MessageDAO {
         String sql = "insert into ecollaborationweb.message (title,content,createTime," +
                 "senderId,readFlag,deadDate) values(?,?,?,?,?,?);";
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, messageBean.getTitle());
             ps.setString(2, messageBean.getContent());
@@ -73,7 +72,7 @@ public class MessageDAOImpl implements MessageDAO {
         PreparedStatement ps = null;
         String sql = "insert into ecollaborationweb.message_receiver (messageId, receiverId, readFlag) values(?,?,?);";
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             for (int i = 0; i < receiverIds.size(); i++) {
                 ps = conn.prepareStatement(sql);
                 ps.setInt(1, messageId);
@@ -94,6 +93,37 @@ public class MessageDAOImpl implements MessageDAO {
 
 
     /**
+     * 添加到 消息-收件人(一个) 的关系表中，
+     *
+     * @param messageId
+     * @param receiverId
+     * @return boolean
+     * @throws SQLException
+     */
+    @Override
+    public boolean addMessageOneReceiver(int messageId, int receiverId) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        String sql = "insert into ecollaborationweb.message_receiver (messageId, receiverId, readFlag) values(?,?,?);";
+        try {
+            conn = DBUtils.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, messageId);
+            ps.setInt(2, receiverId);
+            ps.setInt(3, 0);
+            if (ps.executeUpdate() == 0) {
+                return false;
+            }
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            DBUtils.close(null, ps, conn);
+        }
+    }
+
+    /**
      * 获取MessageBean，通过messageId
      *
      * @param messageId
@@ -109,7 +139,7 @@ public class MessageDAOImpl implements MessageDAO {
         String sql = "select * from ecollaborationweb.message where id = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, messageId);
             rs = ps.executeQuery();
@@ -148,7 +178,7 @@ public class MessageDAOImpl implements MessageDAO {
         String sql = "select readFlag from ecollaborationweb.message where id = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, messageId);
             rs = ps.executeQuery();
@@ -180,7 +210,7 @@ public class MessageDAOImpl implements MessageDAO {
         String sql = "select senderId from ecollaborationweb.message where id = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, messageId);
             rs = ps.executeQuery();
@@ -213,7 +243,7 @@ public class MessageDAOImpl implements MessageDAO {
         String sql = "select id from ecollaborationweb.message where senderId = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, senderId);
             rs = ps.executeQuery();
@@ -246,7 +276,7 @@ public class MessageDAOImpl implements MessageDAO {
         String sql = "select id from ecollaborationweb.message_receiver where receiverId = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, receiverId);
             rs = ps.executeQuery();
@@ -278,7 +308,7 @@ public class MessageDAOImpl implements MessageDAO {
         String sql = "select id from ecollaborationweb.message_receiver where receiverId = ? and readFlag = 0";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, receiverId);
             rs = ps.executeQuery();
@@ -310,7 +340,7 @@ public class MessageDAOImpl implements MessageDAO {
         String sql = "select receiverId from ecollaborationweb.message_receiver where messageId = ?";
 
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, messageId);
             rs = ps.executeQuery();
@@ -340,7 +370,7 @@ public class MessageDAOImpl implements MessageDAO {
         PreparedStatement ps = null;
         String sql = "update ecollaborationweb.message_receiver set readFlag=1 where receiverId = ? and messageId=?;";
         try {
-            conn = DBUtils.getConnetction();
+            conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setInt(1, receiverId);
             ps.setInt(2, messageId);

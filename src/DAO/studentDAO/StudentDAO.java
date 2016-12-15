@@ -91,12 +91,28 @@ public interface StudentDAO {
     public boolean addStudentToTeam(int studentId, int teamId, int leaderFlag) throws SQLException;
 
     /**
+     * 获得组长id或组员id
+     * @param teamId
+     * @param leaderFlag
+     * @return
+     * @throws Exception
+     */
+    public ArrayList<Integer> getTeamLeaderOrMemberByTeamIdLeaderFlag(int teamId, int leaderFlag) throws Exception;
+    /**
      * 获得学生所在团队
      * @param studentId
      * @return teamId
      * @throws SQLException
      */
     public ArrayList<Integer> getTeamIdByStudentId(int studentId) throws SQLException;
+
+    /**
+     * 获得团队所有学生
+     * @param teamId
+     * @return
+     * @throws SQLException
+     */
+    public ArrayList<Integer> getStudentIdByTeamId(int teamId) throws SQLException;
 
     /**
      * 修改学生所在团队
@@ -122,4 +138,13 @@ public interface StudentDAO {
      * @throws SQLException
      */
     public boolean deleteAllStudentFormTeam(int teamId) throws SQLException;
+
+    /**
+     * 获取学生id，通过项目  团队
+     * @param teamId
+     * @param projectId
+     * @return
+     * @throws Exception
+     */
+    public ArrayList<Integer> getStudentIdByTeamIdProjectId(int teamId, int projectId) throws  Exception;
 }

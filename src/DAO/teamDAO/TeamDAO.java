@@ -57,6 +57,14 @@ public interface TeamDAO {
 	public ArrayList<Integer> getTeamIdListByProjectId(int projectId) throws SQLException;
 
 	/**
+	 * 获取学生在团队身份
+	 * @param teamId
+	 * @param studentId
+	 * @return
+	 * @throws Exception
+	 */
+	public Integer getleadFlagByTeamIdStudentId(int teamId, int studentId) throws Exception;
+	/**
 	 * 获取团队id列表，通过学生id，
 	 *
 	 * @param studentId
@@ -174,4 +182,20 @@ public interface TeamDAO {
 	 */
 	public boolean deleteProject_Team(int teamId) throws SQLException;
 
+	/**
+	 * 获取团队创建人id
+	 * @param teamId
+	 * @return
+	 * @throws Exception
+	 */
+	public Integer getCreatorIdByTeamId(int teamId) throws Exception;
+
+	/**
+	 * 根据学生id，项目id，获取团队id
+	 * @param studentId
+	 * @param projectId
+	 * @return
+	 * @throws Exception
+	 */
+	public Integer getTeamIdByStudentIdProjectId(int studentId, int projectId) throws Exception;
 }

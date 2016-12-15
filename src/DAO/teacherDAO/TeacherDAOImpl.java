@@ -27,7 +27,7 @@ public class TeacherDAOImpl implements TeacherDAO {
 		PreparedStatement ps = null;
 		String sql = "insert into ecollaborationweb.teacher (id,homePageUrl,needStudentsFlag)values(?,?,?);";
 		try {
-			conn = DBUtils.getConnetction();
+			conn = DBUtils.getConnection();
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, teacherBean.getId());
 			ps.setString(2, teacherBean.getHomePageUrl());
@@ -61,7 +61,7 @@ public class TeacherDAOImpl implements TeacherDAO {
 
 		String sql = "UPDATE ecollaborationweb.teacher set homePageUrl = ?,needStudentsFlag= ? WHERE id = ?";
 		try{
-			connection = DBUtils.getConnetction();
+			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1,teacherBean.getHomePageUrl());
 			preparedStatement.setInt(2,teacherBean.getNeedStudentsFlag());
@@ -94,7 +94,7 @@ public class TeacherDAOImpl implements TeacherDAO {
 		String sql = "delete from ecollaborationweb.teacher where id=?";
 
 		try {
-			conn = DBUtils.getConnetction();
+			conn = DBUtils.getConnection();
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, teacherId);
 			int i = ps.executeUpdate();
@@ -127,7 +127,7 @@ public class TeacherDAOImpl implements TeacherDAO {
 		ResultSet resultSet = null;
 		String sql = "select * from ECollaborationWeb.teacher WHERE id = ?";
 		try {
-			connection = DBUtils.getConnetction();
+			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, teacherId);
 			resultSet = preparedStatement.executeQuery();
@@ -163,7 +163,7 @@ public class TeacherDAOImpl implements TeacherDAO {
 		String sql = "INSERT INTO ECollaborationWeb.teacher_project (teacherId, projectId) " +
 				" VALUES (?,?);";
 		try {
-			connection = DBUtils.getConnetction();
+			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, teacherId);
 			preparedStatement.setInt(2, projectId);
@@ -193,7 +193,7 @@ public class TeacherDAOImpl implements TeacherDAO {
 		PreparedStatement preparedStatement = null;
 		String sql = "DELETE FROM ECollaborationWeb.teacher_project WHERE projectId = ?;";
 		try {
-			connection = DBUtils.getConnetction();
+			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, projectId);
 			int flag = preparedStatement.executeUpdate();
@@ -221,7 +221,7 @@ public class TeacherDAOImpl implements TeacherDAO {
 		PreparedStatement preparedStatement = null;
 		String sql = "DELETE FROM ECollaborationWeb.teacher_project WHERE teacherId = ?;";
 		try {
-			connection = DBUtils.getConnetction();
+			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, teacherId);
 			int flag = preparedStatement.executeUpdate();

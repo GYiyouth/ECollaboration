@@ -7,7 +7,7 @@ public class PlanBean {
     private String content;
     private Integer creatorId;
     private String createDate;
-    private String modifyDate;
+    private String finishDate;
     private String beginDate;
     private String targetDate;
 
@@ -51,12 +51,12 @@ public class PlanBean {
         this.createDate = createDate;
     }
 
-    public String getModifyDate() {
-        return modifyDate;
+    public String getFinishDate() {
+        return finishDate;
     }
 
-    public void setModifyDate(String modifyDate) {
-        this.modifyDate = modifyDate;
+    public void setFinishDate(String finishDate) {
+        this.finishDate = finishDate;
     }
 
     public String getBeginDate() {

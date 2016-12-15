@@ -33,7 +33,7 @@ public class ComGetListValueDAOImpl<V, F> implements ComGetListValueDAO {
 		ArrayList<V> listValue = new ArrayList<V>();
 		String sql = "SELECT " + columnA + " FROM "  + SchemaName + tableC + " WHERE " + columnB + " = ?;";
 		try {
-			connection = DBUtils.getConnetction();
+			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setObject(1, (F)valueB);
 			resultSet = preparedStatement.executeQuery();

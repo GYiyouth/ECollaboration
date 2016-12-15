@@ -7,7 +7,6 @@ import DAO.com.smallTools.ComGetListValueDAOImpl;
 import DAO.com.util.db.DBUtils;
 import bean.domain.CodeBean;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,7 +34,7 @@ public class CodeDAOImpl implements CodeDAO {
 				"codeRows, createDate, deadDate, downLoadTimes,  studentId, projectId, teamId, path)" +
 				"VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 		try {
-			connection = DBUtils.getConnetction();
+			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(   1,  codeBean.getRow());
 			preparedStatement.setString(2,  codeBean.getCreateDate());
@@ -81,7 +80,7 @@ public class CodeDAOImpl implements CodeDAO {
 		ResultSet resultSet = null;
 		String sql = "SELECT * FROM ECollaborationWeb.code WHERE id = ?";
 		try {
-			connection = DBUtils.getConnetction();
+			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, codeId);
 			resultSet = preparedStatement.executeQuery();
@@ -126,7 +125,7 @@ public class CodeDAOImpl implements CodeDAO {
 				"downLoadTimes = ?, studentId = ?," +
 				"projectId = ?, teamId = ?, path = ? WHERE id = ?;";
 		try {
-			connection = DBUtils.getConnetction();
+			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(   1, codeBean.getRow());
 			preparedStatement.setString(2, codeBean.getCreateDate());
@@ -168,7 +167,7 @@ public class CodeDAOImpl implements CodeDAO {
 		PreparedStatement preparedStatement = null;
 		String sql = "DELETE  FROM ECollaborationWeb.code WHERE id = ?";
 		try {
-			connection = DBUtils.getConnetction();
+			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, codeId);
 			int flag = preparedStatement.executeUpdate();
@@ -178,6 +177,40 @@ public class CodeDAOImpl implements CodeDAO {
 			throw e;
 		}finally {
 			DBUtils.close(null, preparedStatement, connection);
+		}
+	}
+
+
+	/**
+	 * 获取某个学生在某个项目所有的代码行数
+	 *
+	 * @param studentId
+	 * @param projectId
+	 * @return
+	 */
+	@Override
+	public Integer getCodeRowsSum(int studentId, int projectId) throws SQLException{
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql = "SELECT SUM(codeRows) FROM ecollaborationweb.code WHERE studentId = ? and projectId = ?";
+
+		try {
+			conn = DBUtils.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, studentId);
+			ps.setInt(2, projectId);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				return rs.getInt(1);
+			} else {
+				return null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			DBUtils.close(rs, ps, conn);
 		}
 	}
 
@@ -321,7 +354,7 @@ public class CodeDAOImpl implements CodeDAO {
 		String sql = "SELECT id FROM ECollaborationWeb.code WHERE projectId = ? AND teamId = ? AND  studentId = ? ;";
 		ArrayList<Integer> arrayList = new ArrayList<>();
 		try {
-			connection = DBUtils.getConnetction();
+			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, projectId);
 			preparedStatement.setInt(2, teamId);

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE struts PUBLIC
         "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
         "http://struts.apache.org/dtds/struts-2.5.dtd">
@@ -26,5 +25,37 @@
             <result name="success">/这里放置登录以后界面</result>
             <result name="fail">/登录失败又去哪？</result>
         </action>
+
+       <!-- ========================================================================================-->
+        <action name="joinTeam" class="actions.team.JoinTeamAction" method="joinTeam">
+            <result name="success">成功</result>
+            <result name="fail">失败</result>
+        </action>
+
+        <action name="appJoinTeam" class="actions.team.JoinTeamAction" method="appJoinTeam">
+            <result name="success">成功</result>
+            <result name="fail">失败</result>
+        </action>
+
+        <action name="getMyJoinTeam" class="actions.team.GetMyJoinTeamsAction" method="getMyJoinTeam">
+            <result name="success">成功</result>
+            <result name="fail">失败</result>
+        </action>
+
+        <action name="appGetMyJoinTeam" class="actions.team.GetMyJoinTeamsAction" method="appGetMyJoinTeam">
+            <result name="success">成功</result>
+            <result name="fail">失败</result>
+        </action>
+
+        <action name="getMyJoinTeamInfo" class="actions.team.GetMyJoinTeamInfoAction" method="getMyJoinTeamInfo">
+            <result name="success">成功</result>
+            <result name="fail">失败</result>
+        </action>
+
+        <action name="appGetMyJoinTeamInfo" class="actions.team.GetMyJoinTeamInfoAction" method="appGetMyJoinTeamInfo">
+            <result name="success">成功</result>
+            <result name="fail">失败</result>
+        </action>
+
     </package>
 </struts>

@@ -58,6 +58,14 @@ public interface ECFileDAO {
 	public ECFileBean deleteFile(Integer fileId) throws SQLException;
 
 
+	/**
+	 * 某个学生该项目的文件总数
+	 * @param studentId
+	 * @param projectId
+	 * @return
+	 * @throws SQLException
+	 */
+	public Integer getFileSum(int studentId,int projectId) throws SQLException;
 
 	/**
 	 * 获取文件id列表，通过学生id
