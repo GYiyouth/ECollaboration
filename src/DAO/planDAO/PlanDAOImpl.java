@@ -2,7 +2,6 @@ package DAO.planDAO;
 
 import DAO.com.util.db.DBUtils;
 import bean.domain.PlanBean;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

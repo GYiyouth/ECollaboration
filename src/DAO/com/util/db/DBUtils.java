@@ -34,7 +34,7 @@ public class DBUtils {
 	 }
 
 	  //定义数据库连接方式
-	public static Connection getConnetction(){
+	public static Connection getConnection(){
 		Connection connection = null;
 		try {
 			connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);

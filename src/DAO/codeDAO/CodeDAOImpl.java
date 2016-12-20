@@ -31,8 +31,8 @@ public class CodeDAOImpl implements CodeDAO {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		String sql = "INSERT INTO ECollaborationWeb.Code(" +
-				"codeRows, createDate, deadDate, downLoadTimes,  studentId, projectId, teamId, path)" +
-				"VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+				"codeRows, createDate, deadDate, downLoadTimes,  studentId, projectId, teamId, path, codeName)" +
+				"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 		try {
 			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
@@ -45,6 +45,7 @@ public class CodeDAOImpl implements CodeDAO {
 			preparedStatement.setInt(   6,  codeBean.getProjectId());
 			preparedStatement.setInt(   7,  codeBean.getTeamId());
 			preparedStatement.setString(8,  codeBean.getPath());
+			preparedStatement.setString(9,  codeBean.getCodeName());
 			int flag = preparedStatement.executeUpdate();
 
 			if (flag == 1){
@@ -96,6 +97,7 @@ public class CodeDAOImpl implements CodeDAO {
 				codeBean.setDownLoadTimes(  resultSet.getInt("downLoadTimes"));
 				codeBean.setCreateDate(     resultSet.getString("createDate"));
 				codeBean.setDeadDate(       resultSet.getString("deadDate"));
+				codeBean.setCodeName((      resultSet.getString("codeName")));
 				return codeBean;
 			}else
 				return null;
@@ -123,7 +125,7 @@ public class CodeDAOImpl implements CodeDAO {
 		String sql = "UPDATE ECollaborationWeb.code " +
 				"set codeRows = ?, createDate = ?, deadDate = ?," +
 				"downLoadTimes = ?, studentId = ?," +
-				"projectId = ?, teamId = ?, path = ? WHERE id = ?;";
+				"projectId = ?, teamId = ?, path = ?, codeName = ? WHERE id = ?;";
 		try {
 			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
@@ -136,7 +138,8 @@ public class CodeDAOImpl implements CodeDAO {
 			preparedStatement.setInt(   6, codeBean.getProjectId());
 			preparedStatement.setInt(   7, codeBean.getTeamId());
 			preparedStatement.setString(8, codeBean.getPath());
-			preparedStatement.setInt(   9, codeId);
+			preparedStatement.setString(9, codeBean.getCodeName());
+			preparedStatement.setInt(   10, codeId);
 			int flag = preparedStatement.executeUpdate();
 			if (flag == 1 ){
 				return true;

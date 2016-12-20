@@ -99,7 +99,7 @@ public class LogAction implements ServletRequestAware, ServletResponseAware{
 			this.response.getWriter().write(jsonArray.toString());
 			return "success";
 		}else {
-			jsonObject.put("result", "success");
+			jsonObject.put("result", "fail");
 			jsonArray.add(jsonObject);
 			this.response.setCharacterEncoding("UTF-8");
 			this.response.getWriter().write(jsonArray.toString());
