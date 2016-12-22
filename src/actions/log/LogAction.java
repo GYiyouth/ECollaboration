@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 
 /**
@@ -58,6 +59,11 @@ public class LogAction implements ServletRequestAware, ServletResponseAware{
 	@Override
 	public void setServletRequest(HttpServletRequest request) {
 		this.request = request;
+		try {
+			this.request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -68,6 +74,7 @@ public class LogAction implements ServletRequestAware, ServletResponseAware{
 	@Override
 	public void setServletResponse(HttpServletResponse response) {
 		this.response = response;
+		this.response.setCharacterEncoding("UTF-8");
 	}
 
 	public String log() throws Exception {
@@ -84,26 +91,34 @@ public class LogAction implements ServletRequestAware, ServletResponseAware{
 			return "fail";
 	}
 
-	public String appLog() throws Exception{
+	public void appLog() throws Exception{
 		JSONArray jsonArray = new JSONArray();
 		JSONObject jsonObject = new JSONObject();
 
-		if (log().equals("success")){
+		try {
+			if (log().equals("success")) {
 
-			jsonObject.put("userBean", getUserBean());
-			jsonObject.put("photoPath", getUserBean().getPhoto());
-			jsonObject.put("result", "success");
-			jsonArray.add(jsonObject);
+				jsonObject.put("userBean", getUserBean());
+				jsonObject.put("photoPath", getUserBean().getPhoto());
+				jsonObject.put("result", "success");
+				jsonArray.add(jsonObject);
 
-			this.response.setCharacterEncoding("UTF-8");
-			this.response.getWriter().write(jsonArray.toString());
-			return "success";
-		}else {
-			jsonObject.put("result", "fail");
-			jsonArray.add(jsonObject);
-			this.response.setCharacterEncoding("UTF-8");
-			this.response.getWriter().write(jsonArray.toString());
-			return "fail";
+				this.response.setCharacterEncoding("UTF-8");
+				this.response.getWriter().write(jsonArray.toString());
+				this.response.getWriter().flush();
+				this.response.getWriter().close();
+
+			} else {
+				jsonObject.put("result", "fail");
+				jsonArray.add(jsonObject);
+				this.response.setCharacterEncoding("UTF-8");
+				this.response.getWriter().write(jsonArray.toString());
+				this.response.getWriter().flush();
+				this.response.getWriter().close();
+				;
+			}
+		}finally {
+
 		}
 	}
 }
