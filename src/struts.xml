@@ -4,7 +4,7 @@
         "http://struts.apache.org/dtds/struts-2.5.dtd">
 
 <struts>
-    <constant name="struts.devMode" value="true"/>
+    <!--<constant name="struts.devMode" value="true"/>-->
     <package name="log" extends="struts-default">
 
         <action name="log" class="actions.log.LogAction" method="log">
@@ -28,8 +28,8 @@
 
        <!-- ========================================================================================-->
         <action name="joinTeam" class="actions.team.JoinTeamAction" method="joinTeam">
-            <result name="success">成功</result>
-            <result name="fail">失败</result>
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
         </action>
 
         <action name="appJoinTeam" class="actions.team.JoinTeamAction" method="appJoinTeam">
@@ -38,8 +38,8 @@
         </action>
 
         <action name="getMyJoinTeam" class="actions.team.GetMyJoinTeamsAction" method="getMyJoinTeam">
-            <result name="success">成功</result>
-            <result name="fail">失败</result>
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
         </action>
 
         <action name="appGetMyJoinTeam" class="actions.team.GetMyJoinTeamsAction" method="appGetMyJoinTeam">
@@ -48,11 +48,41 @@
         </action>
 
         <action name="getMyJoinTeamInfo" class="actions.team.GetMyJoinTeamInfoAction" method="getMyJoinTeamInfo">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+        </action>
+
+        <action name="appGetMyJoinTeamInfo" class="actions.team.GetMyJoinTeamInfoAction" method="appGetMyJoinTeamInfo">
             <result name="success">成功</result>
             <result name="fail">失败</result>
         </action>
 
-        <action name="appGetMyJoinTeamInfo" class="actions.team.GetMyJoinTeamInfoAction" method="appGetMyJoinTeamInfo">
+        <action name="addStudent" class="actions.student.AddStudentAction" method="addStudent">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+        </action>
+
+        <action name="appAddStudent" class="actions.student.AddStudentAction" method="appAddStudent">
+            <result name="success">成功</result>
+            <result name="fail">失败</result>
+        </action>
+
+        <action name="addTeacher" class="actions.teacher.AddTeacherAction" method="addTeacher">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+        </action>
+
+        <action name="appAddTeacher" class="actions.teacher.AddTeacherAction" method="appAddTeacher">
+            <result name="success">成功</result>
+            <result name="fail">失败</result>
+        </action>
+
+        <action name="addManager" class="actions.manager.AddManagerAction" method="addManager">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+        </action>
+
+        <action name="appAddManager" class="actions.manager.AddManagerAction" method="appAddManager">
             <result name="success">成功</result>
             <result name="fail">失败</result>
         </action>

@@ -1,7 +1,7 @@
 package bean.domain;
 
 
-public class TeacherBean {
+public class TeacherBean  extends UserBean{
 	private Integer id = null;
 	private String homePageUrl = null;
 	private Integer needStudentsFlag = null;

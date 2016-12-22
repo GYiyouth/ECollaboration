@@ -38,7 +38,7 @@ public class UserDAOImpl implements UserDAO{
                 user.setSchoolId(rs.getString("schoolId"));
                 user.setName(rs.getString("name"));
                 user.setSex(rs.getInt("sex"));
-                user.setCharacter(rs.getInt("role"));
+                user.setRole(rs.getInt("role"));
                 user.setEmail(rs.getString("email"));
                 user.setPhoneNumber(rs.getString("phoneNumber"));
                 user.setLogName(rs.getString("logName"));
@@ -83,7 +83,7 @@ public class UserDAOImpl implements UserDAO{
             preparedStatement.setString(1, user.getSchoolId());
             preparedStatement.setString(2, user.getName());
             preparedStatement.setInt(   3, user.getSex());
-            preparedStatement.setInt(   4, user.getCharacter());
+            preparedStatement.setInt(   4, user.getRole());
             preparedStatement.setString(5, user.getEmail());
             preparedStatement.setString(6, user.getPhoneNumber());
             preparedStatement.setString(7, user.getLogName());
@@ -137,7 +137,7 @@ public class UserDAOImpl implements UserDAO{
                 user.setSchoolId(rs.getString("schoolId"));
                 user.setName(rs.getString("name"));
                 user.setSex(rs.getInt("sex"));
-                user.setCharacter(rs.getInt("role"));
+                user.setRole(rs.getInt("role"));
                 user.setEmail(rs.getString("email"));
                 user.setPhoneNumber(rs.getString("phoneNumber"));
                 user.setLogName(rs.getString("logName"));
@@ -182,7 +182,7 @@ public class UserDAOImpl implements UserDAO{
 		    preparedStatement.setString(1, user.getSchoolId());
 		    preparedStatement.setString(2, user.getName());
 		    preparedStatement.setInt(   3, user.getSex());
-		    preparedStatement.setInt(   4, user.getCharacter());
+		    preparedStatement.setInt(   4, user.getRole());
 		    preparedStatement.setString(5, user.getEmail());
 		    preparedStatement.setString(6, user.getPhoneNumber());
 		    preparedStatement.setString(7, user.getLogName());

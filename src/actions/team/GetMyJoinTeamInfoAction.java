@@ -14,6 +14,7 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -67,11 +68,17 @@ public class GetMyJoinTeamInfoAction implements ServletRequestAware, ServletResp
     @Override
     public void setServletRequest(HttpServletRequest request) {
         this.request = request;
+        try {
+            request.setCharacterEncoding("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void setServletResponse(HttpServletResponse response) {
         this.response = response;
+        this.response.setCharacterEncoding("UTF-8");
     }
 
 
@@ -135,7 +142,7 @@ public class GetMyJoinTeamInfoAction implements ServletRequestAware, ServletResp
 
     }
 
-    public String appGetMyJoinTeamInfo() throws Exception{
+    public void appGetMyJoinTeamInfo() throws Exception{
 
         JSONArray jsonArray = new JSONArray();
         JSONObject jsonObject = new JSONObject();
@@ -149,13 +156,15 @@ public class GetMyJoinTeamInfoAction implements ServletRequestAware, ServletResp
             jsonArray.add(jsonObject);
             this.response.setCharacterEncoding("UTF-8");
             this.response.getWriter().write(jsonArray.toString());
-            return "success";
+            this.response.getWriter().flush();
+            this.response.getWriter().close();
         }else {
             jsonObject.put("result", "fail");
             jsonArray.add(jsonObject);
             this.response.setCharacterEncoding("UTF-8");
             this.response.getWriter().write(jsonArray.toString());
-            return "fail";
+            this.response.getWriter().flush();
+            this.response.getWriter().close();
         }
 
     }

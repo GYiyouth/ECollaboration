@@ -3,6 +3,7 @@ package DAO.studentDAO;
 import DAO.com.util.db.DBUtils;
 import bean.domain.StudentBean;
 
+import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,15 +23,42 @@ public class StudentDaoImpl implements StudentDAO {
      */
     @Override
     public boolean addStudent(StudentBean studentBean) throws SQLException {
-        boolean flag = true;
         Connection conn = null;
         PreparedStatement ps = null;
-        String sql = "insert into ecollaborationweb.student (id,grade,isOnproject,isNeedProject," +
-                "graduatedSchool,tecKeyWord,homePageUrl,codeScore1,codeScore2,presentationScore,finalScore) " +
-                "values(?,?,?,?,?,?,?,?,?,?,?);";
+        ResultSet rs = null;
+        String sqlU = "INSERT INTO ECollaborationWeb.user ( " +
+                " schoolId, name, sex, role, email, phoneNumber, " +
+                " logName, passWord, createDate, " +
+                " lastLogTime, activeBefore, newsFlag) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";
+        String sqlS = "insert into ECollaborationWeb.student (id,grade,isOnproject,isNeedProject," +
+                "graduatedSchool,tecKeyWord,homePageUrl) " +
+                "values(?,?,?,?,?,?,?)";
         try {
             conn = DBUtils.getConnection();
-            ps = conn.prepareStatement(sql);
+            conn.setAutoCommit(false);
+            ps = conn.prepareStatement(sqlU, PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setString(1,studentBean.getSchoolId());
+            ps.setString(2,studentBean.getName());
+            ps.setInt(3,studentBean.getSex());
+            ps.setInt(4,studentBean.getRole());
+            ps.setString(5,studentBean.getEmail());
+            ps.setString(6,studentBean.getPhoneNumber());
+            ps.setString(7,studentBean.getLogName());
+            ps.setString(8,studentBean.getPassWord());
+            ps.setString(9,studentBean.getCreateDate());
+            ps.setString(10,studentBean.getLastLogTime());
+            ps.setString(11,studentBean.getActiveBefore());
+            ps.setInt(12,studentBean.getNewFlag());
+            int z  = ps.executeUpdate();
+            if(z!=0){
+                ResultSet ids = ps.getGeneratedKeys();
+                if(ids.next())
+                    System.out.println("插入user表成功");
+                    studentBean.setId(ids.getInt(1));
+            }else{
+                return false;
+            }
+            ps = conn.prepareStatement(sqlS);
             ps.setInt(1, studentBean.getId());
             ps.setString(2, studentBean.getGrade());
             ps.setInt(3, studentBean.getIsOnProject());
@@ -38,20 +66,26 @@ public class StudentDaoImpl implements StudentDAO {
             ps.setString(5, studentBean.getGraduatedSchool());
             ps.setString(6, studentBean.getTecKeyWord());
             ps.setString(7, studentBean.getHomePageUrl());
-            ps.setInt(8,studentBean.getCodeScore1());
-            ps.setInt(9,studentBean.getCodeScore2());
-            ps.setInt(10,studentBean.getPresentationScore());
-            ps.setInt(11, studentBean.getFinalScore());
+//            ps.setInt(8,studentBean.getCodeScore1());
+//            ps.setInt(9,studentBean.getCodeScore2());
+//            ps.setInt(10,studentBean.getPresentationScore());
+//            ps.setInt(11, studentBean.getFinalScore());
             int i = ps.executeUpdate();
             if (i == 0) {
-                flag = false;
+                return false;
+            }else{
+                System.out.println("插入student表成功");
             }
+            conn.commit();
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.rollback();
+            return false;
         } finally {
             DBUtils.close(null, ps, conn);
         }
-        return flag;
+
+        return true;
     }
 
     /**
