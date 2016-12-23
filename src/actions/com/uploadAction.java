@@ -27,11 +27,10 @@ public class uploadAction {
 	private String fileContentType;
 
 	//想让文件存储在哪里，就直接写在这里就好了，如果为空，则会和操作日志放在一个文件夹下。
-	private String savePath = "/web";
+	private String savePath = "/web/upload/temp/headPhotos";
 
 	public String uploadPic() {
 		setSavePath( ServletActionContext.getServletContext().getRealPath("")+"/../../.." + getSavePath() );
-
 		//上传文件的逻辑代码
 		FileIOBean fileIOBean = new FileIOBean();
 		try {

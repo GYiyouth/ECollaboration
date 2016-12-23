@@ -28,9 +28,29 @@
 
         <action name="uploadPhoto" class="actions.com.uploadAction" method="uploadPic">
             <result name="success">/照片上传成功</result>
+            <interceptor-ref name="fileUpload">
+                <!-- 限制2兆大小 -->
+                <param name="maximumSize">2097152</param>
+                <param name="allowedTypes">
+                    image/png, image/jpg, image/jpeg, image/bmp
+                </param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack" />
         </action>
 
-       <!-- ========================================================================================-->
+        <action name="downloadAction" class="actions.com.downloadActoin" method="downloadFiles">
+            <result type="stream">
+                <!-- 文件类型 —— application/octet-stream 表示无限制 -->
+                <param name="contentType">application/octet-stream</param>
+                <!-- 流对象名 —— 去找Action中的getInputStream方法 -->
+                <param name="inputName">inputStream</param>
+                <!-- 文件名 —— 将调用该Action中的getFileName方法 -->
+                <param name="contentDisposition">attachment;filename="${fileName}"</param>
+                <param name="bufferSize">4096</param>
+            </result>
+        </action>
+
+        <!-- ========================================================================================-->
         <action name="joinTeam" class="actions.team.JoinTeamAction" method="joinTeam">
             <result name="success">/success.jsp</result>
             <result name="fail">/fail.jsp</result>
@@ -61,35 +81,35 @@
             <result name="fail">失败</result>
         </action>
 
-        <action name="addStudent" class="actions.student.AddStudentAction" method="addStudent">
-            <result name="success">/success.jsp</result>
-            <result name="fail">/fail.jsp</result>
-        </action>
+        <!--<action name="addStudent" class="actions.student.AddStudentAction" method="addStudent">-->
+            <!--<result name="success">/success.jsp</result>-->
+            <!--<result name="fail">/fail.jsp</result>-->
+        <!--</action>-->
 
-        <action name="appAddStudent" class="actions.student.AddStudentAction" method="appAddStudent">
-            <result name="success">成功</result>
-            <result name="fail">失败</result>
-        </action>
+        <!--<action name="appAddStudent" class="actions.student.AddStudentAction" method="appAddStudent">-->
+            <!--<result name="success">成功</result>-->
+            <!--<result name="fail">失败</result>-->
+        <!--</action>-->
 
-        <action name="addTeacher" class="actions.teacher.AddTeacherAction" method="addTeacher">
-            <result name="success">/success.jsp</result>
-            <result name="fail">/fail.jsp</result>
-        </action>
+        <!--<action name="addTeacher" class="actions.teacher.AddTeacherAction" method="addTeacher">-->
+            <!--<result name="success">/success.jsp</result>-->
+            <!--<result name="fail">/fail.jsp</result>-->
+        <!--</action>-->
 
-        <action name="appAddTeacher" class="actions.teacher.AddTeacherAction" method="appAddTeacher">
-            <result name="success">成功</result>
-            <result name="fail">失败</result>
-        </action>
+        <!--<action name="appAddTeacher" class="actions.teacher.AddTeacherAction" method="appAddTeacher">-->
+            <!--<result name="success">成功</result>-->
+            <!--<result name="fail">失败</result>-->
+        <!--</action>-->
 
-        <action name="addManager" class="actions.manager.AddManagerAction" method="addManager">
-            <result name="success">/success.jsp</result>
-            <result name="fail">/fail.jsp</result>
-        </action>
+        <!--<action name="addManager" class="actions.manager.AddManagerAction" method="addManager">-->
+            <!--<result name="success">/success.jsp</result>-->
+            <!--<result name="fail">/fail.jsp</result>-->
+        <!--</action>-->
 
-        <action name="appAddManager" class="actions.manager.AddManagerAction" method="appAddManager">
-            <result name="success">成功</result>
-            <result name="fail">失败</result>
-        </action>
+        <!--<action name="appAddManager" class="actions.manager.AddManagerAction" method="appAddManager">-->
+            <!--<result name="success">成功</result>-->
+            <!--<result name="fail">失败</result>-->
+        <!--</action>-->
 
     </package>
 </struts>

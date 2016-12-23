@@ -18,5 +18,6 @@
 
          <input type="submit" value="提交">
     </form>
+    <a href="downloadAction.action?fileName=QuickTime Player.jpg">下载</a>
 </body>
 </html>
