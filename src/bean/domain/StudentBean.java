@@ -3,7 +3,7 @@ package bean.domain;
 /**
  * Created by GR on 2016/12/4.
  */
-public class StudentBean {
+public class StudentBean extends UserBean{
     private Integer id  ;
     private String grade  ;
     private Integer isOnProject ;  

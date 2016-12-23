@@ -14,6 +14,7 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -48,11 +49,17 @@ public class JoinTeamAction implements ServletRequestAware, ServletResponseAware
     @Override
     public void setServletRequest(HttpServletRequest request) {
         this.request = request;
+        try {
+            request.setCharacterEncoding("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void setServletResponse(HttpServletResponse response) {
         this.response = response;
+        this.response.setCharacterEncoding("UTF-8");
     }
 
     public String joinTeam() throws Exception{
@@ -67,7 +74,7 @@ public class JoinTeamAction implements ServletRequestAware, ServletResponseAware
 
     }
 
-    public String appJoinTeam() throws Exception{
+    public void appJoinTeam() throws Exception{
         JSONArray jsonArray = new JSONArray();
         JSONObject jsonObject = new JSONObject();
         if (joinTeam().equals("success")){
@@ -110,16 +117,18 @@ public class JoinTeamAction implements ServletRequestAware, ServletResponseAware
 
             jsonObject.put("result", "success");
             jsonArray.add(jsonObject);
+
             this.response.setCharacterEncoding("UTF-8");
             this.response.getWriter().write(jsonArray.toString());
-            System.out.println(jsonObject.toString());
-            return "success";
+            this.response.getWriter().flush();
+            this.response.getWriter().close();
         }else {
             jsonObject.put("result", "fail");
             jsonArray.add(jsonObject);
             this.response.setCharacterEncoding("UTF-8");
             this.response.getWriter().write(jsonArray.toString());
-            return "fail";
+            this.response.getWriter().flush();
+            this.response.getWriter().close();
         }
     }
 

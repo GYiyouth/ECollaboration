@@ -21,27 +21,64 @@ public class TeacherDAOImpl implements TeacherDAO {
 	 */
 	@Override
 	public boolean addTeacher(TeacherBean teacherBean) throws SQLException {
-
-		boolean flag = true;
 		Connection conn = null;
 		PreparedStatement ps = null;
-		String sql = "insert into ecollaborationweb.teacher (id,homePageUrl,needStudentsFlag)values(?,?,?);";
+		ResultSet rs = null;
+		String sqlU = "INSERT INTO ECollaborationWeb.user ( " +
+				" schoolId, name, sex, role, email, phoneNumber, " +
+				" logName, passWord, createDate, " +
+				" lastLogTime, activeBefore, newsFlag) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";
+		String sqlT = "insert into ECollaborationWeb.teacher (id,homePageUrl,needStudentsFlag) " +
+				"values(?,?,?)";
 		try {
 			conn = DBUtils.getConnection();
-			ps = conn.prepareStatement(sql);
+			conn.setAutoCommit(false);
+			ps = conn.prepareStatement(sqlU, PreparedStatement.RETURN_GENERATED_KEYS);
+			ps.setString(1,teacherBean.getSchoolId());
+			ps.setString(2,teacherBean.getName());
+			ps.setInt(3,teacherBean.getSex());
+			ps.setInt(4,teacherBean.getRole());
+			ps.setString(5,teacherBean.getEmail());
+			ps.setString(6,teacherBean.getPhoneNumber());
+			ps.setString(7,teacherBean.getLogName());
+			ps.setString(8,teacherBean.getPassWord());
+			ps.setString(9,teacherBean.getCreateDate());
+			ps.setString(10,teacherBean.getLastLogTime());
+			ps.setString(11,teacherBean.getActiveBefore());
+			ps.setInt(12,teacherBean.getNewFlag());
+
+			int z  = ps.executeUpdate();
+			if(z!=0){
+				ResultSet ids = ps.getGeneratedKeys();
+				if(ids.next())
+					System.out.println("插入user表成功");
+				teacherBean.setId(ids.getInt(1));
+			}else{
+				System.out.println("插入teacher表失败");
+				return false;
+			}
+			ps = conn.prepareStatement(sqlT);
 			ps.setInt(1, teacherBean.getId());
 			ps.setString(2, teacherBean.getHomePageUrl());
 			ps.setInt(3, teacherBean.getNeedStudentsFlag());
 			int i = ps.executeUpdate();
 			if (i == 0) {
-				flag = false;
+				System.out.println("插入teacher表失败");
+				return false;
+			}else{
+				System.out.println("插入teacher表成功");
 			}
+			conn.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			System.out.println("出错！");
+			conn.rollback();
+			return false;
 		} finally {
 			DBUtils.close(null, ps, conn);
 		}
-		return flag;
+
+		return true;
 	}
 
 
