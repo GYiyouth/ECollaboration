@@ -26,6 +26,10 @@
             <result name="fail">/登录失败又去哪？</result>
         </action>
 
+        <action name="uploadPhoto" class="actions.com.uploadAction" method="uploadPic">
+            <result name="success">/照片上传成功</result>
+        </action>
+
        <!-- ========================================================================================-->
         <action name="joinTeam" class="actions.team.JoinTeamAction" method="joinTeam">
             <result name="success">成功</result>

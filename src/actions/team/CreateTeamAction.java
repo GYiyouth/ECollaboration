@@ -12,6 +12,7 @@ import smallTools.TimeImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created by geyao on 2016/12/13.
@@ -84,6 +85,11 @@ public class CreateTeamAction implements ServletRequestAware, ServletResponseAwa
 	@Override
 	public void setServletRequest(HttpServletRequest request) {
 		this.request = request;
+		try {
+			this.request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -94,11 +100,16 @@ public class CreateTeamAction implements ServletRequestAware, ServletResponseAwa
 	@Override
 	public void setServletResponse(HttpServletResponse response) {
 		this.response = response;
+		this.response.setCharacterEncoding("UTF-8");
 	}
 
 
 	public String createTeam() throws Exception {
 		try {
+			System.out.println(memberMax);
+			System.out.println(teamName);
+			System.out.println(creatorId);
+			System.out.println(description);
 			TeamDAO teamDAO = new TeamDAOImpl();
 			TeamBean teamBean = new TeamBean();
 			Time time = new TimeImpl();
@@ -108,7 +119,7 @@ public class CreateTeamAction implements ServletRequestAware, ServletResponseAwa
 				teamBean.setDescription(description);
 			else
 				teamBean.setDescription("");
-			if (memberMax > 0)
+			if (memberMax != null && memberMax> 0)
 				teamBean.setMemberMax(memberMax);
 			else
 				teamBean.setMemberMax(0);
@@ -118,6 +129,7 @@ public class CreateTeamAction implements ServletRequestAware, ServletResponseAwa
 			this.id = teamDAO.addTeam(teamBean);
 			teamBean.setId(this.getId());
 			setTeamBean(teamBean);
+			System.out.println(teamBean);
 			return "success";
 		}catch (Exception e){
 			e.printStackTrace();
@@ -126,7 +138,7 @@ public class CreateTeamAction implements ServletRequestAware, ServletResponseAwa
 
 	}
 
-	public String appCreateTeam() throws Exception{
+	public void appCreateTeam() throws Exception{
 		JSONArray jsonArray = new JSONArray();
 		JSONObject jsonObject = new JSONObject();
 		if (createTeam().equals("success")){
@@ -134,15 +146,17 @@ public class CreateTeamAction implements ServletRequestAware, ServletResponseAwa
 			jsonObject.put("teamBean", getTeamBean());
 			jsonObject.put("result", "success");
 			jsonArray.add(jsonObject);
-			this.response.setCharacterEncoding("UTF-8");
+
 			this.response.getWriter().write(jsonArray.toString());
-			return "success";
+			this.response.getWriter().flush();
+			this.response.getWriter().close();
 		}else {
 			jsonObject.put("result", "fail");
 			jsonArray.add(jsonObject);
-			this.response.setCharacterEncoding("UTF-8");
+
 			this.response.getWriter().write(jsonArray.toString());
-			return "fail";
+			this.response.getWriter().flush();
+			this.response.getWriter().close();
 		}
 	}
 }
