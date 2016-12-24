@@ -1,13 +1,11 @@
 package bean.BusinessBean.Code;
 
-import bean.BusinessBean.XmlReaderBean;
+import bean.com.XmlReaderBean;
 import bean.domain.CodeBean;
 import org.dom4j.DocumentException;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
 
 /**
  * 用来处理代码的业务逻辑方法集合

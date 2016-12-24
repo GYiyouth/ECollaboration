@@ -47,7 +47,7 @@ public class CodeBean {
 		super();
 		Time time = new TimeImpl();
 		this.createDate = time.getDateStr();
-		this.deadDate = time.getDeadDateStr();
+		this.deadDate = time.getDeadTime();
 	}
 
 	public String getCodeName() {

@@ -1,4 +1,4 @@
-package bean.BusinessBean;
+package bean.com;
 
 import bean.BusinessBean.Code.CommitBean;
 import org.dom4j.Document;

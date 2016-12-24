@@ -52,7 +52,7 @@ public class Test {
 //		}
 //		Time time = new TimeImpl();
 //		System.out.println(time.getDateStr());
-//		System.out.println(time.getDeadDateStr());
+//		System.out.println(time.getDeadTime());
 //		CodeBean codeBean = new CodeBean();
 //		codeBean.setDownLoadTimes(0);
 //		codeBean.setPath("lala");

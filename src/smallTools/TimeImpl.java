@@ -57,10 +57,10 @@ public class TimeImpl implements Time{
 	}
 
 	@Override
-	public String getDeadDateStr() {
+	public String getDeadTime() {
 		String deadDate = getDateStr();
 		int deadDateInt = Integer.parseInt(deadDate) + 100000;
-		return ("" + deadDateInt);
+		return ("" + deadDateInt + " " +  getHour() + ":" + getMinute() + ":" + getSecond());
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class TimeImpl implements Time{
 	@Override
 	public String getTime() {
 		Date date = new Date();
-		String time = String.format("%tY-%tm-%td  %tH:%tM:%tS", date,date,date,date,date,date);
+		String time = String.format("%tY-%tm-%td %tH:%tM:%tS", date,date,date,date,date,date);
 		return time;
 	}
 }

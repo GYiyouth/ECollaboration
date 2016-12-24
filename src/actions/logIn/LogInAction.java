@@ -82,13 +82,14 @@ public class LogInAction implements ServletRequestAware, ServletResponseAware, S
 
 	public String log() throws Exception {
 		UserDAO userDAO = new UserDAOImpl();
-		UserBean userBean = new UserBean();
+		UserBean userBean;
 		userBean = userDAO.getLogInfo(userName, passWord);
 		if (userBean!=null) {
 			File file = userDAO.getUserPhoto(userBean);
 			userBean.setPhoto(file.getCanonicalPath());
 			this.setUserBean(userBean);
 			this.session.put("userName", userName);
+			this.session.put("userId", userBean.getId());
 			return "success";
 		}else
 			return "fail";

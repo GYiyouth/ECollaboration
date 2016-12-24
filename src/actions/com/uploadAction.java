@@ -12,6 +12,7 @@ import java.io.*;
  * 如果在后面再人为加上"/../../.."
  * 就可以回到根目录下，和src,web一个目录。
  *
+ * 另外，jsp里，文件那一栏对应的name必须是file
  * Created by geyao on 2016/12/23.
  */
 public class uploadAction {
