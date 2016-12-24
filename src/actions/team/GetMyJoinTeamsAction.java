@@ -74,6 +74,11 @@ public class GetMyJoinTeamsAction implements ServletRequestAware, ServletRespons
         }
     }
 
+    /**
+     * 返回result： 成功：success  失败：fail
+     * 成功返回团队信息：teamBean：
+     * @throws Exception
+     */
     public void appGetMyJoinTeam() throws Exception{
         JSONArray jsonArray = new JSONArray();
         JSONObject jsonObject = new JSONObject();

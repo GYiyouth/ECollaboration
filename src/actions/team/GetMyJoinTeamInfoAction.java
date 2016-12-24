@@ -90,8 +90,6 @@ public class GetMyJoinTeamInfoAction implements ServletRequestAware, ServletResp
         ECFileDAOImpl fileDaoImpl = new ECFileDAOImpl();
 
         try{
-//            int teamId = teamDaoImpl.getTeamIdByStudentIdProjectId(studentId, projectId);
-//            System.out.println("teamId"+teamId);
             ArrayList<Integer> studentIds = studentDaoImpl.getStudentIdByTeamIdProjectId(teamId,projectId);
             ArrayList<PlanBean> teamPlanBeans = new ArrayList<>();
 
@@ -142,6 +140,19 @@ public class GetMyJoinTeamInfoAction implements ServletRequestAware, ServletResp
 
     }
 
+    /**
+     * 返回：
+     * 成功：1.result=success，
+     *      2.ArrayList<PlanBean> teamPlanBeans 团队计划，按照顺序存储团队计划<PlanBean>的arraylist数组
+     *      3.ArrayList<ArrayList> teamInfoList包含小组所有人的信息：（ArrayList）teamInfoList.get(i)为第i位同学信息，默认组长在第一个
+     *          学生信息里包括 3.1 学生个人信息（StudentBean）
+     *                          3.2 代码行数（int型）
+     *                          3.3 上传文件总数（int型）
+     *                          3.4 个人每阶段完成所有任务的集合，阶段以团队任务划分ArrayList<ArrayList<PlanBean>> stagePlanBeanSum
+     *                                 3.4.1 ArrayList<PlanBean>的每个阶段的完成任务集合：其中，如果某个阶段没有完成任务，则stagePlanBeanSum.get（i）==null
+     *
+     * @throws Exception
+     */
     public void appGetMyJoinTeamInfo() throws Exception{
 
         JSONArray jsonArray = new JSONArray();

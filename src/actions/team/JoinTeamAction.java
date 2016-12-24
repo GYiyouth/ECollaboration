@@ -74,7 +74,13 @@ public class JoinTeamAction implements ServletRequestAware, ServletResponseAware
 
     }
 
+
+    /**
+     * 返回result  成功：success  失败：fail
+     * @throws Exception
+     */
     public void appJoinTeam() throws Exception{
+
         JSONArray jsonArray = new JSONArray();
         JSONObject jsonObject = new JSONObject();
         if (joinTeam().equals("success")){
@@ -117,7 +123,6 @@ public class JoinTeamAction implements ServletRequestAware, ServletResponseAware
 
             jsonObject.put("result", "success");
             jsonArray.add(jsonObject);
-
             this.response.setCharacterEncoding("UTF-8");
             this.response.getWriter().write(jsonArray.toString());
             this.response.getWriter().flush();
