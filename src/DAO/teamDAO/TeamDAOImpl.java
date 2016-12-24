@@ -687,5 +687,35 @@ public class TeamDAOImpl implements TeamDAO {
 			throw e;
 		}
 	}
+
+	/**
+	 * 获取申请进入团队的人的id
+	 *
+	 * @param teamId
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public ArrayList<Integer> getApplyStudentIdByTeamId(int teamId) throws Exception {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		ArrayList<Integer> list = new ArrayList<>();
+		String sql = "SELECT studentId FROM ecollaborationweb.student_team WHERE teamId = ? AND leaderFlag = ?";
+		try {
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, teamId);
+			preparedStatement.setInt(2, 0);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				list.add(resultSet.getInt("studentId"));
+			}
+			return list;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}
+	}
 }
 

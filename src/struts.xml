@@ -43,6 +43,7 @@
         <!--网页上传头像-->
         <action name="uploadPhoto" class="actions.user.UploadPhoto" method="uploadPic">
             <result name="success">/照片上传成功</result>
+            <result name="login">/login.jsp</result>
             <interceptor-ref name="fileUpload">
                 <!-- 限制2兆大小 -->
                 <param name="maximumSize">2097152</param>
@@ -78,6 +79,7 @@
         <!--学生上传代码-->
         <action name="uploadCode" class="actions.code.codeUploadAction" method="uploadCode">
             <result name="success">/代码上传成功</result>
+            <result name="login">/login.jsp</result>
             <interceptor-ref name="fileUpload">
                 <param name="maximumSize">2097152</param>
             </interceptor-ref>
@@ -163,7 +165,6 @@
             <result name="login">/登录界面</result>
         </action>
 
-        createProject
         <action name="createProject" class="actions.project.CreateProjectAction" method="createProject">
             <result name="success">/success.jsp</result>
             <result name="fail">/fail.jsp</result>
@@ -171,6 +172,18 @@
         </action>
 
         <action name="appCreateProject" class="actions.project.CreateProjectAction" method="appCreateProject">
+            <result name="success">成功</result>
+            <result name="fail">失败</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <action name="getTeamApplyInfo" class="actions.team.GetTeamApplyInfoAction" method="getTeamApplyInfo">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <action name="appGetTeamApplyInfo" class="actions.team.GetTeamApplyInfoAction" method="appGetTeamApplyInfo">
             <result name="success">成功</result>
             <result name="fail">失败</result>
             <result name="login">/登录界面</result>

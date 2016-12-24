@@ -237,8 +237,8 @@ public class CreateProjectAction implements SessionAware, ServletRequestAware, S
         projectBean.setGain(gain);
         projectBean.setPriority(priority);
         projectBean.setStatus(status);
-        UserBean u = (UserBean)session.get("userBean");
-        projectBean.setCreatorId(u.getId());
+//        UserBean u = (UserBean)session.get("userBean");
+//        projectBean.setCreatorId(u.getId());
         projectBean.setTeacherId(teacherId);
         try{
             if(projectDAO.addProject(projectBean))
