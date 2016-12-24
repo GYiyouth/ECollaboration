@@ -7,11 +7,14 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
+import org.apache.struts2.interceptor.SessionAware;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -19,12 +22,13 @@ import java.io.UnsupportedEncodingException;
  *
  * Created by geyao on 2016/12/13.
  */
-public class LogInAction implements ServletRequestAware, ServletResponseAware{
+public class LogInAction implements ServletRequestAware, ServletResponseAware, SessionAware{
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private String userName;
 	private String passWord;
 	private UserBean userBean;
+	private Map session;
 
 	public UserBean getUserBean() {
 		return userBean;
@@ -84,7 +88,7 @@ public class LogInAction implements ServletRequestAware, ServletResponseAware{
 			File file = userDAO.getUserPhoto(userBean);
 			userBean.setPhoto(file.getCanonicalPath());
 			this.setUserBean(userBean);
-
+			this.session.put("userName", userName);
 			return "success";
 		}else
 			return "fail";
@@ -119,6 +123,16 @@ public class LogInAction implements ServletRequestAware, ServletResponseAware{
 		}finally {
 
 		}
+	}
+
+	/**
+	 * Sets the Map of session attributes in the implementing class.
+	 *
+	 * @param session a Map of HTTP session attribute name/value pairs.
+	 */
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.session = session;
 	}
 }
 
