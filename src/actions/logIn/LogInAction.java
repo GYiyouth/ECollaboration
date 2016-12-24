@@ -90,6 +90,9 @@ public class LogInAction implements ServletRequestAware, ServletResponseAware, S
 			this.setUserBean(userBean);
 			this.session.put("userName", userName);
 			this.session.put("userId", userBean.getId());
+			//1管理员，2老师，3学生
+			this.session.put("role", userBean.getRole());
+			this.session.put("userBean", userBean);
 			return "success";
 		}else
 			return "fail";

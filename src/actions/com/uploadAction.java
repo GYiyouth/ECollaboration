@@ -13,6 +13,8 @@ import java.io.*;
  * 就可以回到根目录下，和src,web一个目录。
  *
  * 另外，jsp里，文件那一栏对应的name必须是file
+ *
+ * 仅做测试，实际上用不到的
  * Created by geyao on 2016/12/23.
  */
 public class uploadAction {
@@ -28,7 +30,7 @@ public class uploadAction {
 	private String fileContentType;
 
 	//想让文件存储在哪里，就直接写在这里就好了，如果为空，则会和操作日志放在一个文件夹下。
-	private String savePath = "/web/upload/temp/headPhotos";
+	private String savePath = "/web/upload/headPhotos";
 
 	public String uploadPic() {
 		setSavePath( ServletActionContext.getServletContext().getRealPath("")+"/../../.." + getSavePath() );
