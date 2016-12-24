@@ -145,5 +145,18 @@
             <result name="login">/登录界面</result>
         </action>
 
+        createProject
+        <action name="createProject" class="actions.project.CreateProjectAction" method="createProject">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <action name="appCreateProject" class="actions.project.CreateProjectAction" method="appCreateProject">
+            <result name="success">成功</result>
+            <result name="fail">失败</result>
+            <result name="login">/登录界面</result>
+        </action>
+
     </package>
 </struts>

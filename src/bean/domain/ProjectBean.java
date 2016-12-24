@@ -13,7 +13,7 @@ public class ProjectBean {
 	private Integer teamMax = null;
 	private Integer memberMax = null;
 	private String createDate = null;
-	private String grade = null;
+	private Integer grade = null;
 	private String keyWord = null;
 	private String info = null;
 	private String requirement = null;
@@ -98,11 +98,11 @@ public class ProjectBean {
 		this.createDate = createDate;
 	}
 
-	public String getGrade() {
+	public Integer getGrade() {
 		return grade;
 	}
 
-	public void setGrade(String grade) {
+	public void setGrade(Integer grade) {
 		this.grade = grade;
 	}
 

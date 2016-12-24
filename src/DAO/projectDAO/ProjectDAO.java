@@ -31,12 +31,12 @@ import java.util.ArrayList;
  */
 public interface ProjectDAO {
 	/**
-	 * 添加项目，内部生成id，返回项目id
+	 * 添加项目，内部生成id，
 	 * @param projectBean
-	 * @return int
+	 * @return boolean
 	 * @throws SQLException
 	 */
-	public Integer addProject(ProjectBean projectBean) throws SQLException;
+	public boolean addProject(ProjectBean projectBean) throws SQLException;
 
 	/**
 	 * 根据id寻找项目，返回project

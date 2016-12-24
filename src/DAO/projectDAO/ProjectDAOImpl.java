@@ -5,10 +5,7 @@ import DAO.com.smallTools.ComGetListValueDAOImpl;
 import DAO.com.util.db.DBUtils;
 import bean.domain.ProjectBean;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -24,32 +21,71 @@ public class ProjectDAOImpl implements ProjectDAO{
      * @throws SQLException
      */
     @Override
-    public Integer addProject(ProjectBean projectBean) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        String sql = "INSERT INTO ECollaborationWeb.project (name) VALUES (?);";
+    public boolean addProject(ProjectBean projectBean) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "INSERT  INTO ECollaborationWeb.project (name, applyBeforeDate," +
+                " finishDate, survivalDate, teamNumber, teamMax, memberMax, createDate," +
+                " grade, keyWord, info, requirement, gain, priority, status, creatorId," +
+                " teacherId)  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         try {
-            connection = DBUtils.getConnection();
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, projectBean.getName());
-            int flag = preparedStatement.executeUpdate();
-            if (flag == 1){
-                sql = "SELECT LAST_INSERT_ID();";
-                preparedStatement = connection.prepareStatement(sql);
-                resultSet = preparedStatement.executeQuery();
-                if (resultSet.next()) {
-                    projectBean.setId(resultSet.getInt(1));
-                    updateInfo(projectBean, projectBean.getId());
-                }
+            conn = DBUtils.getConnection();
+            ps = conn.prepareStatement(sql);
+
+            ps.setString(1,projectBean.getName());
+            ps.setString(2,projectBean.getApplyBeforeDate());
+            ps.setString(3,projectBean.getFinishDate());
+            ps.setString(4,projectBean.getSurvivalDate());
+            ps.setInt(5,projectBean.getTeamNumber());
+            if(projectBean.getTeamMax()==null){
+                ps.setNull(6, Types.INTEGER);
+            }else{
+                ps.setInt(6,projectBean.getTeamMax());
             }
-            return null;
+            if(projectBean.getMemberMax()==null){
+                ps.setNull(7, Types.INTEGER);
+            }else{
+                ps.setInt(7,projectBean.getMemberMax());
+            }
+            ps.setString(8,projectBean.getCreateDate());
+            if(projectBean.getGrade()==null){
+                ps.setNull(9, Types.INTEGER);
+            }else{
+                ps.setInt(9, projectBean.getGrade());
+            }
+            ps.setString(10, projectBean.getKeyWord());
+            ps.setString(11, projectBean.getInfo());
+            ps.setString(12, projectBean.getRequirement());
+            ps.setString(13, projectBean.getGain());
+            if(projectBean.getPriority()==null)
+                ps.setNull(14, Types.INTEGER);
+            else
+                ps.setInt(14, projectBean.getPriority());
+            if(projectBean.getStatus()==null)
+                ps.setNull(15, Types.INTEGER);
+            else
+                ps.setInt(15, projectBean.getStatus());
+            if(projectBean.getCreatorId()==null)
+                ps.setNull(16, projectBean.getCreatorId());
+            else
+                ps.setInt(16, projectBean.getCreatorId());
+            if(projectBean.getTeacherId()==null)
+                ps.setNull(17, Types.INTEGER);
+            else
+                ps.setInt(17, projectBean.getTeacherId());
+            int flag = ps.executeUpdate();
+            if (flag != 0){
+                return true;
+            }
+            return false;
         }catch (SQLException e){
             e.printStackTrace();
             throw e;
         }finally {
-            DBUtils.close(resultSet, preparedStatement, connection);
+            DBUtils.close(rs, ps, conn);
         }
+
     }
 
     /**
@@ -82,7 +118,7 @@ public class ProjectDAOImpl implements ProjectDAO{
                 projectBean.setTeamMax(         resultSet.getInt("teamMax"));
                 projectBean.setMemberMax(       resultSet.getInt("memberMax"));
                 projectBean.setCreateDate(      resultSet.getString("createDate"));
-                projectBean.setGrade(           resultSet.getString("grade"));
+                projectBean.setGrade(           resultSet.getInt("grade"));
                 projectBean.setKeyWord(         resultSet.getString("keyWord"));
                 projectBean.setInfo(            resultSet.getString("info"));
                 projectBean.setRequirement(         resultSet.getString("requirement"));
