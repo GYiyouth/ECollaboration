@@ -29,15 +29,13 @@ public class ECFileDAOImpl implements ECFileDAO {
 		if (ecFileBean == null )
 			return null;
 		else
-			if (getFileInfo( ecFileBean.getId() ) != null)                              //文件已经存在
+			if (ecFileBean.getId() != null)                              //文件已经存在
 				return null;
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		String sql = "insert into ECollaborationWeb.ecfile(fileName, createDate, deadDate, downLoadTimes," +
 				" creatorId, path) values(?,?,?,?,?,?);";
-		Time time = new TimeImpl();
-		ecFileBean.setCreateDate(time.getDateStr());
 		try{
 			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);

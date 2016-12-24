@@ -8,26 +8,35 @@ import bean.BusinessBean.File.FileIOBean;
 import bean.domain.ECFileBean;
 import bean.domain.UserBean;
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
 import smallTools.Time;
 import smallTools.TimeImpl;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Map;
 
 /**
  * 上传文件的action
  * 要求session里有userId，userBean等东西，已经加在了登录的action里
- *
+ * 如果是学生上传文件，form表单里必须要有projectId和teamId。
  * Created by geyao on 2016/12/24.
  */
-public class fileUploadAction implements SessionAware {
+public class fileUploadAction implements SessionAware, ServletRequestAware, ServletResponseAware {
 	private Map session;
 	private ECFileBean fileBean = new ECFileBean();
 	private Integer creatorId;
 	private String savePath;
 	private Integer fileId;
+	private Integer projectId;
+	private Integer teamId;
+	private HttpServletRequest request;
+	private HttpServletResponse response;
 
 	//注意，file并不是指前端jsp上传过来的文件本身，而是文件上传过来存放在临时文件夹下面的文件
 	private File file;
@@ -40,19 +49,17 @@ public class fileUploadAction implements SessionAware {
 
 	//仅用作学生上传学校工程实践项目的文件
 	public String studentUploadFile(){
-		if (session.containsKey("projectId") && session.containsKey("teamId")){
+		if (projectId!=null && teamId != null){
 			try {
-				int projectId = (int)session.get("projectId");
-				int teamId = (int)session.get("teamId");
-
 				fileBeanInit("/schoolPractices/" + projectId + "/" +teamId);
-
 				FileIOBean fileIOBean = new FileIOBean();
 				fileIOBean.uploadFile( getSavePath(), getFileFileName(), getFile());
 				ECFileDAO fileDAO = new ECFileDAOImpl();
 				int id = fileDAO.addFile( getFileBean() );
 				setFileId(id);
 				getFileBean().setId(id);
+				UserBean userBean = (UserBean) this.session.get("userBean");
+				setCreatorId(userBean.getId());
 				StudentDAO studentDAO = new StudentDaoImpl();
 				studentDAO.setFile(getCreatorId(), teamId, projectId, getFileId());
 			} catch (Exception e) {
@@ -79,6 +86,7 @@ public class fileUploadAction implements SessionAware {
 	public void fileBeanInit(String path){
 		getFileBean().setFileName(getFileFileName());
 		Time time = new TimeImpl();
+		System.out.println("time的getTime()方法 = " + time.getTime());
 		getFileBean().setCreateDate(time.getTime());
 		getFileBean().setDeadDate(time.getDeadTime());
 		getFileBean().setDownLoadTimes(0);
@@ -155,5 +163,78 @@ public class fileUploadAction implements SessionAware {
 
 	public void setFileId(Integer fileId) {
 		this.fileId = fileId;
+	}
+
+	/**
+	 * Sets the HTTP request object in implementing classes.
+	 *
+	 * @param request the HTTP request.
+	 */
+	@Override
+	public void setServletRequest(HttpServletRequest request) {
+		this.request = request;
+		try {
+			this.request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Sets the HTTP response object in implementing classes.
+	 *
+	 * @param response the HTTP response.
+	 */
+	@Override
+	public void setServletResponse(HttpServletResponse response) {
+		this.response = response;
+		this.response.setCharacterEncoding("UTF-8");
+	}
+
+	public int getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(int projectId) {
+		this.projectId = projectId;
+	}
+
+	public int getTeamId() {
+		return teamId;
+	}
+
+	public void setTeamId(int teamId) {
+		this.teamId = teamId;
+	}
+
+	public HttpServletRequest getRequest() {
+		return request;
+	}
+
+	public void setRequest(HttpServletRequest request) {
+		this.request = request;
+	}
+
+	public HttpServletResponse getResponse() {
+		return response;
+	}
+
+	public void setResponse(HttpServletResponse response) {
+		this.response = response;
+	}
+
+	@Override
+	public String toString() {
+		return "fileUploadAction{" +
+				"fileBean=" + fileBean +
+				", creatorId=" + creatorId +
+				", savePath='" + savePath + '\'' +
+				", fileId=" + fileId +
+				", projectId=" + projectId +
+				", teamId=" + teamId +
+				", file=" + file +
+				", fileFileName='" + fileFileName + '\'' +
+				", fileContentType='" + fileContentType + '\'' +
+				'}';
 	}
 }
