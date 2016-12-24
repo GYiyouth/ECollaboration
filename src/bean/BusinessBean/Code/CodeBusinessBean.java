@@ -67,8 +67,8 @@ public class CodeBusinessBean {
 	public static void main(String[] args) {
 		CodeBusinessBean codeBusinessBean = new CodeBusinessBean();
 		CodeBean codeBean = new CodeBean();
-		codeBean.setPath("/Users/geyao/IdeaProjects/ECollaborationGit/src/actions/log/LogAction.java");
-		codeBean.setCodeName("LogAction.java");
+		codeBean.setPath("/Users/geyao/IdeaProjects/ECollaborationGit/src/actions/log/LogInAction.java");
+		codeBean.setCodeName("LogInAction.java");
 		try {
 			System.out.println(codeBusinessBean.reviewCode(codeBean));
 		} catch (IOException e) {

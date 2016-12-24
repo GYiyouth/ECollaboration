@@ -162,7 +162,7 @@ public class Test {
 //			System.out.println(jsonObject);
 //			System.out.println(jsonArray);
 			try {
-				String[] cmd = new String[]{"cd ", "cd Desktop ", "ls"," cloc /Users/geyao/IdeaProjects/ECollaborationGit/src/actions/log/LogAction.java -xml -out=/Users/geyao/123.xml", "cd /Users/geyao/Desktop"};
+				String[] cmd = new String[]{"cd ", "cd Desktop ", "ls"," cloc /Users/geyao/IdeaProjects/ECollaborationGit/src/actions/log/LogInAction.java -xml -out=/Users/geyao/123.xml", "cd /Users/geyao/Desktop"};
 //				Runtime.getRuntime().exec(cmd[0]);
 //				Runtime.getRuntime().exec(cmd[1]);
 				Process p = Runtime.getRuntime().exec(cmd[3]);

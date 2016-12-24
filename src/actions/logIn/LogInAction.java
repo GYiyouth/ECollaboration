@@ -1,4 +1,4 @@
-package actions.log;
+package actions.logIn;
 
 import DAO.userDAO.UserDAO;
 import DAO.userDAO.UserDAOImpl;
@@ -11,7 +11,6 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 
@@ -20,7 +19,7 @@ import java.io.UnsupportedEncodingException;
  *
  * Created by geyao on 2016/12/13.
  */
-public class LogAction implements ServletRequestAware, ServletResponseAware{
+public class LogInAction implements ServletRequestAware, ServletResponseAware{
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private String userName;

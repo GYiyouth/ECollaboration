@@ -10,7 +10,7 @@
         <interceptors>
             <!--定义权限验证拦截器 -->
             <interceptor name="myLoginValidation"
-                         class="actions.log.LoginValidationInterceptor">
+                         class="interceptors.com.LogInValidationInterceptor">
             </interceptor>
             <!--定义拦截器栈 -->
             <interceptor-stack name="loginValidation">
@@ -22,12 +22,12 @@
         <!-- 定义默认拦截器 -->
         <default-interceptor-ref name="loginValidation" />
 
-        <action name="log" class="actions.log.LogAction" method="log">
+        <action name="log" class="actions.logIn.LogInAction" method="log">
             <result name="success">/这里放置登录以后界面</result>
             <result name="fail">/登录失败又去哪？</result>
         </action>
 
-        <action name="appLog" class="actions.log.LogAction" method="appLog">
+        <action name="appLog" class="actions.logIn.LogInAction" method="appLog">
             <result name="success"></result>
         </action>
 
@@ -102,41 +102,41 @@
             <result name="login">/登录界面</result>
         </action>
 
-        <!--<action name="addStudent" class="actions.student.AddStudentAction" method="addStudent">-->
-            <!--<result name="success">/success.jsp</result>-->
-            <!--<result name="fail">/fail.jsp</result>-->
-            <!--<result name="login">/登录界面</result>-->
-        <!--</action>-->
+        <action name="addStudent" class="actions.student.AddStudentAction" method="addStudent">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
 
-        <!--<action name="appAddStudent" class="actions.student.AddStudentAction" method="appAddStudent">-->
-            <!--<result name="success">成功</result>-->
-            <!--<result name="fail">失败</result>-->
-            <!--<result name="login">/登录界面</result>-->
-        <!--</action>-->
+        <action name="appAddStudent" class="actions.student.AddStudentAction" method="appAddStudent">
+            <result name="success">成功</result>
+            <result name="fail">失败</result>
+            <result name="login">/登录界面</result>
+        </action>
 
-        <!--<action name="addTeacher" class="actions.teacher.AddTeacherAction" method="addTeacher">-->
-            <!--<result name="success">/success.jsp</result>-->
-            <!--<result name="fail">/fail.jsp</result>-->
-            <!--<result name="login">/登录界面</result>-->
-        <!--</action>-->
+        <action name="addTeacher" class="actions.teacher.AddTeacherAction" method="addTeacher">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
 
-        <!--<action name="appAddTeacher" class="actions.teacher.AddTeacherAction" method="appAddTeacher">-->
-            <!--<result name="success">成功</result>-->
-            <!--<result name="fail">失败</result>-->
-            <!--<result name="login">/登录界面</result>-->
-        <!--</action>-->
+        <action name="appAddTeacher" class="actions.teacher.AddTeacherAction" method="appAddTeacher">
+            <result name="success">成功</result>
+            <result name="fail">失败</result>
+            <result name="login">/登录界面</result>
+        </action>
 
-        <!--<action name="addManager" class="actions.manager.AddManagerAction" method="addManager">-->
-            <!--<result name="success">/success.jsp</result>-->
-            <!--<result name="fail">/fail.jsp</result>-->
-            <!--<result name="login">/登录界面</result>-->
-        <!--</action>-->
+        <action name="addManager" class="actions.manager.AddManagerAction" method="addManager">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
 
-        <!--<action name="appAddManager" class="actions.manager.AddManagerAction" method="appAddManager">-->
-            <!--<result name="success">成功</result>-->
-            <!--<result name="fail">失败</result>-->
-            <!--<result name="login">/登录界面</result>-->
-        <!--</action>-->
+        <action name="appAddManager" class="actions.manager.AddManagerAction" method="appAddManager">
+            <result name="success">成功</result>
+            <result name="fail">失败</result>
+            <result name="login">/登录界面</result>
+        </action>
 
     </package>
 </struts>
