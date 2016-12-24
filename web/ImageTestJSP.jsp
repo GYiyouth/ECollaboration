@@ -19,5 +19,10 @@
          <input type="submit" value="提交">
     </form>
     <a href="downloadAction.action?fileName=QuickTime Player.jpg">下载</a>
+    <form action="logIn.action" method="log">
+        用户名<input type="text" name="userName"><br>
+        密码<input type="password" name="passWord">
+        <input type="submit" value="提交">
+    </form>
 </body>
 </html>

@@ -88,10 +88,18 @@ public class LogInAction implements ServletRequestAware, ServletResponseAware, S
 			File file = userDAO.getUserPhoto(userBean);
 			userBean.setPhoto(file.getCanonicalPath());
 			this.setUserBean(userBean);
+			if (this.session.containsKey("userName"))
+				this.session.remove("userName");
 			this.session.put("userName", userName);
+			if (this.session.containsKey("userId"))
+				this.session.remove("userId");
 			this.session.put("userId", userBean.getId());
+			if (this.session.containsKey("role"))
+				this.session.remove("role");
 			//1管理员，2老师，3学生
 			this.session.put("role", userBean.getRole());
+			if (this.session.containsKey("userBean"))
+				this.session.remove("userBean");
 			this.session.put("userBean", userBean);
 			return "success";
 		}else

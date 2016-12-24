@@ -64,16 +64,4 @@ public class DBUtils {
 			System.out.println("关闭连接失败");
 		}
 	}
-
-//	public static void main(String[] args){
-//		UserDAO userDAO = new UserDAOImpl();
-//		try {
-//
-//			UserBean user = userDAO.findByAccount("1", "2");
-//			System.out.println(user.getId());
-//			System.out.println(userDAO.check("1", "1"));
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//	}
 }

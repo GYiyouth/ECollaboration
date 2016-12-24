@@ -4,7 +4,7 @@
         "http://struts.apache.org/dtds/struts-2.5.dtd">
 
 <struts>
-    <!--<constant name="struts.devMode" value="true"/>-->
+    <constant name="struts.devMode" value="true"/>
     <package name="log" extends="struts-default">
 
         <interceptors>
@@ -23,7 +23,7 @@
         <default-interceptor-ref name="loginValidation" />
 
         <action name="logIn" class="actions.logIn.LogInAction" method="log">
-            <result name="success">/这里放置登录以后界面</result>
+            <result name="success">/ImageTestJSP.jsp</result>
             <result name="fail">/登录失败又去哪？</result>
         </action>
 
@@ -63,7 +63,7 @@
             </interceptor-ref>
             <interceptor-ref name="defaultStack" />
         </action>
-
+        <!--网页下载-->
         <action name="downloadAction" class="actions.com.downloadActoin" method="downloadFiles">
             <result type="stream">
                 <!-- 文件类型 —— application/octet-stream 表示无限制 -->
@@ -90,6 +90,11 @@
             </interceptor-ref>
         </action>
 
+        <!--队长代表团队申请项目-->
+        <action name="applyProject" class="actions.team.ApplyProjectAction" method="execute">
+            <result name="success">/申请成功</result>
+            <result name="fail">/申请失败</result>
+        </action>
         <!-- ========================================================================================-->
         <action name="joinTeam" class="actions.team.JoinTeamAction" method="joinTeam">
             <result name="success">/success.jsp</result>
@@ -163,7 +168,7 @@
             <result name="login">/登录界面</result>
         </action>
 
-        createProject
+        <!--createProject-->
         <action name="createProject" class="actions.project.CreateProjectAction" method="createProject">
             <result name="success">/success.jsp</result>
             <result name="fail">/fail.jsp</result>
@@ -177,4 +182,5 @@
         </action>
 
     </package>
+
 </struts>

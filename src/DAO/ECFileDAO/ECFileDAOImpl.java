@@ -41,12 +41,10 @@ public class ECFileDAOImpl implements ECFileDAO {
 		try{
 			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
-//			preparedStatement.setInt(   1,  ecFileBean.getId());
 			preparedStatement.setString(1,  ecFileBean.getFileName());
 			preparedStatement.setString(2,  ecFileBean.getCreateDate());
 			preparedStatement.setString(3,  ecFileBean.getDeadDate());
 			preparedStatement.setInt(   4,  ecFileBean.getDownLoadTimes());
-//			preparedStatement.setInt(   5,  ecFileBean.getPriority());
 			preparedStatement.setInt(   5,  ecFileBean.getCreatorId());
 			preparedStatement.setString(6,  ecFileBean.getPath());
 			int doneFlag = preparedStatement.executeUpdate();

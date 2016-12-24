@@ -39,15 +39,12 @@ public class UserBean {
     public void setSex(Integer sex) {
         this.sex = sex;
     }
-
     public Integer getRole() {
         return role;
     }
-
     public void setRole(Integer role) {
         this.role = role;
     }
-
     public String getEmail() {
         return email;
     }

@@ -92,14 +92,14 @@ public class UserDAOImpl implements UserDAO{
         }finally {
             DBUtils.close(resultSet, preparedStatement, connection);
         }
-
     }
 
 
     /**
      * 根据id寻找用户，返回User
      *
-     * @param userId@return User
+     * @param userId
+     * @return User
      * @throws SQLException
      */
     @Override
