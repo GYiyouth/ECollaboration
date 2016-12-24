@@ -17,8 +17,8 @@ import java.util.Map;
 
 /**
  * 上传文件的action
- * 要求session里有userId
- * 如果是个学生上传的文件，则必须指明，团队，项目，如果是老师上传，不可以指定团队，项目指明与否可选。
+ * 要求session里有userId，userBean等东西，已经加在了登录的action里
+ *
  * Created by geyao on 2016/12/24.
  */
 public class fileUploadAction implements SessionAware {
