@@ -63,10 +63,9 @@ public class JoinTeamAction implements ServletRequestAware, ServletResponseAware
     }
 
     public String joinTeam() throws Exception{
-        int teamId =  Integer.parseInt(request.getParameter("teamId"));
-        int studentId = Integer.parseInt(request.getParameter("studentId"));    //不知道这个id到底叫什么名字
         StudentDaoImpl studentDaoImpl = new StudentDaoImpl();
-        boolean flag = studentDaoImpl.addStudentToTeam(studentId, teamId, 0);    //0代表组员
+
+        boolean flag = studentDaoImpl.addStudentToTeam(studentId, teamId, 0);    //0代表申请团队还没经过同意
         if(flag)
             return "success";
         else

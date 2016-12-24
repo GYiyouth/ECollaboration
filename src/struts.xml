@@ -4,7 +4,7 @@
         "http://struts.apache.org/dtds/struts-2.5.dtd">
 
 <struts>
-    <constant name="struts.devMode" value="true"/>
+    <!--<constant name="struts.devMode" value="true"/>-->
     <package name="log" extends="struts-default">
 
         <interceptors>
@@ -43,6 +43,7 @@
         <!--网页上传头像-->
         <action name="uploadPhoto" class="actions.user.UploadPhoto" method="uploadPic">
             <result name="success">/照片上传成功</result>
+            <result name="login">/login.jsp</result>
             <interceptor-ref name="fileUpload">
                 <!-- 限制2兆大小 -->
                 <param name="maximumSize">2097152</param>
@@ -63,7 +64,7 @@
             </interceptor-ref>
             <interceptor-ref name="defaultStack" />
         </action>
-        <!--网页下载-->
+
         <action name="downloadAction" class="actions.com.downloadActoin" method="downloadFiles">
             <result type="stream">
                 <!-- 文件类型 —— application/octet-stream 表示无限制 -->
@@ -90,11 +91,6 @@
             </interceptor-ref>
         </action>
 
-        <!--队长代表团队申请项目-->
-        <action name="applyProject" class="actions.team.ApplyProjectAction" method="execute">
-            <result name="success">/申请成功</result>
-            <result name="fail">/申请失败</result>
-        </action>
         <!-- ========================================================================================-->
         <action name="joinTeam" class="actions.team.JoinTeamAction" method="joinTeam">
             <result name="success">/success.jsp</result>
@@ -168,7 +164,7 @@
             <result name="login">/登录界面</result>
         </action>
 
-        <!--createProject-->
+        createProject
         <action name="createProject" class="actions.project.CreateProjectAction" method="createProject">
             <result name="success">/success.jsp</result>
             <result name="fail">/fail.jsp</result>
@@ -182,5 +178,4 @@
         </action>
 
     </package>
-
 </struts>

@@ -198,4 +198,12 @@ public interface TeamDAO {
 	 * @throws Exception
 	 */
 	public Integer getTeamIdByStudentIdProjectId(int studentId, int projectId) throws Exception;
+
+	/**
+	 * 获取申请进入团队的人的id
+	 * @param teamId
+	 * @return
+	 * @throws Exception
+	 */
+	public ArrayList<Integer> getApplyStudentIdByTeamId(int teamId) throws Exception;
 }
