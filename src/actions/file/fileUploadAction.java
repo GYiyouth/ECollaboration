@@ -13,6 +13,7 @@ import smallTools.Time;
 import smallTools.TimeImpl;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -41,19 +42,18 @@ public class fileUploadAction implements SessionAware {
 	public String studentUploadFile(){
 		if (session.containsKey("projectId") && session.containsKey("teamId")){
 			try {
-			int projectId = (int)session.get("projectId");
-			int teamId = (int)session.get("teamId");
+				int projectId = (int)session.get("projectId");
+				int teamId = (int)session.get("teamId");
 
-			fileBeanInit("/schoolPractices/" + projectId + "/" +teamId);
-			FileIOBean fileIOBean = new FileIOBean();
+				fileBeanInit("/schoolPractices/" + projectId + "/" +teamId);
 
+				FileIOBean fileIOBean = new FileIOBean();
 				fileIOBean.uploadFile( getSavePath(), getFileFileName(), getFile());
 				ECFileDAO fileDAO = new ECFileDAOImpl();
 				int id = fileDAO.addFile( getFileBean() );
 				setFileId(id);
 				getFileBean().setId(id);
 				StudentDAO studentDAO = new StudentDaoImpl();
-
 				studentDAO.setFile(getCreatorId(), teamId, projectId, getFileId());
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -62,9 +62,19 @@ public class fileUploadAction implements SessionAware {
 			return "success";
 		}else
 			return "fail";
-
-
 	}
+
+	//用作老师上传文件，可以精确到项目、团队
+	//需要在seesion里放置projectId和teamId的数组,不管精确与否
+//	public String teacherUploadFile(){
+//		try {
+//			UserBean userBean = (UserBean) session.get("userBean");
+//			ArrayList<Integer> projectIdList = (ArrayList<Integer>) session.get("projectIdList");
+//			ArrayList<Integer> teamIdList = (ArrayList<Integer>) session.get("teamIdList");
+//			return "fail";
+//		}
+//
+//	}
 
 	public void fileBeanInit(String path){
 		getFileBean().setFileName(getFileFileName());

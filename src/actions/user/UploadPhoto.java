@@ -16,6 +16,8 @@ import java.util.Map;
 
 /**
  * 头像上传的action
+ * 手机端返回图片的地址
+ * jsp 的 form里，name必须是file
  * Created by geyao on 2016/12/24.
  */
 public class UploadPhoto implements SessionAware,ServletRequestAware, ServletResponseAware {
