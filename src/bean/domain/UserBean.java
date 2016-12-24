@@ -11,7 +11,7 @@ public class UserBean {
     private String logName;
     private String passWord;
     private String createDate;
-    private String photo; //路径，默认放在web.upload.temp.headPhotos下
+    private String photo; //路径，默认放在web.upload.headPhotos下
     private String lastLogTime;
     private String activeBefore;
     private int newFlag;

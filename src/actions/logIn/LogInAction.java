@@ -90,13 +90,16 @@ public class LogInAction implements ServletRequestAware, ServletResponseAware, S
 			this.setUserBean(userBean);
 			this.session.put("userName", userName);
 			this.session.put("userId", userBean.getId());
+			//1管理员，2老师，3学生
+			this.session.put("role", userBean.getRole());
+			this.session.put("userBean", userBean);
 			return "success";
 		}else
 			return "fail";
 	}
 
 	public void appLog() throws Exception{
-		JSONArray jsonArray = new JSONArray();
+
 		JSONObject jsonObject = new JSONObject();
 
 		try {
@@ -105,18 +108,18 @@ public class LogInAction implements ServletRequestAware, ServletResponseAware, S
 				jsonObject.put("userBean", getUserBean());
 				jsonObject.put("photoPath", getUserBean().getPhoto());
 				jsonObject.put("result", "success");
-				jsonArray.add(jsonObject);
+
 
 				this.response.setCharacterEncoding("UTF-8");
-				this.response.getWriter().write(jsonArray.toString());
+				this.response.getWriter().write(jsonObject.toString());
 				this.response.getWriter().flush();
 				this.response.getWriter().close();
 
 			} else {
 				jsonObject.put("result", "fail");
-				jsonArray.add(jsonObject);
+
 				this.response.setCharacterEncoding("UTF-8");
-				this.response.getWriter().write(jsonArray.toString());
+				this.response.getWriter().write(jsonObject.toString());
 				this.response.getWriter().flush();
 				this.response.getWriter().close();
 				;

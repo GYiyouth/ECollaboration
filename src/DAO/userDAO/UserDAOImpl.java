@@ -33,24 +33,7 @@ public class UserDAOImpl implements UserDAO{
             //preparedStatement = connection.prepareStatement(sql);
             state = connection.prepareStatement(sql);
             rs = state.executeQuery();
-            if(rs.next()){
-                user.setId(rs.getInt("id"));
-                user.setSchoolId(rs.getString("schoolId"));
-                user.setName(rs.getString("name"));
-                user.setSex(rs.getInt("sex"));
-                user.setRole(rs.getInt("role"));
-                user.setEmail(rs.getString("email"));
-                user.setPhoneNumber(rs.getString("phoneNumber"));
-                user.setLogName(rs.getString("logName"));
-                user.setPassWord(rs.getString("passWord"));
-                user.setCreateDate(rs.getString("createDate"));
-                user.setLastLogTime(rs.getString("lastLogTime"));
-                user.setActiveBefore(rs.getString("activeBefore"));
-                user.setNewFlag(rs.getInt("newsFlag"));
-                return user;
-            }else{
-                return null;
-            }
+            return setUser(rs, user);
 
         }catch (SQLException e) {
             e.printStackTrace();
@@ -75,8 +58,8 @@ public class UserDAOImpl implements UserDAO{
         Integer id = null;
         String sql = "INSERT INTO ECollaborationWeb.user ( " +
                 " schoolId, name, sex, role, email, phoneNumber, " +
-                " logName, passWord, createDate, " +
-                " lastLogTime, activeBefore, newsFlag) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";
+                " logName, passWord, createDate, photo, " +
+                " lastLogTime, activeBefore, newsFlag) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);";
         try {
             connection = DBUtils.getConnection();
             preparedStatement = connection.prepareStatement(sql);
@@ -89,10 +72,10 @@ public class UserDAOImpl implements UserDAO{
             preparedStatement.setString(7, user.getLogName());
             preparedStatement.setString(8, user.getPassWord());
             preparedStatement.setString(9, user.getCreateDate());
-//            preparedStatement.setString(10, user.getPhoto());
-            preparedStatement.setString(10, user.getLastLogTime());
-            preparedStatement.setString(11, user.getActiveBefore());
-            preparedStatement.setInt(   12, user.getNewFlag());
+            preparedStatement.setString(10, user.getPhoto());
+            preparedStatement.setString(11, user.getLastLogTime());
+            preparedStatement.setString(12, user.getActiveBefore());
+            preparedStatement.setInt(   13, user.getNewFlag());
             int flag = preparedStatement.executeUpdate();
             if (flag == 1){
                 sql = "SELECT LAST_INSERT_ID();";
@@ -132,25 +115,7 @@ public class UserDAOImpl implements UserDAO{
             //preparedStatement = connection.prepareStatement(sql);
             state = connection.prepareStatement(sql);
             rs = state.executeQuery();
-            if(rs.next()){
-                user.setId(rs.getInt("id"));
-                user.setSchoolId(rs.getString("schoolId"));
-                user.setName(rs.getString("name"));
-                user.setSex(rs.getInt("sex"));
-                user.setRole(rs.getInt("role"));
-                user.setEmail(rs.getString("email"));
-                user.setPhoneNumber(rs.getString("phoneNumber"));
-                user.setLogName(rs.getString("logName"));
-                user.setPassWord(rs.getString("passWord"));
-                user.setCreateDate(rs.getString("createDate"));
-
-                user.setLastLogTime(rs.getString("lastLogTime"));
-                user.setActiveBefore(rs.getString("activeBefore"));
-                user.setNewFlag(rs.getInt("newsFlag"));
-                return user;
-            }else{
-                return null;
-            }
+            return setUser(rs, user);
 
         }catch (SQLException e) {
             e.printStackTrace();
@@ -174,7 +139,7 @@ public class UserDAOImpl implements UserDAO{
 	    Integer id = null;
 	    String sql = "UPDATE ECollaborationWeb.user SET " +
 			    " schoolId = ?, name = ?, sex = ?, role = ?, email = ?, phoneNumber = ?, " +
-			    " logName = ?, passWord = ?, createDate = ?, " +
+			    " logName = ?, passWord = ?, createDate = ?, photo = ?, " +
 			    " lastLogTime = ?, activeBefore = ?, newsFlag = ? WHERE id = ? ;";
 	    try {
 		    connection = DBUtils.getConnection();
@@ -188,11 +153,11 @@ public class UserDAOImpl implements UserDAO{
 		    preparedStatement.setString(7, user.getLogName());
 		    preparedStatement.setString(8, user.getPassWord());
 		    preparedStatement.setString(9, user.getCreateDate());
-//            preparedStatement.setString(10, user.getPhoto());
-		    preparedStatement.setString(10, user.getLogName());
-		    preparedStatement.setString(11, user.getActiveBefore());
-		    preparedStatement.setInt(   12, user.getNewFlag());
-		    preparedStatement.setInt(   13, user.getId());
+            preparedStatement.setString(10, user.getPhoto());
+		    preparedStatement.setString(11, user.getLastLogTime());
+		    preparedStatement.setString(12, user.getActiveBefore());
+		    preparedStatement.setInt(   13, user.getNewFlag());
+		    preparedStatement.setInt(   14, user.getId());
 		    int flag = preparedStatement.executeUpdate();
 		    if (flag == 1){
 			    return true;
@@ -319,5 +284,26 @@ public class UserDAOImpl implements UserDAO{
 		    DBUtils.close(resultSet, preparedStatement, connection);
 	    }
 
+    }
+    private UserBean setUser(ResultSet rs, UserBean user) throws SQLException {
+	    if(rs.next()){
+		    user.setId(rs.getInt("id"));
+		    user.setSchoolId(rs.getString("schoolId"));
+		    user.setName(rs.getString("name"));
+		    user.setSex(rs.getInt("sex"));
+		    user.setRole(rs.getInt("role"));
+		    user.setEmail(rs.getString("email"));
+		    user.setPhoneNumber(rs.getString("phoneNumber"));
+		    user.setLogName(rs.getString("logName"));
+		    user.setPassWord(rs.getString("passWord"));
+		    user.setCreateDate(rs.getString("createDate"));
+			user.setPhoto(rs.getString("photo"));
+		    user.setLastLogTime(rs.getString("lastLogTime"));
+		    user.setActiveBefore(rs.getString("activeBefore"));
+		    user.setNewFlag(rs.getInt("newsFlag"));
+		    return user;
+	    }else{
+		    return null;
+	    }
     }
 }

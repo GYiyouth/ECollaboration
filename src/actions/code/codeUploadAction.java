@@ -73,7 +73,7 @@ public class codeUploadAction implements SessionAware{
 		getCodeBean().setProjectId((int)session.get("projectId"));
 		getCodeBean().setTeamId((int)session.get("teamId"));
 		setSavePath( ServletActionContext.getServletContext().getRealPath("")+
-				"/../../../web/upload/" + getCodeBean().getProjectId() +
+				"/../../../web/upload/schoolPractices/" + getCodeBean().getProjectId() +
 				"/" + getCodeBean().getProjectId() +
 				"/" + getCodeBean().getStudentId());
 		getCodeBean().setPath(getSavePath());
