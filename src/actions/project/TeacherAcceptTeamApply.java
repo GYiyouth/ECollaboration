@@ -12,11 +12,11 @@ import java.util.Map;
 
 /**
  * 老师接受团队对于项目的申请
- * 未作后台验证
+ *
  * form里要有teamId，projectId
  * Created by geyao on 2016/12/25.
  */
-public class TeacherAccepTeamApply implements SessionAware{
+public class TeacherAcceptTeamApply implements SessionAware{
 	private int teamId;
 	private int projectId;
 	private Map session;
@@ -30,6 +30,7 @@ public class TeacherAccepTeamApply implements SessionAware{
 			return "fail";
 		if (teamDAO.getTeamIdListByProjectId(projectId).contains(teamId)){
 			try {
+
 				teamDAO.acceptTeamApplytoProject(teamId, projectId);
 				return "success";
 			}catch (SQLException e){
@@ -48,5 +49,21 @@ public class TeacherAccepTeamApply implements SessionAware{
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
+	}
+
+	public int getTeamId() {
+		return teamId;
+	}
+
+	public void setTeamId(int teamId) {
+		this.teamId = teamId;
+	}
+
+	public int getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(int projectId) {
+		this.projectId = projectId;
 	}
 }

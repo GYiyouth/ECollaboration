@@ -17,7 +17,7 @@ public class LogInValidationInterceptor extends AbstractInterceptor{
         System.out.println("登录拦截器");
         Map<String, Object> session= actionInvocation.getInvocationContext().getSession();
         UserBean userBean = (UserBean) session.get("userBean");
-        System.out.println("已经登录的用户："+userBean.getName()+"!");
+
         if(LogInAction.class==actionInvocation.getAction().getClass())
         {
             System.out.println("当前进行登录呢。。");
@@ -29,6 +29,7 @@ public class LogInValidationInterceptor extends AbstractInterceptor{
             return "login";
         } else {
             //继续执行剩余的拦截器和Action
+            System.out.println("已经登录的用户："+userBean.getName()+"!");
             return actionInvocation.invoke();
         }
     }
