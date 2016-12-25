@@ -12,7 +12,7 @@ import java.util.Map;
 
 /**
  * 老师接受团队对于项目的申请
- *
+ * 在DAO里修改了team_project的applyFlag，以及project本身的teamNumber
  * form里要有teamId，projectId
  * Created by geyao on 2016/12/25.
  */
@@ -30,9 +30,8 @@ public class TeacherAcceptTeamApply implements SessionAware{
 			return "fail";
 		if (teamDAO.getTeamIdListByProjectId(projectId).contains(teamId)){
 			try {
-
-				teamDAO.acceptTeamApplytoProject(teamId, projectId);
-				return "success";
+				if (teamDAO.acceptTeamApplyToProject(teamId, projectId))
+					return "success";
 			}catch (SQLException e){
 				e.printStackTrace();
 				return "fail";

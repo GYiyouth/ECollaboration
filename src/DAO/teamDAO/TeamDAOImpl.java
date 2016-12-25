@@ -5,6 +5,9 @@ import DAO.com.smallTools.ComGetListBy2DAOImpl;
 import DAO.com.smallTools.ComGetListValueDAO;
 import DAO.com.smallTools.ComGetListValueDAOImpl;
 import DAO.com.util.db.DBUtils;
+import DAO.projectDAO.ProjectDAO;
+import DAO.projectDAO.ProjectDAOImpl;
+import bean.domain.ProjectBean;
 import bean.domain.TeamBean;
 
 import java.sql.Connection;
@@ -722,31 +725,41 @@ public class TeamDAOImpl implements TeamDAO {
 
 	/**
 	 * 接受某个团队的申请，将applyFlag从1置0
-	 *
+	 * 同时，将项目的teamNumber加1
 	 * @param teamId
 	 * @param projectId
 	 * @return
 	 * @throws SQLException
 	 */
 	@Override
-	public boolean acceptTeamApplytoProject(int teamId, int projectId) throws SQLException {
+	public boolean acceptTeamApplyToProject(int teamId, int projectId) throws Exception {
 		Connection conn = null;
 		PreparedStatement ps = null;
-		String sql = "UPDATE ecollaborationweb.team_project " +
-				"SET applyFlag = 0 WHERE teamId = ? AND projectId = ?;";
+		ProjectDAO projectDAO = new ProjectDAOImpl();
+		ProjectBean projectBean = projectDAO.getProjectInfo(projectId);
+		if ( projectBean.getTeamMax() <= projectBean.getTeamNumber() )
+			return false;
+		String sql1 = "UPDATE EcollaborationWeb.team_project " +
+				"SET applyFlag = 0 WHERE teamId = ? AND projectId = ?; ";
+		String sql2 =" UPDATE ECollaborationWeb.project SET teamNumber = (teamNumber +1) WHERE Id = ?;";
+
 		try {
 			conn = DBUtils.getConnection();
-			ps = conn.prepareStatement(sql);
 
+			conn.setAutoCommit(false);
+			ps = conn.prepareStatement(sql1);
 			ps.setInt(1, teamId);
 			ps.setInt(2, projectId);
-			int flag = ps.executeUpdate();
-			if (flag ==1 )
-				return true;
-			else
-				return false;
-		}catch (SQLException e){
+			ps.executeUpdate();
+			ps = conn.prepareStatement(sql2);
+			ps.setInt(1, projectId);
+			ps.executeUpdate();
+
+			conn.commit();
+			return true;
+		}catch (Exception e){
 			e.printStackTrace();
+			conn.rollback();
 			throw e;
 		}finally {
 			DBUtils.close(null, ps, conn);

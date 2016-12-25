@@ -1,6 +1,6 @@
 package actions.com;
 
-import bean.BusinessBean.File.FileIOBean;
+import bean.BusinessBean.file.FileIOBean;
 import org.apache.struts2.ServletActionContext;
 
 import java.io.*;

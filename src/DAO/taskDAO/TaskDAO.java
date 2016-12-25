@@ -13,10 +13,11 @@ public interface TaskDAO {
 	/**
 	 * 添加任务，获取新任务id
 	 * @param taskBean
+	 * @param projects
 	 * @return
 	 * @throws SQLException
 	 */
-	public Integer addTask(TaskBean taskBean) throws SQLException;
+	public Integer addTask(TaskBean taskBean,ArrayList<Integer>projects) throws Exception;
 
 	/**
 	 * 删除任务，获取此任务Task对象

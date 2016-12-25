@@ -223,5 +223,5 @@ public interface TeamDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public boolean acceptTeamApplytoProject(int teamId, int projectId) throws SQLException;
+	public boolean acceptTeamApplyToProject(int teamId, int projectId) throws Exception;
 }

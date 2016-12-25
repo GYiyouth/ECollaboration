@@ -1,6 +1,6 @@
 package actions.user;
 
-import bean.BusinessBean.File.FileIOBean;
+import bean.BusinessBean.file.FileIOBean;
 import bean.domain.UserBean;
 import net.sf.json.JSONObject;
 import org.apache.struts2.ServletActionContext;

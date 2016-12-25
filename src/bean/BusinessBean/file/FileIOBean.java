@@ -1,4 +1,4 @@
-package bean.BusinessBean.File;
+package bean.BusinessBean.file;
 
 import java.io.*;
 

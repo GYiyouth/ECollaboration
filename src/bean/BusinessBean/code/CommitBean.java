@@ -1,4 +1,4 @@
-package bean.BusinessBean.Code;
+package bean.BusinessBean.code;
 
 /**
  * Created by geyao on 2016/12/20.
