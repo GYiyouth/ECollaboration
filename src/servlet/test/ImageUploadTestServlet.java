@@ -75,7 +75,7 @@ public class ImageUploadTestServlet extends HttpServlet {
 					UserDAO userDAO = new UserDAOImpl();
 					UserBean userBean = userDAO.getUserInfoById(1);
 					File photo = new File(savePath + "/" +fileName);
-					userDAO.setUserPhoto(userBean, photo);
+//					userDAO.setUserPhoto(userBean, photo);
 					inputStream.close();
 					fileOutputStream.close();
 					item.delete();

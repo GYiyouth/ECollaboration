@@ -259,16 +259,16 @@
         </action>
 
         <!--创建项目计划-->
-        <action name="createPlanToProject" class="actions.plan.CreatePlanToProjectAction" method="createPlanToProject">
-            <result name="success">/success.jsp</result>
-            <result name="fail">/fail.jsp</result>
-            <result name="login">/登录界面</result>
-        </action>
-        <action name="appCreatePlanToProject" class="actions.plan.CreatePlanToProjectAction" method="appCreatePlanToProject">
-            <result name="success">/success.jsp</result>
-            <result name="fail">/fail.jsp</result>
-            <result name="login">/登录界面</result>
-        </action>
+        <!--<action name="createPlanToProject" class="actions.plan.CreatePlanToProjectAction" method="createPlanToProject">-->
+            <!--<result name="success">/success.jsp</result>-->
+            <!--<result name="fail">/fail.jsp</result>-->
+            <!--<result name="login">/登录界面</result>-->
+        <!--</action>-->
+        <!--<action name="appCreatePlanToProject" class="actions.plan.CreatePlanToProjectAction" method="appCreatePlanToProject">-->
+            <!--<result name="success">/success.jsp</result>-->
+            <!--<result name="fail">/fail.jsp</result>-->
+            <!--<result name="login">/登录界面</result>-->
+        <!--</action>-->
 
         <!--创建团队计划-->
         <action name="createPlanToTeam" class="actions.plan.CreatePlanToTeamAction" method="createPlanToTeam">
