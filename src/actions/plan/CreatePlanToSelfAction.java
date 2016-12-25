@@ -22,7 +22,7 @@ import java.util.Map;
  *
  * Created by GR on 2016/12/25.
  */
-public class CreatePlanToSelf  implements SessionAware, ServletRequestAware, ServletResponseAware {
+public class CreatePlanToSelfAction implements SessionAware, ServletRequestAware, ServletResponseAware {
 
     private HttpServletRequest request;
     private HttpServletResponse response;
@@ -33,7 +33,7 @@ public class CreatePlanToSelf  implements SessionAware, ServletRequestAware, Ser
     private String content;
     private String targetDate;
     private Integer projectId;
-    private Integer teamId;
+//    private Integer teamId;
 
 
 
@@ -77,13 +77,13 @@ public class CreatePlanToSelf  implements SessionAware, ServletRequestAware, Ser
         this.projectId = projectId;
     }
 
-    public Integer getTeamId() {
-        return teamId;
-    }
-
-    public void setTeamId(Integer teamId) {
-        this.teamId = teamId;
-    }
+//    public Integer getTeamId() {
+//        return teamId;
+//    }
+//
+//    public void setTeamId(Integer teamId) {
+//        this.teamId = teamId;
+//    }
 
     public Integer getId() {
         return id;
