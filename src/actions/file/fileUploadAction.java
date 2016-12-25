@@ -4,7 +4,7 @@ import DAO.ECFileDAO.ECFileDAO;
 import DAO.ECFileDAO.ECFileDAOImpl;
 import DAO.studentDAO.StudentDAO;
 import DAO.studentDAO.StudentDaoImpl;
-import bean.BusinessBean.File.FileIOBean;
+import bean.BusinessBean.file.FileIOBean;
 import bean.domain.ECFileBean;
 import bean.domain.UserBean;
 import org.apache.struts2.ServletActionContext;
@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.Map;
 
 /**

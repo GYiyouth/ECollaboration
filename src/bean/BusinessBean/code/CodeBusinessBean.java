@@ -1,4 +1,4 @@
-package bean.BusinessBean.Code;
+package bean.BusinessBean.code;
 
 import bean.com.XmlReaderBean;
 import bean.domain.CodeBean;

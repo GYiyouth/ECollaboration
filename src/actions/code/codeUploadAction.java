@@ -2,9 +2,9 @@ package actions.code;
 
 import DAO.codeDAO.CodeDAO;
 import DAO.codeDAO.CodeDAOImpl;
-import bean.BusinessBean.Code.CodeBusinessBean;
-import bean.BusinessBean.Code.CommitBean;
-import bean.BusinessBean.File.FileIOBean;
+import bean.BusinessBean.code.CodeBusinessBean;
+import bean.BusinessBean.code.CommitBean;
+import bean.BusinessBean.file.FileIOBean;
 import bean.domain.CodeBean;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;

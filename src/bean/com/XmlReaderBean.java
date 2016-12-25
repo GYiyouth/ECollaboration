@@ -1,6 +1,6 @@
 package bean.com;
 
-import bean.BusinessBean.Code.CommitBean;
+import bean.BusinessBean.code.CommitBean;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
