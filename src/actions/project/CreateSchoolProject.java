@@ -19,9 +19,10 @@ import java.util.Map;
 
 /**
  * 创建项目
+ * 参数：下面注释中“jst提交”部分
  * Created by GR on 2016/12/24.
  */
-public class CreateProjectAction implements SessionAware, ServletRequestAware, ServletResponseAware {
+public class CreateSchoolProject implements SessionAware, ServletRequestAware, ServletResponseAware {
 
     private HttpServletRequest request;
     private HttpServletResponse response;
@@ -215,40 +216,47 @@ public class CreateProjectAction implements SessionAware, ServletRequestAware, S
         this.session = session;
     }
 
-    public String createProject(){
+    public String createSchPrcByTeacher() throws Exception{
+        priority = 0;   //工程实践项目
+        status = 1;
         ProjectDAO projectDAO = new ProjectDAOImpl();
         ProjectBean projectBean = new ProjectBean();
-        projectBean.setName(name);
-        projectBean.setApplyBeforeDate(applyBeforeDate);
-        projectBean.setFinishDate(finishDate);
-        projectBean.setSurvivalDate(survivalDate);
-        projectBean.setTeamNumber(0);
-        projectBean.setTeamMax(teamMax);
-        projectBean.setMemberMax(memberMax);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        createDate = sdf.format(new Date());
-        projectBean.setCreateDate(createDate);
-        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy");
-        grade = Integer.parseInt(sdf2.format(new Date()));
-        projectBean.setGrade(grade);
-        projectBean.setKeyWord(keyWord);
-        projectBean.setInfo(info);
-        projectBean.setRequirement(requirement);
-        projectBean.setGain(gain);
-        projectBean.setPriority(priority);
-        projectBean.setStatus(status);
-//        UserBean u = (UserBean)session.get("userBean");
-//        projectBean.setCreatorId(u.getId());
-        projectBean.setTeacherId(teacherId);
-        try{
-            if(projectDAO.addProject(projectBean))
-                return "success";
-            else
-                return "fail";
-        }catch(Exception e){
-            e.printStackTrace();
+        UserBean u = (UserBean)session.get("userBean");
+        if(u.getRole()==2){
+            projectBean.setName(name);
+            projectBean.setApplyBeforeDate(applyBeforeDate);
+            projectBean.setFinishDate(finishDate);
+            projectBean.setSurvivalDate(survivalDate);
+            projectBean.setTeamNumber(0);
+            projectBean.setTeamMax(teamMax);
+            projectBean.setMemberMax(memberMax);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            createDate = sdf.format(new Date());
+            projectBean.setCreateDate(createDate);
+            SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy");
+            grade = Integer.parseInt(sdf2.format(new Date()));
+            projectBean.setGrade(grade);
+            projectBean.setKeyWord(keyWord);
+            projectBean.setInfo(info);
+            projectBean.setRequirement(requirement);
+            projectBean.setGain(gain);
+            projectBean.setPriority(priority);
+            projectBean.setStatus(status);
+            projectBean.setCreatorId(u.getId());
+            projectBean.setTeacherId(u.getId());
+            try{
+                if(projectDAO.addProject(projectBean))
+                    return "success";
+                else
+                    return "fail";
+            }catch(Exception e){
+                e.printStackTrace();
+                throw e;
+            }
+        }else{
+            return "fail";
         }
-        return "success";
+
     }
 
     /**
@@ -256,10 +264,80 @@ public class CreateProjectAction implements SessionAware, ServletRequestAware, S
      *        返回（ProjectBean）projectBean
      * @throws Exception
      */
-    public void appCreateProject() throws Exception{
+    public void appCreateSchPrcByTeacher() throws Exception{
         JSONArray jsonArray = new JSONArray();
         JSONObject jsonObject = new JSONObject();
-        if (createProject().equals("success")){
+        if (createSchPrcByTeacher().equals("success")){
+
+            jsonObject.put("projectBean", getProjectBean());
+            jsonObject.put("result", "success");
+            jsonArray.add(jsonObject);
+            this.response.setCharacterEncoding("UTF-8");
+            this.response.getWriter().write(jsonArray.toString());
+            this.response.getWriter().flush();
+            this.response.getWriter().close();
+        }else {
+            jsonObject.put("result", "fail");
+            jsonArray.add(jsonObject);
+            this.response.setCharacterEncoding("UTF-8");
+            this.response.getWriter().write(jsonArray.toString());
+            this.response.getWriter().flush();
+            this.response.getWriter().close();
+        }
+    }
+
+    public String createSchPrcByStudent() throws Exception{
+        priority = 0;   //工程实践项目
+        status = 1;
+        ProjectDAO projectDAO = new ProjectDAOImpl();
+        ProjectBean projectBean = new ProjectBean();
+        UserBean u = (UserBean)session.get("userBean");
+        if(u.getRole()==3){
+            projectBean.setName(name);
+            projectBean.setApplyBeforeDate(applyBeforeDate);
+            projectBean.setFinishDate(finishDate);
+            projectBean.setSurvivalDate(survivalDate);
+            projectBean.setTeamNumber(0);
+            projectBean.setTeamMax(teamMax);
+            projectBean.setMemberMax(memberMax);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            createDate = sdf.format(new Date());
+            projectBean.setCreateDate(createDate);
+            SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy");
+            grade = Integer.parseInt(sdf2.format(new Date()));
+            projectBean.setGrade(grade);
+            projectBean.setKeyWord(keyWord);
+            projectBean.setInfo(info);
+            projectBean.setRequirement(requirement);
+            projectBean.setGain(gain);
+            projectBean.setPriority(priority);
+            projectBean.setStatus(status);
+            projectBean.setCreatorId(u.getId());
+            projectBean.setTeacherId(teacherId);
+            try{
+                if(projectDAO.addProject(projectBean))
+                    return "success";
+                else
+                    return "fail";
+            }catch(Exception e){
+                e.printStackTrace();
+                throw e;
+            }
+        }else{
+            return "fail";
+        }
+
+    }
+
+    /**
+     * 成功：返回result=success
+     *        返回（ProjectBean）projectBean
+     * @throws Exception
+     */
+    public void appCreateSchPrcByStudent() throws Exception{
+        JSONArray jsonArray = new JSONArray();
+        JSONObject jsonObject = new JSONObject();
+        if (createSchPrcByStudent().equals("success")){
 
             jsonObject.put("projectBean", getProjectBean());
             jsonObject.put("result", "success");

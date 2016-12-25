@@ -19,7 +19,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
- * 加入团队
+ * 申请加入团队
+ * 参数：学生id，团队id
  * Created by GR on 2016/12/13.
  */
 public class JoinTeamAction implements ServletRequestAware, ServletResponseAware {
@@ -62,6 +63,11 @@ public class JoinTeamAction implements ServletRequestAware, ServletResponseAware
         this.response.setCharacterEncoding("UTF-8");
     }
 
+    /**
+     *
+     * @return 成功：success，失败 :fail
+     * @throws Exception
+     */
     public String joinTeam() throws Exception{
         StudentDaoImpl studentDaoImpl = new StudentDaoImpl();
 
