@@ -58,22 +58,22 @@ public interface UserDAO {
 	 */
 	public boolean deleteById(int userId) throws SQLException;
 
-	/**
-	 * 设置用户头像，根据userBean，file
-	 * @param userBean
-	 * @param file
-	 * @return
-	 * @throws SQLException
-	 */
-	public boolean setUserPhoto(UserBean userBean, File file) throws SQLException, FileNotFoundException;
+//	/**
+//	 * 设置用户头像，根据userBean，file
+//	 * @param userBean
+//	 * @param file
+//	 * @return
+//	 * @throws SQLException
+//	 */
+//	public boolean setUserPhoto(UserBean userBean, File file) throws SQLException, FileNotFoundException;
 
-	/**
-	 * 获取File，头像，通过UserBean
-	 * @param userBean
-	 * @return
-	 * @throws SQLException
-	 */
-	public File getUserPhoto(UserBean userBean) throws SQLException,FileNotFoundException, IOException;
+//	/**
+//	 * 获取File，头像，通过UserBean
+//	 * @param userBean
+//	 * @return
+//	 * @throws SQLException
+//	 */
+//	public File getUserPhoto(UserBean userBean) throws SQLException,FileNotFoundException, IOException;
 
 }
 

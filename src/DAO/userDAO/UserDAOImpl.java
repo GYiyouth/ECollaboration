@@ -203,88 +203,85 @@ public class UserDAOImpl implements UserDAO{
 	    }
 	}
 
-    /**
-     * 设置用户头像，根据userBean，file
-     *
-     * @param userBean
-     * @param file
-     * @return
-     * @throws SQLException
-     */
-    @Override
-    public boolean setUserPhoto(UserBean userBean, File file) throws SQLException , FileNotFoundException{
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-//        ResultSet resultSet = null;
-        String sql = "UPDATE ECollaborationweb.user SET photo = ? WHERE id = ?;";
-        try {
-            InputStream inputStream = new FileInputStream(file);
-            connection = DBUtils.getConnection();
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setBinaryStream(  1, inputStream, file.length());
-            preparedStatement.setInt(           2, userBean.getId());
-            int flag = preparedStatement.executeUpdate();
-            if (flag == 1)
-                return true;
-            else
-                return false;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }finally {
-            DBUtils.close(null, preparedStatement, connection);
-        }
+//    /**
+//     * 设置用户头像，根据userBean，file
+//     *
+//     * @param userBean
+//     * @param file
+//     * @return
+//     * @throws SQLException
+//     */
+//    @Override
+//    public boolean setUserPhoto(UserBean userBean, File file) throws SQLException , FileNotFoundException{
+//        Connection connection = null;
+//        PreparedStatement preparedStatement = null;
+////        ResultSet resultSet = null;
+//        String sql = "UPDATE ECollaborationweb.user SET photo = ? WHERE id = ?;";
+//        try {
+//            InputStream inputStream = new FileInputStream(file);
+//            connection = DBUtils.getConnection();
+//            preparedStatement = connection.prepareStatement(sql);
+//            preparedStatement.setBinaryStream(  1, inputStream, file.length());
+//            preparedStatement.setInt(           2, userBean.getId());
+//            int flag = preparedStatement.executeUpdate();
+//            if (flag == 1)
+//                return true;
+//            else
+//                return false;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            throw e;
+//        }finally {
+//            DBUtils.close(null, preparedStatement, connection);
+//        }
+//    }
 
-
-
-    }
-
-    /**
-     * 获取File，头像，通过UserBean
-     *
-     * @param userBean
-     * @return
-     * @throws SQLException
-     */
-    @Override
-    public File getUserPhoto(UserBean userBean) throws SQLException,FileNotFoundException, IOException {
-	    Connection connection = null;
-	    PreparedStatement preparedStatement = null;
-	    ResultSet resultSet = null;
-	    String sql = "SELECT photo FROM ECollaborationWeb.user WHERE id = 1";
-	    try {
-
-
-		    connection = DBUtils.getConnection();
-
-		    preparedStatement = connection.prepareStatement(sql);
-		    resultSet = preparedStatement.executeQuery();
-		    resultSet.next();
-		    int id = userBean.getId();
-		    File file = new File("/Users/geyao/IdeaProjects/ECollaborationGit/web/askedFiles/headPhotos" + id +".jpg");
-		    if (file.exists()){
-			    file.delete();
-		    }
-		    BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream("/Users/geyao/Desktop/" + id + ".jpg"));
-		    byte[] buf=new byte[1024];
-		    BufferedInputStream bufferedInputStream = new BufferedInputStream(resultSet.getBinaryStream(1));
-		    int count = -1;
-		    while ((count = bufferedInputStream.read(buf, 0, 1024)) != -1 ){
-			    bufferedOutputStream.write(buf, 0, count);
-		    }
-		    bufferedOutputStream.flush();
-		    return file;
-	    }catch (SQLException e){
-		    e.printStackTrace();
-		    throw e;
-	    }catch (IOException e){
-		    e.printStackTrace();
-		    throw e;
-	    }finally {
-		    DBUtils.close(resultSet, preparedStatement, connection);
-	    }
-
-    }
+//    /**
+//     * 获取File，头像，通过UserBean
+//     *
+//     * @param userBean
+//     * @return
+//     * @throws SQLException
+//     */
+//    @Override
+//    public File getUserPhoto(UserBean userBean) throws SQLException,FileNotFoundException, IOException {
+//	    Connection connection = null;
+//	    PreparedStatement preparedStatement = null;
+//	    ResultSet resultSet = null;
+//	    String sql = "SELECT photo FROM ECollaborationWeb.user WHERE id = 1";
+//	    try {
+//
+//
+//		    connection = DBUtils.getConnection();
+//
+//		    preparedStatement = connection.prepareStatement(sql);
+//		    resultSet = preparedStatement.executeQuery();
+//		    resultSet.next();
+//		    int id = userBean.getId();
+//		    File file = new File("/Users/geyao/IdeaProjects/ECollaborationGit/web/askedFiles/headPhotos" + id +".jpg");
+//		    if (file.exists()){
+//			    file.delete();
+//		    }
+//		    BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream("/Users/geyao/Desktop/" + id + ".jpg"));
+//		    byte[] buf=new byte[1024];
+//		    BufferedInputStream bufferedInputStream = new BufferedInputStream(resultSet.getBinaryStream(1));
+//		    int count = -1;
+//		    while ((count = bufferedInputStream.read(buf, 0, 1024)) != -1 ){
+//			    bufferedOutputStream.write(buf, 0, count);
+//		    }
+//		    bufferedOutputStream.flush();
+//		    return file;
+//	    }catch (SQLException e){
+//		    e.printStackTrace();
+//		    throw e;
+//	    }catch (IOException e){
+//		    e.printStackTrace();
+//		    throw e;
+//	    }finally {
+//		    DBUtils.close(resultSet, preparedStatement, connection);
+//	    }
+//
+//    }
     private UserBean setUser(ResultSet rs, UserBean user) throws SQLException {
 	    if(rs.next()){
 		    user.setId(rs.getInt("id"));
