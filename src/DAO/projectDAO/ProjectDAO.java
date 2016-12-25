@@ -107,7 +107,13 @@ public interface ProjectDAO {
 	 * @throws SQLException
 	 */
 	public ArrayList<Integer> getProjectIdListByPlanId(int planId) throws SQLException;
-
+	/**
+	 * 检测项目id列表，返回指定类型的项目id列表
+	 * @param projectIds
+	 * @return
+	 * @throws Exception
+	 */
+	public ArrayList<Integer> checkSchoolProjectByIdList(ArrayList<Integer>projectIds, int priority) throws Exception;
 //	/**
 //	 * 获取项目id列表，通过计划id，教师id
 //	 * @param planId

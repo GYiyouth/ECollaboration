@@ -56,6 +56,7 @@ public interface TeamDAO {
 	 */
 	public ArrayList<Integer> getTeamIdListByProjectId(int projectId) throws SQLException;
 
+
 	/**
 	 * 获取学生在团队身份
 	 * @param teamId

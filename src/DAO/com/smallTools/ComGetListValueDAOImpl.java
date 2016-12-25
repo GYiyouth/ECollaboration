@@ -7,6 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 
 /**
  * Created by geyao on 2016/12/2.
@@ -42,8 +45,12 @@ public class ComGetListValueDAOImpl<V, F> implements ComGetListValueDAO {
 			}
 			if (listValue.size() == 0)
 				return null;
-			else
+			else{
+				HashSet tem = new HashSet(listValue);
+				listValue.clear();
+				listValue.addAll(tem);
 				return listValue;
+			}
 		}catch (SQLException e){
 			e.printStackTrace();
 			throw  e;
