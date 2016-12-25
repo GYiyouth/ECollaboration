@@ -175,14 +175,25 @@
             <result name="login">/登录界面</result>
         </action>
 
-        <!--createProject-->
-        <action name="createProject" class="actions.project.CreateProjectAction" method="createProject">
+        <!--老师新建工程实践项目-->
+        <action name="createSchPrcByTeacher" class="actions.project.CreateSchoolProject" method="createSchPrcByTeacher">
             <result name="success">/success.jsp</result>
             <result name="fail">/fail.jsp</result>
             <result name="login">/登录界面</result>
         </action>
+        <action name="appCreateSchPrcByTeacher" class="actions.project.CreateSchoolProject" method="appCreateSchPrcByTeacher">
+            <result name="success">成功</result>
+            <result name="fail">失败</result>
+            <result name="login">/登录界面</result>
+        </action>
 
-        <action name="appCreateProject" class="actions.project.CreateProjectAction" method="appCreateProject">
+        <!--学生新建工程实践项目-->
+        <action name="createSchPrcByStudent" class="actions.project.CreateSchoolProject" method="createSchPrcByStudent">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appCreateSchPrcByStudent" class="actions.project.CreateSchoolProject" method="appCreateSchPrcByStudent">
             <result name="success">成功</result>
             <result name="fail">失败</result>
             <result name="login">/登录界面</result>

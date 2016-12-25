@@ -21,6 +21,8 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
+ * 参数：无
+ * 从session获取
  * Created by GR on 2016/12/24.
  */
 public class GetTeamApplyInfoAction implements SessionAware,ServletResponseAware,ServletRequestAware{
