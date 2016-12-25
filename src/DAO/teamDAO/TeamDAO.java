@@ -215,4 +215,13 @@ public interface TeamDAO {
 	 * @throws Exception
 	 */
 	public boolean acceptApplyJoinByTeamIdStudentId(int teamId, int studentId, int leaderFlag) throws Exception;
+
+	/**
+	 * 接受某个团队的申请，将applyFlag从1置0
+	 * @param teamId
+	 * @param projectId
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean acceptTeamApplytoProject(int teamId, int projectId) throws SQLException;
 }

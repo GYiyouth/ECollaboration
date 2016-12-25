@@ -21,6 +21,7 @@ import java.util.Map;
 
 /**
  * form里要有teamId, projectId
+ * 会验证team，project是否合法。
  * Created by geyao on 2016/12/24.
  */
 public class ApplyProjectAction implements SessionAware, ServletResponseAware, ServletRequestAware{
@@ -46,8 +47,6 @@ public class ApplyProjectAction implements SessionAware, ServletResponseAware, S
 
 		ArrayList<Integer> prosList = projectDAO.getProjectIdListByTeamId(teamId);
 		ArrayList<Integer> prosList2 = projectDAO.checkSchoolProjectByIdList(prosList, 0);
-		System.out.println("lsit1"+prosList);
-		System.out.println("lsit2"+prosList2);
 		if (prosList2 == null || !prosList2.contains(projectId)){
 			teamDAO.setTeamProject(teamId, projectId);
 			return "success";

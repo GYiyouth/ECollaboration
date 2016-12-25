@@ -97,6 +97,11 @@
             <result name="success">/QuickTime%20Player.jpg</result>
             <result name="fail">/index.jsp</result>
         </action>
+        <!--老师同意团队对于项目的申请-->
+        <action name="teacherAcceptTeam" class="actions.project.TeacherAccepTeamApply" method="accept">
+            <result name="success">/QuickTime%20Player.jpg</result>
+            <result name="fail">/index.jsp</result>
+        </action>
         <!-- ========================================================================================-->
         <action name="joinTeam" class="actions.team.JoinTeamAction" method="joinTeam">
             <result name="success">/success.jsp</result>

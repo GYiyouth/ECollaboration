@@ -492,7 +492,7 @@ public class TeamDAOImpl implements TeamDAO {
 	public boolean setTeamProject(int teamId, int projectId) throws SQLException{
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		String sql = "INSERT INTO ECollaborationWeb.team_project (teamId, projectId) VALUES (?,?);";
+		String sql = "INSERT INTO ECollaborationWeb.team_project (teamId, projectId, applyFlag) VALUES (?,?,1);";
 		try {
 			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
@@ -717,6 +717,39 @@ public class TeamDAOImpl implements TeamDAO {
 		}catch (SQLException e){
 			e.printStackTrace();
 			throw e;
+		}
+	}
+
+	/**
+	 * 接受某个团队的申请，将applyFlag从1置0
+	 *
+	 * @param teamId
+	 * @param projectId
+	 * @return
+	 * @throws SQLException
+	 */
+	@Override
+	public boolean acceptTeamApplytoProject(int teamId, int projectId) throws SQLException {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		String sql = "UPDATE ecollaborationweb.team_project " +
+				"SET applyFlag = 0 WHERE teamId = ? AND projectId = ?;";
+		try {
+			conn = DBUtils.getConnection();
+			ps = conn.prepareStatement(sql);
+
+			ps.setInt(1, teamId);
+			ps.setInt(2, projectId);
+			int flag = ps.executeUpdate();
+			if (flag ==1 )
+				return true;
+			else
+				return false;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}finally {
+			DBUtils.close(null, ps, conn);
 		}
 	}
 
