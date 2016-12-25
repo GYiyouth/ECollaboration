@@ -58,61 +58,109 @@ public class PlanDAOImpl implements PlanDAO {
     /**
      * 添加自己的计划
      *
-     * @param planId,projectId,studentId
+     * @param planBean,projectId,studentId
      * @return boolean
      * @throws SQLException
      */
     @Override
-    public boolean addPlanToStudent(int planId, int studentId,int projectId) throws SQLException {
+    public boolean addPlanToStudent(PlanBean planBean, int studentId,int projectId) throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
-        String sql = "insert into ecollaborationweb.student_team_project_plan (planId, studentId, projectId) values(?,?,?);";
+        String sql1 = "insert into ecollaborationweb.plan (title,content,creatorId,createDate,finishDate,beginDate,targetDate) values(?,?,?,?,?,?,?)";
+        String sql2 = "insert into ecollaborationweb.student_team_project_plan (planId, studentId, projectId) values(?,?,?);";
         try {
             conn = DBUtils.getConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, planId);
+            conn.setAutoCommit(false);
+            ps = conn.prepareStatement(sql1, PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setString(1, planBean.getTitle());
+            ps.setString(2, planBean.getContent());
+            ps.setInt(3, planBean.getCreatorId());
+            ps.setString(4, planBean.getCreateDate());
+            ps.setString(5, planBean.getFinishDate());
+            ps.setString(6, planBean.getBeginDate());
+            ps.setString(7, planBean.getTargetDate());
+            int i = ps.executeUpdate();
+            if (i != 0) {
+                ResultSet ids = ps.getGeneratedKeys();
+                if(ids.next())
+                    System.out.println("插入plan表成功");
+                planBean.setId(ids.getInt(1));
+            }else {
+                System.out.println("插入计划表失败");
+                return false;
+            }
+            ps = conn.prepareStatement(sql2);
+            ps.setInt(1, planBean.getId());
             ps.setInt(2, studentId);
             ps.setInt(3, projectId);
             if (ps.executeUpdate() == 0) {
                 return false;
+            }else{
+                System.out.println("插入plan关系表成功");
             }
-            return true;
+            conn.commit();
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.rollback();
             throw e;
         } finally {
             DBUtils.close(null, ps, conn);
         }
+        return true;
     }
 
     /**
      * 添加计划给某个项目(发布人应该是老师)
      *
-     * @param planId
+     * @param planBean
      * @param projectId
      * @return boolean
      * @throws SQLException
      */
     @Override
-    public boolean addPlanToProject(int planId, int projectId) throws SQLException {
+    public boolean addPlanToProject(PlanBean planBean, int projectId) throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
-        String sql = "insert into ecollaborationweb.student_team_project_plan (planId, projectId) values(?,?);";
+        String sql1 = "insert into ecollaborationweb.plan (title,content,creatorId,createDate,finishDate,beginDate,targetDate) values(?,?,?,?,?,?,?)";
+        String sql2 = "insert into ecollaborationweb.student_team_project_plan (planId, projectId) values(?,?);";
         try {
             conn = DBUtils.getConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, planId);
+            conn.setAutoCommit(false);
+            ps = conn.prepareStatement(sql1, PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setString(1, planBean.getTitle());
+            ps.setString(2, planBean.getContent());
+            ps.setInt(3, planBean.getCreatorId());
+            ps.setString(4, planBean.getCreateDate());
+            ps.setString(5, planBean.getFinishDate());
+            ps.setString(6, planBean.getBeginDate());
+            ps.setString(7, planBean.getTargetDate());
+            int i = ps.executeUpdate();
+            if (i != 0) {
+                ResultSet ids = ps.getGeneratedKeys();
+                if(ids.next())
+                    System.out.println("插入plan表成功");
+                planBean.setId(ids.getInt(1));
+            }else {
+                System.out.println("插入计划表失败");
+                return false;
+            }
+            ps = conn.prepareStatement(sql2);
+            ps.setInt(1, planBean.getId());
             ps.setInt(2, projectId);
             if (ps.executeUpdate() == 0) {
                 return false;
+            }else{
+                System.out.println("插入plan关系表成功");
             }
-            return true;
+            conn.commit();
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.rollback();
             throw e;
         } finally {
             DBUtils.close(null, ps, conn);
         }
+        return true;
     }
 
     /**
@@ -132,26 +180,50 @@ public class PlanDAOImpl implements PlanDAO {
      * @throws SQLException
      */
     @Override
-    public boolean addPlanToTeam(int planId, int teamId, int projectId) throws SQLException {
+    public boolean addPlanToTeam(PlanBean planBean, int teamId, int projectId) throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
-        String sql = "insert into ecollaborationweb.student_team_project_plan (planId, teamId, projectId) values(?,?,?);";
+        String sql1 = "insert into ecollaborationweb.plan (title,content,creatorId,createDate,finishDate,beginDate,targetDate) values(?,?,?,?,?,?,?)";
+        String sql2 = "insert into ecollaborationweb.student_team_project_plan (planId, teamId, projectId) values(?,?,?);";
         try {
             conn = DBUtils.getConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, planId);
+            conn.setAutoCommit(false);
+            ps = conn.prepareStatement(sql1, PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setString(1, planBean.getTitle());
+            ps.setString(2, planBean.getContent());
+            ps.setInt(3, planBean.getCreatorId());
+            ps.setString(4, planBean.getCreateDate());
+            ps.setString(5, planBean.getFinishDate());
+            ps.setString(6, planBean.getBeginDate());
+            ps.setString(7, planBean.getTargetDate());
+            int i = ps.executeUpdate();
+            if (i != 0) {
+                ResultSet ids = ps.getGeneratedKeys();
+                if(ids.next())
+                    System.out.println("插入plan表成功");
+                planBean.setId(ids.getInt(1));
+            }else {
+                System.out.println("插入计划表失败");
+                return false;
+            }
+            ps = conn.prepareStatement(sql2);
+            ps.setInt(1, planBean.getId());
             ps.setInt(2, teamId);
             ps.setInt(3, projectId);
             if (ps.executeUpdate() == 0) {
                 return false;
+            }else{
+                System.out.println("插入plan关系表成功");
             }
-            return true;
+            conn.commit();
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.rollback();
             throw e;
         } finally {
             DBUtils.close(null, ps, conn);
         }
+        return true;
     }
 
     /**

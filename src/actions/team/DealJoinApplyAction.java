@@ -17,6 +17,7 @@ import java.io.UnsupportedEncodingException;
  * 组长处理别人加入团队的请求
  * 参数：要加入团队学生id，团队id
  * Created by GR on 2016/12/25.
+ * ok
  */
 public class DealJoinApplyAction implements ServletRequestAware, ServletResponseAware {
 
@@ -25,6 +26,22 @@ public class DealJoinApplyAction implements ServletRequestAware, ServletResponse
 
     private int teamId;
     private int studentId;
+
+    public int getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
+    }
+
+    public int getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(int studentId) {
+        this.studentId = studentId;
+    }
 
     @Override
     public void setServletRequest(HttpServletRequest request) {

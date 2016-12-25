@@ -22,6 +22,7 @@ import java.util.Calendar;
  * 申请加入团队
  * 参数：学生id，团队id
  * Created by GR on 2016/12/13.
+ * ok
  */
 public class JoinTeamAction implements ServletRequestAware, ServletResponseAware {
 

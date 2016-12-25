@@ -102,6 +102,10 @@
             <result name="success">/QuickTime%20Player.jpg</result>
             <result name="fail">/index.jsp</result>
         </action>
+
+
+
+
         <!-- ========================================================================================-->
         <action name="joinTeam" class="actions.team.JoinTeamAction" method="joinTeam">
             <result name="success">/success.jsp</result>
@@ -218,6 +222,30 @@
             <result name="login">/登录界面</result>
         </action>
         <action name="appRefuseJoinApply" class="actions.team.DealJoinApplyAction" method="appRefuseJoinApply">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <!--组长获取申请加入团队的所有学生信息-->
+        <action name="getTeamApplyInfo" class="actions.team.GetTeamApplyInfoAction" method="getTeamApplyInfo">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appGetTeamApplyInfo" class="actions.team.GetTeamApplyInfoAction" method="appGetTeamApplyInfo">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <!--创建个人计划-->
+        <action name="createPlanToSelf" class="actions.plan.CreatePlanToSelf" method="createPlanToSelf">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appCreatePlanToSelf" class="actions.plan.CreatePlanToSelf" method="appCreatePlanToSelf">
             <result name="success">/success.jsp</result>
             <result name="fail">/fail.jsp</result>
             <result name="login">/登录界面</result>

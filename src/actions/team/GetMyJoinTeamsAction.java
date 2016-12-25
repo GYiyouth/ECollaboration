@@ -20,6 +20,7 @@ import java.util.Map;
  * 参数：无
  * 返回：ArrayList<TeamBean> teamBeans;
  * Created by GR on 2016/12/14.
+ * ok
  */
 public class GetMyJoinTeamsAction implements ServletRequestAware, ServletResponseAware {
     private HttpServletRequest request;

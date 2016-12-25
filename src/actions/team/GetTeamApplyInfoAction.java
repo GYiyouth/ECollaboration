@@ -21,9 +21,14 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
+ * 获取所有的加入团队的申请
  * 参数：无
- * 从session获取
+ *       从session获取
+ * 返回：1.ArrayList teamApplyInfos
+ *                 1.1: teamBean
+ *                 1.2: ArrayList<StudentBean> studentBeans
  * Created by GR on 2016/12/24.
+ * ok
  */
 public class GetTeamApplyInfoAction implements SessionAware,ServletResponseAware,ServletRequestAware{
 
@@ -87,9 +92,14 @@ public class GetTeamApplyInfoAction implements SessionAware,ServletResponseAware
 
         TeamDAO teamDAO = new TeamDAOImpl();
         UserBean userBean = (UserBean)session.get("userBean");
+        System.out.println("登录的id"+userBean.getId());
         int studentId = userBean.getId();
         try{
             ArrayList<Integer> teamIds = teamDAO.getTeamIdListByStudentId(studentId);
+            if(teamIds==null){
+                System.out.println("空");                    //加处理程序
+                return "fail";
+            }
             for(int i = 0;i<teamIds.size(); i++){
                 TeamBean teamBean = teamDAO.getTeamInfo(teamIds.get(i));
                 teamApplyInfos.add(teamBean);

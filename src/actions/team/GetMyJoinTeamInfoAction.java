@@ -22,6 +22,7 @@ import java.util.ArrayList;
  *
  * 获取团队的详细信息
  * Created by GR on 2016/12/14.
+ * ok
  */
 public class GetMyJoinTeamInfoAction implements ServletRequestAware, ServletResponseAware {
     private HttpServletRequest request;

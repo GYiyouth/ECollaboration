@@ -177,7 +177,7 @@ public class StudentDaoImpl implements StudentDAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "select * from ecollaborationweb.student where id = ?";
+        String sql = "select * from ecollaborationweb.student,ecollaborationweb.user where student.id = ? and student.id = user.id  ";
 
         try {
             conn = DBUtils.getConnection();
@@ -195,6 +195,19 @@ public class StudentDaoImpl implements StudentDAO {
                 student.setCodeScore1(rs.getInt("codeScore1"));
                 student.setCodeScore2(rs.getInt("codeScore2"));
                 student.setFinalScore(rs.getInt("finalScore"));
+                student.setSchoolId(rs.getString("schoolId"));
+                student.setName(rs.getString("name"));
+                student.setSex(rs.getInt("sex"));
+                student.setRole(rs.getInt("role"));
+                student.setEmail(rs.getString("email"));
+                student.setPhoneNumber(rs.getString("phoneNumber"));
+                student.setLogName(rs.getString("logName"));
+                student.setPassWord(rs.getString("passWord"));
+                student.setCreateDate(rs.getString("createDate"));
+                student.setPhoto(rs.getString("photo"));
+                student.setLastLogTime(rs.getString("lastLogTime"));
+                student.setActiveBefore(rs.getString("activeBefore"));
+                student.setNewFlag(rs.getInt("newsFlag"));
                 return student;
             }else{
                 return null;
