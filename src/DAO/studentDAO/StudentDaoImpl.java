@@ -60,7 +60,7 @@ public class StudentDaoImpl implements StudentDAO {
             }
             ps = conn.prepareStatement(sqlS);
             ps.setInt(1, studentBean.getId());
-            ps.setString(2, studentBean.getGrade());
+            ps.setInt(2, studentBean.getGrade());
             ps.setInt(3, studentBean.getIsOnProject());
             ps.setInt(4, studentBean.getIsNeedProject());
             ps.setString(5, studentBean.getGraduatedSchool());
@@ -108,7 +108,7 @@ public class StudentDaoImpl implements StudentDAO {
         try {
             conn = DBUtils.getConnection();
             ps = conn.prepareStatement(sql);
-            ps.setString(1, studentBean.getGrade());
+            ps.setInt(1, studentBean.getGrade());
             ps.setInt(2, studentBean.getIsOnProject());
             ps.setInt(3, studentBean.getIsNeedProject());
             ps.setString(4, studentBean.getGraduatedSchool());
@@ -186,7 +186,7 @@ public class StudentDaoImpl implements StudentDAO {
             rs = ps.executeQuery();
             if (rs.next()) {
                 student.setId(rs.getInt("id"));
-                student.setGrade(rs.getString("grade"));
+                student.setGrade(rs.getInt("grade"));
                 student.setIsOnProject(rs.getInt("isOnProject"));
                 student.setIsNeedProject(rs.getInt("isNeedProject"));
                 student.setGraduatedSchool(rs.getString("graduatedSchool"));
