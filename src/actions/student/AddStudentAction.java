@@ -30,7 +30,7 @@ public class AddStudentAction implements ServletRequestAware, ServletResponseAwa
     private Integer role;       //1:manager 2:teacher 3:student
     private String email;
     private String phoneNumber;
-    private String logName;     //默认：email
+    private String logName;     //默认：schoolId
     private String passWord;
     private String createDate;  //生成
     private String photo;
@@ -38,7 +38,7 @@ public class AddStudentAction implements ServletRequestAware, ServletResponseAwa
     private String activeBefore;//生成
     private Integer newsFlag;   //生成
 
-    private String grade;
+    private Integer grade;
     private Integer isOnProject;
     private Integer isNeedProject;
     private String graduatedSchool;
@@ -163,11 +163,12 @@ public class AddStudentAction implements ServletRequestAware, ServletResponseAwa
         this.newsFlag = newsFlag;
     }
 
-    public String getGrade() {
+    public Integer getGrade() {
+
         return grade;
     }
 
-    public void setGrade(String grade) {
+    public void setGrade(Integer grade) {
         this.grade = grade;
     }
 

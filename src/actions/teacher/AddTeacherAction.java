@@ -208,7 +208,7 @@ public class AddTeacherAction implements ServletRequestAware, ServletResponseAwa
         teacherBean.setPhoneNumber(phoneNumber);
         teacherBean.setLogName(email); //如果登录不等于邮箱，修改这个地方
         teacherBean.setPassWord(passWord);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         createDate = sdf.format(new Date());
         teacherBean.setCreateDate(createDate);
         teacherBean.setPhoto("test");

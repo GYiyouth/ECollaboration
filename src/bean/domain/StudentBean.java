@@ -5,7 +5,7 @@ package bean.domain;
  */
 public class StudentBean extends UserBean{
     private Integer id  ;
-    private String grade  ;
+    private Integer grade  ;
     private Integer isOnProject ;  
     private Integer isNeedProject ;  
     private String graduatedSchool;
@@ -24,11 +24,11 @@ public class StudentBean extends UserBean{
         this.id = id;
     }
 
-    public String getGrade() {
+    public Integer getGrade() {
         return grade;
     }
 
-    public void setGrade(String grade) {
+    public void setGrade(Integer grade) {
         this.grade = grade;
     }
 

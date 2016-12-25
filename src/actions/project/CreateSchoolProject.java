@@ -19,8 +19,9 @@ import java.util.Map;
 
 /**
  * 创建项目
- * 参数：下面注释中“jst提交”部分
+ * 参数：下面注释中“jsp提交”部分
  * Created by GR on 2016/12/24.
+ * ok
  */
 public class CreateSchoolProject implements SessionAware, ServletRequestAware, ServletResponseAware {
 

@@ -19,29 +19,29 @@ public interface PlanDAO {
     /**
      * 添加计划给某个学生
      *
-     * @param planId,projectId,studentId
+     * @param planBean,projectId,studentId
      * @return boolean
      * @throws SQLException
      */
-    public boolean addPlanToStudent(int planId, int studentId, int projectId) throws SQLException;
+    public boolean addPlanToStudent(PlanBean planBean, int studentId, int projectId) throws SQLException;
 
     /**
      * 添加计划给某个项目(发布人应该是老师)
      *
-     * @param planId,projectId
+     * @param planBean,projectId
      * @return boolean
      * @throws SQLException
      */
-    public boolean addPlanToProject(int planId, int projectId) throws SQLException;
+    public boolean addPlanToProject(PlanBean planBean, int projectId) throws SQLException;
 
     /**
      * 发计划给团队(组长)
      *
-     * @param planId,teamId,projectId
+     * @param planBean,teamId,projectId
      * @return boolean
      * @throws SQLException
      */
-    public boolean addPlanToTeam(int planId, int teamId, int projectId) throws SQLException;
+    public boolean addPlanToTeam(PlanBean planBean, int teamId, int projectId) throws SQLException;
 
     /**
      * 获取Plan对象，通过PlanId
