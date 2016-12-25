@@ -177,5 +177,29 @@
             <result name="login">/登录界面</result>
         </action>
 
+        <!--接受申请加入团队的请求-->
+        <action name="acceptJoinApply" class="actions.team.DealJoinApplyAction" method="acceptJoinApply">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appAcceptJoinApply" class="actions.team.DealJoinApplyAction" method="appAcceptJoinApply">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <!--拒绝申请加入团队的请求-->
+        <action name="refuseJoinApply" class="actions.team.DealJoinApplyAction" method="refuseJoinApply">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appRefuseJoinApply" class="actions.team.DealJoinApplyAction" method="appRefuseJoinApply">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+
     </package>
 </struts>

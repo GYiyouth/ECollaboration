@@ -717,5 +717,38 @@ public class TeamDAOImpl implements TeamDAO {
 			throw e;
 		}
 	}
+
+	/**
+	 * 同意某人加入团队
+	 *
+	 * @param teamId    ，studentId
+	 * @param studentId
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public boolean acceptApplyJoinByTeamIdStudentId(int teamId, int studentId, int leaderFlag) throws Exception {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		String sql = "UPDATE ecollaborationweb.student_team " +
+				"SET leaderFlag = ? WHERE teamId = ? AND studentId = ?;";
+		try {
+			conn = DBUtils.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, leaderFlag);
+			ps.setInt(2, teamId);
+			ps.setInt(3, studentId);
+			int flag = ps.executeUpdate();
+			if (flag ==1 )
+				return true;
+			else
+				return false;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}finally {
+			DBUtils.close(null, ps, conn);
+		}
+	}
 }
 

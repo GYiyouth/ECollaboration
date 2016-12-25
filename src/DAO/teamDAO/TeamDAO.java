@@ -206,4 +206,12 @@ public interface TeamDAO {
 	 * @throws Exception
 	 */
 	public ArrayList<Integer> getApplyStudentIdByTeamId(int teamId) throws Exception;
+
+	/**
+	 * 修改某人在组内的角色（组长？组员？临时申请的人？）
+	 * @param teamId，studentId
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean acceptApplyJoinByTeamIdStudentId(int teamId, int studentId, int leaderFlag) throws Exception;
 }
