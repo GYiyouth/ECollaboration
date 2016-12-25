@@ -18,22 +18,23 @@ import java.util.HashSet;
 public class TaskDAOImpl implements TaskDAO {
     /**
      * 添加任务，获取新任务id
-     *
+     * 同时在project_task表里添加记录
      * @param taskBean
      * @return
      * @throws SQLException
      */
     @Override
-    public Integer addTask(TaskBean taskBean) throws SQLException {
+    public Integer addTask(TaskBean taskBean, ArrayList<Integer>projects) throws Exception {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        String sql = "INSERT INTO ECollaborationWeb.task " +
+        String sql1 = "INSERT INTO ECollaborationWeb.task " +
                 " (title, content, creatorId, createDate, " +
                 " modifyDate, beginDate, targetDate) VALUES (?,?,?,?,?,?,?);";
         try {
             connection = DBUtils.getConnection();
-            preparedStatement = connection.prepareStatement(sql);
+            connection.setAutoCommit(false);
+            preparedStatement = connection.prepareStatement(sql1);
             preparedStatement.setString(1, taskBean.getTitle());
             preparedStatement.setString(2, taskBean.getContent());
             preparedStatement.setInt(3, taskBean.getCreatorId());
@@ -43,15 +44,27 @@ public class TaskDAOImpl implements TaskDAO {
             preparedStatement.setString(7, taskBean.getTargetDate());
             int flag = preparedStatement.executeUpdate();
             if (flag == 1) {
-                sql = "SELECT LAST_INSERT_ID()";
-                preparedStatement = connection.prepareStatement(sql);
+                String sql2 = "SELECT LAST_INSERT_ID()";
+                preparedStatement = connection.prepareStatement(sql2);
                 resultSet = preparedStatement.executeQuery();
-                if (resultSet.next())
-                    return resultSet.getInt(1);
+                if (resultSet.next()) {
+                    int taskId = resultSet.getInt(1);
+                    String sql3 = "INSERT INTO ECollaborationWeb.project_task " +
+                            " (projectId, taskId) VALUES (?,?);";
+                    preparedStatement = connection.prepareStatement(sql3);
+                    for (int projectId : projects){
+                        preparedStatement.setInt(1, projectId);
+                        preparedStatement.setInt(2, taskId);
+                        preparedStatement.executeUpdate();
+                    }
+                    connection.commit();
+                    return taskId;
+                }
             }
             return null;
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            connection.rollback();
             throw e;
         } finally {
             DBUtils.close(resultSet, preparedStatement, connection);

@@ -102,6 +102,12 @@
             <result name="success">/QuickTime%20Player.jpg</result>
             <result name="fail">/index.jsp</result>
         </action>
+
+        <!--新建任务-->
+        <action name="taskCreation" class="actions.task.TaskCreationAction" method="execute">
+            <result name="success">/QuickTime%20Player.jpg</result>
+            <result name="fail">/index.jsp</result>
+        </action>
         <!-- ========================================================================================-->
         <action name="joinTeam" class="actions.team.JoinTeamAction" method="joinTeam">
             <result name="success">/success.jsp</result>
