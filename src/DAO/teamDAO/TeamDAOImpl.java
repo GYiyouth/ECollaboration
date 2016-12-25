@@ -236,6 +236,8 @@ public class TeamDAOImpl implements TeamDAO {
 		}
 	}
 
+
+
 	/**
 	 * 获取团队id列表，通过学生ID，项目id
 	 *  这个SQL写不好，因为返回的表里包含有相同的团队id，这里采用了转化为哈希集合，再转为列表的方式解决。

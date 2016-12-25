@@ -44,14 +44,14 @@
         <action name="uploadPhoto" class="actions.user.UploadPhoto" method="uploadPic">
             <result name="success">/照片上传成功</result>
             <result name="login">/login.jsp</result>
-            <!--<interceptor-ref name="fileUpload">-->
-                <!--&lt;!&ndash; 限制2兆大小 &ndash;&gt;-->
-                <!--<param name="maximumSize">2097152</param>-->
-                <!--<param name="allowedTypes">-->
-                    <!--image/png, image/jpg, image/jpeg, image/bmp-->
-                <!--</param>-->
-            <!--</interceptor-ref>-->
-            <!--<interceptor-ref name="defaultStack" />-->
+            <interceptor-ref name="fileUpload">
+                <!-- 限制2兆大小 -->
+                <param name="maximumSize">2097152</param>
+                <param name="allowedTypes">
+                    image/png, image/jpg, image/jpeg, image/bmp
+                </param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack" />
         </action>
         <!--手机上传头像-->
         <action name="appUploadPhoto" class="actions.user.UploadPhoto" method="appUploadPic">
@@ -64,7 +64,7 @@
             <!--</interceptor-ref>-->
             <!--<interceptor-ref name="defaultStack" />-->
         </action>
-
+        <!--下载-->
         <action name="downloadAction" class="actions.com.downloadActoin" method="downloadFiles">
             <result type="stream">
                 <!-- 文件类型 —— application/octet-stream 表示无限制 -->
@@ -91,6 +91,12 @@
             <!--</interceptor-ref>-->
         </action>
 
+
+        <!--团队队长申请学校工程实践项目-->
+        <action name="applySchoolPractice" class="actions.team.ApplyProjectAction" method="execute">
+            <result name="success">/QuickTime%20Player.jpg</result>
+            <result name="fail">/index.jsp</result>
+        </action>
         <!-- ========================================================================================-->
         <action name="joinTeam" class="actions.team.JoinTeamAction" method="joinTeam">
             <result name="success">/success.jsp</result>

@@ -1,6 +1,14 @@
 package actions.team;
 
+import DAO.projectDAO.ProjectDAO;
+import DAO.projectDAO.ProjectDAOImpl;
+import DAO.studentDAO.StudentDAO;
+import DAO.studentDAO.StudentDaoImpl;
+import DAO.teamDAO.TeamDAO;
+import DAO.teamDAO.TeamDAOImpl;
 import bean.domain.StudentBean;
+import bean.domain.TeamBean;
+import bean.domain.UserBean;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
@@ -8,20 +16,43 @@ import org.apache.struts2.interceptor.SessionAware;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
+ * form里要有teamId, projectId
  * Created by geyao on 2016/12/24.
  */
 public class ApplyProjectAction implements SessionAware, ServletResponseAware, ServletRequestAware{
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private Map session;
+	private Integer teamId;
+	private Integer projectId;
 
 	private StudentBean studentBean;
 
 	public String execute() throws Exception {
-		return "success";
+		UserBean userBean = (UserBean) this.session.get("userBean");
+		TeamDAO teamDAO = new TeamDAOImpl();
+		ProjectDAO projectDAO = new ProjectDAOImpl();
+		TeamBean teamBean = teamDAO.getTeamInfo(teamId);
+		if (teamBean == null)
+			return "fail";
+		if (teamBean.getCreatorId() != userBean.getId() )
+			return "fail";
+		if (projectDAO.getProjectInfo(projectId) == null)
+			return "fail";
+
+		ArrayList<Integer> prosList = projectDAO.getProjectIdListByTeamId(teamId);
+		ArrayList<Integer> prosList2 = projectDAO.checkSchoolProjectByIdList(prosList, 0);
+		System.out.println("lsit1"+prosList);
+		System.out.println("lsit2"+prosList2);
+		if (prosList2 == null || !prosList2.contains(projectId)){
+			teamDAO.setTeamProject(teamId, projectId);
+			return "success";
+		}else
+			return "fail";
 	}
 
 	/**
@@ -33,7 +64,7 @@ public class ApplyProjectAction implements SessionAware, ServletResponseAware, S
 	public void setServletRequest(HttpServletRequest request) {
 		this.request = request;
 		try {
-			this.request.setCharacterEncoding("UTF_8");
+			this.request.setCharacterEncoding("UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
@@ -66,5 +97,41 @@ public class ApplyProjectAction implements SessionAware, ServletResponseAware, S
 
 	public void setStudentBean(StudentBean studentBean) {
 		this.studentBean = studentBean;
+	}
+
+	public HttpServletRequest getRequest() {
+		return request;
+	}
+
+	public void setRequest(HttpServletRequest request) {
+		this.request = request;
+	}
+
+	public HttpServletResponse getResponse() {
+		return response;
+	}
+
+	public void setResponse(HttpServletResponse response) {
+		this.response = response;
+	}
+
+	public Map getSession() {
+		return session;
+	}
+
+	public Integer getTeamId() {
+		return teamId;
+	}
+
+	public void setTeamId(Integer teamId) {
+		this.teamId = teamId;
+	}
+
+	public Integer getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(Integer projectId) {
+		this.projectId = projectId;
 	}
 }

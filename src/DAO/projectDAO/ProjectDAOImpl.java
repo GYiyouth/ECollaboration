@@ -546,7 +546,7 @@ public class ProjectDAOImpl implements ProjectDAO{
     }
 
     /**
-     * 删除关系
+     * 删除关系,通过projectId，taskId
      *
      * @param projectId
      * @param taskId
@@ -628,6 +628,42 @@ public class ProjectDAOImpl implements ProjectDAO{
             throw e;
         }finally {
             DBUtils.close(null, preparedStatement, connection);
+        }
+
+
+    }
+    /**
+     * 检测项目id列表，返回指定类型的项目id列表
+     *
+     * @param projectIds
+     * @param priority
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public ArrayList<Integer> checkSchoolProjectByIdList(ArrayList<Integer> projectIds, int priority) throws Exception {
+        Connection connection= null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        ArrayList<Integer> list = new ArrayList<>();
+        String sql = "SELECT id FROM ECollaborationWeb.project WHERE priority = ?;";
+        try {
+            connection = DBUtils.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, priority);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                int projectId = resultSet.getInt(1);
+                if (projectIds.contains(projectId)){
+                    list.add(projectId);
+                }
+            }
+            return list;
+        }catch (Exception e){
+            e.printStackTrace();
+            throw e;
+        }finally {
+            DBUtils.close(resultSet, preparedStatement, connection);
         }
     }
 }
