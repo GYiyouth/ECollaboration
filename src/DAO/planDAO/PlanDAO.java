@@ -224,6 +224,14 @@ public interface PlanDAO {
      */
     public ArrayList<Integer> getPlanIdBetweenATimeBTime(String beginTime, String endTime,int studentId, int projectId) throws Exception;
 
+    /**
+     * 完成计划
+     *
+     * @param planId,finishDate
+     * @return boolean
+     * @throws SQLException
+     */
+    public boolean finishPlan(int planId, String finishDate) throws SQLException;
 }
 
 

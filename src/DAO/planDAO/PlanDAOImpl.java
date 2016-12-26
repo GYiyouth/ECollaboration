@@ -175,7 +175,7 @@ public class PlanDAOImpl implements PlanDAO {
     /**
      * 组长发计划给团队
      *
-     * @param planId,teamId,projectId
+     * @param planBean,teamId,projectId
      * @return boolean
      * @throws SQLException
      */
@@ -901,5 +901,39 @@ public class PlanDAOImpl implements PlanDAO {
         } finally {
             DBUtils.close(rs, ps, conn);
         }
+    }
+
+    /**
+     * 完成计划
+     *
+     * @param planId
+     * @param finishDate
+     * @return boolean
+     * @throws SQLException
+     */
+    @Override
+    public boolean finishPlan(int planId, String finishDate) throws SQLException {
+        boolean flag = true;
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String sql = " UPDATE ecollaborationweb.plan SET finishDate = ? WHERE planId = ? ";
+
+        try {
+            conn = DBUtils.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, finishDate);
+            ps.setInt(2, planId);
+            int i = ps.executeUpdate();
+            if (i == 0) {
+                flag = false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            DBUtils.close(null, ps, conn);
+        }
+        return flag;
     }
 }

@@ -258,18 +258,6 @@
             <result name="login">/登录界面</result>
         </action>
 
-        <!--创建项目计划-->
-        <!--<action name="createPlanToProject" class="actions.plan.CreatePlanToProjectAction" method="createPlanToProject">-->
-            <!--<result name="success">/success.jsp</result>-->
-            <!--<result name="fail">/fail.jsp</result>-->
-            <!--<result name="login">/登录界面</result>-->
-        <!--</action>-->
-        <!--<action name="appCreatePlanToProject" class="actions.plan.CreatePlanToProjectAction" method="appCreatePlanToProject">-->
-            <!--<result name="success">/success.jsp</result>-->
-            <!--<result name="fail">/fail.jsp</result>-->
-            <!--<result name="login">/登录界面</result>-->
-        <!--</action>-->
-
         <!--创建团队计划-->
         <action name="createPlanToTeam" class="actions.plan.CreatePlanToTeamAction" method="createPlanToTeam">
             <result name="success">/success.jsp</result>
@@ -277,6 +265,30 @@
             <result name="login">/登录界面</result>
         </action>
         <action name="appCreatePlanToTeam" class="actions.plan.CreatePlanToTeamAction" method="appCreatePlanToTeam">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <!--完成计划-->
+        <action name="finishPlan" class="actions.plan.PlanFinishAction" method="finishPlan">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appFinishPlan" class="actions.plan.PlanFinishAction" method="appFinishPlan">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <!--修改计划-->
+        <action name="modifyPlan" class="actions.plan.PlanModifyAction" method="modifyPlan">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appModifyPlan" class="actions.plan.PlanModifyAction" method="appModifyPlan">
             <result name="success">/success.jsp</result>
             <result name="fail">/fail.jsp</result>
             <result name="login">/登录界面</result>

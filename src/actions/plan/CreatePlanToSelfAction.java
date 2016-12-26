@@ -33,6 +33,7 @@ public class CreatePlanToSelfAction implements SessionAware, ServletRequestAware
     private String content;
     private String targetDate;
     private Integer projectId;
+    private String beginDate;
 //    private Integer teamId;
 
 
@@ -41,7 +42,7 @@ public class CreatePlanToSelfAction implements SessionAware, ServletRequestAware
     private Integer creatorId;
     private String createDate;
     private String finishDate;
-    private String beginDate;
+
     private Integer studentId;
     private Integer planId;
 

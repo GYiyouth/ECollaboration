@@ -25,16 +25,9 @@
 							<i class="fa fa-user"></i>
 						</div>
 						<div class="form-group help">
-							<input type="passWord" class="form-control" name="passWord" placeholder="密　码">
-							<i class="fa fa-lock"></i>
-							<a href="#" class="fa fa-question-circle"></a>
+							<input type="password" class="form-control" name="passWord" placeholder="密　码">
 						</div>
 						<div class="form-group">
-							<div class="main-checkbox">
-								<input type="checkbox" value="None" id="checkbox1" name="check"/>
-								<label for="checkbox1"></label>
-							</div>
-							<span class="text">记住密码</span>
 							<button type="submit" class="btn btn-default">登录</button>
 						</div>
 					</form>
