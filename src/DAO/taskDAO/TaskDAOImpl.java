@@ -18,7 +18,8 @@ import java.util.HashSet;
 public class TaskDAOImpl implements TaskDAO {
     /**
      * 添加任务，获取新任务id
-     * 同时在project_task表里添加记录
+     * 先从team_project里获取到id，然后添加到team_project_access表里
+     * 默认让一个项目下的所有团队都执行该任务
      * @param taskBean
      * @return
      * @throws SQLException
@@ -48,14 +49,27 @@ public class TaskDAOImpl implements TaskDAO {
                 preparedStatement = connection.prepareStatement(sql2);
                 resultSet = preparedStatement.executeQuery();
                 if (resultSet.next()) {
+                    //获取taskId
                     int taskId = resultSet.getInt(1);
-                    String sql3 = "INSERT INTO ECollaborationWeb.project_task " +
-                            " (projectId, taskId) VALUES (?,?);";
-                    preparedStatement = connection.prepareStatement(sql3);
+                    //对于每一个项目
                     for (int projectId : projects){
+                        String sql3 = "SELECT id FROM ECollaborationWeb.team_project WHERE projectId = ?";
+                        preparedStatement = connection.prepareStatement(sql3);
                         preparedStatement.setInt(1, projectId);
-                        preparedStatement.setInt(2, taskId);
-                        preparedStatement.executeUpdate();
+                        //获取到team_project Id
+                        resultSet = preparedStatement.executeQuery();
+                        //对于项目下的每一个team
+                        while (resultSet.next()){
+                            int team_projectId = resultSet.getInt(1);
+                            String sql4 = "INSERT INTO ECollaborationWeb.team_project_access " +
+                                    " (team_project_id, taskId) VALUES (?,?);";
+                            preparedStatement = connection.prepareStatement(sql4);
+                            preparedStatement.setInt(1, team_projectId);
+                            //插入team_project_access
+                            preparedStatement.executeUpdate();
+                        }
+
+
                     }
                     connection.commit();
                     return taskId;
