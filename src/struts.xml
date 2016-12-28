@@ -24,7 +24,9 @@
 
         <action name="logIn" class="actions.logIn.LogInAction" method="log">
             <result name="success">/ImageTestJSP.jsp</result>
-            <result name="fail">/登录失败又去哪？</result>
+            <result name="fail">/QuickTime%20Player.jpg</result>
+            <result name="input">/ImageTestJSP.jsp</result>
+
         </action>
 
         <action name="appLogIn" class="actions.logIn.LogInAction" method="appLog">
@@ -65,7 +67,7 @@
             <!--<interceptor-ref name="defaultStack" />-->
         </action>
         <!--下载-->
-        <action name="downloadAction" class="actions.com.downloadActoin" method="downloadFiles">
+        <action name="downloadAction" class="actions.com.downloadAction" method="downloadFiles">
             <result type="stream">
                 <!-- 文件类型 —— application/octet-stream 表示无限制 -->
                 <param name="contentType">application/octet-stream</param>
@@ -75,6 +77,7 @@
                 <param name="contentDisposition">attachment;filename="${fileName}"</param>
                 <param name="bufferSize">4096</param>
             </result>
+            <result name="login">/kedaya.jpg</result>
         </action>
         <!--学生上传代码-->
         <action name="uploadCode" class="actions.code.codeUploadAction" method="uploadCode">
@@ -283,16 +286,16 @@
         </action>
 
         <!--修改计划-->
-        <action name="modifyPlan" class="actions.plan.PlanModifyAction" method="modifyPlan">
-            <result name="success">/success.jsp</result>
-            <result name="fail">/fail.jsp</result>
-            <result name="login">/登录界面</result>
-        </action>
-        <action name="appModifyPlan" class="actions.plan.PlanModifyAction" method="appModifyPlan">
-            <result name="success">/success.jsp</result>
-            <result name="fail">/fail.jsp</result>
-            <result name="login">/登录界面</result>
-        </action>
+        <!--<action name="modifyPlan" class="actions.plan.PlanModifyAction" method="modifyPlan">-->
+            <!--<result name="success">/success.jsp</result>-->
+            <!--<result name="fail">/fail.jsp</result>-->
+            <!--<result name="login">/登录界面</result>-->
+        <!--</action>-->
+        <!--<action name="appModifyPlan" class="actions.plan.PlanModifyAction" method="appModifyPlan">-->
+            <!--<result name="success">/success.jsp</result>-->
+            <!--<result name="fail">/fail.jsp</result>-->
+            <!--<result name="login">/登录界面</result>-->
+        <!--</action>-->
 
     </package>
 </struts>

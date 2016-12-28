@@ -1,3 +1,4 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: geyao
@@ -20,12 +21,17 @@
          <input type="submit" value="提交">
     </form>
     <a href="downloadAction.action?fileName=QuickTime Player.jpg">下载</a>
-    <form action="logIn.action" method="post">
-        用户名<input type="text" name="userName"><br>
-        密码<input type="password" name="passWord">
+
+    <s:form action="logIn" method="post">
+
+        <s:textfield name="userName"></s:textfield><br>
+        <%--<s:fielderror fieldName="userName"/><br>--%>
+        <s:textfield name="passWord"></s:textfield>
+        <%--<s:fielderror fieldName="passWord"/><br>--%>
 
 
-        <input type="submit" value="提交">
-    </form>
+
+        <s:submit value="提交"></s:submit>
+    </s:form>
 </body>
 </html>

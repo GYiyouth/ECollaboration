@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE validators PUBLIC
+        "-//Apache Struts//XWork Validator 1.0.2//EN"
+        "http://struts.apache.org/dtds/xwork-validator-1.0.2.dtd">
+
+<validators>
+    <!-- 校验Action的name属性 -->
+    <field name="userName">
+        <!-- 指定name属性必须满足的必填规则 -->
+        <field-validator type="requiredstring">
+            <!--<param name="trim">true</param>-->
+            <message>userName is required</message>
+        </field-validator>
+        <!--&lt;!&ndash; 指定name属性必须匹配正则表达式 &ndash;&gt;-->
+        <!--<field-validator type="regex">-->
+            <!--<param name="expression"><![CDATA[(\w{4,25})]]></param>-->
+            <!--<message>您输入的用户名只能是字母和数字，且长度必须在4到25之间</message>-->
+        <!--</field-validator>-->
+    </field>
+
+    <!-- 校验Action的password属性 -->
+    <field name="passWord">
+        <!-- 指定password属性必须满足必填的规则 -->
+        <field-validator type="requiredstring">
+            <!--<param name="trim">true</param>-->
+            <message>password is required</message>
+        </field-validator>
+        <!--&lt;!&ndash; 指定password属性必须满足匹配指定的正则表达式 &ndash;&gt;-->
+        <!--<field-validator type="regex">-->
+            <!--<param name="expression"><![CDATA[(\w{4,25})]]></param>-->
+            <!--<message>您输入的密码指定是字母和数字，且长度必须在4到25之间</message>-->
+        <!--</field-validator>-->
+    </field>
+</validators>
