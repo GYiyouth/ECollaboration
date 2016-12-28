@@ -23,15 +23,9 @@
     <a href="downloadAction.action?fileName=QuickTime Player.jpg">下载</a>
 
     <s:form action="logIn" method="post">
-
-        <s:textfield name="userName"></s:textfield><br>
-        <%--<s:fielderror fieldName="userName"/><br>--%>
-        <s:textfield name="passWord"></s:textfield>
-        <%--<s:fielderror fieldName="passWord"/><br>--%>
-
-
-
-        <s:submit value="提交"></s:submit>
+        <s:textfield name="userName" label="username"></s:textfield><br>
+        <s:textfield name="passWord" label="password"></s:textfield><br>
+        <s:submit value="登录"></s:submit>
     </s:form>
 </body>
 </html>
