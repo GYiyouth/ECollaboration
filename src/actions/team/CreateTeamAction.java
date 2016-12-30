@@ -3,29 +3,32 @@ package actions.team;
 import DAO.teamDAO.TeamDAO;
 import DAO.teamDAO.TeamDAOImpl;
 import bean.domain.TeamBean;
+import bean.domain.UserBean;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
+import org.apache.struts2.interceptor.SessionAware;
 import smallTools.Time;
 import smallTools.TimeImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
+import java.util.Map;
 
 /**
  * Created by geyao on 2016/12/13.
  */
-public class CreateTeamAction implements ServletRequestAware, ServletResponseAware {
+public class CreateTeamAction implements SessionAware, ServletRequestAware, ServletResponseAware {
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	//以下从请求中获取
 	private String teamName;
 	private String description;
 	private Integer memberMax;
-	private Integer creatorId;
-
+//	private Integer creatorId;
+	private Map session;
 	private TeamBean teamBean;
 	private Integer id;
 
@@ -69,13 +72,13 @@ public class CreateTeamAction implements ServletRequestAware, ServletResponseAwa
 		this.memberMax = memberMax;
 	}
 
-	public Integer getCreatorId() {
-		return creatorId;
-	}
-
-	public void setCreatorId(Integer creatorId) {
-		this.creatorId = creatorId;
-	}
+//	public Integer getCreatorId() {
+//		return creatorId;
+//	}
+//
+//	public void setCreatorId(Integer creatorId) {
+//		this.creatorId = creatorId;
+//	}
 
 	/**
 	 * Sets the HTTP request object in implementing classes.
@@ -106,10 +109,7 @@ public class CreateTeamAction implements ServletRequestAware, ServletResponseAwa
 
 	public String createTeam() throws Exception {
 		try {
-			System.out.println(memberMax);
-			System.out.println(teamName);
-			System.out.println(creatorId);
-			System.out.println(description);
+
 			TeamDAO teamDAO = new TeamDAOImpl();
 			TeamBean teamBean = new TeamBean();
 			Time time = new TimeImpl();
@@ -124,7 +124,8 @@ public class CreateTeamAction implements ServletRequestAware, ServletResponseAwa
 			else
 				teamBean.setMemberMax(0);
 			teamBean.setTeamName(teamName);
-			teamBean.setCreatorId(creatorId);
+			UserBean userBean = (UserBean) session.get("userBean");
+			teamBean.setCreatorId(userBean.getId());
 
 			this.id = teamDAO.addTeam(teamBean);
 			teamBean.setId(this.getId());
@@ -158,5 +159,15 @@ public class CreateTeamAction implements ServletRequestAware, ServletResponseAwa
 			this.response.getWriter().flush();
 			this.response.getWriter().close();
 		}
+	}
+
+	/**
+	 * Sets the Map of session attributes in the implementing class.
+	 *
+	 * @param session a Map of HTTP session attribute name/value pairs.
+	 */
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.session = session;
 	}
 }
