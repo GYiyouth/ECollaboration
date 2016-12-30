@@ -16,8 +16,8 @@ import smallTools.TimeImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
+import java.lang.reflect.Method;
 import java.util.Map;
 
 /**
@@ -51,8 +51,11 @@ public class fileUploadAction implements SessionAware, ServletRequestAware, Serv
 		if (projectId!=null && teamId != null){
 			try {
 				fileBeanInit("/schoolPractices/" + projectId + "/" +teamId);
-				FileIOBean fileIOBean = new FileIOBean();
-				fileIOBean.uploadFile( getSavePath(), getFileFileName(), getFile());
+//				FileIOBean fileIOBean = new FileIOBean();
+//				Class fioB = Class.forName("bean.BusinessBean.file.FileIOBean");
+//				Object obj = fioB.newInstance();
+//				FileIOBean fileIOBean = (FileIOBean)obj;
+				uploadFile( getSavePath(), getFileFileName(), getFile());
 				ECFileDAO fileDAO = new ECFileDAOImpl();
 				int id = fileDAO.addFile( getFileBean() );
 				setFileId(id);
@@ -85,17 +88,45 @@ public class fileUploadAction implements SessionAware, ServletRequestAware, Serv
 	public void fileBeanInit(String path){
 		getFileBean().setFileName(getFileFileName());
 		Time time = new TimeImpl();
-		System.out.println("time的getTime()方法 = " + time.getTime());
+
 		getFileBean().setCreateDate(time.getTime());
 		getFileBean().setDeadDate(time.getDeadTime());
 		getFileBean().setDownLoadTimes(0);
 		getFileBean().setCreatorId( (int)session.get("userId") );
 		setSavePath(""+
 				ServletActionContext.getServletContext().getRealPath("")+
-				"/../../../web/upload" + path
+				"../../../web/upload" + path
 		);
 		getFileBean().setPath( getSavePath() );
 
+	}
+	public String uploadFile(String savePath, String fileName, File tempFile) throws Exception {
+
+		try {
+			File tempSavePath = new File(savePath);
+			if (!tempSavePath.exists())
+				tempSavePath.mkdirs();
+
+			OutputStream os = new FileOutputStream(new File(savePath, fileName));
+			InputStream is = new FileInputStream(tempFile);
+
+
+			byte[] buffer = new byte[500];
+			int length = 0;
+
+			while (-1 != (length = is.read(buffer, 0, buffer.length))) {
+				os.write(buffer);
+			}
+
+			os.close();
+			is.close();
+
+			return "success";
+		}catch (Exception e){
+			e.printStackTrace();
+			throw e;
+
+		}
 	}
 
 	/**

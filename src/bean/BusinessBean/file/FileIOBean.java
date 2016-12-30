@@ -7,6 +7,10 @@ import java.io.*;
  */
 public class FileIOBean {
 
+	public FileIOBean() {
+		super();
+	}
+
 	public String uploadFile(String savePath, String fileName, File tempFile) throws Exception {
 
 		try {

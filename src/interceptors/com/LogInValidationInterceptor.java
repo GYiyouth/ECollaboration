@@ -29,6 +29,7 @@ public class LogInValidationInterceptor extends AbstractInterceptor{
             return "login";
         } else {
             //继续执行剩余的拦截器和Action
+            System.out.println(userBean);
             return actionInvocation.invoke();
         }
     }

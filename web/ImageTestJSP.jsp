@@ -14,7 +14,9 @@
 <body>
     <form action="studentUploadFile.action" enctype="multipart/form-data" method="post">
          <%--上传用户：<input type="text" name="username"><br/>--%>
-         上传文件：<input type="file" name="file" accept="image/jpeg, image/png"><br/>
+         上传文件：<input type="file" name="file"
+                     <%--accept="image/jpeg, image/png"--%>
+         ><br/>
          <%--上传文件2：<input type="file" name="file2"><br/>--%>
              <input name="projectId" value="1" hidden="hidden">
              <input name="teamId" value="1" hidden="hidden">

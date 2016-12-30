@@ -5,7 +5,7 @@
 
 <struts>
     <!--<constant name="struts.devMode" value="true"/>-->
-    <package name="log" extends="struts-default">
+    <package name="log" extends="struts-default" >
 
         <interceptors>
             <!--定义权限验证拦截器 -->
