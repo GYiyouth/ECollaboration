@@ -18,7 +18,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-offset-3 col-md-6">
-					<form class="form-horizontal" action="logIn.action">
+					<form class="form-horizontal" action="logIn">
 						<span class="heading">用户登录</span>
 						<div class="form-group">
 							<input type="text" class="form-control" name="userName" placeholder="学工号">

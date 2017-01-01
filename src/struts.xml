@@ -116,6 +116,10 @@
         <action name="modifyAction" class="actions.task.TaskModifyAction" method="execute">
 
         </action>
+        <!--搜索项目-->
+        <action name="SearchProject" class="actions.project.SearchProjectAction" method="execute">
+
+        </action>
         <!-- ========================================================================================-->
         <action name="joinTeam" class="actions.team.JoinTeamAction" method="joinTeam">
             <result name="success">/success.jsp</result>

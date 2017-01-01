@@ -102,6 +102,19 @@ public class LogInAction implements ServletRequestAware, ServletResponseAware, S
 			if (this.session.containsKey("userBean"))
 				this.session.remove("userBean");
 			this.session.put("userBean", userBean);
+			switch (userBean.getRole()){
+				case 1:{
+					//管理员
+
+				}break;
+				case 2:{
+					//老师
+				}break;
+				case 3:{
+
+				}break;
+				default:return "fail";
+			}
 			return "success";
 		}else
 			return "fail";
