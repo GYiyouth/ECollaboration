@@ -168,6 +168,9 @@ public class LogInAction implements ServletRequestAware, ServletResponseAware, S
 		ProjectDAO projectDAO = new ProjectDAOImpl();
 		try {
 			ArrayList<Integer> projectIdList = projectDAO.getProjectIdListByTeacherId(teacherId);
+			if (projectIdList == null){
+				projectIdList = new ArrayList<>();
+			}
 			int projectNum = projectIdList.size();
 
 
@@ -196,9 +199,15 @@ public class LogInAction implements ServletRequestAware, ServletResponseAware, S
 		ProjectDAO projectDAO = new ProjectDAOImpl();
 		try {
 			ArrayList<Integer> teamIdList = teamDAO.getTeamIdListByStudentId(id);
+			if (teamIdList == null)
+				teamIdList = new ArrayList<>();
+
 			HashMap<Integer, HashMap<Integer, ProjectBean> >teamId_projectBean = new HashMap<>();
 			for (int teamId : teamIdList){
 				ArrayList<Integer> projects = projectDAO.getProjectIdListByTeamId(teamId);
+				if (projects == null){
+					projects = new ArrayList<>();
+				}
 				HashMap<Integer, ProjectBean> projectBeanHashMap = new HashMap<>();
 				for (int projectId : projects){
 					projectBeanHashMap.put(projectId, projectDAO.getProjectInfo(projectId) );
