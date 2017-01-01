@@ -21,7 +21,7 @@ public class ProjectDAOImpl implements ProjectDAO{
      * @throws SQLException
      */
     @Override
-    public boolean addProject(ProjectBean projectBean) throws SQLException {
+    public Integer addProject(ProjectBean projectBean) throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -75,10 +75,15 @@ public class ProjectDAOImpl implements ProjectDAO{
             else
                 ps.setInt(17, projectBean.getTeacherId());
             int flag = ps.executeUpdate();
-            if (flag != 0){
-                return true;
+            if (flag != 0) {
+                sql = "SELECT LAST_INSERT_ID()";
+                ps = conn.prepareStatement(sql);
+                rs = ps.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
             }
-            return false;
+            return null;
         }catch (SQLException e){
             e.printStackTrace();
             throw e;

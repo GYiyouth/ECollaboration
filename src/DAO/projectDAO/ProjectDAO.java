@@ -36,7 +36,7 @@ public interface ProjectDAO {
 	 * @return boolean
 	 * @throws SQLException
 	 */
-	public boolean addProject(ProjectBean projectBean) throws SQLException;
+	public Integer addProject(ProjectBean projectBean) throws SQLException;
 
 	/**
 	 * 根据id寻找项目，返回project
