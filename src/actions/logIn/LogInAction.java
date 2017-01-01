@@ -1,18 +1,27 @@
 package actions.logIn;
 
+import DAO.projectDAO.ProjectDAO;
+import DAO.projectDAO.ProjectDAOImpl;
+import DAO.teamDAO.TeamDAO;
+import DAO.teamDAO.TeamDAOImpl;
 import DAO.userDAO.UserDAO;
 import DAO.userDAO.UserDAOImpl;
+import bean.domain.ProjectBean;
 import bean.domain.UserBean;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
+import smallTools.SessionTools;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +38,8 @@ public class LogInAction implements ServletRequestAware, ServletResponseAware, S
 	private String passWord;
 	private UserBean userBean;
 	private Map session;
+
+
 
 	public UserBean getUserBean() {
 		return userBean;
@@ -109,10 +120,12 @@ public class LogInAction implements ServletRequestAware, ServletResponseAware, S
 				}break;
 				case 2:{
 					//老师
-				}break;
+					return teacherLogIn(userBean.getId());
+				}
 				case 3:{
-
-				}break;
+					//学生
+					return studentLogIn(userBean.getId());
+				}
 				default:return "fail";
 			}
 			return "success";
@@ -148,6 +161,58 @@ public class LogInAction implements ServletRequestAware, ServletResponseAware, S
 			}
 		}finally {
 
+		}
+	}
+
+	private String teacherLogIn(int teacherId){
+		ProjectDAO projectDAO = new ProjectDAOImpl();
+		try {
+			ArrayList<Integer> projectIdList = projectDAO.getProjectIdListByTeacherId(teacherId);
+			int projectNum = projectIdList.size();
+
+
+			HashMap<Integer, ProjectBean> projectId_BeanMap = new HashMap<>();
+			for (int projectId : projectIdList){
+				ProjectBean projectBean = projectDAO.getProjectInfo(projectId);
+				projectId_BeanMap.put(projectBean.getId(), projectBean);
+			}
+			ArrayList<String> temp = new ArrayList<>();
+			temp.add("projectNum");
+			temp.add("projectIdList");
+			temp.add("projectId_BeanMap");
+			session = SessionTools.removeAttributes(session, temp);
+			session.put("projectNum", projectNum);
+			session.put("projectIdList", projectIdList);
+			session.put("projectId_BeanMap", projectId_BeanMap);
+			return "teacher";
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "fail";
+		}
+	}
+
+	private String studentLogIn(int id){
+		TeamDAO teamDAO = new TeamDAOImpl();
+		ProjectDAO projectDAO = new ProjectDAOImpl();
+		try {
+			ArrayList<Integer> teamIdList = teamDAO.getTeamIdListByStudentId(id);
+			HashMap<Integer, HashMap<Integer, ProjectBean> >teamId_projectBean = new HashMap<>();
+			for (int teamId : teamIdList){
+				ArrayList<Integer> projects = projectDAO.getProjectIdListByTeamId(teamId);
+				HashMap<Integer, ProjectBean> projectBeanHashMap = new HashMap<>();
+				for (int projectId : projects){
+					projectBeanHashMap.put(projectId, projectDAO.getProjectInfo(projectId) );
+				}
+				teamId_projectBean.put(teamId, projectBeanHashMap);
+			}
+			session = SessionTools.removeAttribute(session, "teamIdList");
+			session = SessionTools.removeAttribute(session, "teamId_projectBean");
+			session.put("teamIdList", teamIdList);
+			session.put("teamId_projectBean", teamId_projectBean);
+			return "student";
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "fail";
 		}
 	}
 
