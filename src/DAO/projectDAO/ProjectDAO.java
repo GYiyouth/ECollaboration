@@ -1,9 +1,11 @@
 package DAO.projectDAO;
 
 import bean.domain.ProjectBean;
+import com.sun.istack.internal.Nullable;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * 项目的dao接口
@@ -244,5 +246,13 @@ public interface ProjectDAO {
 	 * @throws SQLException
 	 */
 	public boolean deleteTask_Project(int taskId) throws SQLException;
+
+	/**
+	 * 获取所有特定优先级的项目
+	 * @param priority
+	 * @return
+	 * @throws SQLException
+	 */
+	public HashMap<Integer, ProjectBean> getAllProject(@Nullable Integer priority) throws SQLException;
 
 }

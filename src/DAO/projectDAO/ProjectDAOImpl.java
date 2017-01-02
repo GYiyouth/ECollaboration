@@ -4,9 +4,11 @@ import DAO.com.smallTools.ComGetListValueDAO;
 import DAO.com.smallTools.ComGetListValueDAOImpl;
 import DAO.com.util.db.DBUtils;
 import bean.domain.ProjectBean;
+import com.sun.istack.internal.Nullable;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 /**
@@ -665,6 +667,62 @@ public class ProjectDAOImpl implements ProjectDAO{
             }
             return list;
         }catch (Exception e){
+            e.printStackTrace();
+            throw e;
+        }finally {
+            DBUtils.close(resultSet, preparedStatement, connection);
+        }
+    }
+
+    /**
+     * 获取所有特定优先级的项目
+     *
+     * @param priority
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public HashMap<Integer, ProjectBean> getAllProject(@Nullable Integer priority) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String sql = "SELECT * FROM project ";
+        if (priority == null)
+            sql += " ;";
+        else
+            sql += " WHERE priority = ?;";
+        HashMap<Integer, ProjectBean> result = new HashMap<>();
+
+        try{
+            connection = DBUtils.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            if (priority != null)
+                preparedStatement.setInt(1, priority);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                ProjectBean projectBean = new ProjectBean();
+                projectBean.setId(resultSet.getInt("id"));
+                projectBean.setName(resultSet.getString("name"));
+                projectBean.setApplyBeforeDate(resultSet.getString("applyBeforeDate"));
+                projectBean.setFinishDate(resultSet.getString("finishDate"));
+                projectBean.setSurvivalDate(resultSet.getString("survivalDate"));
+                projectBean.setTeamNumber(resultSet.getInt("teamNumber"));
+                projectBean.setTeamMax(resultSet.getInt("teamMax"));
+                projectBean.setMemberMax(resultSet.getInt("memberMax"));
+                projectBean.setCreateDate(resultSet.getString("createDate"));
+                projectBean.setGrade(resultSet.getInt("grade"));
+                projectBean.setKeyWord(resultSet.getString("keyWord"));
+                projectBean.setInfo(resultSet.getString("info"));
+                projectBean.setRequirement(resultSet.getString("requirement"));
+                projectBean.setGain(resultSet.getString("gain"));
+                projectBean.setPriority(resultSet.getInt("priority"));
+                projectBean.setStatus(resultSet.getInt("status"));
+                projectBean.setCreatorId(resultSet.getInt("creatorId"));
+                projectBean.setTeacherId(resultSet.getInt("teacherId"));
+                result.put(projectBean.getId(), projectBean);
+            }
+            return result;
+        }catch (SQLException e){
             e.printStackTrace();
             throw e;
         }finally {

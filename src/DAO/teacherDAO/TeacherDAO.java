@@ -3,6 +3,7 @@ package DAO.teacherDAO;
 import bean.domain.*;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 
 public interface TeacherDAO {
 
@@ -64,4 +65,18 @@ public interface TeacherDAO {
 	 * @throws SQLException
 	 */
 	public boolean deleteTeacher_Project(int teacherId) throws SQLException;
+
+	/**
+	 * 获取所有老师的信息，哈希表为id_name对
+	 * @return
+	 * @throws SQLException
+	 */
+	public HashMap<Integer, String>getTeacherID_Name() throws SQLException;
+
+	/**
+	 * 获取所有老师的信息，返回Bean
+	 * @return
+	 * @throws SQLException
+	 */
+	public HashMap<Integer, TeacherBean> getAllTeacher()throws SQLException;
 }

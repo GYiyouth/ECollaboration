@@ -12,14 +12,14 @@
     <title>ImageTestJSP</title>
 </head>
 <body>
-    <form action="studentUploadFile.action" enctype="multipart/form-data" method="post">
+    <form action="uploadPhoto.action" enctype="multipart/form-data" method="post" >
          <%--上传用户：<input type="text" name="username"><br/>--%>
          上传文件：<input type="file" name="file"
-                     <%--accept="image/jpeg, image/png"--%>
+                     accept="image/jpeg, image/png"
          ><br/>
          <%--上传文件2：<input type="file" name="file2"><br/>--%>
-             <input name="projectId" value="1" hidden="hidden">
-             <input name="teamId" value="1" hidden="hidden">
+             <%--<input name="projectId" value="1" hidden="hidden">--%>
+             <%--<input name="teamId" value="1" hidden="hidden">--%>
          <input type="submit" value="提交">
     </form>
     <a href="downloadAction.action?fileName=QuickTime Player.jpg">下载</a>

@@ -113,6 +113,7 @@ public class LogInAction implements ServletRequestAware, ServletResponseAware, S
 			if (this.session.containsKey("userBean"))
 				this.session.remove("userBean");
 			this.session.put("userBean", userBean);
+			System.out.println(session);
 			switch (userBean.getRole()){
 				case 1:{
 					//管理员
@@ -133,23 +134,29 @@ public class LogInAction implements ServletRequestAware, ServletResponseAware, S
 			return "fail";
 	}
 
-	public void appLog() throws Exception{
+	public String appLog() throws Exception{
 
 		JSONObject jsonObject = new JSONObject();
-
+		String result = log();
 		try {
-			if (log().equals("success")) {
+			if (result.equals("teacher") || result.equals("student")) {
 
 				jsonObject.put("userBean", getUserBean());
 				jsonObject.put("photoPath", getUserBean().getPhoto());
 				jsonObject.put("result", "success");
 
+				TeamDAO teamDAO = new TeamDAOImpl();
+				ArrayList<Integer>teamIdList = teamDAO.getTeamIdListByStudentId(getUserBean().getId());
+				if (teamIdList == null)
+					teamIdList = new ArrayList<>();
+				jsonObject.put("teamIdList", teamIdList);
 
 				this.response.setCharacterEncoding("UTF-8");
 				this.response.getWriter().write(jsonObject.toString());
 				this.response.getWriter().flush();
 				this.response.getWriter().close();
-
+				System.out.println(session);
+				return "success";
 			} else {
 				jsonObject.put("result", "fail");
 
@@ -157,22 +164,24 @@ public class LogInAction implements ServletRequestAware, ServletResponseAware, S
 				this.response.getWriter().write(jsonObject.toString());
 				this.response.getWriter().flush();
 				this.response.getWriter().close();
-				;
+				return "fail";
 			}
-		}finally {
-
+		}catch (Exception e){
+			e.printStackTrace();
+			return "fail";
 		}
 	}
 
 	private String teacherLogIn(int teacherId){
 		ProjectDAO projectDAO = new ProjectDAOImpl();
+		System.out.println(1);
 		try {
 			ArrayList<Integer> projectIdList = projectDAO.getProjectIdListByTeacherId(teacherId);
 			if (projectIdList == null){
 				projectIdList = new ArrayList<>();
 			}
 			int projectNum = projectIdList.size();
-
+			System.out.println(2);
 
 			HashMap<Integer, ProjectBean> projectId_BeanMap = new HashMap<>();
 			for (int projectId : projectIdList){
@@ -180,6 +189,7 @@ public class LogInAction implements ServletRequestAware, ServletResponseAware, S
 				projectId_BeanMap.put(projectBean.getId(), projectBean);
 			}
 			ArrayList<String> temp = new ArrayList<>();
+			System.out.println(3);
 			temp.add("projectNum");
 			temp.add("projectIdList");
 			temp.add("projectId_BeanMap");

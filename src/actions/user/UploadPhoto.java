@@ -10,8 +10,9 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
+import java.nio.channels.FileChannel;
+import java.nio.file.Files;
 import java.util.Map;
 
 /**
@@ -36,17 +37,27 @@ public class UploadPhoto implements SessionAware,ServletRequestAware, ServletRes
 	//想让文件存储在哪里，就直接写在这里就好了，如果为空，则会和操作日志放在一个文件夹下。
 	private String savePath = "/web/upload/headPhotos";
 
+	private String tempSavePath = "web/upload/headPhotos";
+
 	public String uploadPic() throws Exception {
 		UserBean userBean = (UserBean) session.get("userBean");
+		setTempSavePath( ServletActionContext.getServletContext().getRealPath("")
+				+ getTempSavePath() + "/" + userBean.getId() );
 		setSavePath( ServletActionContext.getServletContext().getRealPath("")+
-				"/../../.." + getSavePath() + "/" + userBean.getId());
+				"../../.." + getSavePath() + "/" + userBean.getId());
 		//上传文件的逻辑代码
-		FileIOBean fileIOBean = new FileIOBean();
+//		FileIOBean fileIOBean = new FileIOBean();
 		try {
 			int a = getFileFileName().lastIndexOf(".");
 			//改变文件名为用户id
 			String fileName = userBean.getId() + getFileFileName().substring(a);
-			fileIOBean.uploadFile(getSavePath(), fileName, getFile());
+			System.out.println("savePath = " + savePath);
+			System.out.println("tempSavePath = " + tempSavePath);
+
+			uploadFile( getTempSavePath(), fileName, getFile());
+			System.out.println(2);
+			uploadFile( getSavePath(), fileName, getFile());
+			System.out.println(1);
 			return "success";
 		}catch (Exception e){
 			e.printStackTrace();
@@ -54,19 +65,25 @@ public class UploadPhoto implements SessionAware,ServletRequestAware, ServletRes
 		}
 	}
 
-	public void appUploadPic() throws Exception{
+
+	public String appUploadPic() throws Exception{
 		JSONObject jsonObject = new JSONObject();
-		if (uploadPic().equals("success")){
+		System.out.println("appUploadPic");
+		try {
+			appEditInfo();
 			jsonObject.put("result", "success");
 			jsonObject.put("photoPath", getSavePath());
 			this.response.getWriter().write(jsonObject.toString());
 			this.response.getWriter().flush();
 			this.response.getWriter().close();
-		}else {
+			return "success";
+		}catch (Exception e){
 			jsonObject.put("result", "fail");
 			this.response.getWriter().write(jsonObject.toString());
 			this.response.getWriter().flush();
 			this.response.getWriter().close();
+			e.printStackTrace();
+			return "fail";
 		}
 	}
 
@@ -121,7 +138,7 @@ public class UploadPhoto implements SessionAware,ServletRequestAware, ServletRes
 	public void setServletRequest(HttpServletRequest request) {
 		this.request = request;
 		try {
-			this.request.setCharacterEncoding("UTF_8");
+			this.request.setCharacterEncoding("UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
@@ -136,5 +153,66 @@ public class UploadPhoto implements SessionAware,ServletRequestAware, ServletRes
 	public void setServletResponse(HttpServletResponse response) {
 		this.response = response;
 		this.response.setCharacterEncoding("UTF-8");
+	}
+
+	public String getTempSavePath() {
+		return tempSavePath;
+	}
+
+	public void setTempSavePath(String tempSavePath) {
+		this.tempSavePath = tempSavePath;
+	}
+
+	public String uploadFile(String savePath, String fileName, File tempFile) throws Exception {
+
+		try {
+			File tempSavePath = new File(savePath);
+			if (!tempSavePath.exists())
+				tempSavePath.mkdirs();
+
+			OutputStream os = new FileOutputStream(new File(savePath, fileName));
+			InputStream is = new FileInputStream(tempFile);
+
+
+			byte[] buffer = new byte[500];
+			int length = 0;
+
+			while (-1 != (length = is.read(buffer, 0, buffer.length))) {
+				os.write(buffer);
+			}
+
+			os.close();
+			is.close();
+
+			return "success";
+		}catch (Exception e){
+			e.printStackTrace();
+			throw e;
+
+		}
+	}
+	public void appEditInfo( ) throws Exception{
+		InputStream in = request.getInputStream();
+		//里面填写你的工程目录下的WebContent
+		UserBean userBean = (UserBean)session.get("userBean");
+		String path = request.getServletContext().getRealPath("") + userBean.getId() +"/"+userBean.getId()+".png";
+		FileOutputStream fos = new FileOutputStream(path);
+//		FileOutputStream fos2 = new FileOutputStream((ServletActionContext.getServletContext().getRealPath("")+
+//				"../../.." + userBean.getId() +"/"+userBean.getId()+".png"));
+		int len = 0;
+		System.out.println("request"+request);
+		System.out.println("path" + path);
+
+		byte[] bytes = new byte[request.getContentLength()];
+		while((len = in.read(bytes))!=-1){
+			fos.write(bytes, 0, len);
+			fos.flush();
+		}
+		File source = new File(path);
+		File dest = new File(ServletActionContext.getServletContext().getRealPath("")+
+				"../../../" + userBean.getId() +"/"+userBean.getId()+".png");
+		fos.close();
+		Files.copy(source.toPath(), dest.toPath() );
+		return ;
 	}
 }

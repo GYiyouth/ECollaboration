@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 /**
  * Created by geyao on 2016/11/9.
@@ -71,7 +72,7 @@ public class TeacherDAOImpl implements TeacherDAO {
 			conn.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("出错！");
+			System.out.println("teacherDAO出错！");
 			conn.rollback();
 			return false;
 		} finally {
@@ -270,6 +271,83 @@ public class TeacherDAOImpl implements TeacherDAO {
 			throw e;
 		}finally {
 			DBUtils.close(null, preparedStatement, connection);
+		}
+	}
+
+	/**
+	 * 获取所有老师的信息，哈希表为id_name对
+	 *
+	 * @return
+	 * @throws SQLException
+	 */
+	@Override
+	public HashMap<Integer, String> getTeacherID_Name() throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		HashMap<Integer, String>hashMap = new HashMap<>();
+		String sql = "SELECT id, name FROM user;";
+		try {
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()){
+				int id = resultSet.getInt("id");
+				String name = resultSet.getString("name");
+				hashMap.put(id, name);
+			}
+			return hashMap;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}finally {
+			DBUtils.close(resultSet, preparedStatement, connection);
+		}
+	}
+
+	/**
+	 * 获取所有老师的信息，返回Bean
+	 *
+	 * @return
+	 * @throws SQLException
+	 */
+	@Override
+	public HashMap<Integer, TeacherBean> getAllTeacher() throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		HashMap<Integer, TeacherBean> result = new HashMap<>();
+		String sql = " SELECT * FROM user, teacher WHERE user.id = teacher.id; ";
+		try {
+			TeacherBean teacherBean = new TeacherBean();
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()){
+				teacherBean.setId(resultSet.getInt("id"));
+				teacherBean.setSchoolId(resultSet.getString("schoolId"));
+				teacherBean.setName(resultSet.getString("name"));
+				teacherBean.setSex(resultSet.getInt("sex"));
+				teacherBean.setRole(resultSet.getInt("role"));
+				teacherBean.setEmail(resultSet.getString("email"));
+				teacherBean.setPhoneNumber(resultSet.getString("phoneNumber"));
+				teacherBean.setLogName(resultSet.getString("logName"));
+				teacherBean.setPhoneNumber(resultSet.getString("passWord"));
+				teacherBean.setCreateDate(resultSet.getString("createDate"));
+				teacherBean.setPhoto(resultSet.getString("photo"));
+				teacherBean.setLastLogTime(resultSet.getString("lastLogTime"));
+				teacherBean.setActiveBefore(resultSet.getString("activeBefore"));
+				teacherBean.setNewFlag(resultSet.getInt("newsFlag"));
+				teacherBean.setHomePageUrl(resultSet.getString("homePageUrl"));
+				teacherBean.setNeedStudentsFlag(resultSet.getInt("needStudentsFlag"));
+				result.put(teacherBean.getId(), teacherBean);
+			}
+			return result;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}finally {
+			DBUtils.close(resultSet, preparedStatement, connection);
 		}
 	}
 }

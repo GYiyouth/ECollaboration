@@ -26,7 +26,7 @@
             <result name="success">/ImageTestJSP.jsp</result>
             <result name="fail">/QuickTime%20Player.jpg</result>
             <result name="input">/ImageTestJSP.jsp</result>
-            <result name="teacher">/kedaya.jpg</result>
+            <result name="teacher">/ImageTestJSP.jsp</result>
 
         </action>
 

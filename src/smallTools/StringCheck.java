@@ -1,5 +1,7 @@
 package smallTools;
 
+import java.util.regex.Pattern;
+
 /**
  * Created by geyao on 2016/11/1.
  */
@@ -26,5 +28,10 @@ public class StringCheck {
 		System.out.println(phoneCheck(phone));
 		String email = "gy2016@edu._";
 		System.out.println(emailCheck(email));
+	}
+
+	public static boolean isNumeric(String str){
+		Pattern pattern = Pattern.compile("[0-9]*");
+		return pattern.matcher(str).matches();
 	}
 }

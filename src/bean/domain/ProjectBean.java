@@ -6,6 +6,7 @@ package bean.domain;
 public class ProjectBean {
 	private Integer id = null;
 	private String name = null;
+
 	private String applyBeforeDate = null;
 	private String finishDate = null;
 	private String survivalDate = null;
