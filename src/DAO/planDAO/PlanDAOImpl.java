@@ -904,6 +904,46 @@ public class PlanDAOImpl implements PlanDAO {
     }
 
     /**
+     * 获取某人完成的所有计划id集合
+     *
+     * @param studentId
+     * @param projectId
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public ArrayList<Integer> getPlanIdsFinishedByStudentIdProjectId(int studentId, int projectId) throws Exception {
+        System.out.println("student"+studentId);
+        System.out.println("project"+projectId);
+        ArrayList<Integer> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "select plan.id from plan,student_team_project_plan " +
+                "WHERE plan.finishDate IS NOT null " +
+                "AND plan.id = student_team_project_plan.planId " +
+                "AND student_team_project_plan.studentId = ? " +
+                "AND student_team_project_plan.projectId = ? ORDER BY finishDate";
+
+        try {
+            conn = DBUtils.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, studentId);
+            ps.setInt(2, projectId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getInt("id"));
+            }
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            DBUtils.close(rs, ps, conn);
+        }
+    }
+
+    /**
      * 完成计划
      *
      * @param planId

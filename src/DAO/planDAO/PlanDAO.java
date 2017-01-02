@@ -225,6 +225,15 @@ public interface PlanDAO {
     public ArrayList<Integer> getPlanIdBetweenATimeBTime(String beginTime, String endTime,int studentId, int projectId) throws Exception;
 
     /**
+     * 获取某人完成的所有计划id集合
+     * @param studentId
+     * @param projectId
+     * @return
+     * @throws Exception
+     */
+    public ArrayList<Integer> getPlanIdsFinishedByStudentIdProjectId(int studentId, int projectId) throws Exception;
+
+    /**
      * 完成计划
      *
      * @param planId,finishDate
