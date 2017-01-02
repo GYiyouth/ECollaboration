@@ -7,6 +7,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
+import org.apache.struts2.interceptor.SessionAware;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,22 +23,12 @@ import java.util.Map;
  * Created by GR on 2016/12/14.
  * ok
  */
-public class GetMyJoinTeamsAction implements ServletRequestAware, ServletResponseAware {
+public class GetMyJoinTeamsAction implements ServletRequestAware, ServletResponseAware ,SessionAware{
     private HttpServletRequest request;
     private HttpServletResponse response;
     private Map<String, Object> session;
 
-//    private int studentId;
-
     private ArrayList<TeamBean> teamBeans;
-
-//    public int getStudentId() {
-//        return studentId;
-//    }
-//
-//    public void setStudentId(int studentId) {
-//        this.studentId = studentId;
-//    }
 
     public ArrayList<TeamBean> getTeamBeans() {
         return teamBeans;
@@ -71,7 +62,9 @@ public class GetMyJoinTeamsAction implements ServletRequestAware, ServletRespons
         try {
             TeamDAOImpl teamDaoImpl = new TeamDAOImpl();
             UserBean userBean = (UserBean)session.get("userBean");
+            System.out.println(userBean.getId()+"id");
             int studentId = userBean.getId();
+//            int studentId = 1;
             ArrayList<Integer> teamIds = teamDaoImpl.getTeamIdListByStudentId(studentId);
             ArrayList<TeamBean> teams = new ArrayList<>();
             for(int i = 0 ;i<teamIds.size() ;i++){
@@ -93,21 +86,21 @@ public class GetMyJoinTeamsAction implements ServletRequestAware, ServletRespons
      * @throws Exception
      */
     public void appGetMyJoinTeam() throws Exception{
-        JSONArray jsonArray = new JSONArray();
+
         JSONObject jsonObject = new JSONObject();
         if(getMyJoinTeam().equals("success")){
             jsonObject.put("teamBeans", getTeamBeans());
             jsonObject.put("result", "success");
-            jsonArray.add(jsonObject);
+
             this.response.setCharacterEncoding("UTF-8");
-            this.response.getWriter().write(jsonArray.toString());
+            this.response.getWriter().write(jsonObject.toString());
             this.response.getWriter().flush();
             this.response.getWriter().close();
         }else {
             jsonObject.put("result", "fail");
-            jsonArray.add(jsonObject);
+
             this.response.setCharacterEncoding("UTF-8");
-            this.response.getWriter().write(jsonArray.toString());
+            this.response.getWriter().write(jsonObject.toString());
             this.response.getWriter().flush();
             this.response.getWriter().close();
         }

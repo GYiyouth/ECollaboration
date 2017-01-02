@@ -6,6 +6,7 @@ import DAO.planDAO.PlanDAOImpl;
 import DAO.studentDAO.StudentDaoImpl;
 import DAO.taskDAO.TaskDAOImpl;
 import DAO.teamDAO.TeamDAOImpl;
+import actions.plan.PlanFinishAction;
 import bean.domain.*;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -28,11 +29,122 @@ public class GetMyJoinTeamInfoAction implements ServletRequestAware, ServletResp
     private HttpServletRequest request;
     private HttpServletResponse response;
     private int projectId;
-//    private int studentId;
     private int teamId;
 
-    private ArrayList<ArrayList> teamInfoList;
+//    private ArrayList<ArrayList> teamInfoList;
     private ArrayList<PlanBean> teamPlanBeans;
+    private ArrayList<StudentBean> studentBeans;    //学生信息集合
+    private ArrayList<Integer> codeSums;    //代码行数集合
+    private ArrayList<Integer> fileSums;    //文件数集合
+    private ArrayList<ArrayList<PlanBean>> planBeansAllStudents;  //所有学生计划集合
+
+
+
+    public String getMyJoinTeamInfo() throws Exception{
+        System.out.println("getMyJoinTeam");
+        TeamDAOImpl teamDaoImpl = new TeamDAOImpl();
+        StudentDaoImpl studentDaoImpl = new StudentDaoImpl();
+        PlanDAOImpl planDaoImpl = new PlanDAOImpl();
+        CodeDAOImpl codeDaoImpl = new CodeDAOImpl();
+        ECFileDAOImpl fileDaoImpl = new ECFileDAOImpl();
+        if(projectId==-1){  //没有项目
+            return "noProject";
+        }else {
+            try {
+                System.out.println("teamId" + teamId);
+                ArrayList<PlanBean> teamPlanBeans = new ArrayList<PlanBean>();
+                ArrayList<StudentBean> studentBeans = new ArrayList<>();
+                ArrayList<Integer> codeSums = new ArrayList<>();
+                ArrayList<Integer> fileSums = new ArrayList<>();
+                ArrayList<ArrayList<PlanBean>> planBeansAllStudents = new ArrayList<>();
+                ArrayList<Integer> studentIds = studentDaoImpl.getStudentIdByTeamIdProjectId(teamId, projectId);
+                System.out.println(studentIds.get(0) + ":0");
+
+
+                //团队的计划集合
+                ArrayList<Integer> teamPlanIds = planDaoImpl.getPlanIdListByTeamIdProjectId(teamId, projectId);
+                for (int temp : teamPlanIds) {
+                    System.out.println("团队任务id" + temp);
+                    PlanBean planBean = planDaoImpl.getPlanInfoByPlanId(temp);
+                    teamPlanBeans.add(planBean);
+                    setTeamPlanBeans(teamPlanBeans);
+                }
+
+                //团队成员各种信息
+                ArrayList<ArrayList> teamInfoList = new ArrayList();
+                for (int i = 0; i < studentIds.size(); i++) {
+                    ArrayList studentInfo = new ArrayList();
+                    StudentBean studentBean = studentDaoImpl.getInfoById(studentIds.get(i));
+                    System.out.println("学生个人主页" + studentBean.getHomePageUrl());
+                    int codeSum = codeDaoImpl.getCodeRowsSum(studentIds.get(i), projectId);
+                    int fileSum = fileDaoImpl.getFileSum(studentIds.get(i), projectId);
+                    System.out.println("代码：" + codeSum + "文件" + fileSum);
+
+                    ArrayList<PlanBean> planBeans = new ArrayList();
+                    ArrayList<Integer> planIds = planDaoImpl.getPlanIdsFinishedByStudentIdProjectId(studentIds.get(i),projectId);
+                    if(planIds.size()==0)   //没有完成任务
+                        planBeans.add(null);
+                    else {
+                        for (int j = 0; j < planIds.size(); j++) {
+                            ArrayList<PlanBean> stagePlanBean = new ArrayList<>();
+                            PlanBean teamPlanBean = teamPlanBeans.get(j);
+                            PlanBean planBean = planDaoImpl.getPlanInfoByPlanId(planIds.get(j));
+                            planBeans.add(planBean);
+                        }
+                    }
+                    studentBeans.add(studentBean);
+                    codeSums.add(codeSum);
+                    fileSums.add(fileSum);
+                    planBeansAllStudents.add(planBeans);
+
+                    //set
+                    setStudentBeans(studentBeans);
+                    setCodeSums(codeSums);
+                    setFileSums(fileSums);
+                    setPlanBeansAllStudents(planBeansAllStudents);
+                }
+                return "success";
+            } catch (Exception e) {
+                return "fail";
+            }
+        }
+
+    }
+
+    /**
+     * 返回：
+     * 成功：1.result=success
+     *      2.ArrayList<PlanBean> teamPlanBeans 团队计划，按照顺序存储团队计划<PlanBean>的arraylist数组
+     *          //下面四个list顺序是对应的
+     *      3.rrayList<StudentBean> studentBeans 学生的信息  第一个是组长
+     *      4.ArrayList<Integer> codeSums   每个人的代码量
+     *      5.ArrayList<Integer> fileSum    每个人的文件数
+     *      6.ArrayList<ArrayList<PlanBean>> planBeansAllStudents   每个人完成的计划的集合
+     * @throws Exception
+     */
+    public void appGetMyJoinTeamInfo() throws Exception{
+
+        JSONObject jsonObject = new JSONObject();
+        if (getMyJoinTeamInfo().equals("success")){
+            jsonObject.put("teamPlanBeans",getTeamPlanBeans());
+            jsonObject.put("studentBeans", getStudentBeans());
+            jsonObject.put("codeSums", getCodeSums());
+            jsonObject.put("fileSum", getFileSums());
+            jsonObject.put("planBeansAllStudents", getPlanBeansAllStudents());
+            jsonObject.put("result", "success");
+            this.response.setCharacterEncoding("UTF-8");
+            this.response.getWriter().write(jsonObject.toString());
+            this.response.getWriter().flush();
+            this.response.getWriter().close();
+        }else {
+            jsonObject.put("result", "fail");
+            this.response.setCharacterEncoding("UTF-8");
+            this.response.getWriter().write(jsonObject.toString());
+            this.response.getWriter().flush();
+            this.response.getWriter().close();
+        }
+
+    }
 
     public int getProjectId() {
         return projectId;
@@ -50,12 +162,36 @@ public class GetMyJoinTeamInfoAction implements ServletRequestAware, ServletResp
         this.teamId = teamId;
     }
 
-    public ArrayList<ArrayList> getTeamInfoList() {
-        return teamInfoList;
+    public ArrayList<StudentBean> getStudentBeans() {
+        return studentBeans;
     }
 
-    public void setTeamInfoList(ArrayList<ArrayList> teamInfoList) {
-        this.teamInfoList = teamInfoList;
+    public void setStudentBeans(ArrayList<StudentBean> studentBeans) {
+        this.studentBeans = studentBeans;
+    }
+
+    public ArrayList<Integer> getCodeSums() {
+        return codeSums;
+    }
+
+    public void setCodeSums(ArrayList<Integer> codeSums) {
+        this.codeSums = codeSums;
+    }
+
+    public ArrayList<Integer> getFileSums() {
+        return fileSums;
+    }
+
+    public void setFileSums(ArrayList<Integer> fileSums) {
+        this.fileSums = fileSums;
+    }
+
+    public ArrayList<ArrayList<PlanBean>> getPlanBeansAllStudents() {
+        return planBeansAllStudents;
+    }
+
+    public void setPlanBeansAllStudents(ArrayList<ArrayList<PlanBean>> planBeansAllStudents) {
+        this.planBeansAllStudents = planBeansAllStudents;
     }
 
     public ArrayList<PlanBean> getTeamPlanBeans() {
@@ -80,105 +216,6 @@ public class GetMyJoinTeamInfoAction implements ServletRequestAware, ServletResp
     public void setServletResponse(HttpServletResponse response) {
         this.response = response;
         this.response.setCharacterEncoding("UTF-8");
-    }
-
-
-    public String getMyJoinTeamInfo() throws Exception{
-        TeamDAOImpl teamDaoImpl = new TeamDAOImpl();
-        StudentDaoImpl studentDaoImpl = new StudentDaoImpl();
-        PlanDAOImpl planDaoImpl = new PlanDAOImpl();
-        CodeDAOImpl codeDaoImpl = new CodeDAOImpl();
-        ECFileDAOImpl fileDaoImpl = new ECFileDAOImpl();
-
-        try{
-            ArrayList<Integer> studentIds = studentDaoImpl.getStudentIdByTeamIdProjectId(teamId,projectId);
-            ArrayList<PlanBean> teamPlanBeans = new ArrayList<>();
-
-            ArrayList<Integer> teamPlanIds = planDaoImpl.getPlanIdListByTeamIdProjectId(teamId,projectId);
-            for(int temp:teamPlanIds){
-                System.out.println("团队任务id"+temp);
-                PlanBean planBean = planDaoImpl.getPlanInfoByPlanId(temp);
-                teamPlanBeans.add(planBean);
-            }
-
-            ArrayList<ArrayList> teamInfoList = new ArrayList();
-            for(int i=0;i<studentIds.size();i++){
-                ArrayList studentInfo = new ArrayList();
-                StudentBean studentBean = studentDaoImpl.getInfoById(studentIds.get(i));
-                System.out.println("学生个人主页"+studentBean.getHomePageUrl());
-                int codeSum = codeDaoImpl.getCodeRowsSum(studentIds.get(i),1);
-                int fileSum = fileDaoImpl.getFileSum(studentIds.get(i),1);
-                System.out.println("代码："+codeSum+"文件"+fileSum);
-
-                ArrayList<ArrayList<PlanBean>> stagePlanBeanSum = new ArrayList();
-                for(int j=0;j<teamPlanBeans.size();j++){
-                    ArrayList<PlanBean> stagePlanBean = new ArrayList<>();
-                    PlanBean teamPlanBean = teamPlanBeans.get(j);
-                    System.out.println("团队任务的每个任务的标题:"+teamPlanBean.getTitle());
-                    ArrayList<Integer> planIds = planDaoImpl.getPlanIdBetweenATimeBTime(teamPlanBean.getBeginDate(),teamPlanBean.getTargetDate(),studentIds.get(i),1);
-                    if(planIds.size()==0)
-                        stagePlanBean.add(null);
-                    else {
-                        for (int k = 0; k < planIds.size(); k++) {
-                            PlanBean planBean = planDaoImpl.getPlanInfoByPlanId(planIds.get(k));
-                            stagePlanBean.add(planBean);
-                        }
-                    }
-                    stagePlanBeanSum.add(stagePlanBean);
-                }
-
-                studentInfo.add(studentBean);
-                studentInfo.add(codeSum);
-                studentInfo.add(fileSum);
-                studentInfo.add(stagePlanBeanSum);
-                teamInfoList.add(studentInfo);
-
-            }
-            return "success";
-        }catch(Exception e){
-            return "fail";
-        }
-
-    }
-
-    /**
-     * 返回：
-     * 成功：1.result=success，
-     *      2.ArrayList<PlanBean> teamPlanBeans 团队计划，按照顺序存储团队计划<PlanBean>的arraylist数组
-     *      3.ArrayList<ArrayList> teamInfoList包含小组所有人的信息：（ArrayList）teamInfoList.get(i)为第i位同学信息，默认组长在第一个
-     *          学生信息里包括 3.1 学生个人信息（StudentBean）
-     *                          3.2 代码行数（int型）
-     *                          3.3 上传文件总数（int型）
-     *                          3.4 个人每阶段完成所有任务的集合，阶段以团队任务划分ArrayList<ArrayList<PlanBean>> stagePlanBeanSum
-     *                                 3.4.1 ArrayList<PlanBean>的每个阶段的完成任务集合：其中，如果某个阶段没有完成任务，则stagePlanBeanSum.get（i）==null
-     *
-     * @throws Exception
-     */
-    public void appGetMyJoinTeamInfo() throws Exception{
-
-        JSONArray jsonArray = new JSONArray();
-        JSONObject jsonObject = new JSONObject();
-
-
-
-        if (getMyJoinTeamInfo().equals("success")){
-            jsonObject.put("teamPlanBeans",getTeamPlanBeans());
-            jsonObject.put("teamInfoList", getTeamInfoList());
-            jsonObject.put("result", "success");
-            jsonArray.add(jsonObject);
-            this.response.setCharacterEncoding("UTF-8");
-            this.response.getWriter().write(jsonArray.toString());
-            this.response.getWriter().flush();
-            this.response.getWriter().close();
-        }else {
-            jsonObject.put("result", "fail");
-            jsonArray.add(jsonObject);
-            this.response.setCharacterEncoding("UTF-8");
-            this.response.getWriter().write(jsonArray.toString());
-            this.response.getWriter().flush();
-            this.response.getWriter().close();
-        }
-
     }
 
 
