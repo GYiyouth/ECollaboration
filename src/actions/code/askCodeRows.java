@@ -35,6 +35,7 @@ public class askCodeRows implements SessionAware{
 	private CodeBean codeBean = new CodeBean();
 	private HashMap<Integer, CodeBean> CodeBeans = new HashMap<>();
 	private HashMap<Integer, Integer> students = new HashMap<>();
+	private HashMap<Integer, Integer> studentRows = new HashMap<>();
 
 	private Map session;
 
@@ -49,7 +50,27 @@ public class askCodeRows implements SessionAware{
 		CodeDAO codeDAO = new CodeDAOImpl();
 		setCodeBeans(codeDAO.getCodeBeans(projectId, teamId));
 		StudentDAO studentDAO = new StudentDaoImpl();
-		studentDAO.getStudentIdByTeamId(teamId);
+		this.students = studentDAO.getStudentIdMapByTeamId(teamId);
+		int studentNum = students.size();
+		//遍历每一个学生
+		for (int i =1; i <= studentNum; i++){
+			int studentId = students.get(i);
+			int tempRows =0;
+			if (!studentRows.containsKey(studentId))
+				studentRows.put(studentId, tempRows);
+			//遍历codeBean的哈希表，找匹配的
+			for (CodeBean tempBean : getCodeBeans().values()){
+				if (tempBean.getStudentId() == studentId) {
+					tempRows = studentRows.get(i) + tempBean.getRow();
+					studentRows.replace(i, tempRows);
+				}
+			}
+		}
+		//处理团队总代码
+		for (int rows : studentRows.values()){
+			teamRows += rows;
+		}
+		return "success";
 	}
 
 	public Integer getProjectId() {
@@ -120,5 +141,13 @@ public class askCodeRows implements SessionAware{
 
 	public void setCodeBeans(HashMap<Integer, CodeBean> codeBeans) {
 		CodeBeans = codeBeans;
+	}
+
+	public HashMap<Integer, Integer> getStudentRows() {
+		return studentRows;
+	}
+
+	public void setStudentRows(HashMap<Integer, Integer> studentRows) {
+		this.studentRows = studentRows;
 	}
 }

@@ -5,6 +5,7 @@ import bean.domain.TeacherBean;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by GR on 2016/12/4.?
@@ -113,6 +114,14 @@ public interface StudentDAO {
      * @throws SQLException
      */
     public ArrayList<Integer> getStudentIdByTeamId(int teamId) throws SQLException;
+
+    /**
+     * 获取团队所有学生，以哈希表存储，1为队长
+     * @param teamId
+     * @return
+     * @throws SQLException
+     */
+    public HashMap<Integer, Integer> getStudentIdMapByTeamId(int teamId) throws SQLException;
 
     /**
      * 修改学生所在团队

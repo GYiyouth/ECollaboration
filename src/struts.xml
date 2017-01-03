@@ -132,11 +132,11 @@
         <action name="SearchProject" class="actions.project.SearchProjectAction" method="execute">
 
         </action>
-
+        <!--获取但个学生代码量-->
         <action name="getStudentCodeRow" class="actions.code.askCodeRows" method="getStudentCodes">
             <result name="success">/查询成功</result>
         </action>
-
+        <!--获取整个团队的代码量-->
         <action name="getTeamCodeRows" class="actions.code.askCodeRows" method="getTeamCodes">
             <result name="success">/查询成功</result>
         </action>

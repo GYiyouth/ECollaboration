@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by GR on 2016/12/4.
@@ -383,6 +384,40 @@ public class StudentDaoImpl implements StudentDAO {
             DBUtils.close(null, ps, conn);
         }
         return flag;
+    }
+
+    /**
+     * 获取团队所有学生，以哈希表存储，1为队长
+     *
+     * @param teamId
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public HashMap<Integer, Integer> getStudentIdMapByTeamId(int teamId) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null ;
+        String sql = "SELECT DISTINCT studentId FROM student_team WHERE teamId = ? " +
+                " ORDER BY leaderFlag DESC ;";
+        HashMap<Integer, Integer> hashMap = new HashMap<>();
+        try {
+            connection = DBUtils.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, teamId);
+            resultSet = preparedStatement.executeQuery();
+            int i = 1;
+            while (resultSet.next()){
+                hashMap.put(i, resultSet.getInt(1));
+                i++;
+            }
+            return hashMap;
+        }catch (SQLException e){
+            e.printStackTrace();
+            throw e;
+        }finally {
+            DBUtils.close(resultSet, preparedStatement, connection);
+        }
     }
 
     /**
