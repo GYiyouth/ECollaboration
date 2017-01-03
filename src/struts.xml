@@ -121,10 +121,27 @@
         <action name="modifyAction" class="actions.task.TaskModifyAction" method="execute">
 
         </action>
+
+
+
+        <!--完成任务-->
+        <action name="taskFinish" class="actions.task.TaskFinishAction" method="setAccess">
+
+        </action>
         <!--搜索项目-->
         <action name="SearchProject" class="actions.project.SearchProjectAction" method="execute">
 
         </action>
+
+        <action name="getStudentCodeRow" class="actions.code.askCodeRows" method="getStudentCodes">
+            <result name="success">/查询成功</result>
+        </action>
+
+        <action name="getTeamCodeRows" class="actions.code.askCodeRows" method="getTeamCodes">
+            <result name="success">/查询成功</result>
+        </action>
+
+
         <!-- ========================================================================================-->
         <action name="joinTeam" class="actions.team.JoinTeamAction" method="joinTeam">
             <result name="success">/success.jsp</result>

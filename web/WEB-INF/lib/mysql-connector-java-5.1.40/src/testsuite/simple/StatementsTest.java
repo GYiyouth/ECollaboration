@@ -145,7 +145,7 @@ public class StatementsTest extends BaseTestCase {
             this.stmt.executeUpdate(insertBuf.toString());
         }
 
-        // explicitly set the catalog to exercise code in execute(), executeQuery() and executeUpdate()
+        // explicitly set the catalog to exercise code in getStudentCodes(), executeQuery() and executeUpdate()
         // FIXME: Only works on Windows!
         // this.conn.setCatalog(this.conn.getCatalog().toUpperCase());
     }
@@ -173,7 +173,7 @@ public class StatementsTest extends BaseTestCase {
     public void testAccessorsAndMutators() throws SQLException {
         assertTrue("Connection can not be null, and must be same connection", this.stmt.getConnection() == this.conn);
 
-        // Set max rows, to exercise code in execute(), executeQuery() and executeUpdate()
+        // Set max rows, to exercise code in getStudentCodes(), executeQuery() and executeUpdate()
         Statement accessorStmt = null;
 
         try {

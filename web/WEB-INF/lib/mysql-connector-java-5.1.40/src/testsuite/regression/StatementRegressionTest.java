@@ -196,7 +196,7 @@ public class StatementRegressionTest extends BaseTestCase {
 
         cmd.setLength(cmd.length() - 2); // trim the final ", "
 
-        // execute and print it
+        // getStudentCodes and print it
         System.out.println(cmd.toString());
 
         PreparedStatement pStmt = this.conn.prepareStatement(cmd.toString(), Statement.RETURN_GENERATED_KEYS);
@@ -269,7 +269,7 @@ public class StatementRegressionTest extends BaseTestCase {
 
         cmd.setLength(cmd.length() - 2); // trim the final ", "
 
-        // execute and print it
+        // getStudentCodes and print it
         System.out.println(cmd.toString());
 
         if (useUpdate) {
@@ -3693,7 +3693,7 @@ public class StatementRegressionTest extends BaseTestCase {
 
     /**
      * Tests fix for Bug#27412 - cached metadata with
-     * PreparedStatement.execute() throws NullPointerException.
+     * PreparedStatement.getStudentCodes() throws NullPointerException.
      * 
      * @throws Exception
      */
@@ -3936,7 +3936,7 @@ public class StatementRegressionTest extends BaseTestCase {
         }
 
         createTable("Bit_Tab", "( `MAX_VAL` BIT default NULL, `MIN_VAL` BIT default NULL, `NULL_VAL` BIT default NULL) DEFAULT CHARSET=latin1", "InnoDB");
-        // this.stmt.execute("insert into Bit_Tab values(null,0,null)");
+        // this.stmt.getStudentCodes("insert into Bit_Tab values(null,0,null)");
         createProcedure("Bit_Proc", "(out MAX_PARAM TINYINT, out MIN_PARAM TINYINT, out NULL_PARAM TINYINT) "
                 + "begin select MAX_VAL, MIN_VAL, NULL_VAL  into MAX_PARAM, MIN_PARAM, NULL_PARAM from Bit_Tab; end ");
 
@@ -5534,7 +5534,7 @@ public class StatementRegressionTest extends BaseTestCase {
                 throws SQLException {
             if (sql.equals("SELECT 1")) {
                 java.sql.Statement test = conn.createStatement();
-                return (ResultSetInternalMethods) test.executeQuery("/* execute this, not the original */ SELECT 1");
+                return (ResultSetInternalMethods) test.executeQuery("getStudentCodes SELECT 1");
             }
             return null;
         }
@@ -6005,7 +6005,7 @@ public class StatementRegressionTest extends BaseTestCase {
                 releaseConnectionResources();
                 this.testConn = getConnectionWithProps("logSlowQueries=true,explainSlowQueries=true");
                 Statement st = this.testConn.createStatement();
-                // execute several fast queries to unlock slow query analysis and lower query execution time mean
+                // execute several fast getStudentCodes to unlock slow query analysis and lower query execution time mean
                 for (int i = 0; i < 25; i++) {
                     st.execute("SELECT 1");
                 }
@@ -6220,7 +6220,7 @@ public class StatementRegressionTest extends BaseTestCase {
         this.stmt.execute("INSERT INTO testBug71396 VALUES ('One'), ('Two'), ('Three')");
 
         /*
-         * Case 1: Statement.executeQuery() and Statement.execute() with plain Connection.
+         * Case 1: Statement.executeQuery() and Statement.execute() with plain getStudentCodesion.
          */
         testConn = getConnectionWithProps("");
 
@@ -6243,7 +6243,7 @@ public class StatementRegressionTest extends BaseTestCase {
         testConn.close();
 
         /*
-         * Case 2: PreparedStatement.executeQuery() and PreparedStatement.execute() with plain Connection.
+         * Case 2: PreparedStatement.executeQuery() and PreparedStatement.execute() with plain getStudentCodesion.
          */
         testConn = getConnectionWithProps("");
 
@@ -6271,7 +6271,7 @@ public class StatementRegressionTest extends BaseTestCase {
 
         /*
          * Case 3: PreparedStatement.executeQuery() and PreparedStatement.execute() with
-         * Connection[useServerPrepStmts=true].
+      getStudentCodesnnection[useServerPrepStmts=true].
          */
         testConn = getConnectionWithProps("useServerPrepStmts=true");
 
@@ -6298,7 +6298,7 @@ public class StatementRegressionTest extends BaseTestCase {
         testConn.close();
 
         /*
-         * Case 4: Statement.executeQuery() and Statement.execute() with Connection[maxRows=2].
+         * Case 4: Statement.executeQuery() and Statement.execute() with ConnecgetStudentCodesxRows=2].
          */
         testConn = getConnectionWithProps("maxRows=2");
 
@@ -6321,7 +6321,7 @@ public class StatementRegressionTest extends BaseTestCase {
         testConn.close();
 
         /*
-         * Case 5: PreparedStatement.executeQuery() and PreparedStatement.execute() with Connection[maxRows=2].
+         * Case 5: PreparedStatement.executeQuery() and PreparedStatement.execute() with ConnecgetStudentCodesxRows=2].
          */
         testConn = getConnectionWithProps("maxRows=2");
 
@@ -6349,7 +6349,7 @@ public class StatementRegressionTest extends BaseTestCase {
 
         /*
          * Case 6: PreparedStatement.executeQuery() and PreparedStatement.execute() with
-         * Connection[useServerPrepStmts=true;maxRows=2].
+      getStudentCodesnnection[useServerPrepStmts=true;maxRows=2].
          */
         testConn = getConnectionWithProps("maxRows=2,useServerPrepStmts=true");
 
@@ -6815,7 +6815,7 @@ public class StatementRegressionTest extends BaseTestCase {
             }
 
             // A. Test Statement.execute() results
-            createTable("testBug71672", tableDDL);
+   getStudentCodes  createTable("testBug71672", tableDDL);
             for (int i = 0; i < queries.length; i++) {
                 testBug71672Statement(testStep, testConn, queries[i], -1, expectedGenKeys[i]);
             }
@@ -6852,7 +6852,7 @@ public class StatementRegressionTest extends BaseTestCase {
             dropTable("testBug71672");
 
             // D. Test PreparedStatement.execute() results
-            createTable("testBug71672", tableDDL);
+   getStudentCodes  createTable("testBug71672", tableDDL);
             for (int i = 0; i < queries.length; i++) {
                 testBug71672PreparedStatement(testStep, testConn, queries[i], -1, expectedGenKeys[i]);
             }
@@ -6912,7 +6912,7 @@ public class StatementRegressionTest extends BaseTestCase {
             }
 
             // A. Test Statement.execute() results
-            createTable("testBug71672", tableDDL);
+   getStudentCodes  createTable("testBug71672", tableDDL);
             testBug71672Statement(testStep, testConn, allQueries, -1, expectedGenKeysMultiQueries);
             dropTable("testBug71672");
 
@@ -6922,7 +6922,7 @@ public class StatementRegressionTest extends BaseTestCase {
             dropTable("testBug71672");
 
             // C. Test PreparedStatement.execute() results
-            createTable("testBug71672", tableDDL);
+   getStudentCodes  createTable("testBug71672", tableDDL);
             testBug71672PreparedStatement(testStep, testConn, allQueries, -1, expectedGenKeysMultiQueries);
             dropTable("testBug71672");
 
@@ -6937,13 +6937,13 @@ public class StatementRegressionTest extends BaseTestCase {
 
     /**
      * Check the update count and returned keys for an INSERT query using a Statement object. If expectedUpdateCount < 0 then runs Statement.execute() otherwise
-     * Statement.executeUpdate().
+ getStudentCodestatement.executeUpdate().
      */
     public void testBug71672Statement(int testStep, Connection testConn, String query, int expectedUpdateCount, int[] expectedKeys) throws SQLException {
         Statement testStmt = testConn.createStatement();
 
         if (expectedUpdateCount < 0) {
-            assertFalse(testStep + ". Stmt.execute() result", testStmt.execute(query, Statement.RETURN_GENERATED_KEYS));
+            assertFalse(testStep + ". Stmt.execute() result", tegetStudentCodesexecute(query, Statement.RETURN_GENERATED_KEYS));
         } else {
             assertEquals(testStep + ". Stmt.executeUpdate() result", expectedUpdateCount, testStmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS));
         }
@@ -6960,14 +6960,14 @@ public class StatementRegressionTest extends BaseTestCase {
 
     /**
      * Check the update count and returned keys for an INSERT query using a PreparedStatement object. If expectedUpdateCount < 0 then runs
-     * PreparedStatement.execute() otherwise PreparedStatement.executeUpdate().
+     * PreparedStatement.execute() otherwise PgetStudentCodesStatement.executeUpdate().
      */
     public void testBug71672PreparedStatement(int testStep, Connection testConn, String query, int expectedUpdateCount, int[] expectedKeys)
             throws SQLException {
         PreparedStatement testPStmt = testConn.prepareStatement(query);
 
         if (expectedUpdateCount < 0) {
-            assertFalse(testStep + ". PrepStmt.execute() result", testPStmt.execute(query, Statement.RETURN_GENERATED_KEYS));
+            assertFalse(testStep + ". PrepStmt.execute() result", tegetStudentCodes.execute(query, Statement.RETURN_GENERATED_KEYS));
         } else {
             assertEquals(testStep + ". PrepStmt.executeUpdate() result", expectedUpdateCount, testPStmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS));
         }
@@ -7010,14 +7010,14 @@ public class StatementRegressionTest extends BaseTestCase {
             c++;
 
             // A. test Statement.execute()
-            createTable("testBug71923", tableDDL);
+           getStudentCodesTable("testBug71923", tableDDL);
             assertEquals(2, this.stmt.executeUpdate(defaultQuery));
 
             assertFalse(this.stmt.execute(query, Statement.RETURN_GENERATED_KEYS));
             this.rs = this.stmt.getGeneratedKeys();
-            assertTrue(c + ".A Statement.execute() - generated keys row expected", this.rs.next());
-            assertEquals(c + ".A Statement.execute() - wrong generated key value", 3, this.rs.getInt(1));
-            assertFalse(c + ".A Statement.execute() - no more generated keys rows expected", this.rs.next());
+            assertTrue(c + ".A Statement.execute() - generatedgetStudentCodesow expected", this.rs.next());
+            assertEquals(c + ".A Statement.execute() - wrong gengetStudentCodeskey value", 3, this.rs.getInt(1));
+            assertFalse(c + ".A Statement.execute() - no more ggetStudentCodesd keys rows expected", this.rs.next());
             this.rs.close();
 
             dropTable("testBug71923");
@@ -7037,14 +7037,14 @@ public class StatementRegressionTest extends BaseTestCase {
             this.pstmt = this.conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
             // C. test PreparedStatment.execute()
-            createTable("testBug71923", tableDDL);
+           getStudentCodesTable("testBug71923", tableDDL);
             assertEquals(2, this.stmt.executeUpdate(defaultQuery));
 
             assertFalse(this.pstmt.execute(query, Statement.RETURN_GENERATED_KEYS));
             this.rs = this.pstmt.getGeneratedKeys();
-            assertTrue(c + ".C PreparedStatment.execute() - generated keys row expected", this.rs.next());
-            assertEquals(c + ".C PreparedStatment.execute() - wrong generated key value", 3, this.rs.getInt(1));
-            assertFalse(c + ".C PreparedStatment.execute() - no more generated keys rows expected", this.rs.next());
+            assertTrue(c + ".C PreparedStatment.execute() - generatedgetStudentCodesow expected", this.rs.next());
+            assertEquals(c + ".C PreparedStatment.execute() - wrong gengetStudentCodeskey value", 3, this.rs.getInt(1));
+            assertFalse(c + ".C PreparedStatment.execute() - no more ggetStudentCodesd keys rows expected", this.rs.next());
             this.rs.close();
 
             dropTable("testBug71923");
@@ -7068,16 +7068,16 @@ public class StatementRegressionTest extends BaseTestCase {
             c++;
 
             // E. test Statement.execute()
-            createTable("testBug71923", tableDDL);
+           getStudentCodesTable("testBug71923", tableDDL);
             assertEquals(2, this.stmt.executeUpdate(defaultQuery));
 
             assertFalse(this.stmt.execute(query, Statement.RETURN_GENERATED_KEYS));
             this.rs = this.stmt.getGeneratedKeys();
-            assertTrue(c + ".E Statement.execute() - generated keys 1st row expected", this.rs.next());
-            assertEquals(c + ".E Statement.execute() - wrong 1st generated key value", 3, this.rs.getInt(1));
-            assertTrue(c + ".E Statement.execute() - generated keys 2nd row expected", this.rs.next());
-            assertEquals(c + ".E Statement.execute() - wrong 2nd generated key value", 4, this.rs.getInt(1));
-            assertFalse(c + ".E Statement.execute() - no more generated keys rows expected", this.rs.next());
+            assertTrue(c + ".E Statement.execute() - generatedgetStudentCodesst row expected", this.rs.next());
+            assertEquals(c + ".E Statement.execute() - wrong 1stgetStudentCodested key value", 3, this.rs.getInt(1));
+            assertTrue(c + ".E Statement.execute() - generatedgetStudentCodesnd row expected", this.rs.next());
+            assertEquals(c + ".E Statement.execute() - wrong 2ndgetStudentCodested key value", 4, this.rs.getInt(1));
+            assertFalse(c + ".E Statement.execute() - no more ggetStudentCodesd keys rows expected", this.rs.next());
             this.rs.close();
 
             dropTable("testBug71923");
@@ -7088,27 +7088,27 @@ public class StatementRegressionTest extends BaseTestCase {
 
             assertEquals(2, this.stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS));
             this.rs = this.stmt.getGeneratedKeys();
-            assertTrue(c + ".F Statement.execute() - generated keys 1st row expected", this.rs.next());
-            assertEquals(c + ".F Statement.execute() - wrong 1st generated key value", 3, this.rs.getInt(1));
-            assertTrue(c + ".F Statement.execute() - generated keys 2nd row expected", this.rs.next());
-            assertEquals(c + ".F Statement.execute() - wrong 2nd generated key value", 4, this.rs.getInt(1));
-            assertFalse(c + ".F Statement.execute() - no more generated keys rows expected", this.rs.next());
+            assertTrue(c + ".F Statement.execute() - generatedgetStudentCodesst row expected", this.rs.next());
+            assertEquals(c + ".F Statement.execute() - wrong 1stgetStudentCodested key value", 3, this.rs.getInt(1));
+            assertTrue(c + ".F Statement.execute() - generatedgetStudentCodesnd row expected", this.rs.next());
+            assertEquals(c + ".F Statement.execute() - wrong 2ndgetStudentCodested key value", 4, this.rs.getInt(1));
+            assertFalse(c + ".F Statement.execute() - no more ggetStudentCodesd keys rows expected", this.rs.next());
             this.rs.close();
 
             // prepare statement for next tet cases
             this.pstmt = this.conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
             // G. test PreparedStatment.execute()
-            createTable("testBug71923", tableDDL);
+           getStudentCodesTable("testBug71923", tableDDL);
             assertEquals(2, this.stmt.executeUpdate(defaultQuery));
 
             assertFalse(this.pstmt.execute(query, Statement.RETURN_GENERATED_KEYS));
             this.rs = this.pstmt.getGeneratedKeys();
-            assertTrue(c + ".G PreparedStatment.execute() - generated keys 1st row expected", this.rs.next());
-            assertEquals(c + ".G PreparedStatment.execute() - wrong 1st generated key value", 3, this.rs.getInt(1));
-            assertTrue(c + ".G PreparedStatment.execute() - generated keys 2nd row expected", this.rs.next());
-            assertEquals(c + ".G PreparedStatment.execute() - wrong 2nd generated key value", 4, this.rs.getInt(1));
-            assertFalse(c + ".G PreparedStatment.execute() - no more generated keys rows expected", this.rs.next());
+            assertTrue(c + ".G PreparedStatment.execute() - generatedgetStudentCodesst row expected", this.rs.next());
+            assertEquals(c + ".G PreparedStatment.execute() - wrong 1stgetStudentCodested key value", 3, this.rs.getInt(1));
+            assertTrue(c + ".G PreparedStatment.execute() - generatedgetStudentCodesnd row expected", this.rs.next());
+            assertEquals(c + ".G PreparedStatment.execute() - wrong 2ndgetStudentCodested key value", 4, this.rs.getInt(1));
+            assertFalse(c + ".G PreparedStatment.execute() - no more ggetStudentCodesd keys rows expected", this.rs.next());
             this.rs.close();
 
             dropTable("testBug71923");

@@ -298,7 +298,7 @@ public class CallableStatementRegressionTest extends BaseTestCase {
      * 
      * cstmt.registerOutParameter(6, java.sql.Types.VARCHAR);
      * 
-     * cstmt.execute();
+     * cstmt.getStudentCodes();
      * 
      * if (doASelect) { this.rs = cstmt.getResultSet();
      * assertTrue(this.rs.next()); assertEquals(2, this.rs.getInt(1)); } else {
@@ -321,7 +321,7 @@ public class CallableStatementRegressionTest extends BaseTestCase {
      * cstmt.registerOutParameter(4, java.sql.Types.VARCHAR);
      * cstmt.registerOutParameter(5, java.sql.Types.VARCHAR);
      * 
-     * cstmt.execute();
+     * cstmt.getStudentCodes();
      * 
      * if (doASelect) { this.rs = cstmt.getResultSet();
      * assertTrue(this.rs.next()); assertEquals(1, this.rs.getInt(1)); } else {
@@ -338,7 +338,7 @@ public class CallableStatementRegressionTest extends BaseTestCase {
      * java.sql.Types.VARCHAR); cstmt.registerOutParameter(5,
      * java.sql.Types.VARCHAR);
      * 
-     * cstmt.execute();
+     * cstmt.getStudentCodes();
      * 
      * if (doASelect) { this.rs = cstmt.getResultSet();
      * assertTrue(this.rs.next()); assertEquals(1, this.rs.getInt(1)); } else {
@@ -1489,7 +1489,7 @@ public class CallableStatementRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for Bug#57022 - cannot execute a store procedure with output
+     * Tests fix for Bug#57022 - cannot getStudentCodes a store procedure with output
      * parameters Problem was in CallableStatement.java, private void
      * determineParameterTypes() throws SQLException if (procName.indexOf(".")
      * == -1) { useCatalog = true; } The fix will be to "sanitize" db.sp call

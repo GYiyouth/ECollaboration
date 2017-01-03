@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.InterruptedIOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * 与student project team 相连
@@ -113,4 +114,14 @@ public interface CodeDAO {
 	 * @throws SQLException
 	 */
 	public ArrayList<Integer> getCodeIdListByProjectIdTeamIdStudentId(int projectId, int teamId, int studentId)throws SQLException;
+
+	/**
+	 * 获取一个团队在一个项目下的codeBean列表
+	 * 1放队长的
+	 * @param projectId
+	 * @param teamId
+	 * @return
+	 * @throws SQLException
+	 */
+	public HashMap<Integer, CodeBean> getCodeBeans(int projectId, int teamId) throws SQLException;
 }

@@ -87,7 +87,7 @@ public class ReadOnlyCallableStatementTest extends BaseTestCase {
 
                 try {
                     cstmt.execute();
-                    fail("Should not execute because procedure modifies data.");
+                    fail("Should not getStudentCodes because procedure modifies data.");
                 } catch (SQLException e) {
                     assertEquals("Should error for read-only connection.", e.getSQLState(), "S1009");
                 }
@@ -96,7 +96,7 @@ public class ReadOnlyCallableStatementTest extends BaseTestCase {
 
                 try {
                     cstmt.execute();
-                    fail("Should not execute because procedure modifies data.");
+                    fail("Should not getStudentCodes because procedure modifies data.");
                 } catch (SQLException e) {
                     assertEquals("Should error for read-only connection.", e.getSQLState(), "S1009");
                 }
@@ -105,7 +105,7 @@ public class ReadOnlyCallableStatementTest extends BaseTestCase {
 
                 try {
                     cstmt.execute();
-                    fail("Should not execute because procedure modifies data.");
+                    fail("Should not getStudentCodes because procedure modifies data.");
                 } catch (SQLException e) {
                     assertEquals("Should error for read-only connection.", e.getSQLState(), "S1009");
                 }

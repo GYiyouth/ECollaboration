@@ -64,7 +64,7 @@ import com.mysql.jdbc.exceptions.MySQLTimeoutException;
 import com.mysql.jdbc.profiler.ProfilerEvent;
 
 /**
- * A SQL Statement is pre-compiled and stored in a PreparedStatement object. This object can then be used to efficiently execute this statement multiple times.
+ * A SQL Statement is pre-compiled and stored in a PreparedStatement object. This object can then be used to efficiently getStudentCodes this statement multiple times.
  * 
  * <p>
  * <B>Note:</B> The setXXX methods for setting IN parameter values must specify types that are compatible with the defined SQL type of the input parameter. For
@@ -1119,7 +1119,7 @@ public class PreparedStatement extends com.mysql.jdbc.StatementImpl implements j
     }
 
     /**
-     * Some prepared statements return multiple results; the execute method
+     * Some prepared statements return multiple results; the getStudentCodes method
      * handles these complex statements as well as the simpler form of
      * statements handled by executeQuery and executeUpdate
      * 
@@ -1809,7 +1809,7 @@ public class PreparedStatement extends com.mysql.jdbc.StatementImpl implements j
     }
 
     /**
-     * Actually execute the prepared statement. This is here so server-side
+     * Actually getStudentCodes the prepared statement. This is here so server-side
      * PreparedStatements can re-use most of the code from this class.
      * 
      * @param maxRowsToRetrieve

@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by geyao on 2016/11/19.
@@ -373,6 +374,56 @@ public class CodeDAOImpl implements CodeDAO {
 		}catch (SQLException e){
 			e.printStackTrace();
 			throw e;
+		}
+	}
+
+	/**
+	 * 获取一个团队在一个项目下的codeBean列表
+	 * @param projectId
+	 * @param teamId
+	 * @return
+	 * @throws SQLException
+	 */
+	@Override
+	public HashMap<Integer, CodeBean> getCodeBeans(int projectId, int teamId) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String sql1 = "SELECT * FROM code, student_team WHERE " +
+				" code.teamId = ? AND code.projectId = ? AND " +
+				" code.studentId = student_team.studentId ORDER BY " +
+				" leaderFlag DESC, studentId ;";
+		String sql2 = "";
+		String sql3 = "";
+		HashMap<Integer, CodeBean> hashMap = new HashMap<>();
+		try {
+			connection = DBUtils.getConnection();
+			connection.setAutoCommit(false);
+			preparedStatement = connection.prepareStatement(sql1);
+			preparedStatement.setInt(1, teamId);
+			preparedStatement.setInt(2, projectId);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()){
+				CodeBean codeBean = new CodeBean();
+				codeBean.setId(resultSet.getInt("id"));
+				codeBean.setCodeName(resultSet.getString("fileName"));
+				codeBean.setRow(resultSet.getInt("codeRows"));
+				codeBean.setCreateDate(resultSet.getString("createDate"));
+				codeBean.setDeadDate(resultSet.getString("deadDate"));
+				codeBean.setDownLoadTimes(resultSet.getInt("downLoadTimes"));
+				codeBean.setStudentId(resultSet.getInt("studentId"));
+				codeBean.setProjectId(resultSet.getInt("projectId"));
+				codeBean.setTeamId(resultSet.getInt("teamId"));
+				codeBean.setPath(resultSet.getString("path"));
+				hashMap.put(codeBean.getId(), codeBean);
+			}
+			connection.commit();
+			return hashMap;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}finally {
+			DBUtils.close(resultSet, preparedStatement, connection);
 		}
 	}
 }
