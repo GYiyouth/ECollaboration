@@ -115,7 +115,7 @@ public class CreateTeamAction implements SessionAware, ServletRequestAware, Serv
 			Time time = new TimeImpl();
 
 			teamBean.setCreateDate(time.getTime());
-			if (description != null && description.equals(""))
+			if (description != null && !description.equals(""))
 				teamBean.setDescription(description);
 			else
 				teamBean.setDescription("");

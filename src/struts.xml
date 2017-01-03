@@ -39,7 +39,7 @@
         </action>
 
         <action name="createTeam" class="actions.team.CreateTeamAction" method="createTeam">
-            <result name="success">/这里放置登录以后界面</result>
+            <result name="success">/new_team_success.jsp</result>
             <result name="fail">/登录失败又去哪？</result>
         </action>
 

@@ -311,22 +311,19 @@ public class AddStudentAction implements ServletRequestAware, ServletResponseAwa
 
 
     public void appAddStudent() throws Exception{
-        JSONArray jsonArray = new JSONArray();
         JSONObject jsonObject = new JSONObject();
         if (addStudent().equals("success")){
 
             jsonObject.put("studentBean", getStudentBean());
             jsonObject.put("result", "success");
-            jsonArray.add(jsonObject);
             this.response.setCharacterEncoding("UTF-8");
-            this.response.getWriter().write(jsonArray.toString());
+            this.response.getWriter().write(jsonObject.toString());
             this.response.getWriter().flush();
             this.response.getWriter().close();
         }else {
             jsonObject.put("result", "fail");
-            jsonArray.add(jsonObject);
             this.response.setCharacterEncoding("UTF-8");
-            this.response.getWriter().write(jsonArray.toString());
+            this.response.getWriter().write(jsonObject.toString());
             this.response.getWriter().flush();
             this.response.getWriter().close();
         }

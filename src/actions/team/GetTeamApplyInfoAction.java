@@ -118,22 +118,18 @@ public class GetTeamApplyInfoAction implements SessionAware,ServletResponseAware
     }
 
     public void appGetTeamApplyInfo() throws Exception{
-        JSONArray jsonArray = new JSONArray();
         JSONObject jsonObject = new JSONObject();
         if (getTeamApplyInfo().equals("success")){
 
             jsonObject.put("teamApplyInfos", getTeamApplyInfos());
             jsonObject.put("result", "success");
-            jsonArray.add(jsonObject);
 
-            this.response.getWriter().write(jsonArray.toString());
+            this.response.getWriter().write(jsonObject.toString());
             this.response.getWriter().flush();
             this.response.getWriter().close();
         }else {
             jsonObject.put("result", "fail");
-            jsonArray.add(jsonObject);
-
-            this.response.getWriter().write(jsonArray.toString());
+            this.response.getWriter().write(jsonObject.toString());
             this.response.getWriter().flush();
             this.response.getWriter().close();
         }

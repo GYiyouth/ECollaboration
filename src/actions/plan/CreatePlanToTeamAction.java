@@ -186,21 +186,15 @@ public class CreatePlanToTeamAction implements SessionAware, ServletRequestAware
     }
 
     public void appCreatePlanToTeam() throws Exception{
-        JSONArray jsonArray = new JSONArray();
         JSONObject jsonObject = new JSONObject();
         if (createPlanToTeam().equals("success")){
-
             jsonObject.put("result", "success");
-            jsonArray.add(jsonObject);
-
-            this.response.getWriter().write(jsonArray.toString());
+            this.response.getWriter().write(jsonObject.toString());
             this.response.getWriter().flush();
             this.response.getWriter().close();
         }else {
             jsonObject.put("result", "fail");
-            jsonArray.add(jsonObject);
-
-            this.response.getWriter().write(jsonArray.toString());
+            this.response.getWriter().write(jsonObject.toString());
             this.response.getWriter().flush();
             this.response.getWriter().close();
         }

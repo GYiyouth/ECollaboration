@@ -78,13 +78,6 @@ public class CreatePlanToSelfAction implements SessionAware, ServletRequestAware
         this.projectId = projectId;
     }
 
-//    public Integer getTeamId() {
-//        return teamId;
-//    }
-//
-//    public void setTeamId(Integer teamId) {
-//        this.teamId = teamId;
-//    }
 
     public Integer getId() {
         return id;
@@ -188,21 +181,15 @@ public class CreatePlanToSelfAction implements SessionAware, ServletRequestAware
     }
 
     public void appCreatePlanToSelf() throws Exception{
-        JSONArray jsonArray = new JSONArray();
         JSONObject jsonObject = new JSONObject();
         if (createPlanToSelf().equals("success")){
-
             jsonObject.put("result", "success");
-            jsonArray.add(jsonObject);
-
-            this.response.getWriter().write(jsonArray.toString());
+            this.response.getWriter().write(jsonObject.toString());
             this.response.getWriter().flush();
             this.response.getWriter().close();
         }else {
             jsonObject.put("result", "fail");
-            jsonArray.add(jsonObject);
-
-            this.response.getWriter().write(jsonArray.toString());
+            this.response.getWriter().write(jsonObject.toString());
             this.response.getWriter().flush();
             this.response.getWriter().close();
         }
