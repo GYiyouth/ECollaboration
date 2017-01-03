@@ -155,13 +155,25 @@
             <result name="login">/登录界面</result>
         </action>
 
+        <!--获取我加入的所有团队信息-->
         <action name="getMyJoinTeam" class="actions.team.GetMyJoinTeamsAction" method="getMyJoinTeam">
             <result name="success">/success.jsp</result>
             <result name="fail">/fail.jsp</result>
             <result name="login">/登录界面</result>
         </action>
-
         <action name="appGetMyJoinTeam" class="actions.team.GetMyJoinTeamsAction" method="appGetMyJoinTeam">
+            <result name="success">成功</result>
+            <result name="fail">失败</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <!--根据teamid获取团队信息-->
+        <action name="getTeamInfoByTeamId" class="actions.team.GetTeamInfoAction" method="getTeamInfoByTeamId">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appGetTeamInfoByTeamId" class="actions.team.GetTeamInfoAction" method="appGetTeamInfoByTeamId">
             <result name="success">成功</result>
             <result name="fail">失败</result>
             <result name="login">/登录界面</result>
@@ -310,7 +322,6 @@
             <result name="fail">/fail.jsp</result>
             <result name="login">/登录界面</result>
         </action>
-
         <!--修改计划-->
         <!--<action name="modifyPlan" class="actions.plan.PlanModifyAction" method="modifyPlan">-->
             <!--<result name="success">/success.jsp</result>-->
