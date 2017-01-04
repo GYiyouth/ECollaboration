@@ -58,13 +58,15 @@ public class GetMyJoinTeamInfoAction implements ServletRequestAware, ServletResp
                 ArrayList<String> fileSums = new ArrayList<>();
                 ArrayList<ArrayList<PlanBean>> planBeansAllStudents = new ArrayList<>();
                 ArrayList<Integer> studentIds = studentDaoImpl.getStudentIdByTeamIdProjectId(teamId, projectId);
-                System.out.println(studentIds.get(0) + ":0");
-
-
+                if(studentIds == null){
+                    return "fail";
+                }
                 //团队的计划集合
                 ArrayList<Integer> teamPlanIds = planDaoImpl.getPlanIdListByTeamIdProjectId(teamId, projectId);
+                if(teamPlanIds == null){
+                    return "fail";
+                }
                 for (int temp : teamPlanIds) {
-                    System.out.println("团队任务id" + temp);
                     PlanBean planBean = planDaoImpl.getPlanInfoByPlanId(temp);
                     teamPlanBeans.add(planBean);
                     setTeamPlanBeans(teamPlanBeans);
@@ -75,13 +77,16 @@ public class GetMyJoinTeamInfoAction implements ServletRequestAware, ServletResp
                 for (int i = 0; i < studentIds.size(); i++) {
                     ArrayList studentInfo = new ArrayList();
                     StudentBean studentBean = studentDaoImpl.getInfoById(studentIds.get(i));
-                    System.out.println("学生个人主页" + studentBean.getHomePageUrl());
+                    if(studentBean == null){
+                        return "fail";
+                    }
                     String codeSum = codeDaoImpl.getCodeRowsSum(studentIds.get(i), projectId).toString();
                     String fileSum = fileDaoImpl.getFileSum(studentIds.get(i), projectId).toString();
-                    System.out.println("代码：" + codeSum + "文件" + fileSum);
 
                     ArrayList<PlanBean> planBeans = new ArrayList();
                     ArrayList<Integer> planIds = planDaoImpl.getPlanIdsFinishedByStudentIdProjectId(studentIds.get(i),projectId);
+                    if(planIds == null)
+                        return "fail";
                     if(planIds.size()==0)   //没有完成任务
                         planBeans.add(null);
                     else {
