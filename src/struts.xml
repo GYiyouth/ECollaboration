@@ -25,8 +25,8 @@
         <action name="logIn" class="actions.logIn.LogInAction" method="log">
             <result name="success">/ImageTestJSP.jsp</result>
             <result name="fail">/QuickTime%20Player.jpg</result>
-            <result name="student" type="redirect">getMyJoinProjectByStudent</result>
-            <result name="teacher">/ImageTestJSP.jsp</result>
+            <result name="student">/newstudentitem.jsp</result>
+            <result name="teacher">/newteacheritem.jsp</result>
 
         </action>
 
@@ -130,7 +130,7 @@
         </action>
         <!--搜索项目-->
         <action name="searchProject" class="actions.project.SearchProjectAction" method="execute">
-
+            <result >/newsearch.jsp</result>
         </action>
         <!--手机搜索项目-->
         <action name="appSearchProject" class="actions.project.SearchProjectAction" method="appExecute">
@@ -384,9 +384,9 @@
 
         <!--web根据项目id获取项目信息-->
         <action name="getProjectInfoByProjectId" class="actions.project.GetProjectInfoByProjectIdAction" method="getProjectInfoByProjectId">
-            <result name="success">/success.jsp</result>
-            <result name="fail">/fail.jsp</result>
-            <result name="login">/登录界面</result>
+            <result name="success">/newstudentvitem.jsp</result>
+            <result name="fail">/newsearch.jsp</result>
+            <result name="login">/login.jsp</result>
         </action>
         <action name="appGetProjectInfoByProjectId" class="actions.project.GetProjectInfoByProjectIdAction" method="appGetProjectInfoByProjectId">
             <result name="success">/success.jsp</result>

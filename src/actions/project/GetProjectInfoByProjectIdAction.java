@@ -30,6 +30,7 @@ public class GetProjectInfoByProjectIdAction implements SessionAware, ServletReq
     public String getProjectInfoByProjectId(){
         ProjectBean projectBean = new ProjectBean();
         ProjectDAO projectDAO = new ProjectDAOImpl();
+        System.out.println("得到的projectId是" + projectId);
         try {
             projectBean = projectDAO.getProjectInfo(projectId);
             if(projectBean == null)

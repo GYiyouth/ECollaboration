@@ -182,15 +182,15 @@
         </div>
       </div>
       
-      <form action="">
+      <form action="searchProject.action">
       <!-- search (提交按钮) -->
       <div id="u30" class="ax_提交按钮" data-label="search">
-        <input id="u30_input" type="submit" value="搜索"/>
+        <input id="u30_input" type="submit" value="搜索" name="keyWord"/>
       </div>
 
       <!-- searchkeyword (文本框) -->
       <div id="u31" class="ax_文本框" data-label="searchkeyword">
-        <input id="u31_input" type="text" name="searchkeyword"/>
+        <input id="u31_input" type="text" name="keyWord"/>
       </div>
 	  </form>
 	  
@@ -205,8 +205,24 @@
 
       <!-- showsearchresult (形状) -->
       <div id="u34" class="ax_形状" data-label="showsearchresult">
-        <img id="u34_img" class="img " src="images/newsearch/showsearchresult_u34.png"/>
-        <!-- Unnamed () -->
+        <table>
+          <tr>
+            <td colspan="2">项目名称</td>
+          </tr>
+          <s:iterator value="show1TimesProjectBeans">
+            <a href="<s:url action='getProjectInfoByProjectId?projectId=%{id}'/>"><s:property value="name"/></a>
+          </s:iterator>
+          <s:iterator value="show2TimesProjectBeans">
+            <a href="<s:url action='getProjectInfoByProjectId?projectId=%{id}'/>"><s:property value="name"/></a>
+          </s:iterator>
+          <s:iterator value="show3TimesProjectBeans">
+            <a href="<s:url action='getProjectInfoByProjectId?projectId=%{id}'/>"><s:property value="name"/></a>
+          </s:iterator>
+          <s:iterator value="show4TimesProjectBeans">
+            <a href="<s:url action='getProjectInfoByProjectId?projectId=%{id}'/>"><s:property value="name"/></a>
+          </s:iterator>
+        </table>
+
         <div id="u35" class="text">
           <p><span></span></p>
         </div>
