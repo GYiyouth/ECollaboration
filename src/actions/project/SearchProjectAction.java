@@ -37,8 +37,13 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 	private Map session;
 	private String keyWord;
 	private HashMap<Integer, ProjectBean> SearchResultHashMap = new HashMap<>();
+	private HashMap<Integer, Integer> accurateResult = new HashMap<>();
+	private ArrayList<ProjectBean> show2TimesProjectBeans = new ArrayList<>();
+	private ArrayList<ProjectBean> show3TimesProjectBeans = new ArrayList<>();
+	private ArrayList<ProjectBean> show4TimesProjectBeans = new ArrayList<>();
 
 	private ProjectRichBean projectRichBean = new ProjectRichBean();
+
 
 	//以下是搜索关键字的列表
 	private ArrayList<Integer> gradeList = new ArrayList<>();
@@ -92,12 +97,20 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 		String result = execute();
 		if (result.equals("success")){
 			jsonObject.put("result", "success");
-			ArrayList<ProjectRichBean> projectRichBeanArrayList = new ArrayList<>();
+//			ArrayList<ProjectRichBean> projectRichBeanArrayList = new ArrayList<>();
 //			for (ProjectBean projectBean: getSearchResultHashMap().values()){
 //				ProjectRichBean projectRichBean = (ProjectRichBean) projectBean;
 //
 //			}
-			jsonObject.put("SearchResultHashMap", getSearchResultHashMap());
+			ArrayList<ProjectBean> arrayList = new ArrayList<>();
+			for (ProjectBean projectBean : getSearchResultHashMap().values()){
+				arrayList.add(projectBean);
+			}
+			jsonObject.put("SearchResultHashMap", arrayList);
+			jsonObject.put("show2TimesProjectBeans", show2TimesProjectBeans);
+			jsonObject.put("show3TimesProjectBeans", show3TimesProjectBeans);
+			jsonObject.put("show4TimesProjectBeans", show4TimesProjectBeans);
+			System.out.println("jsonObject" + jsonObject.toString());
 			this.response.getWriter().write(jsonObject.toString());
 			this.response.getWriter().flush();
 			this.response.getWriter().close();
@@ -111,10 +124,14 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 
 	private HashMap<Integer, ProjectBean> analyse(String keyWord) throws SQLException {
 		this.keyWord = keyWord.trim();
+		keyWord.replace(",", " ");
+		keyWord.replace("，", " ");
+		System.out.println("keyword替换后" + keyWord);
 		String[] elements = this.keyWord.split(" ");
-		System.out.println("输入的关键词是" + elements);
+		for (String a : elements)
+			System.out.println("输入的关键词是" + a);
 		for (String element : elements){
-			if (element.equals(" ") || element.equals(" "))
+			if (element.equals(" ") || element.equals("  ")|| element.equals(","))
 				continue;
 			boolean tempGrade = analyseGrade(element);
 			if (tempGrade)
@@ -158,6 +175,8 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 
 		for (String key : keyWordList){
 			for (ProjectBean temp :	db.values()) {
+				if (temp == null)
+					continue;
 				if (       temp.getRequirement().contains(key)
 						|| temp.getName().contains(key)
 						|| temp.getGain().contains(key)
@@ -168,25 +187,66 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 		}
 
 		HashMap<Integer, ProjectBean> result4 = new HashMap<>();
-		if (result3.size() == 0){
-			for (String key : remainList){
-				for (ProjectBean temp :	db.values()) {
-					if (       temp.getRequirement().contains(key)
-							|| temp.getName().contains(key)
-							|| temp.getGain().contains(key)
-							|| temp.getInfo().contains(key)
-							|| temp.getKeyWord().contains(key))
-						result4.put(temp.getId(), temp);
-				}
+
+		for (String key : remainList){
+			for (ProjectBean temp :	db.values()) {
+				if (       temp.getRequirement().contains(key)
+						|| temp.getName().contains(key)
+						|| temp.getGain().contains(key)
+						|| temp.getInfo().contains(key)
+						|| temp.getKeyWord().contains(key))
+					result4.put(temp.getId(), temp);
 			}
 		}
+
 
 		HashMap<Integer, ProjectBean> result = new HashMap<>();
 		result.putAll(result1);
 		result.putAll(result2);
 		result.putAll(result3);
 		result.putAll(result4);
+//		HashMap<Integer, Integer> hashMap = new HashMap<>();
+
+		createAccurateResult(result1);
+		createAccurateResult(result2);
+		createAccurateResult(result3);
+		createAccurateResult(result4);
+		for ( Map.Entry map : this.accurateResult.entrySet()){
+			switch ( (Integer) map.getValue() ){
+				case 1:
+					break;
+				case 2:{
+					int projectId = (Integer) map.getKey();
+					ProjectBean projectBean = result.get(projectId);
+					this.show2TimesProjectBeans.add(projectBean);
+				}break;
+				case 3:{
+					int projectId = (Integer) map.getKey();
+					ProjectBean projectBean = result.get(projectId);
+					this.show3TimesProjectBeans.add(projectBean);
+				}break;
+				case 4:{
+					int projectId = (Integer) map.getKey();
+					ProjectBean projectBean = result.get(projectId);
+					this.show4TimesProjectBeans.add(projectBean);
+				}break;
+			}
+		}
 		return result;
+	}
+
+	//遍历子结果，把分析结果再放在线性表里，key为项目id，value为出现次数，越高，越精确
+	private void createAccurateResult(HashMap<Integer, ProjectBean> result){
+		for (Map.Entry map : result.entrySet()){
+			int projectId = (Integer) map.getKey();
+			if (this.accurateResult.containsKey(projectId)){
+
+				this.accurateResult.replace(projectId,
+						this.accurateResult.get(projectId) +1 );
+			}else {
+				this.accurateResult.put(projectId, 1);
+			}
+		}
 	}
 
 	private boolean analyseGrade(String element){
@@ -402,5 +462,37 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 
 	public void setProjectRichBean(ProjectRichBean projectRichBean) {
 		this.projectRichBean = projectRichBean;
+	}
+
+	public HashMap<Integer, Integer> getAccurateResult() {
+		return accurateResult;
+	}
+
+	public void setAccurateResult(HashMap<Integer, Integer> accurateResult) {
+		this.accurateResult = accurateResult;
+	}
+
+	public ArrayList<ProjectBean> getShow2TimesProjectBeans() {
+		return show2TimesProjectBeans;
+	}
+
+	public void setShow2TimesProjectBeans(ArrayList<ProjectBean> show2TimesProjectBeans) {
+		this.show2TimesProjectBeans = show2TimesProjectBeans;
+	}
+
+	public ArrayList<ProjectBean> getShow3TimesProjectBeans() {
+		return show3TimesProjectBeans;
+	}
+
+	public void setShow3TimesProjectBeans(ArrayList<ProjectBean> show3TimesProjectBeans) {
+		this.show3TimesProjectBeans = show3TimesProjectBeans;
+	}
+
+	public ArrayList<ProjectBean> getShow4TimesProjectBeans() {
+		return show4TimesProjectBeans;
+	}
+
+	public void setShow4TimesProjectBeans(ArrayList<ProjectBean> show4TimesProjectBeans) {
+		this.show4TimesProjectBeans = show4TimesProjectBeans;
 	}
 }
