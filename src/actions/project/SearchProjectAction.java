@@ -137,7 +137,6 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 
 		this.keyWord = this.keyWord.replace(",", " ");
 		this.keyWord = this.keyWord.replace("，", " ");
-		System.out.println("keyword替换后" + this.keyWord);
 		String[] elements = this.keyWord.split(" ");
 		for (String a : elements)
 			System.out.println("输入的关键词是" + a);
@@ -198,16 +197,11 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 			//最后在每个项目的名字里匹配
 			if (proNameFlag == true){
 				for (String name : this.getProNameList()){
-					System.out.println("ProNameList的结果是======" + name);
-					System.out.println("而项目名字是 ====" + temp.getName());
-					System.out.println();
 					if (temp.getName() != null && temp.getName().contains(name)){
 						result4.put(temp.getId(), temp);
 					}
 				}
 			}
-			System.out.println("remainList的结果是=====" + remainList);
-			System.out.println("result4的结果是=====" + result4);
 		}
 		//合并结果
 		HashMap<Integer, ProjectBean> result = new HashMap<>();

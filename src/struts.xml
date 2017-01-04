@@ -130,7 +130,7 @@
         </action>
         <!--搜索项目-->
         <action name="searchProject" class="actions.project.SearchProjectAction" method="execute">
-
+            <result>/newsearch.jsp</result>
         </action>
         <!--手机搜索项目-->
         <action name="appSearchProject" class="actions.project.SearchProjectAction" method="appExecute">

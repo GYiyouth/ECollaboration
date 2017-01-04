@@ -47,7 +47,8 @@ public class GetTaskListAction  implements SessionAware, ServletRequestAware, Se
             ArrayList<TaskBean> taskBeans = new ArrayList<>();
             ArrayList<Integer> taskIds = taskDAO.getTaskIdListByProjectId(projectId);
             if(taskIds == null || taskIds.size() == 0){
-                return "fail";
+                this.taskBeans = new ArrayList<>();
+                return "success";
             }else{
                 for(int i = 0; i < taskIds.size(); i++){
                     TaskBean taskBean = taskDAO.getTaskInfo(taskIds.get(i));
@@ -55,7 +56,7 @@ public class GetTaskListAction  implements SessionAware, ServletRequestAware, Se
                         taskBeans.add(taskBean);
 
                     }else{
-                        return "fail";
+                        continue;
                     }
                 }
                 setTaskBeans(taskBeans);
