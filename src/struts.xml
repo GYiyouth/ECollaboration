@@ -385,7 +385,7 @@
         <!--web根据项目id获取项目信息-->
         <action name="getProjectInfoByProjectId" class="actions.project.GetProjectInfoByProjectIdAction" method="getProjectInfoByProjectId">
             <result name="student">/newstudentvitem.jsp</result>
-            <result name="teacher">/newteachervitem.jsp</result>
+            <result name="teacher">/newteachervitem.jsp </result>
             <result name="login">/登录界面</result>
         </action>
         <action name="appGetProjectInfoByProjectId" class="actions.project.GetProjectInfoByProjectIdAction" method="appGetProjectInfoByProjectId">
