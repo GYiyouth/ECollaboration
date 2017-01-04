@@ -6,6 +6,7 @@ import DAO.teacherDAO.TeacherDAO;
 import DAO.teacherDAO.TeacherDAOImpl;
 import bean.domain.ProjectBean;
 import bean.domain.TeacherBean;
+import bean.secondary.ProjectRichBean;
 import net.sf.json.JSONObject;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
@@ -36,6 +37,8 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 	private Map session;
 	private String keyWord;
 	private HashMap<Integer, ProjectBean> SearchResultHashMap = new HashMap<>();
+
+	private ProjectRichBean projectRichBean = new ProjectRichBean();
 
 	//以下是搜索关键字的列表
 	private ArrayList<Integer> gradeList = new ArrayList<>();
@@ -89,6 +92,11 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 		String result = execute();
 		if (result.equals("success")){
 			jsonObject.put("result", "success");
+			ArrayList<ProjectRichBean> projectRichBeanArrayList = new ArrayList<>();
+//			for (ProjectBean projectBean: getSearchResultHashMap().values()){
+//				ProjectRichBean projectRichBean = (ProjectRichBean) projectBean;
+//
+//			}
 			jsonObject.put("SearchResultHashMap", getSearchResultHashMap());
 			this.response.getWriter().write(jsonObject.toString());
 			this.response.getWriter().flush();
@@ -386,5 +394,13 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 
 	public static void setKeyWordListDB(ArrayList<String> keyWordListDB) {
 		SearchProjectAction.keyWordListDB = keyWordListDB;
+	}
+
+	public ProjectRichBean getProjectRichBean() {
+		return projectRichBean;
+	}
+
+	public void setProjectRichBean(ProjectRichBean projectRichBean) {
+		this.projectRichBean = projectRichBean;
 	}
 }
