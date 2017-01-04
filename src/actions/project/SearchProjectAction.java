@@ -28,7 +28,9 @@ import java.util.Map;
  * 搜索的团队年限是2000～2050年
  * form里只需要有keyWord
  * 返回
- * SearchResultHashMap
+ *
+ * show1TimesProjectBeans~show4TimesProjectBeans
+ * 四个ArrayList表，1表示至少匹配了一次
  * Created by geyao on 2016/12/31.
  */
 public class SearchProjectAction implements SessionAware, ServletRequestAware, ServletResponseAware {
@@ -38,6 +40,7 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 	private String keyWord;
 	private HashMap<Integer, ProjectBean> SearchResultHashMap = new HashMap<>();
 	private HashMap<Integer, Integer> accurateResult = new HashMap<>();
+	private ArrayList<ProjectBean> show1TimesProjectBeans = new ArrayList<>();
 	private ArrayList<ProjectBean> show2TimesProjectBeans = new ArrayList<>();
 	private ArrayList<ProjectBean> show3TimesProjectBeans = new ArrayList<>();
 	private ArrayList<ProjectBean> show4TimesProjectBeans = new ArrayList<>();
@@ -85,6 +88,9 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 			this.session = SessionTools.removeAttribute(session, "SearchResultHashMap");
 			this.session.put("SearchResultHashMap", getSearchResultHashMap());
 			System.out.println("搜索结果是"+getSearchResultHashMap());
+			this.show1TimesProjectBeans.removeAll(show2TimesProjectBeans);
+			this.show2TimesProjectBeans.removeAll(show3TimesProjectBeans);
+			this.show3TimesProjectBeans.removeAll(show4TimesProjectBeans);
 		return "success";
 		}catch (Exception e){
 			e.printStackTrace();
@@ -106,7 +112,7 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 			for (ProjectBean projectBean : getSearchResultHashMap().values()){
 				arrayList.add(projectBean);
 			}
-			jsonObject.put("SearchResultHashMap", arrayList);
+			jsonObject.put("show2TimesProjectBeans", show1TimesProjectBeans);
 			jsonObject.put("show2TimesProjectBeans", show2TimesProjectBeans);
 			jsonObject.put("show3TimesProjectBeans", show3TimesProjectBeans);
 			jsonObject.put("show4TimesProjectBeans", show4TimesProjectBeans);
@@ -124,9 +130,9 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 
 	private HashMap<Integer, ProjectBean> analyse(String keyWord) throws SQLException {
 		this.keyWord = keyWord.trim();
-		keyWord.replace(",", " ");
-		keyWord.replace("，", " ");
-		System.out.println("keyword替换后" + keyWord);
+		this.keyWord = this.keyWord.replace(",", " ");
+		this.keyWord = this.keyWord.replace("，", " ");
+		System.out.println("keyword替换后" + this.keyWord);
 		String[] elements = this.keyWord.split(" ");
 		for (String a : elements)
 			System.out.println("输入的关键词是" + a);
@@ -137,9 +143,9 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 			if (tempGrade)
 				continue;
 			boolean tempkey = analyseKeyWord(element);
-			boolean tempTecher = analyseTeacher(element);
+			boolean tempTeacher = analyseTeacher(element);
 			boolean tempProName = analyseProjectName(element);
-			if (tempGrade || tempkey || tempProName || tempTecher){
+			if (tempGrade || tempkey || tempProName || tempTeacher){
 				continue;
 			}else{
 				remainList.add(element);
@@ -152,61 +158,60 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 
 	private HashMap<Integer, ProjectBean> createResult(HashMap<Integer, ProjectBean> db){
 		HashMap<Integer, ProjectBean> result1 = new HashMap<>();
-		if (gradeFlag == true){
-			for (int grade : gradeList){
-				for (ProjectBean temp :
-						db.values()) {
-					if ( temp.getGrade() == grade)
+		HashMap<Integer, ProjectBean> result2 = new HashMap<>();
+		HashMap<Integer, ProjectBean> result3 = new HashMap<>();
+		HashMap<Integer, ProjectBean> result4 = new HashMap<>();
+		for ( ProjectBean temp :
+				db.values() ){
+			if (temp == null)
+				continue;
+			//检索年份
+			if (gradeFlag == true){
+				for ( int grade : gradeList ){
+					if (temp.getGrade()!= null && temp.getGrade() == grade)
 						result1.put(temp.getId(), temp);
 				}
 			}
-			gradeFlag = false;
-		}
-		HashMap<Integer, ProjectBean> result2 = new HashMap<>();
-		if (teacherFlag == true){
-			for (TeacherBean bean : teacherList){
-				for (ProjectBean temp :	db.values()) {
-					if (bean.getId() == temp.getTeacherId())
+			//检索教师
+			if (teacherFlag == true) {
+				for (TeacherBean bean : teacherList) {
+					if (temp.getTeacherId()!= null && temp.getTeacherId() == bean.getId())
 						result2.put(temp.getId(), temp);
 				}
 			}
-		}
-		HashMap<Integer, ProjectBean> result3 = new HashMap<>();
-
-		for (String key : keyWordList){
-			for (ProjectBean temp :	db.values()) {
-				if (temp == null)
-					continue;
-				if (       temp.getRequirement().contains(key)
-						|| temp.getName().contains(key)
-						|| temp.getGain().contains(key)
-						|| temp.getInfo().contains(key)
-						|| temp.getKeyWord().contains(key))
-					result3.put(temp.getId(), temp);
+			//检索关键词
+			if (keyWordFlag == true){
+				for (String key : keyWordList){
+					if (       ( temp.getRequirement() != null && temp.getRequirement().contains(key) )
+							|| (temp.getName() != null && temp.getName().contains(key) )
+							|| (temp.getGain() != null && temp.getGain().contains(key) )
+							|| (temp.getInfo() != null && temp.getInfo().contains(key) )
+							|| (temp.getKeyWord() != null && temp.getKeyWord().contains(key)) )
+						result3.put(temp.getId(), temp);
+				}
 			}
-		}
-
-		HashMap<Integer, ProjectBean> result4 = new HashMap<>();
-
-		for (String key : remainList){
-			for (ProjectBean temp :	db.values()) {
-				if (       temp.getRequirement().contains(key)
-						|| temp.getName().contains(key)
-						|| temp.getGain().contains(key)
-						|| temp.getInfo().contains(key)
-						|| temp.getKeyWord().contains(key))
-					result4.put(temp.getId(), temp);
+			//最后在每个项目的名字里匹配
+			if (proNameFlag == true){
+				for (String name : this.getProNameList()){
+					System.out.println("ProNameList的结果是======" + name);
+					System.out.println("而项目名字是 ====" + temp.getName());
+					System.out.println();
+					if (temp.getName() != null && temp.getName().contains(name)){
+						result4.put(temp.getId(), temp);
+					}
+				}
 			}
+			System.out.println("remainList的结果是=====" + remainList);
+			System.out.println("result4的结果是=====" + result4);
 		}
-
-
+		//合并结果
 		HashMap<Integer, ProjectBean> result = new HashMap<>();
 		result.putAll(result1);
 		result.putAll(result2);
 		result.putAll(result3);
 		result.putAll(result4);
 //		HashMap<Integer, Integer> hashMap = new HashMap<>();
-
+		this.show1TimesProjectBeans.addAll(result.values());
 		createAccurateResult(result1);
 		createAccurateResult(result2);
 		createAccurateResult(result3);
@@ -263,7 +268,7 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 	}
 
 	private boolean analyseProjectName(String element){
-		ProjectDAO projectDAO = new ProjectDAOImpl();
+//		ProjectDAO projectDAO = new ProjectDAOImpl();
 		proNameFlag = true;
 		ProNameList.add(element);
 		return true;
@@ -284,6 +289,12 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 			if (bean.getName().contains(element)){
 				teacherFlag = true;
 				teacherList.add(bean);
+			}else {
+				if (StringCheck.isNumeric(element))
+					if (bean.getId() == Integer.parseInt(element)) {
+						teacherFlag = true;
+						teacherList.add(bean);
+					}
 			}
 		}
 		return teacherFlag;
@@ -494,5 +505,13 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 
 	public void setShow4TimesProjectBeans(ArrayList<ProjectBean> show4TimesProjectBeans) {
 		this.show4TimesProjectBeans = show4TimesProjectBeans;
+	}
+
+	public ArrayList<ProjectBean> getShow1TimesProjectBeans() {
+		return show1TimesProjectBeans;
+	}
+
+	public void setShow1TimesProjectBeans(ArrayList<ProjectBean> show1TimesProjectBeans) {
+		this.show1TimesProjectBeans = show1TimesProjectBeans;
 	}
 }

@@ -129,7 +129,7 @@
 
         </action>
         <!--搜索项目-->
-        <action name="SearchProject" class="actions.project.SearchProjectAction" method="execute">
+        <action name="searchProject" class="actions.project.SearchProjectAction" method="execute">
 
         </action>
         <!--手机搜索项目-->
