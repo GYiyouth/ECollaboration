@@ -361,8 +361,8 @@
         <!--获取学生参与的所有项目-->
         <action name="getMyJoinProjectByStudent" class="actions.project.GetMyJoinProjectAction" method="getMyJoinProjectByStudent">
             <result name="success">/newstudentitem.jsp</result>
-            <result name="fail">/fail.jsp</result>
-            <result name="login">/登录界面</result>
+            <result name="fail">/login.jsp</result>
+            <result name="login">/login.jsp</result>
         </action>
         <action name="appGetMyJoinProjectByStudent" class="actions.project.GetMyJoinProjectAction" method="appGetMyJoinProjectByStudent">
             <result name="success">/success.jsp</result>
@@ -373,8 +373,8 @@
         <!--获取老师参与的所有项目-->
         <action name="getMyJoinProjectByTeacher" class="actions.project.GetMyJoinProjectAction" method="getMyJoinProjectByTeacher">
             <result name="success">/newteacheritem.jsp</result>
-            <result name="fail">/fail.jsp</result>
-            <result name="login">/登录界面</result>
+            <result name="fail">/login.jsp</result>
+            <result name="login">/login.jsp</result>
         </action>
         <action name="appGetMyJoinProjectByTeacher" class="actions.project.GetMyJoinProjectAction" method="appGetMyJoinProjectByTeacher">
             <result name="success">/success.jsp</result>
