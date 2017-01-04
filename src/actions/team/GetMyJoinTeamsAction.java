@@ -66,6 +66,8 @@ public class GetMyJoinTeamsAction implements ServletRequestAware, ServletRespons
             int studentId = userBean.getId();
 //            int studentId = 1;
             ArrayList<Integer> teamIds = teamDaoImpl.getTeamIdListByStudentId(studentId);
+            if(teamIds == null)
+                teamIds = new ArrayList<>();
             ArrayList<TeamBean> teams = new ArrayList<>();
             for(int i = 0 ;i<teamIds.size() ;i++){
                 TeamBean teamBean = new TeamBean();

@@ -61,6 +61,7 @@ public class fileUploadAction implements SessionAware, ServletRequestAware, Serv
 				setFileId(id);
 				getFileBean().setId(id);
 				UserBean userBean = (UserBean) this.session.get("userBean");
+				getFileBean().setPath( getSavePath() + getFileFileName());
 				setCreatorId(userBean.getId());
 				StudentDAO studentDAO = new StudentDaoImpl();
 				studentDAO.setFile(getCreatorId(), teamId, projectId, getFileId());
@@ -94,10 +95,8 @@ public class fileUploadAction implements SessionAware, ServletRequestAware, Serv
 		getFileBean().setDownLoadTimes(0);
 		getFileBean().setCreatorId( (int)session.get("userId") );
 		setSavePath(""+
-				ServletActionContext.getServletContext().getRealPath("")+
-				"../../../web/upload" + path
-		);
-		getFileBean().setPath( getSavePath() );
+				ServletActionContext.getServletContext().getRealPath("")+ path);
+
 
 	}
 	public String uploadFile(String savePath, String fileName, File tempFile) throws Exception {

@@ -1,5 +1,7 @@
 package actions.team;
 
+import DAO.studentDAO.StudentDAO;
+import DAO.studentDAO.StudentDaoImpl;
 import DAO.teamDAO.TeamDAO;
 import DAO.teamDAO.TeamDAOImpl;
 import bean.domain.TeamBean;
@@ -131,6 +133,8 @@ public class CreateTeamAction implements SessionAware, ServletRequestAware, Serv
 			teamBean.setId(this.getId());
 			setTeamBean(teamBean);
 			System.out.println(teamBean);
+			StudentDAO studentDAO = new StudentDaoImpl();
+			studentDAO.addStudentToTeam(userBean.getId(), teamBean.getId(), 1);
 			return "success";
 		}catch (Exception e){
 			e.printStackTrace();
@@ -140,22 +144,21 @@ public class CreateTeamAction implements SessionAware, ServletRequestAware, Serv
 	}
 
 	public void appCreateTeam() throws Exception{
-		JSONArray jsonArray = new JSONArray();
+//		JSONArray jsonArray = new JSONArray();
 		JSONObject jsonObject = new JSONObject();
 		if (createTeam().equals("success")){
 
 			jsonObject.put("teamBean", getTeamBean());
 			jsonObject.put("result", "success");
-			jsonArray.add(jsonObject);
 
-			this.response.getWriter().write(jsonArray.toString());
+			this.response.getWriter().write(jsonObject.toString());
 			this.response.getWriter().flush();
 			this.response.getWriter().close();
 		}else {
 			jsonObject.put("result", "fail");
-			jsonArray.add(jsonObject);
 
-			this.response.getWriter().write(jsonArray.toString());
+
+			this.response.getWriter().write(jsonObject.toString());
 			this.response.getWriter().flush();
 			this.response.getWriter().close();
 		}

@@ -3,10 +3,14 @@ package DAO.team_project;
 import DAO.com.smallTools.ComGetSingleBy2DAO;
 import DAO.com.smallTools.ComGetSingleBy2DAOImpl;
 import DAO.com.util.db.DBUtils;
+import bean.domain.TeamBean;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by geyao on 2016/12/25.
@@ -129,5 +133,44 @@ public class TeamProjectDAOImpl implements Team_ProjectDAO {
 		ComGetSingleBy2DAO<Integer, Integer, Integer> comGetSingleBy2DAO = new ComGetSingleBy2DAOImpl<>();
 		return comGetSingleBy2DAO.getListAfromBbyC("access", "team_project_id", team_projectId,
 				"taskId", taskId, "team_project_access");
+	}
+
+	/**
+	 * 获取
+	 *
+	 * @param projectId
+	 * @return
+	 * @throws SQLException
+	 */
+	@Override
+	public ArrayList<TeamBean> getTeamBeanByProjectId(int projectId) throws SQLException {
+		ArrayList<TeamBean> arrayList = new ArrayList<>();
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String sql = "SELECT * FROM team_project, team WHERE team.id = team_project.id " +
+				" AND team_project.projectId = ? ORDER BY id;";
+		try {
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, projectId);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()){
+				TeamBean teamBean = new TeamBean();
+				teamBean.setId( resultSet.getInt("id"));
+				teamBean.setTeamName( resultSet.getString("teamName"));
+				teamBean.setCreatorId( resultSet.getInt("creatorId"));
+				teamBean.setCreateDate( resultSet.getString("createDate"));
+				teamBean.setMemberMax( resultSet.getInt("memberMax"));
+				teamBean.setDescription( resultSet.getString("description"));
+				arrayList.add(teamBean);
+			}
+			return arrayList;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw e;
+		}finally {
+			DBUtils.close(resultSet, preparedStatement, connection);
+		}
 	}
 }

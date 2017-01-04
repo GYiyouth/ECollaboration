@@ -140,6 +140,14 @@
         <action name="getTeamCodeRows" class="actions.code.askCodeRows" method="getTeamCodes">
             <result name="success">/查询成功</result>
         </action>
+        <!--获取项目及相关信息-->
+        <action name="getProjectInfo" class="actions.project.getProjectInfoAction" method="execute">
+            <result name="success"></result>
+        </action>
+        <!--手机获取项目及相关信息-->
+        <action name="appGetProjectInfo" class="actions.project.getProjectInfoAction" method="appExecute">
+            <result name="success"></result>
+        </action>
 
 
         <!-- ========================================================================================-->
