@@ -110,6 +110,7 @@ public class GetMyJoinTeamInfoAction implements ServletRequestAware, ServletResp
                 }
                 return "success";
             } catch (Exception e) {
+                e.printStackTrace();
                 return "fail";
             }
         }
@@ -121,7 +122,7 @@ public class GetMyJoinTeamInfoAction implements ServletRequestAware, ServletResp
      * 成功：1.result=success
      *      2.ArrayList<PlanBean> teamPlanBeans 团队计划，按照顺序存储团队计划<PlanBean>的arraylist数组
      *          //下面四个list顺序是对应的
-     *      3.rrayList<StudentBean> studentBeans 学生的信息  第一个是组长
+     *      3.ArrayList<StudentBean> studentBeans 学生的信息  第一个是组长
      *      4.ArrayList<Integer> codeSums   每个人的代码量
      *      5.ArrayList<Integer> fileSum    每个人的文件数
      *      6.ArrayList<ArrayList<PlanBean>> planBeansAllStudents   每个人完成的计划的集合
