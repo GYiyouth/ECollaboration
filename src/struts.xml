@@ -371,12 +371,12 @@
         </action>
 
         <!--获取老师参与的所有项目-->
-        <action name="getMyJoinProjectByTeacher" class="actions.project.GetMyJoinProjectAction" method="getMyJoinProjectByStudent">
+        <action name="getMyJoinProjectByTeacher" class="actions.project.GetMyJoinProjectAction" method="getMyJoinProjectByTeacher">
             <result name="success">/success.jsp</result>
             <result name="fail">/fail.jsp</result>
             <result name="login">/登录界面</result>
         </action>
-        <action name="appGetMyJoinProjectByTeacher" class="actions.project.GetMyJoinProjectAction" method="appGetMyJoinProjectByStudent">
+        <action name="appGetMyJoinProjectByTeacher" class="actions.project.GetMyJoinProjectAction" method="appGetMyJoinProjectByTeacher">
             <result name="success">/success.jsp</result>
             <result name="fail">/fail.jsp</result>
             <result name="login">/登录界面</result>
@@ -396,7 +396,7 @@
 
         <!--获取项目的所有任务-->
         <action name="getTaskList" class="actions.task.GetTaskListAction" method="getTaskList">
-            <result name="success">/success.jsp</result>
+            <result name="success">/newstudentmission.jsp</result>
             <result name="fail">/fail.jsp</result>
             <result name="login">/登录界面</result>
         </action>
@@ -408,7 +408,7 @@
 
         <!--获取任务的详细信息-->
         <action name="getTaskInfo" class="actions.task.GetTaskInfoAction" method="getTaskInfo">
-            <result name="success">/success.jsp</result>
+            <result name="success">/newstudentmissiondetail.jsp</result>
             <result name="fail">/fail.jsp</result>
             <result name="login">/登录界面</result>
         </action>

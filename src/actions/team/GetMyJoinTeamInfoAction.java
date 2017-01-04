@@ -85,11 +85,12 @@ public class GetMyJoinTeamInfoAction implements ServletRequestAware, ServletResp
 
                     ArrayList<PlanBean> planBeans = new ArrayList();
                     ArrayList<Integer> planIds = planDaoImpl.getPlanIdsFinishedByStudentIdProjectId(studentIds.get(i),projectId);
-                    if(planIds == null)
+                    if(planIds == null) {
                         return "fail";
-                    if(planIds.size()==0)   //没有完成任务
+                    }if(planIds.size()==0)   //没有完成任务
+                    {
                         planBeans.add(null);
-                    else {
+                    } else {
                         for (int j = 0; j < planIds.size(); j++) {
                             ArrayList<PlanBean> stagePlanBean = new ArrayList<>();
                             PlanBean teamPlanBean = teamPlanBeans.get(j);

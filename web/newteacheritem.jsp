@@ -161,16 +161,16 @@
           <p><span>邮箱：websse@ustc.edu.cn</span></p>
         </div>
       </div>
-//显示老师所属项目
+
       <!-- showitem (形状) -->
       <div id="u25" class="ax_形状" data-label="showitem">
        <table border="1" align="center">
         <tr>
             <td align="center">项目名称</td>
         </tr>
-        <s:iterator value="teamBeans" >
+        <s:iterator value="projectBeans" >
             <tr>
-                <td align="center" ><a href=" 'getTeamInfoByTeamId?teamId=%{id}'/>"><s:property value="teamName"/></a ></td>
+                <td align="center" ><a href="<s:url action='getProjectInfoByProjectId?projectId=%{id}'/><s:property value="name"/></a ></td>
             </tr>
         </s:iterator>
     	</table>
@@ -198,7 +198,6 @@
           <p><span>我的项目</span></p>
         </div>
       </div>
-//教师新建项目
 <form action="">
 
       <div id="u32" class="ax_提交按钮" data-label="teachernewitem">

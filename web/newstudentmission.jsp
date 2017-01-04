@@ -181,7 +181,6 @@
           <p><span>任务</span></p>
         </div>
       </div>
-//循环输出学生在一个项目中的任务
       <!-- studentshowmission (形状) -->
       <div id="u30" class="ax_形状" data-label="studentshowmission">
         <table border="1" align="center">
@@ -190,7 +189,7 @@
         </tr>
           <s:iterator value="taskBeans" >
             <tr>
-              <td><a href="<s:url action='getTaskInfo?taskId=%{taskId}'/>"><s:property value="title"/></a ></td>
+              <td><a href="<s:url action='getTaskInfo?taskId=%{id}'/>"><s:property value="title"/></a ></td>
             </tr>
           </s:iterator>
     	</table>

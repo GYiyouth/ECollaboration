@@ -459,7 +459,7 @@
       <!-- studentshowmission (提交按钮) -->
 
       <div id="u94" class="ax_提交按钮" data-label="studentshowmission">
-        <a href="<s:url action='getProjectInfoByProjectId?projectId=%{projectBean.id}'/>">查看任务</a >
+        <a href="<s:url action='getTaskList?projectId=%{projectBean.id}'/>">查看任务</a >
       </div>
 
       
