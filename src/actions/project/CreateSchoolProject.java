@@ -123,22 +123,19 @@ public class CreateSchoolProject implements SessionAware, ServletRequestAware, S
      * @throws Exception
      */
     public void appCreateSchPrcByTeacher() throws Exception{
-        JSONArray jsonArray = new JSONArray();
         JSONObject jsonObject = new JSONObject();
         if (createSchPrcByTeacher().equals("success")){
 
             jsonObject.put("projectBean", getProjectBean());
             jsonObject.put("result", "success");
-            jsonArray.add(jsonObject);
             this.response.setCharacterEncoding("UTF-8");
-            this.response.getWriter().write(jsonArray.toString());
+            this.response.getWriter().write(jsonObject.toString());
             this.response.getWriter().flush();
             this.response.getWriter().close();
         }else {
             jsonObject.put("result", "fail");
-            jsonArray.add(jsonObject);
             this.response.setCharacterEncoding("UTF-8");
-            this.response.getWriter().write(jsonArray.toString());
+            this.response.getWriter().write(jsonObject.toString());
             this.response.getWriter().flush();
             this.response.getWriter().close();
         }
