@@ -371,12 +371,12 @@
         </action>
 
         <!--获取老师参与的所有项目-->
-        <action name="getMyJoinProjectByTeacher" class="actions.project.GetMyJoinProjectAction" method="getMyJoinProjectByStudent">
+        <action name="getMyJoinProjectByTeacher" class="actions.project.GetMyJoinProjectAction" method="getMyJoinProjectByTeacher">
             <result name="success">/success.jsp</result>
             <result name="fail">/fail.jsp</result>
             <result name="login">/登录界面</result>
         </action>
-        <action name="appGetMyJoinProjectByTeacher" class="actions.project.GetMyJoinProjectAction" method="appGetMyJoinProjectByStudent">
+        <action name="appGetMyJoinProjectByTeacher" class="actions.project.GetMyJoinProjectAction" method="appGetMyJoinProjectByTeacher">
             <result name="success">/success.jsp</result>
             <result name="fail">/fail.jsp</result>
             <result name="login">/登录界面</result>

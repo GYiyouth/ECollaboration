@@ -165,10 +165,10 @@
       <!-- showitem (形状) -->
       <div id="u25" class="ax_形状" data-label="showitem">
        <table border="1" align="center">
+         <tr>
+           <td align="center">项目名称</td>
+         </tr>
        <s:iterator value="projectBeans" >
-        <tr>
-            <td align="center">项目名称</td>
-        </tr>
             <tr>
                 <td align="center" ><a href="<s:url action='getProjectInfoByProjectId?projectId=%{id}'/>"><s:property value="name"/></a ></td>
             </tr>
