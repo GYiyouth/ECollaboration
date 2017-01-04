@@ -50,13 +50,20 @@ public class GetProjectInfoByProjectIdAction implements SessionAware, ServletReq
     public String getProjectInfoByProjectId(){
         ProjectBean projectBean = new ProjectBean();
         ProjectDAO projectDAO = new ProjectDAOImpl();
+        System.out.println("得到的projectId是" + projectId);
         try {
             projectBean = projectDAO.getProjectInfo(projectId);
             if(projectBean == null)
                 return "fail";
             else {
                 setProjectBean(projectBean);
-                return "success";
+                int role = (int)session.get("role");
+                switch (role){
+                    case 1:
+                    case 2:return "teacher";
+                    case 3:return "student";
+                }
+                return "fail";
             }
         }catch(Exception e){
             e.printStackTrace();

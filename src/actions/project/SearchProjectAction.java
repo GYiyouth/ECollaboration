@@ -129,7 +129,12 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 	}
 
 	private HashMap<Integer, ProjectBean> analyse(String keyWord) throws SQLException {
+		if (keyWord == null )
+			return new HashMap<>();
 		this.keyWord = keyWord.trim();
+		if (this.keyWord.equals(""))
+			return new HashMap<>();
+
 		this.keyWord = this.keyWord.replace(",", " ");
 		this.keyWord = this.keyWord.replace("，", " ");
 		System.out.println("keyword替换后" + this.keyWord);
@@ -137,7 +142,7 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 		for (String a : elements)
 			System.out.println("输入的关键词是" + a);
 		for (String element : elements){
-			if (element.equals(" ") || element.equals("  ")|| element.equals(","))
+			if (element.equals(" ") || element.equals("")|| element.equals(","))
 				continue;
 			boolean tempGrade = analyseGrade(element);
 			if (tempGrade)
