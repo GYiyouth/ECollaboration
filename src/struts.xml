@@ -25,7 +25,7 @@
         <action name="logIn" class="actions.logIn.LogInAction" method="log">
             <result name="success">/ImageTestJSP.jsp</result>
             <result name="fail">/QuickTime%20Player.jpg</result>
-            <result name="input">/ImageTestJSP.jsp</result>
+            <result name="student">/newstudentitem.jsp</result>
             <result name="teacher">/ImageTestJSP.jsp</result>
 
         </action>
