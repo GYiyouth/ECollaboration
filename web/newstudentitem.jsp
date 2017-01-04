@@ -173,7 +173,7 @@
         <td align="center">项目名称</td>
     </tr>
     <tr>
-        <td align="center" ><a href="<s:url action='getProjectInfo?id=%{id}'/>"><s:property value="name"/></a ></td>
+        <td align="center" ><a href="<s:url action='getProjectInfoByProjectId?projectId=%{id}'/>"><s:property value="name"/></a ></td>
     </tr>
 </s:iterator>
 

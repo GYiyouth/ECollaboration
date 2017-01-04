@@ -384,7 +384,7 @@
 
         <!--web根据项目id获取项目信息-->
         <action name="getProjectInfoByProjectId" class="actions.project.GetProjectInfoByProjectIdAction" method="getProjectInfoByProjectId">
-            <result name="success">/success.jsp</result>
+            <result name="success">/newstudentvitem.jsp</result>
             <result name="fail">/fail.jsp</result>
             <result name="login">/登录界面</result>
         </action>
@@ -393,6 +393,15 @@
             <result name="fail">/fail.jsp</result>
             <result name="login">/登录界面</result>
         </action>
+
+        <!--获取项目的所有任务-->
+        <action name="getTaskList" class="actions.task.GetTaskListAction" method="getTaskList">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+
         <!--修改计划-->
         <!--<action name="modifyPlan" class="actions.plan.PlanModifyAction" method="modifyPlan">-->
             <!--<result name="success">/success.jsp</result>-->
