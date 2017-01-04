@@ -328,7 +328,7 @@
 
       <!-- name (形状) -->
       <div id="u62" class="ax_形状" data-label="name">
-        name<s:property value="name"/>
+        name<s:property value="projectBean.name"/>
         <div id="u63" class="text">
           <p><span></span></p>
         </div>
@@ -337,7 +337,7 @@
       <!-- info (形状) -->
       <div id="u64" class="ax_形状" data-label="info">
   
-        info<s:property value="info"/>
+        info<s:property value="projectBean.info"/>
         <div id="u65" class="text">
           <p><span></span></p>
         </div>
@@ -346,7 +346,7 @@
       <!-- creatorid (形状) -->
       <div id="u66" class="ax_形状" data-label="creatorid">
         
-        creatorid<s:property value="creatorId"/>
+        creatorid<s:property value="projectBean.creatorId"/>
         <div id="u67" class="text">
           <p><span></span></p>
         </div>
@@ -354,7 +354,7 @@
 
       <!-- teacherid (形状) -->
       <div id="u68" class="ax_形状" data-label="teacherid">
-       <s:property value="teacherId"/>
+       <s:property value="projectBean.teacherId"/>
         <div id="u69" class="text">
           <p><span></span></p>
         </div>
@@ -362,7 +362,7 @@
 
       <!-- createDate (形状) -->
       <div id="u70" class="ax_形状" data-label="createDate">
-        <s:property value="createDate"/>
+        <s:property value="projectBean.createDate"/>
         <div id="u71" class="text">
           <p><span></span></p>
         </div>
@@ -370,7 +370,7 @@
 
       <!-- grade (形状) -->
       <div id="u72" class="ax_形状" data-label="grade">
-        <s:property value="grade"/>
+        <s:property value="projectBean.grade"/>
         <div id="u73" class="text">
           <p><span></span></p>
         </div>
@@ -378,7 +378,7 @@
 
       <!-- finishDate (形状) -->
       <div id="u74" class="ax_形状" data-label="finishDate">
-        <s:property value="finishDate"/>
+        <s:property value="projectBean.finishDate"/>
         <div id="u75" class="text">
           <p><span></span></p>
         </div>
@@ -386,7 +386,7 @@
 
       <!-- status (形状) -->
       <div id="u76" class="ax_形状" data-label="status">
-        <s:property value="status"/>
+        <s:property value="projectBean.status"/>
         <div id="u77" class="text">
           <p><span></span></p>
         </div>
@@ -394,7 +394,7 @@
 
       <!-- teamnumber (形状) -->
       <div id="u78" class="ax_形状" data-label="teamnumber">
-        <s:property value="teamNumber"/>
+        <s:property value="projectBean.teamNumber"/>
         <div id="u79" class="text">
           <p><span></span></p>
         </div>
@@ -402,7 +402,7 @@
 
       <!-- requirement (形状) -->
       <div id="u80" class="ax_形状" data-label="requirement">
-        <s:property value="requirement"/>
+        <s:property value="projectBean.requirement"/>
         <div id="u81" class="text">
           <p><span></span></p>
         </div>
@@ -410,7 +410,7 @@
 
       <!-- keyword (形状) -->
       <div id="u82" class="ax_形状" data-label="keyword">
-        <s:property value="keyWord"/>
+        <s:property value="projectBean.keyWord"/>
         <div id="u83" class="text">
           <p><span></span></p>
         </div>
@@ -418,7 +418,7 @@
 
       <!-- applybefordate (形状) -->
       <div id="u84" class="ax_形状" data-label="applybefordate">
-        <s:property value="applyBeforeDate"/>
+        <s:property value="projectBean.applyBeforeDate"/>
         <div id="u85" class="text">
           <p><span></span></p>
         </div>
@@ -426,7 +426,7 @@
 
       <!-- teammax (形状) -->
       <div id="u86" class="ax_形状" data-label="teammax">
-        <s:property value="teamMax"/>
+        <s:property value="projectBean.teamMax"/>
         <div id="u87" class="text">
           <p><span></span></p>
         </div>
@@ -434,7 +434,7 @@
 
       <!-- gain (形状) -->
       <div id="u88" class="ax_形状" data-label="gain">
-        <s:property value="gain"/>
+        <s:property value="projectBean.gain"/>
         <div id="u89" class="text">
           <p><span></span></p>
         </div>
@@ -442,7 +442,7 @@
 
       <!-- survivaldate (形状) -->
       <div id="u90" class="ax_形状" data-label="survivaldate">
-        <s:property value="survivalDate"/>
+        <s:property value="projectBean.survivalDate"/>
         <div id="u91" class="text">
           <p><span></span></p>
         </div>
@@ -450,7 +450,7 @@
 
       <!-- membermax (形状) -->
       <div id="u92" class="ax_形状" data-label="membermax">
-       <s:property value="memberMax"/>
+       <s:property value="projectBean.memberMax"/>
         <div id="u93" class="text">
           <p><span></span></p>
         </div>
