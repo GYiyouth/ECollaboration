@@ -453,13 +453,11 @@
           <p><span></span></p>
         </div>
       </div>
-//查看该项目的任务      
-<form action="">
+
       <!-- studentshowmission (提交按钮) -->
       <div id="u94" class="ax_提交按钮" data-label="studentshowmission">
-        <input id="u94_input" type="submit" value="查看任务"/>
+        <a href="<s:url action='getTaskList?projectId=%{projectBean.id}'/>">查看任务</a >
       </div>
-</form> 
     </div>
   </body>
 </html>
