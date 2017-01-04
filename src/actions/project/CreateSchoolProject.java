@@ -141,6 +141,7 @@ public class CreateSchoolProject implements SessionAware, ServletRequestAware, S
         }
     }
 
+
     public String createSchPrcByStudent() throws Exception{
         priority = 0;   //工程实践项目
         status = 1;
