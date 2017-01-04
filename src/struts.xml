@@ -403,7 +403,23 @@
             <result name="fail">/fail.jsp</result>
             <result name="login">/登录界面</result>
         </action>
+        <action name="appGetTaskList" class="actions.task.GetTaskListAction" method="appGetTaskList">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
 
+        <!--获取任务的详细信息-->
+        <action name="getTaskInfo" class="actions.task.GetTaskInfoAction" method="getTaskInfo">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appGetTaskInfo" class="actions.task.GetTaskInfoAction" method="appGetTaskInfo">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
 
         <!--修改计划-->
         <!--<action name="modifyPlan" class="actions.plan.PlanModifyAction" method="modifyPlan">-->
