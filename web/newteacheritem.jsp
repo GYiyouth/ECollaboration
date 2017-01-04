@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
@@ -164,16 +164,17 @@
 
       <!-- showitem (形状) -->
       <div id="u25" class="ax_形状" data-label="showitem">
-       <table border="1" align="center">
-        <tr>
-            <td align="center">项目名称</td>
-        </tr>
-        <s:iterator value="projectBeans" >
-            <tr>
-                <td align="center" ><a href="<s:url action='getProjectInfoByProjectId?projectId=%{id}'/><s:property value="name"/></a ></td>
-            </tr>
-        </s:iterator>
-    	</table>
+<table border="2">
+	<tr>
+		<td>项目/任务名称</td>
+	</tr>
+  <s:iterator value="projectBeans">
+    <tr>
+      <td align="center" ><a href="<s:url action='getProjectInfoByProjectId?projectId=%{id}'/>"><s:property value="name"/></a ></td>
+    </tr>
+  </s:iterator>
+
+</table>
         <div id="u26" class="text">
           <p><span></span></p>
         </div>
@@ -198,12 +199,13 @@
           <p><span>我的项目</span></p>
         </div>
       </div>
-<form action="">
 
       <div id="u32" class="ax_提交按钮" data-label="teachernewitem">
-        <input id="u32_input" type="submit" value="新建项目"/>
+        <a href="newteachercreateitem.jsp">新建任务</a>
       </div>
-</form>
+    </div>
+    <div style="position:absolute;left:650px;top:630px">
+      <a href="newsearch.jsp">搜索项目</a>
     </div>
   </body>
 </html>

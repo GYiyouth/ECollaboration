@@ -187,7 +187,7 @@
         <img id="u30_img" class="img " src="resources/images/transparent.gif"/>
         <!-- Unnamed () -->
         <div id="u31" class="text">
-          <p><span>项目名称(必填)</span></p>
+          <p><span>项目名称</span></p>
         </div>
       </div>
 
@@ -259,7 +259,7 @@
         <img id="u46_img" class="img " src="resources/images/transparent.gif"/>
         <!-- Unnamed () -->
         <div id="u47" class="text">
-          <p><span>年级（必填）</span></p>
+          <p><span>年级</span></p>
         </div>
       </div>
 
@@ -344,7 +344,7 @@
 
       <!-- creatorid (形状) -->
       <div id="u66" class="ax_形状" data-label="creatorid">
-        <s:property value="projectBean.creatorId" />
+        <s:property value="projectBean.creatorId"/>
         <div id="u67" class="text">
           <p><span></span></p>
         </div>
@@ -392,7 +392,7 @@
 
       <!-- teamnumber (形状) -->
       <div id="u78" class="ax_形状" data-label="teamnumber">
-        <s:property value="projectBean.teamNumber"/>
+        <s:property value="projectBean.teamnumber"/>
         <div id="u79" class="text">
           <p><span></span></p>
         </div>
@@ -408,7 +408,7 @@
 
       <!-- keyword (形状) -->
       <div id="u82" class="ax_形状" data-label="keyword">
-        <s:property value="projectBean.keyWord"/>
+        <s:property value="projectBean.keyword"/>
         <div id="u83" class="text">
           <p><span></span></p>
         </div>
@@ -416,7 +416,7 @@
 
       <!-- applybefordate (形状) -->
       <div id="u84" class="ax_形状" data-label="applybefordate">
-        <s:property value="projectBean.applyBeforeDate"/>
+        <s:property value="projectBean.applybeforedate"/>
         <div id="u85" class="text">
           <p><span></span></p>
         </div>
@@ -424,7 +424,7 @@
 
       <!-- teammax (形状) -->
       <div id="u86" class="ax_形状" data-label="teammax">
-        <s:property value="projectBean.teamMax"/>
+        <s:property value="projectBean.teammax"/>
         <div id="u87" class="text">
           <p><span></span></p>
         </div>
@@ -440,7 +440,7 @@
 
       <!-- survivaldate (形状) -->
       <div id="u90" class="ax_形状" data-label="survivaldate">
-        <s:property value="projectBean.survivalDate"/>
+        <s:property value="projectBean.survivaldate"/>
         <div id="u91" class="text">
           <p><span></span></p>
         </div>
@@ -448,12 +448,11 @@
 
       <!-- membermax (形状) -->
       <div id="u92" class="ax_形状" data-label="membermax">
-       <s:property value="projectBean.memberMax"/>
+       <s:property value="projectBean.membermax"/>
         <div id="u93" class="text">
           <p><span></span></p>
         </div>
       </div>
-
       <!-- studentshowmission (提交按钮) -->
       <div id="u94" class="ax_提交按钮" data-label="studentshowmission">
         <a href="<s:url action='getTaskList?projectId=%{projectBean.id}'/>">查看任务</a >

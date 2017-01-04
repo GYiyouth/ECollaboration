@@ -4,6 +4,7 @@ import DAO.taskDAO.TaskDAO;
 import DAO.taskDAO.TaskDAOImpl;
 import bean.domain.ProjectBean;
 import bean.domain.TaskBean;
+import bean.domain.UserBean;
 import net.sf.json.JSONObject;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
@@ -40,6 +41,7 @@ public class GetTaskListAction  implements SessionAware, ServletRequestAware, Se
     private ArrayList<TaskBean> taskBeans;
 
     public String getTaskList(){
+        UserBean userBean = (UserBean)session.get("userBean");
         TaskDAO taskDAO = new TaskDAOImpl();
         try {
             ArrayList<TaskBean> taskBeans = new ArrayList<>();
@@ -51,12 +53,18 @@ public class GetTaskListAction  implements SessionAware, ServletRequestAware, Se
                     TaskBean taskBean = taskDAO.getTaskInfo(taskIds.get(i));
                     if(taskBean != null){
                         taskBeans.add(taskBean);
+
                     }else{
                         return "fail";
                     }
                 }
                 setTaskBeans(taskBeans);
-                return "success";
+                switch(userBean.getRole()){
+                    case 1:
+                    case 2:return "teacher";
+                    case 3:return "student";
+                    default:return "fail";
+                }
             }
         }catch (Exception e){
             e.printStackTrace();

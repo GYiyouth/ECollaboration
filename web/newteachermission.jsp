@@ -185,15 +185,15 @@
       <!-- teachershowmission (形状) -->
       <div id="u30" class="ax_形状" data-label="teachershowmission">
         <table border="1" align="center">
-        <tr>
+          <tr>
             <td align="center">任务名称</td>
-        </tr>
-        <s:iterator value="taskBeans" >
+          </tr>
+          <s:iterator value="taskBeans" >
             <tr>
-                <td><a href="<s:url action='getTaskInfo?taskId=%{taskid}'/>"><s:property value="title"/></a ></td>
+              <td><a href="<s:url action='getTaskInfo?taskId=%{id}'/>"><s:property value="title"/></a ></td>
             </tr>
-        </s:iterator>
-    	</table>
+          </s:iterator>
+        </table>
         <div id="u31" class="text">
           <p><span></span></p>
         </div>

@@ -267,7 +267,7 @@ public class ProjectDAOImpl implements ProjectDAO{
     @Override
     public ArrayList<Integer> getProjectIdListByTeacherId(int teacherId) throws SQLException {
         ComGetListValueDAO comGetListValueDAO = new ComGetListValueDAOImpl<Integer, Integer>();
-        return comGetListValueDAO.getListAfromBbyC("Id", "teacherId", teacherId, "project");
+        return comGetListValueDAO.getListAfromBbyC("Id", "teacherId", teacherId, "teacher_project");
     }
 
     /**

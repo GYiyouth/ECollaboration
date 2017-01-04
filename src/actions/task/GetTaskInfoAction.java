@@ -3,6 +3,7 @@ package actions.task;
 import DAO.taskDAO.TaskDAO;
 import DAO.taskDAO.TaskDAOImpl;
 import bean.domain.TaskBean;
+import bean.domain.UserBean;
 import net.sf.json.JSONObject;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
@@ -35,6 +36,7 @@ public class GetTaskInfoAction  implements SessionAware, ServletRequestAware, Se
     private TaskBean taskBean;
 
     public String getTaskInfo(){
+        UserBean userBean = (UserBean)session.get("userBean");
         TaskDAO taskDAO = new TaskDAOImpl();
         try {
             TaskBean taskBean = taskDAO.getTaskInfo(taskId);
@@ -42,7 +44,12 @@ public class GetTaskInfoAction  implements SessionAware, ServletRequestAware, Se
                 return "fail";
             } else {
                 setTaskBean(taskBean);
-                return "success";
+                switch(userBean.getRole()){
+                    case 1:
+                    case 2:return "teacher";
+                    case 3:return "student";
+                    default: return "fail";
+                }
             }
         }catch (Exception e){
             e.printStackTrace();
