@@ -173,8 +173,9 @@ public class LogInAction implements ServletRequestAware, ServletResponseAware, S
 	}
 
 	private String teacherLogIn(int teacherId){
+
 		ProjectDAO projectDAO = new ProjectDAOImpl();
-		System.out.println(1);
+		System.out.println("教师登录");
 		try {
 			ArrayList<Integer> projectIdList = projectDAO.getProjectIdListByTeacherId(teacherId);
 			if (projectIdList == null){
@@ -205,6 +206,7 @@ public class LogInAction implements ServletRequestAware, ServletResponseAware, S
 	}
 
 	private String studentLogIn(int id){
+		System.out.println("学生登录");
 		TeamDAO teamDAO = new TeamDAOImpl();
 		ProjectDAO projectDAO = new ProjectDAOImpl();
 		try {

@@ -64,11 +64,12 @@ public class GetMyJoinProjectAction implements SessionAware, ServletRequestAware
                 System.out.println("fail1");
                 return "fail";
             }else{
+                System.out.println("学生登录后获取项目："  + teamIds);
                 for(int i=0;i<teamIds.size();i++){
                     ArrayList<Integer> projectIds = projectDAO.getProjectIdListByTeamId(teamIds.get(i));
                     if(projectIds == null){
                         System.out.println("fail2");
-                        return "fail";
+                        continue;
                     }else{
                         for(int j=0;j<projectIds.size();j++){
                             ProjectBean projectBean = projectDAO.getProjectInfo(projectIds.get(j));
