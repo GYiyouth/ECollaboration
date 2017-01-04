@@ -57,7 +57,13 @@ public class GetProjectInfoByProjectIdAction implements SessionAware, ServletReq
                 return "fail";
             else {
                 setProjectBean(projectBean);
-                return "success";
+                int role = (int)session.get("role");
+                switch (role){
+                    case 1:
+                    case 2:return "teacher";
+                    case 3:return "student";
+                }
+                return "fail";
             }
         }catch(Exception e){
             e.printStackTrace();

@@ -161,19 +161,20 @@
           <p><span>邮箱：websse@ustc.edu.cn</span></p>
         </div>
       </div>
-//显示老师所属项目
+
       <!-- showitem (形状) -->
       <div id="u25" class="ax_形状" data-label="showitem">
        <table border="1" align="center">
+       <s:iterator value="projectBeans" >
         <tr>
             <td align="center">项目名称</td>
         </tr>
-        <s:iterator value="teamBeans" >
             <tr>
-                <td align="center" ><a href=" 'getTeamInfoByTeamId?teamId=%{id}'/>"><s:property value="teamName"/></a ></td>
+                <td align="center" ><a href="<s:url action='getProjectInfoByProjectId?projectId=%{id}'/>"><s:property value="name"/></a ></td>
             </tr>
         </s:iterator>
     	</table>
+        </div>
         <div id="u26" class="text">
           <p><span></span></p>
         </div>
@@ -189,20 +190,24 @@
           <p><span></span></p>
         </div>
       </div>
-
+      <div>
+      <table border="1" align="center">
       <!-- Unnamed (形状) -->
-      <div id="u30" class="ax_文本段落">
-        <img id="u30_img" class="img " src="resources/images/transparent.gif"/>
-        <!-- Unnamed () -->
-        <div id="u31" class="text">
-          <p><span>我的项目</span></p>
-        </div>
+      <s:iterator value="projectBeans">
+      <tr>
+        <td align="center">项目名称</td>
+      </tr>
+      <tr>
+        <td align="center" ><a href="<s:url action='getProjectInfoByProjectId?projectId=%{id}'/>"><s:property value="name"/></a ></td>
+      </tr>
+      </s:iterator>
+        </table>
       </div>
-//教师新建项目
+
 <form action="">
 
       <div id="u32" class="ax_提交按钮" data-label="teachernewitem">
-        <input id="u32_input" type="submit" value="新建项目"/>
+       <a href="newteachercreateitem.jsp"> <input id="u32_input" type="button" value="新建项目"/></a>
       </div>
 </form>
     </div>

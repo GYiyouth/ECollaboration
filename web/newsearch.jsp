@@ -210,16 +210,16 @@
             <td colspan="2">项目名称</td>
           </tr>
           <s:iterator value="show1TimesProjectBeans">
-            <a href="<s:url action='getProjectInfoByProjectId?projectId=%{id}'/>"><s:property value="name"/></a>
+            <a href="<s:url action='getProjectInfoByProjectId?projectId=%{id}'/>"><s:property value="name"/></a><br/>
           </s:iterator>
           <s:iterator value="show2TimesProjectBeans">
-            <a href="<s:url action='getProjectInfoByProjectId?projectId=%{id}'/>"><s:property value="name"/></a>
+            <a href="<s:url action='getProjectInfoByProjectId?projectId=%{id}'/>"><s:property value="name"/></a><br/>
           </s:iterator>
           <s:iterator value="show3TimesProjectBeans">
-            <a href="<s:url action='getProjectInfoByProjectId?projectId=%{id}'/>"><s:property value="name"/></a>
+            <a href="<s:url action='getProjectInfoByProjectId?projectId=%{id}'/>"><s:property value="name"/></a><br/>
           </s:iterator>
           <s:iterator value="show4TimesProjectBeans">
-            <a href="<s:url action='getProjectInfoByProjectId?projectId=%{id}'/>"><s:property value="name"/></a>
+            <a href="<s:url action='getProjectInfoByProjectId?projectId=%{id}'/>"><s:property value="name"/></a><br/>
           </s:iterator>
         </table>
 
