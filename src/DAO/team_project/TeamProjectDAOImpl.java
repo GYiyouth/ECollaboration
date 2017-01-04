@@ -148,8 +148,8 @@ public class TeamProjectDAOImpl implements Team_ProjectDAO {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		String sql = "SELECT * FROM team_project, team WHERE team.id = team_project.id " +
-				" AND team_project.projectId = ? ORDER BY id;";
+		String sql = "SELECT * FROM team_project, team WHERE team.id = team_project.teamId " +
+				" AND team_project.projectId = ?;";
 		try {
 			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
