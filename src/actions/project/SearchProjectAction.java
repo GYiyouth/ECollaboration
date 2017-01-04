@@ -6,6 +6,7 @@ import DAO.teacherDAO.TeacherDAO;
 import DAO.teacherDAO.TeacherDAOImpl;
 import bean.domain.ProjectBean;
 import bean.domain.TeacherBean;
+import net.sf.json.JSONObject;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
@@ -80,6 +81,23 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 		}catch (Exception e){
 			e.printStackTrace();
 			return "fail";
+		}
+	}
+
+	public void appExecute() throws Exception{
+		JSONObject jsonObject = new JSONObject();
+		String result = execute();
+		if (result.equals("success")){
+			jsonObject.put("result", "success");
+			jsonObject.put("SearchResultHashMap", getSearchResultHashMap());
+			this.response.getWriter().write(jsonObject.toString());
+			this.response.getWriter().flush();
+			this.response.getWriter().close();
+		}else {
+			jsonObject.put("result", "fail");
+			this.response.getWriter().write(jsonObject.toString());
+			this.response.getWriter().flush();
+			this.response.getWriter().close();
 		}
 	}
 

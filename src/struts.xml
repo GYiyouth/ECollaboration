@@ -132,6 +132,10 @@
         <action name="SearchProject" class="actions.project.SearchProjectAction" method="execute">
 
         </action>
+        <!--手机搜索项目-->
+        <action name="appSearchProject" class="actions.project.SearchProjectAction" method="appExecute">
+
+        </action>
         <!--获取但个学生代码量-->
         <action name="getStudentCodeRow" class="actions.code.askCodeRows" method="getStudentCodes">
             <result name="success">/查询成功</result>
@@ -146,7 +150,7 @@
         </action>
         <!--手机获取项目及相关信息-->
         <action name="appGetProjectInfo" class="actions.project.getProjectInfoAction" method="appExecute">
-            <result name="success"></result>
+
         </action>
 
 
