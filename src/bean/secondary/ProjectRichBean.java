@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class ProjectRichBean extends ProjectBean {
 	private String creatorName;
-	private ArrayList<TeamBean> teamBeens = new ArrayList<>();
+	private ArrayList<TeamBean> teamBeans = new ArrayList<>();
 	public ProjectRichBean(){
 		super();
 	}
@@ -24,10 +24,10 @@ public class ProjectRichBean extends ProjectBean {
 	}
 
 	public ArrayList<TeamBean> getTeamBeens() {
-		return teamBeens;
+		return teamBeans;
 	}
 
 	public void setTeamBeens(ArrayList<TeamBean> teamBeens) {
-		this.teamBeens = teamBeens;
+		this.teamBeans = teamBeens;
 	}
 }

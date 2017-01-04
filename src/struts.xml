@@ -25,7 +25,7 @@
         <action name="logIn" class="actions.logIn.LogInAction" method="log">
             <result name="success">/ImageTestJSP.jsp</result>
             <result name="fail">/QuickTime%20Player.jpg</result>
-            <result name="student">/newstudentitem.jsp</result>
+            <result name="student" type="redirect">getMyJoinProjectByStudent</result>
             <result name="teacher">/ImageTestJSP.jsp</result>
 
         </action>
@@ -353,6 +353,30 @@
             <result name="login">/登录界面</result>
         </action>
         <action name="appModifyStudentInfo" class="actions.student.ModifyStudentInfoAction" method="appModifyStudentInfo">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <!--获取学生参与的所有项目-->
+        <action name="getMyJoinProjectByStudent" class="actions.project.GetMyJoinProjectAction" method="getMyJoinProjectByStudent">
+            <result name="success">/newstudentitem.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appGetMyJoinProjectByStudent" class="actions.project.GetMyJoinProjectAction" method="appGetMyJoinProjectByStudent">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <!--获取老师参与的所有项目-->
+        <action name="getMyJoinProjectByTeacher" class="actions.project.GetMyJoinProjectAction" method="getMyJoinProjectByStudent">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appGetMyJoinProjectByTeacher" class="actions.project.GetMyJoinProjectAction" method="appGetMyJoinProjectByStudent">
             <result name="success">/success.jsp</result>
             <result name="fail">/fail.jsp</result>
             <result name="login">/登录界面</result>
