@@ -25,8 +25,8 @@
         <action name="logIn" class="actions.logIn.LogInAction" method="log">
             <result name="success">/ImageTestJSP.jsp</result>
             <result name="fail">/QuickTime%20Player.jpg</result>
-            <result name="student"   type="redirect">getMyJoinProjectByStudent</result>
-            <result name="teacher">/ImageTestJSP.jsp</result>
+            <result name="student" type="redirect">getMyJoinProjectByStudent</result>
+            <result name="teacher" type="redirect">getMyJoinProjectByTeacher</result>
 
         </action>
 
