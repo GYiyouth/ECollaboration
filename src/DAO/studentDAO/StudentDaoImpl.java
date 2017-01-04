@@ -98,39 +98,45 @@ public class StudentDaoImpl implements StudentDAO {
      */
     @Override
     public boolean updateInfoByStudent(StudentBean studentBean) throws SQLException {
-        boolean flag = true;
-        Connection conn = null;
-        PreparedStatement ps = null;
+        /*if (studentBean == null)
+			return false;*/
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
 
-        String sql = " UPDATE ecollaborationweb.student set grade = ?,isOnproject = ?,isNeedProject = ?," +
-                "graduatedSchool = ?,tecKeyWord = ?,homePageUrl = ?,codeScore1 = ?,codeScore2 = ?," +
-                "presentationScore = ?,finalScore = ? where id = ?;";
-
-        try {
-            conn = DBUtils.getConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, studentBean.getGrade());
-            ps.setInt(2, studentBean.getIsOnProject());
-            ps.setInt(3, studentBean.getIsNeedProject());
-            ps.setString(4, studentBean.getGraduatedSchool());
-            ps.setString(5, studentBean.getTecKeyWord());
-            ps.setString(6, studentBean.getHomePageUrl());
-            ps.setInt(7,studentBean.getCodeScore1());
-            ps.setInt(8,studentBean.getCodeScore2());
-            ps.setInt(9,studentBean.getPresentationScore());
-            ps.setInt(10, studentBean.getFinalScore());
-            ps.setInt(11, studentBean.getId());
-            int i = ps.executeUpdate();
-            if (i == 0) {
-                flag = false;
-            }
-        } catch (SQLException e) {
+        String sql1 = "UPDATE ecollaborationweb.user set name = ?, sex = ?, email = ?, phoneNumber = ? WHERE id = ?";
+        String sql2 = "UPDATE ecollaborationweb.student set homePageUrl = ?, graduatedSchool = ?, tecKeyWord = ? WHERE  id = ?";
+        try{
+            connection = DBUtils.getConnection();
+            connection.setAutoCommit(false);
+            preparedStatement = connection.prepareStatement(sql1);
+            preparedStatement.setString(1,studentBean.getName());
+            preparedStatement.setInt(2,studentBean.getSex());
+            preparedStatement.setString(3,studentBean.getEmail());
+            preparedStatement.setString(4,studentBean.getPhoneNumber());
+            preparedStatement.setInt(5,studentBean.getId());
+            int row = preparedStatement.executeUpdate();
+            if (row != 0) {
+                preparedStatement = connection.prepareStatement(sql2);
+                preparedStatement.setString(1,studentBean.getHomePageUrl());
+                preparedStatement.setString(2,studentBean.getGraduatedSchool());
+                preparedStatement.setString(3,studentBean.getTecKeyWord());
+                preparedStatement.setInt(4,studentBean.getId());
+                int row2 = preparedStatement.executeUpdate();
+                if(row2 != 0){
+                    connection.commit();
+                    return true;
+                }else{
+                    return false;
+                }
+            }else
+                return false;
+        }catch (SQLException e){
+            connection.rollback();
             e.printStackTrace();
             throw e;
-        } finally {
-            DBUtils.close(null, ps, conn);
+        }finally {
+            DBUtils.close(null, preparedStatement, connection);
         }
-        return flag;
     }
 
     /**

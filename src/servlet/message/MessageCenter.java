@@ -17,31 +17,6 @@ import org.java_websocket.server.WebSocketServer;
 public class MessageCenter extends WebSocketServer {
     private static final int PORT = 2333;
 
-    public static void main(String[] args) {
-        MessageCenter server = new MessageCenter(PORT);
-        server.start();
-
-        try {
-            String ip = InetAddress.getLocalHost().getHostAddress();
-            int port = server.getPort();
-            print(String.format("服务已启动: %s:%d", ip, port));
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-
-        InputStreamReader in = new InputStreamReader(System.in);
-        BufferedReader reader = new BufferedReader(in);
-
-        while (true) {
-            try {
-                String msg = reader.readLine();
-                server.broadcastMessage(msg);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     public MessageCenter(int port) {
         super(new InetSocketAddress(port));
     }

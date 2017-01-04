@@ -97,19 +97,34 @@ public class TeacherDAOImpl implements TeacherDAO {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
-		String sql = "UPDATE ecollaborationweb.teacher set homePageUrl = ?,needStudentsFlag= ? WHERE id = ?";
+		String sql1 = "UPDATE ecollaborationweb.user set name = ?, sex = ?, email = ?, phoneNumber = ? WHERE id = ?";
+		String sql2 = "UPDATE ecollaborationweb.teacher set homePageUrl = ?, needStudentsFlag = ? WHERE  id = ?";
 		try{
 			connection = DBUtils.getConnection();
-			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(1,teacherBean.getHomePageUrl());
-			preparedStatement.setInt(2,teacherBean.getNeedStudentsFlag());
-			preparedStatement.setInt(3,teacherBean.getId());
+			connection.setAutoCommit(false);
+			preparedStatement = connection.prepareStatement(sql1);
+			preparedStatement.setString(1,teacherBean.getName());
+			preparedStatement.setInt(2,teacherBean.getSex());
+			preparedStatement.setString(3,teacherBean.getEmail());
+			preparedStatement.setString(4,teacherBean.getPhoneNumber());
+			preparedStatement.setInt(5,teacherBean.getId());
 			int row = preparedStatement.executeUpdate();
-			if (row != 1)
+			if (row != 0) {
+				preparedStatement = connection.prepareStatement(sql2);
+				preparedStatement.setString(1,teacherBean.getHomePageUrl());
+				preparedStatement.setInt(2,teacherBean.getNeedStudentsFlag());
+				preparedStatement.setInt(3,teacherBean.getId());
+				int row2 = preparedStatement.executeUpdate();
+				if(row2 != 0){
+					connection.commit();
+					return true;
+				}else{
+					return false;
+				}
+			}else
 				return false;
-			else
-				return true;
 		}catch (SQLException e){
+			connection.rollback();
 			e.printStackTrace();
 			throw e;
 		}finally {
@@ -163,19 +178,29 @@ public class TeacherDAOImpl implements TeacherDAO {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		String sql = "select * from ECollaborationWeb.teacher WHERE id = ?";
+		String sql = "select * from ECollaborationWeb.teacher,ecollaborationweb.user WHERE teacher.id = user.id AND teacher.id = ?";
 		try {
 			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, teacherId);
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
-
-
 				teacherBean.setId(resultSet.getInt("id"));
+				teacherBean.setSchoolId(resultSet.getString("schoolId"));
+				teacherBean.setName(resultSet.getString("name"));
+				teacherBean.setRole(resultSet.getInt("role"));
+				teacherBean.setSex(resultSet.getInt("sex"));
+				teacherBean.setEmail(resultSet.getString("email"));
+				teacherBean.setPhoneNumber(resultSet.getString("phoneNumber"));
+				teacherBean.setLogName(resultSet.getString("logName"));
+				teacherBean.setPassWord(resultSet.getString("passWord"));
+				teacherBean.setCreateDate(resultSet.getString("createDate"));
+				teacherBean.setPhoto(resultSet.getString("photo"));
+				teacherBean.setLastLogTime(resultSet.getString("lastLogTime"));
+				teacherBean.setActiveBefore(resultSet.getString("activeBefore"));
+				teacherBean.setNewFlag(resultSet.getInt("newsFlag"));
 				teacherBean.setHomePageUrl(resultSet.getString("homePageUrl"));
 				teacherBean.setNeedStudentsFlag(resultSet.getInt("NeedStudentsFlag"));
-
 				return teacherBean;
 			}else return null;
 		}catch (SQLException e){

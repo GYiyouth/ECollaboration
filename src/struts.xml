@@ -322,6 +322,29 @@
             <result name="fail">/fail.jsp</result>
             <result name="login">/登录界面</result>
         </action>
+
+        <!--老师修改个人信息-->
+        <action name="modifyTeacherInfo" class="actions.teacher.ModifyTeacherInfoAction" method="modifyTeacherInfo">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appModifyTeacherInfo" class="actions.teacher.ModifyTeacherInfoAction" method="appModifyTeacherInfo">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <!--学生修改个人信息-->
+        <action name="modifyStudentInfo" class="actions.student.ModifyStudentInfoAction" method="modifyStudentInfo">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appModifyStudentInfo" class="actions.student.ModifyStudentInfoAction" method="appModifyStudentInfo">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
         <!--修改计划-->
         <!--<action name="modifyPlan" class="actions.plan.PlanModifyAction" method="modifyPlan">-->
             <!--<result name="success">/success.jsp</result>-->
