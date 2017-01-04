@@ -196,7 +196,7 @@ public class AddManagerAction implements ServletRequestAware, ServletResponseAwa
         managerBean.setRole(role);
         managerBean.setEmail(email);
         managerBean.setPhoneNumber(phoneNumber);
-        managerBean.setLogName(email); //如果登录不等于邮箱，修改这个地方
+        managerBean.setLogName(logName); //如果登录不等于邮箱，修改这个地方
         managerBean.setPassWord(passWord);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         createDate = sdf.format(new Date());

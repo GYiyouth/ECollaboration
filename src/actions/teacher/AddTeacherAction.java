@@ -31,13 +31,15 @@ public class AddTeacherAction implements ServletRequestAware, ServletResponseAwa
     private String phoneNumber;
     private String logName;     //默认：email
     private String passWord;
-    private String createDate;  //生成
+    private String homePageUrl;
     private String photo;
+
+
+    private String createDate;  //生成
     private String lastLogTime; //生成
     private String activeBefore;//生成
     private Integer newsFlag;   //生成
 
-    private String homePageUrl;
     private Integer needStudentsFlag;
 
     private TeacherBean teacherBean;
@@ -206,7 +208,7 @@ public class AddTeacherAction implements ServletRequestAware, ServletResponseAwa
         teacherBean.setRole(role);
         teacherBean.setEmail(email);
         teacherBean.setPhoneNumber(phoneNumber);
-        teacherBean.setLogName(email); //如果登录不等于邮箱，修改这个地方
+        teacherBean.setLogName(logName); //如果登录不等于邮箱，修改这个地方
         teacherBean.setPassWord(passWord);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         createDate = sdf.format(new Date());

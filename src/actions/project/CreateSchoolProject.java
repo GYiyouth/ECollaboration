@@ -100,6 +100,7 @@ public class CreateSchoolProject implements SessionAware, ServletRequestAware, S
                 if(i!=null) {
                     projectBean = projectDAO.getProjectInfo(i);
                     if(projectBean!=null) {
+                        setProjectBean(projectBean);
                         System.out.println(projectBean.getGain()+"gain");
                         return "success";
                     }else
@@ -187,9 +188,10 @@ public class CreateSchoolProject implements SessionAware, ServletRequestAware, S
             try{
                 if(projectDAO.addProject(projectBean)!=null) {
                     projectBean = projectDAO.getProjectInfo(projectDAO.addProject(projectBean));
-                    if(projectBean!=null)
+                    if (projectBean != null){
+                        setProjectBean(projectBean);
                         return "success";
-                    else
+                    }else
                         return "fail";
                 }
                 else

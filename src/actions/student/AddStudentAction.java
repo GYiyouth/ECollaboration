@@ -278,7 +278,7 @@ public class AddStudentAction implements ServletRequestAware, ServletResponseAwa
         studentBean.setRole(role);
         studentBean.setEmail(email);
         studentBean.setPhoneNumber(phoneNumber);
-        studentBean.setLogName(email); //如果登录不等于邮箱，修改这个地方
+        studentBean.setLogName(logName); //如果登录不等于邮箱，修改这个地方
         studentBean.setPassWord(passWord);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         createDate = sdf.format(new Date());
