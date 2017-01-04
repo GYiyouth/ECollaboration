@@ -188,9 +188,9 @@
         <tr>
             <td align="center">任务名称</td>
         </tr>
-        <s:iterator value="teamBeans" >
+        <s:iterator value="taskBeans" >
             <tr>
-                <td align="center" ><a href=" 'getTeamInfoByTeamId?teamId=%{id}'/>"><s:property value="teamName"/></a ></td>
+                <td><a href="<s:url action='getTaskInfo?taskId=%{taskid}'/>"><s:property value="title"/></a ></td>
             </tr>
         </s:iterator>
     	</table>

@@ -220,7 +220,7 @@
 
       <!-- title (形状) -->
       <div id="u38" class="ax_形状" data-label="title">
-        <s:property value="teamName"/>
+        <s:property value="taskBean.title"/>
         <div id="u39" class="text">
           <p><span></span></p>
         </div>
@@ -228,7 +228,7 @@
 
       <!-- createdate (形状) -->
       <div id="u40" class="ax_形状" data-label="createdate">
-        <s:property value="teamName"/>
+        <s:property value="taskBean.createdate"/>
         <div id="u41" class="text">
           <p><span></span></p>
         </div>
@@ -236,7 +236,7 @@
 
       <!-- targetdate (形状) -->
       <div id="u42" class="ax_形状" data-label="targetdate">
-        <s:property value="teamName"/>
+        <s:property value="taskBean.targetdate"/>
         <div id="u43" class="text">
           <p><span></span></p>
         </div>
@@ -244,7 +244,7 @@
 
       <!-- content (形状) -->
       <div id="u44" class="ax_形状" data-label="content">
-      	<s:property value="teamName"/>
+      	<s:property value="taskBean.content"/>
         <div id="u45" class="text">
           <p><span></span></p>
         </div>

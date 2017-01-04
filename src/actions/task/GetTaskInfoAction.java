@@ -2,7 +2,6 @@ package actions.task;
 
 import DAO.taskDAO.TaskDAO;
 import DAO.taskDAO.TaskDAOImpl;
-import bean.domain.ProjectBean;
 import bean.domain.TaskBean;
 import net.sf.json.JSONObject;
 import org.apache.struts2.interceptor.ServletRequestAware;
@@ -16,20 +15,15 @@ import java.util.ArrayList;
 import java.util.Map;
 
 /**
- * 查询项目的所有任务
- * 需要参数：projectId
- * 返回 ArrayList<TaskBean>
  * Created by GR on 2017/1/5.
  */
-public class GetTaskListAction  implements SessionAware, ServletRequestAware, ServletResponseAware {
+public class GetTaskInfoAction  implements SessionAware, ServletRequestAware, ServletResponseAware {
 
     private Map<String, Object> session;
     private HttpServletRequest request;
     private HttpServletResponse response;
 
-    private Integer projectId;
-
-    private Integer id ;
+    private Integer taskId;
     private String title ;
     private String content ;
     private Integer creatorId ;
@@ -37,25 +31,17 @@ public class GetTaskListAction  implements SessionAware, ServletRequestAware, Se
     private String modifyDate ;
     private String beginDate ;
     private String targetDate ;
-    private ArrayList<TaskBean> taskBeans;
 
-    public String getTaskList(){
+    private TaskBean taskBean;
+
+    public String getTaskInfo(){
         TaskDAO taskDAO = new TaskDAOImpl();
         try {
-            ArrayList<TaskBean> taskBeans = new ArrayList<>();
-            ArrayList<Integer> taskIds = taskDAO.getTaskIdListByProjectId(projectId);
-            if(taskIds == null || taskIds.size() == 0){
+            TaskBean taskBean = taskDAO.getTaskInfo(taskId);
+            if (taskBean == null) {
                 return "fail";
-            }else{
-                for(int i = 0; i < taskIds.size(); i++){
-                    TaskBean taskBean = taskDAO.getTaskInfo(taskIds.get(i));
-                    if(taskBean != null){
-                        taskBeans.add(taskBean);
-                    }else{
-                        return "fail";
-                    }
-                }
-                setTaskBeans(taskBeans);
+            } else {
+                setTaskBean(taskBean);
                 return "success";
             }
         }catch (Exception e){
@@ -64,11 +50,11 @@ public class GetTaskListAction  implements SessionAware, ServletRequestAware, Se
         }
     }
 
-    public void appGetTaskList() throws Exception{
+    public void appGetTaskInfo() throws Exception{
         JSONObject jsonObject = new JSONObject();
-        if (getTaskList().equals("success")){
+        if (getTaskInfo().equals("success")){
 
-            jsonObject.put("taskBeans", getTaskBeans());
+            jsonObject.put("taskBean", getTaskBean());
             jsonObject.put("result", "success");
             this.response.getWriter().write(jsonObject.toString());
             this.response.getWriter().flush();
@@ -82,20 +68,20 @@ public class GetTaskListAction  implements SessionAware, ServletRequestAware, Se
     }
 
 
-    public Integer getProjectId() {
-        return projectId;
+    public Integer getTaskId() {
+        return taskId;
     }
 
-    public void setProjectId(Integer projectId) {
-        this.projectId = projectId;
+    public void setTaskId(Integer taskId) {
+        this.taskId = taskId;
     }
 
-    public Integer getId() {
-        return id;
+    public TaskBean getTaskBean() {
+        return taskBean;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setTaskBean(TaskBean taskBean) {
+        this.taskBean = taskBean;
     }
 
     public String getTitle() {
@@ -154,13 +140,6 @@ public class GetTaskListAction  implements SessionAware, ServletRequestAware, Se
         this.targetDate = targetDate;
     }
 
-    public ArrayList<TaskBean> getTaskBeans() {
-        return taskBeans;
-    }
-
-    public void setTaskBeans(ArrayList<TaskBean> taskBeans) {
-        this.taskBeans = taskBeans;
-    }
 
     @Override
     public void setSession(Map<String, Object> session) {
@@ -182,5 +161,8 @@ public class GetTaskListAction  implements SessionAware, ServletRequestAware, Se
         response.setCharacterEncoding("UTF-8");
         this.response = response;
     }
+
+
+
 
 }

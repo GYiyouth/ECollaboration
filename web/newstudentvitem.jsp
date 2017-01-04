@@ -457,11 +457,11 @@
       </div>
 
       <!-- studentshowmission (提交按钮) -->
-      <form action="">
+
       <div id="u94" class="ax_提交按钮" data-label="studentshowmission">
-        <input id="u94_input" type="submit" value="查看任务"/>
+        <a href="<s:url action='getProjectInfoByProjectId?projectId=%{projectBean.id}'/>">查看任务</a >
       </div>
-      </form>
+
       
     </div>
   </body>
