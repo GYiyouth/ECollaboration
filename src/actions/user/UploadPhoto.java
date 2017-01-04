@@ -1,5 +1,7 @@
 package actions.user;
 
+import DAO.userDAO.UserDAO;
+import DAO.userDAO.UserDAOImpl;
 import bean.BusinessBean.file.FileIOBean;
 import bean.domain.UserBean;
 import net.sf.json.JSONObject;
@@ -35,7 +37,7 @@ public class UploadPhoto implements SessionAware,ServletRequestAware, ServletRes
 	private String fileContentType;
 
 	//想让文件存储在哪里，就直接写在这里就好了，如果为空，则会和操作日志放在一个文件夹下。
-	private String savePath = "/web/upload/headPhotos";
+//	private String savePath = "/web/upload/headPhotos";
 
 	private String tempSavePath = "web/upload/headPhotos";
 
@@ -43,20 +45,26 @@ public class UploadPhoto implements SessionAware,ServletRequestAware, ServletRes
 		UserBean userBean = (UserBean) session.get("userBean");
 		setTempSavePath( ServletActionContext.getServletContext().getRealPath("")
 				+ getTempSavePath() + "/" + userBean.getId() );
-		setSavePath( ServletActionContext.getServletContext().getRealPath("")+
-				"../../.." + getSavePath() + "/" + userBean.getId());
+//		setSavePath( ServletActionContext.getServletContext().getRealPath("")+
+//				"../../.." + getSavePath() + "/" + userBean.getId());
 		//上传文件的逻辑代码
 //		FileIOBean fileIOBean = new FileIOBean();
 		try {
 			int a = getFileFileName().lastIndexOf(".");
 			//改变文件名为用户id
-			String fileName = userBean.getId() + getFileFileName().substring(a);
-			System.out.println("savePath = " + savePath);
+			String fileName = userBean.getId() + ".png";
+//			System.out.println("savePath = " + savePath);
 			System.out.println("tempSavePath = " + tempSavePath);
 
 			uploadFile( getTempSavePath(), fileName, getFile());
 			System.out.println(2);
-			uploadFile( getSavePath(), fileName, getFile());
+//			uploadFile( getSavePath(), fileName, getFile());
+			userBean.setPhoto(tempSavePath+fileName);
+			session.remove("userBean");
+			session.put("userBean", userBean);
+			UserDAO userDAO = new UserDAOImpl();
+			userDAO.updateInfo(userBean);
+
 			System.out.println(1);
 			return "success";
 		}catch (Exception e){
@@ -66,24 +74,31 @@ public class UploadPhoto implements SessionAware,ServletRequestAware, ServletRes
 	}
 
 
-	public String appUploadPic() throws Exception{
+	public void appUploadPic() throws Exception{
 		JSONObject jsonObject = new JSONObject();
 		System.out.println("appUploadPic");
 		try {
-			appEditInfo();
+			String path = appEditInfo();
+			UserBean userBean = (UserBean) session.get("userBean");
+			userBean.setPhoto(path);
+			session.remove("userBean");
+			session.put("userBean", userBean);
 			jsonObject.put("result", "success");
-			jsonObject.put("photoPath", getSavePath());
+			jsonObject.put("photoPath", userBean.getPhoto());
+			jsonObject.put("userBean", userBean);
+			UserDAO userDAO = new UserDAOImpl();
+			userDAO.updateInfo(userBean);
 			this.response.getWriter().write(jsonObject.toString());
 			this.response.getWriter().flush();
 			this.response.getWriter().close();
-			return "success";
+//			return "success";
 		}catch (Exception e){
 			jsonObject.put("result", "fail");
 			this.response.getWriter().write(jsonObject.toString());
 			this.response.getWriter().flush();
 			this.response.getWriter().close();
 			e.printStackTrace();
-			return "fail";
+//			return "fail";
 		}
 	}
 
@@ -110,14 +125,14 @@ public class UploadPhoto implements SessionAware,ServletRequestAware, ServletRes
 	public void setFileContentType(String fileContentType) {
 		this.fileContentType = fileContentType;
 	}
-
-	public String getSavePath() {
-		return savePath;
-	}
-
-	public void setSavePath(String savePath) {
-		this.savePath = savePath;
-	}
+//
+//	public String getSavePath() {
+//		return savePath;
+//	}
+//
+//	public void setSavePath(String savePath) {
+//		this.savePath = savePath;
+//	}
 
 	/**
 	 * Sets the Map of session attributes in the implementing class.
@@ -191,12 +206,23 @@ public class UploadPhoto implements SessionAware,ServletRequestAware, ServletRes
 
 		}
 	}
-	public void appEditInfo( ) throws Exception{
+	public String appEditInfo( ) throws Exception{
 		InputStream in = request.getInputStream();
 		//里面填写你的工程目录下的WebContent
 		UserBean userBean = (UserBean)session.get("userBean");
-		String path = request.getServletContext().getRealPath("") + userBean.getId() +"/"+userBean.getId()+".png";
-		FileOutputStream fos = new FileOutputStream(path);
+		String path = request.getServletContext().getRealPath("") + "upload/headphotos/" + userBean.getId() ;
+		File tempFile = new File(path);
+		if (!tempFile.exists()){
+			tempFile.mkdirs();
+
+		}
+		String path1 = path +"/"+userBean.getId()+".png";
+
+		File file1 = new File(path1);
+		file1.createNewFile();
+		path = path ;
+//		tempFile = new File(path);
+		FileOutputStream fos = new FileOutputStream(path+"/"+userBean.getId()+".png");
 //		FileOutputStream fos2 = new FileOutputStream((ServletActionContext.getServletContext().getRealPath("")+
 //				"../../.." + userBean.getId() +"/"+userBean.getId()+".png"));
 		int len = 0;
@@ -208,11 +234,25 @@ public class UploadPhoto implements SessionAware,ServletRequestAware, ServletRes
 			fos.write(bytes, 0, len);
 			fos.flush();
 		}
-		File source = new File(path);
-		File dest = new File(ServletActionContext.getServletContext().getRealPath("")+
-				"../../../" + userBean.getId() +"/"+userBean.getId()+".png");
 		fos.close();
-		Files.copy(source.toPath(), dest.toPath() );
-		return ;
+//		File source = new File(path);
+//		String realPath = ServletActionContext.getServletContext().getRealPath("")+
+//				"../../../web/upload/headphotos/" + userBean.getId() ;
+//		File dest = new File(realPath);
+//
+//
+//		if (!dest.exists()){
+//			dest.mkdirs();
+//
+////			dest.createNewFile();
+//		}
+//		realPath += "/"+userBean.getId();
+//		dest = new File(realPath);
+//		if (dest.exists()){
+//			dest.delete();
+//		}
+//		Files.copy(source.toPath(), dest.toPath() );
+		path += "/"+userBean.getId()+".png";
+		return path;
 	}
 }

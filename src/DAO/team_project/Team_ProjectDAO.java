@@ -1,5 +1,11 @@
 package DAO.team_project;
 
+import bean.domain.TeamBean;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * Created by geyao on 2016/12/25.
  */
@@ -41,5 +47,13 @@ public interface Team_ProjectDAO {
 	 * @throws Exception
 	 */
 	public Integer getAccess(int team_projectId, int taskId) throws Exception;
+
+	/**
+	 * 获取
+	 * @param projectId
+	 * @return
+	 * @throws SQLException
+	 */
+	public ArrayList<TeamBean> getTeamBeanByProjectId(int projectId) throws SQLException;
 
 }
