@@ -34,8 +34,8 @@ public class GetMyJoinTeamInfoAction implements ServletRequestAware, ServletResp
 //    private ArrayList<ArrayList> teamInfoList;
     private ArrayList<PlanBean> teamPlanBeans;
     private ArrayList<StudentBean> studentBeans;    //学生信息集合
-    private ArrayList<Integer> codeSums;    //代码行数集合
-    private ArrayList<Integer> fileSums;    //文件数集合
+    private ArrayList<String> codeSums;    //代码行数集合
+    private ArrayList<String> fileSums;    //文件数集合
     private ArrayList<ArrayList<PlanBean>> planBeansAllStudents;  //所有学生计划集合
 
 
@@ -54,8 +54,8 @@ public class GetMyJoinTeamInfoAction implements ServletRequestAware, ServletResp
                 System.out.println("teamId" + teamId);
                 ArrayList<PlanBean> teamPlanBeans = new ArrayList<PlanBean>();
                 ArrayList<StudentBean> studentBeans = new ArrayList<>();
-                ArrayList<Integer> codeSums = new ArrayList<>();
-                ArrayList<Integer> fileSums = new ArrayList<>();
+                ArrayList<String> codeSums = new ArrayList<>();
+                ArrayList<String> fileSums = new ArrayList<>();
                 ArrayList<ArrayList<PlanBean>> planBeansAllStudents = new ArrayList<>();
                 ArrayList<Integer> studentIds = studentDaoImpl.getStudentIdByTeamIdProjectId(teamId, projectId);
                 System.out.println(studentIds.get(0) + ":0");
@@ -76,8 +76,8 @@ public class GetMyJoinTeamInfoAction implements ServletRequestAware, ServletResp
                     ArrayList studentInfo = new ArrayList();
                     StudentBean studentBean = studentDaoImpl.getInfoById(studentIds.get(i));
                     System.out.println("学生个人主页" + studentBean.getHomePageUrl());
-                    int codeSum = codeDaoImpl.getCodeRowsSum(studentIds.get(i), projectId);
-                    int fileSum = fileDaoImpl.getFileSum(studentIds.get(i), projectId);
+                    String codeSum = codeDaoImpl.getCodeRowsSum(studentIds.get(i), projectId).toString();
+                    String fileSum = fileDaoImpl.getFileSum(studentIds.get(i), projectId).toString();
                     System.out.println("代码：" + codeSum + "文件" + fileSum);
 
                     ArrayList<PlanBean> planBeans = new ArrayList();
@@ -170,19 +170,19 @@ public class GetMyJoinTeamInfoAction implements ServletRequestAware, ServletResp
         this.studentBeans = studentBeans;
     }
 
-    public ArrayList<Integer> getCodeSums() {
+    public ArrayList<String> getCodeSums() {
         return codeSums;
     }
 
-    public void setCodeSums(ArrayList<Integer> codeSums) {
+    public void setCodeSums(ArrayList<String> codeSums) {
         this.codeSums = codeSums;
     }
 
-    public ArrayList<Integer> getFileSums() {
+    public ArrayList<String> getFileSums() {
         return fileSums;
     }
 
-    public void setFileSums(ArrayList<Integer> fileSums) {
+    public void setFileSums(ArrayList<String> fileSums) {
         this.fileSums = fileSums;
     }
 
