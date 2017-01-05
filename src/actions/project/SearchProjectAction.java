@@ -112,7 +112,7 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 			for (ProjectBean projectBean : getSearchResultHashMap().values()){
 				arrayList.add(projectBean);
 			}
-			jsonObject.put("show2TimesProjectBeans", show1TimesProjectBeans);
+			jsonObject.put("show1TimesProjectBeans", show1TimesProjectBeans);
 			jsonObject.put("show2TimesProjectBeans", show2TimesProjectBeans);
 			jsonObject.put("show3TimesProjectBeans", show3TimesProjectBeans);
 			jsonObject.put("show4TimesProjectBeans", show4TimesProjectBeans);
@@ -131,7 +131,7 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 	private HashMap<Integer, ProjectBean> analyse(String keyWord) throws SQLException {
 		if (keyWord == null )
 			return new HashMap<>();
-		this.keyWord = keyWord.trim();
+		this.keyWord = keyWord.trim().toLowerCase();
 		if (this.keyWord.equals(""))
 			return new HashMap<>();
 
@@ -186,18 +186,20 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 			//检索关键词
 			if (keyWordFlag == true){
 				for (String key : keyWordList){
-					if (       ( temp.getRequirement() != null && temp.getRequirement().contains(key) )
-							|| (temp.getName() != null && temp.getName().contains(key) )
-							|| (temp.getGain() != null && temp.getGain().contains(key) )
-							|| (temp.getInfo() != null && temp.getInfo().contains(key) )
-							|| (temp.getKeyWord() != null && temp.getKeyWord().contains(key)) )
+					key = key.toLowerCase();
+					if (       ( temp.getRequirement() != null && temp.getRequirement().toLowerCase().contains(key) )
+							|| (temp.getName() != null && temp.getName().toLowerCase().contains(key) )
+							|| (temp.getGain() != null && temp.getGain().toLowerCase().contains(key) )
+							|| (temp.getInfo() != null && temp.getInfo().toLowerCase().contains(key) )
+							|| (temp.getKeyWord() != null && temp.getKeyWord().toLowerCase().contains(key)) )
 						result3.put(temp.getId(), temp);
 				}
 			}
 			//最后在每个项目的名字里匹配
 			if (proNameFlag == true){
 				for (String name : this.getProNameList()){
-					if (temp.getName() != null && temp.getName().contains(name)){
+					name = name.toLowerCase();
+					if (temp.getName() != null && temp.getName().toLowerCase().contains(name)){
 						result4.put(temp.getId(), temp);
 					}
 				}
@@ -274,9 +276,9 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 	}
 
 	private boolean analyseKeyWord(String element){
-		if (keyWordListDB.contains(element)) {
+		if (keyWordListDB.contains(element.toLowerCase())) {
 			keyWordFlag = true;
-			keyWordList.add(element);
+			keyWordList.add(element.toLowerCase());
 			return true;
 		}
 		else
@@ -285,7 +287,7 @@ public class SearchProjectAction implements SessionAware, ServletRequestAware, S
 
 	private boolean analyseTeacher(String element){
 		for (TeacherBean bean : teacherBeanDB.values()){
-			if (bean.getName().contains(element)){
+			if (bean.getName().contains(element.toLowerCase())){
 				teacherFlag = true;
 				teacherList.add(bean);
 			}else {

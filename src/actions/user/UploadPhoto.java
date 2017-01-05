@@ -37,7 +37,7 @@ public class UploadPhoto implements SessionAware,ServletRequestAware, ServletRes
 	private String fileContentType;
 
 	//想让文件存储在哪里，就直接写在这里就好了，如果为空，则会和操作日志放在一个文件夹下。
-//	private String savePath = "/web/upload/headPhotos";
+	private String savePath = "/web/upload/headPhotos";
 
 	private String tempSavePath = "web/upload/headPhotos";
 
@@ -53,12 +53,12 @@ public class UploadPhoto implements SessionAware,ServletRequestAware, ServletRes
 			int a = getFileFileName().lastIndexOf(".");
 			//改变文件名为用户id
 			String fileName = userBean.getId() + ".png";
-//			System.out.println("savePath = " + savePath);
+			System.out.println("savePath = " + savePath);
 			System.out.println("tempSavePath = " + tempSavePath);
 
 			uploadFile( getTempSavePath(), fileName, getFile());
 			System.out.println(2);
-//			uploadFile( getSavePath(), fileName, getFile());
+			uploadFile( getSavePath(), fileName, getFile());
 			userBean.setPhoto(tempSavePath+fileName);
 			session.remove("userBean");
 			session.put("userBean", userBean);
@@ -125,14 +125,14 @@ public class UploadPhoto implements SessionAware,ServletRequestAware, ServletRes
 	public void setFileContentType(String fileContentType) {
 		this.fileContentType = fileContentType;
 	}
-//
-//	public String getSavePath() {
-//		return savePath;
-//	}
-//
-//	public void setSavePath(String savePath) {
-//		this.savePath = savePath;
-//	}
+
+	public String getSavePath() {
+		return savePath;
+	}
+
+	public void setSavePath(String savePath) {
+		this.savePath = savePath;
+	}
 
 	/**
 	 * Sets the Map of session attributes in the implementing class.
@@ -235,24 +235,49 @@ public class UploadPhoto implements SessionAware,ServletRequestAware, ServletRes
 			fos.flush();
 		}
 		fos.close();
-//		File source = new File(path);
-//		String realPath = ServletActionContext.getServletContext().getRealPath("")+
-//				"../../../web/upload/headphotos/" + userBean.getId() ;
-//		File dest = new File(realPath);
-//
-//
-//		if (!dest.exists()){
-//			dest.mkdirs();
-//
-////			dest.createNewFile();
-//		}
-//		realPath += "/"+userBean.getId();
+		File source = new File(path1);
+		String realPath = ServletActionContext.getServletContext().getRealPath("")+
+				"../../../web/upload/headphotos/" + userBean.getId() ;
+
+		File dest = new File(realPath);
+
+
+		if (!dest.exists()){
+			dest.mkdirs();
+		}
+		realPath += "/"+userBean.getId() + ".png";
+
+		dest = new File(realPath);
+		if (!dest.exists())
+			dest.createNewFile();
+		FileInputStream fi = null;
+		FileOutputStream fo = null;
+		FileChannel fin = null;
+		FileChannel fout = null;
+
+		try {
+			System.out.println("source是"  + source);
+			System.out.println("dest是" + dest);
+			fi = new FileInputStream(source);
+			fo = new FileOutputStream(dest);
+
+			System.out.println("fi是" + fi);
+
+			System.out.println("fo是" + fo);
+			fin = fi.getChannel();//得到对应的文件通道
+			fout = fo.getChannel();//得到对应的文件通道
+			System.out.println("fin是" + fin);
+			System.out.println("fout是" + fout);
+			fin.transferTo(0, fin.size(), fout);//连接两个通道，并且从in通道读取，然后写入out通道
+		}catch (IOException e){
+			e.printStackTrace();
+		}
 //		dest = new File(realPath);
 //		if (dest.exists()){
 //			dest.delete();
 //		}
 //		Files.copy(source.toPath(), dest.toPath() );
 		path += "/"+userBean.getId()+".png";
-		return path;
+		return "upload/headphotos/" + userBean.getId() + "/" + userBean.getId() + ".png";
 	}
 }
