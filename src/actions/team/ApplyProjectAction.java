@@ -9,9 +9,11 @@ import DAO.teamDAO.TeamDAOImpl;
 import bean.domain.StudentBean;
 import bean.domain.TeamBean;
 import bean.domain.UserBean;
+import net.sf.json.JSONObject;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
+import smallTools.JSONHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +23,7 @@ import java.util.Map;
 
 /**
  * form里要有teamId, projectId
- * 会验证team，project是否合法。
+ * 会验证team，project是否合法。申请人必须是团队创始人
  * Created by geyao on 2016/12/24.
  */
 public class ApplyProjectAction implements SessionAware, ServletResponseAware, ServletRequestAware{
@@ -33,25 +35,29 @@ public class ApplyProjectAction implements SessionAware, ServletResponseAware, S
 
 	private StudentBean studentBean;
 
-	public String execute() throws Exception {
+	public void execute() throws Exception {
+		JSONObject jsonObject = new JSONObject();
 		UserBean userBean = (UserBean) this.session.get("userBean");
 		TeamDAO teamDAO = new TeamDAOImpl();
 		ProjectDAO projectDAO = new ProjectDAOImpl();
 		TeamBean teamBean = teamDAO.getTeamInfo(teamId);
-		if (teamBean == null)
-			return "fail";
-		if (teamBean.getCreatorId() != userBean.getId() )
-			return "fail";
-		if (projectDAO.getProjectInfo(projectId) == null)
-			return "fail";
+		if (teamBean == null ||
+				teamBean.getCreatorId() != userBean.getId() ||
+				projectDAO.getProjectInfo(projectId) == null ){
+			JSONHandler.sendJSON(jsonObject, response);
+			return;
+		}
+
 
 		ArrayList<Integer> prosList = projectDAO.getProjectIdListByTeamId(teamId);
 		ArrayList<Integer> prosList2 = projectDAO.checkSchoolProjectByIdList(prosList, 0);
 		if (prosList2 == null || !prosList2.contains(projectId)){
 			teamDAO.setTeamProject(teamId, projectId);
-			return "success";
+			jsonObject.put("success", "fail");
+			JSONHandler.sendJSON(jsonObject, response);
+			return;
 		}else
-			return "fail";
+			JSONHandler.sendJSON(jsonObject, response);
 	}
 
 	/**
