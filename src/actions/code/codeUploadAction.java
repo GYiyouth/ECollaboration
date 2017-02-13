@@ -15,6 +15,8 @@ import java.io.File;
 import java.util.Map;
 
 /**
+ * 此功能被取消，代码量的记录，要求使用者将工程上传至Github，由我们从github中拿到代码量。
+ *
  * 上传代码，需要登录才能进行的操作
  * 此时session里必须要要有"userId" "projectId" "teamId"
  * 前端form里，指定 uploadCode()方法，name指定为"file"

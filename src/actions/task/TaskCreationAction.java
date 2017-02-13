@@ -9,10 +9,17 @@ import DAO.teacherDAO.TeacherDAOImpl;
 import bean.domain.TaskBean;
 import bean.domain.TeacherBean;
 import bean.domain.UserBean;
+import net.sf.json.JSONObject;
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
+import smallTools.JSONHandler;
 import smallTools.Time;
 import smallTools.TimeImpl;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,17 +30,23 @@ import java.util.Map;
  * title，不可为空，content，可为空，beginDate可为空，targetDate不可为空
  * Created by geyao on 2016/12/25.
  */
-public class TaskCreationAction implements SessionAware{
+public class TaskCreationAction implements SessionAware, ServletRequestAware, ServletResponseAware {
 	private Map session;
 	private List<String> projects;
 	private String title;
 	private String content;
 	private String beginDate;
 	private String targetDate;
+	private HttpServletRequest request;
+	private HttpServletResponse response;
 
-	public String execute() throws Exception {
-		if (projects == null || projects.size() <1 )
-			return "fail";
+	public void execute() throws Exception {
+		JSONObject jsonObject = new JSONObject();
+		if (projects == null || projects.size() <1 ){
+			JSONHandler.sendJSON(jsonObject, response);
+			return;
+		}
+
 		TeacherDAO teacherDAO = new TeacherDAOImpl();
 		ProjectDAO projectDAO = new ProjectDAOImpl();
 		TaskDAO taskDAO = new TaskDAOImpl();
@@ -44,14 +57,19 @@ public class TaskCreationAction implements SessionAware{
 			int i = Integer.parseInt(str);
 			if (projectDAO.getProjectInfo(i) != null)
 				projects.add(i);
-			else
-				return "fail";
+			else{
+				JSONHandler.sendJSON(jsonObject, response);
+				return;
+			}
 		}
 		if (projects.size() > 0) {
 			taskDAO.addTask(taskBean, projects);
-			return "success";
-		}else
-			return "fail";
+			jsonObject.put("result", "success");
+			JSONHandler.sendJSON(jsonObject, response);
+		}else{
+			JSONHandler.sendJSON(jsonObject, response);
+			return;
+		}
 	}
 
 	private TaskBean taskBeanInit(int teacherId){
@@ -117,5 +135,20 @@ public class TaskCreationAction implements SessionAware{
 
 	public void setTargetDate(String targetDate) {
 		this.targetDate = targetDate;
+	}
+
+	@Override
+	public void setServletRequest(HttpServletRequest request) {
+		this.request = request;
+		try {
+			this.request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void setServletResponse(HttpServletResponse response) {
+		this.response = response;
 	}
 }
