@@ -392,7 +392,7 @@ public class CodeDAOImpl implements CodeDAO {
 		String sql1 = "SELECT * FROM code, student_team WHERE " +
 				" code.teamId = ? AND code.projectId = ? AND " +
 				" code.studentId = student_team.studentId ORDER BY " +
-				" leaderFlag DESC, studentId ;";
+				" leaderFlag DESC;";
 		String sql2 = "";
 		String sql3 = "";
 		HashMap<Integer, CodeBean> hashMap = new HashMap<>();

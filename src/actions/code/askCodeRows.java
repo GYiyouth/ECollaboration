@@ -6,26 +6,33 @@ import DAO.studentDAO.StudentDAO;
 import DAO.studentDAO.StudentDaoImpl;
 import bean.domain.CodeBean;
 import com.sun.org.apache.bcel.internal.classfile.Code;
+import net.sf.json.JSONObject;
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
+import smallTools.JSONHandler;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * 查询某个人、团队，在特定项目下的代码量
  * 需要：projectId不可为空
- *      studentId在查询具体某个人的代码量时不可为空
- *      teamId在查询整个团队代码量时不可为空，此时studentId可以为空
- * 提供：团队查询时：
- *      teamRows：该团队的代码量
- *      studentRows：学生代码量，为哈希表，id-rows
- *      students：学生编号-id键值对。将组长放在1，组员放在1 2 3
- *      个人查询时：
- *      提供
- *      studentRow
+ *      getStudentCodes查询某个学生在该项目下的代码量
+ *          额外需要studentId
+ *          返回 rows
+ *      getTeamCodes查询某个团队在该项目下的代码量
+ *          额外需要teamId
+ *          返回 studentNum - 该团队人数
+ *              xid - x 为从 1～n的数字，第x位成员的id
+ *              xrow - x 为1～n的数字，第x位成员的代码量
+ *              teamRows - 总代码量
  * Created by geyao on 2017/1/3.
  */
-public class askCodeRows implements SessionAware{
+public class askCodeRows implements ServletRequestAware, ServletResponseAware, SessionAware{
 
 	private Integer projectId;
 	private Integer teamId;
@@ -36,22 +43,31 @@ public class askCodeRows implements SessionAware{
 	private HashMap<Integer, CodeBean> CodeBeans = new HashMap<>();
 	private HashMap<Integer, Integer> students = new HashMap<>();
 	private HashMap<Integer, Integer> studentRows = new HashMap<>();
+	private HttpServletRequest request;
+	private HttpServletResponse response;
+
+
 
 	private Map session;
 
-	public String getStudentCodes() throws Exception {
+	public void getStudentCodes() throws Exception {
 		CodeDAO codeDAO = new CodeDAOImpl();
 		int rows = codeDAO.getCodeRowsSum(studentId, projectId);
 		setStudentRow(rows);
-		return "success";
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("result", "success");
+		jsonObject.put("rows", studentRow);
+		JSONHandler.sendJSON(jsonObject, response);
 	}
 
-	public String getTeamCodes() throws Exception{
+	public void getTeamCodes() throws Exception{
+		JSONObject jsonObject = new JSONObject();
 		CodeDAO codeDAO = new CodeDAOImpl();
 		setCodeBeans(codeDAO.getCodeBeans(projectId, teamId));
 		StudentDAO studentDAO = new StudentDaoImpl();
 		this.students = studentDAO.getStudentIdMapByTeamId(teamId);
 		int studentNum = students.size();
+		jsonObject.put("studentNum", studentNum);
 		//遍历每一个学生
 		for (int i =1; i <= studentNum; i++){
 			int studentId = students.get(i);
@@ -63,15 +79,24 @@ public class askCodeRows implements SessionAware{
 				if (tempBean.getStudentId() == studentId) {
 					tempRows = studentRows.get(i) + tempBean.getRow();
 					studentRows.replace(i, tempRows);
+					jsonObject.put(i + "id", studentId);
+					jsonObject.put(i + "row", tempRows);
 				}
 			}
 		}
 		//处理团队总代码
+		teamRows = 0;
 		for (int rows : studentRows.values()){
 			teamRows += rows;
 		}
-		return "success";
+
+		jsonObject.put("result", "success");
+		jsonObject.put("teamRows", teamRows);
+		JSONHandler.sendJSON(jsonObject, response);
 	}
+
+
+
 
 	public Integer getProjectId() {
 		return projectId;
@@ -149,5 +174,21 @@ public class askCodeRows implements SessionAware{
 
 	public void setStudentRows(HashMap<Integer, Integer> studentRows) {
 		this.studentRows = studentRows;
+	}
+
+	@Override
+	public void setServletRequest(HttpServletRequest request) {
+		this.request = request;
+		try {
+			this.request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void setServletResponse(HttpServletResponse response) {
+		this.response = response;
+		this.response.setCharacterEncoding("UTF-8");
 	}
 }

@@ -42,7 +42,7 @@ public class GetMyJoinTeamsAction implements ServletRequestAware, ServletRespons
     public void setServletRequest(HttpServletRequest request) {
         this.request = request;
         try {
-            request.setCharacterEncoding("UTF-8");
+            this.request.setCharacterEncoding("UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
