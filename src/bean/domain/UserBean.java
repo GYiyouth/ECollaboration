@@ -4,14 +4,14 @@ public class UserBean {
     private Integer id;
     private String schoolId;
     private String name;
-    private Integer sex;	//1:男 2：女
-    private Integer character;//
+    private Integer sex;	//1:男 0：女
+    private Integer role;//1管理员，2教师，3学生
     private String email;
     private String phoneNumber;
     private String logName;
     private String passWord;
     private String createDate;
-    private String photo;
+    private String photo; //路径，默认放在web.upload.headPhotos下
     private String lastLogTime;
     private String activeBefore;
     private int newFlag;
@@ -39,11 +39,11 @@ public class UserBean {
     public void setSex(Integer sex) {
         this.sex = sex;
     }
-    public Integer getCharacter() {
-        return character;
+    public Integer getRole() {
+        return role;
     }
-    public void setCharacter(Integer character) {
-        this.character = character;
+    public void setRole(Integer role) {
+        this.role = role;
     }
     public String getEmail() {
         return email;
@@ -107,7 +107,7 @@ public class UserBean {
                 ", schoolId='" + schoolId + '\'' +
                 ", name='" + name + '\'' +
                 ", sex=" + sex +
-                ", character=" + character +
+                ", character=" + role +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", logName='" + logName + '\'' +

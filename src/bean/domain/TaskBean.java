@@ -1,7 +1,5 @@
 package bean.domain;
 
-import java.util.Date;
-
 /**
  * Created by geyao on 2016/11/7.
  */
@@ -10,10 +8,10 @@ public class TaskBean {
 	private String title = null;
 	private String content = null;
 	private Integer creatorId = null;
-	private Date createDate = null;
-	private Date modifyDate = null;
-	private Date beginDate = null;
-	private Date targetDate = null;
+	private String createDate = null;
+	private String modifyDate = null;
+	private String beginDate = null;
+	private String targetDate = null;
 
 	public TaskBean() {
 		super();
@@ -51,35 +49,49 @@ public class TaskBean {
 		this.creatorId = creatorId;
 	}
 
-	public Date getCreateDate() {
+	public String getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
 
-	public Date getModifyDate() {
+	public String getModifyDate() {
 		return modifyDate;
 	}
 
-	public void setModifyDate(Date modifyDate) {
+	public void setModifyDate(String modifyDate) {
 		this.modifyDate = modifyDate;
 	}
 
-	public Date getBeginDate() {
+	public String getBeginDate() {
 		return beginDate;
 	}
 
-	public void setBeginDate(Date beginDate) {
+	public void setBeginDate(String beginDate) {
 		this.beginDate = beginDate;
 	}
 
-	public Date getTargetDate() {
+	public String getTargetDate() {
 		return targetDate;
 	}
 
-	public void setTargetDate(Date targetDate) {
+	public void setTargetDate(String targetDate) {
 		this.targetDate = targetDate;
+	}
+
+	@Override
+	public String toString() {
+		return "TaskBean{" +
+				"id=" + id +
+				", title='" + title + '\'' +
+				", content='" + content + '\'' +
+				", creatorId=" + creatorId +
+				", createDate='" + createDate + '\'' +
+				", modifyDate='" + modifyDate + '\'' +
+				", beginDate='" + beginDate + '\'' +
+				", targetDate='" + targetDate + '\'' +
+				'}';
 	}
 }

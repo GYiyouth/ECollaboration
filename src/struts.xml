@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <!--<constant name="struts.devMode" value="true"/>-->
+    <package name="log" extends="struts-default" >
+
+        <interceptors>
+            <!--定义权限验证拦截器 -->
+            <interceptor name="myLoginValidation"
+                         class="interceptors.com.LogInValidationInterceptor">
+            </interceptor>
+            <!--定义拦截器栈 -->
+            <interceptor-stack name="loginValidation">
+                <interceptor-ref name="defaultStack" />
+                <interceptor-ref name="myLoginValidation" />
+            </interceptor-stack>
+        </interceptors>
+
+        <!-- 定义默认拦截器 -->
+        <default-interceptor-ref name="loginValidation" />
+
+        <action name="logIn" class="actions.logIn.LogInAction" method="log">
+            <result name="success">/ImageTestJSP.jsp</result>
+            <result name="fail">/QuickTime%20Player.jpg</result>
+            <result name="student" type="redirect">getMyJoinProjectByStudent</result>
+            <result name="teacher" type="redirect">getMyJoinProjectByTeacher</result>
+
+        </action>
+
+        <action name="appLogIn" class="actions.logIn.LogInAction" method="appLog">
+            <result name="success"></result>
+        </action>
+        <!--登出-->
+        <action name="logOut" class="actions.logIn.LogOutAction" method="execute">
+            <result name="success">/login.jsp</result>
+        </action>
+
+        <action name="createTeam" class="actions.team.CreateTeamAction" method="createTeam">
+            <result name="success">/new_team_success.jsp</result>
+            <result name="fail">/登录失败又去哪？</result>
+        </action>
+
+        <action name="appCreateTeam" class="actions.team.CreateTeamAction" method="appCreateTeam">
+            <result name="success">/这里放置登录以后界面</result>
+            <result name="fail">/登录失败又去哪？</result>
+        </action>
+        <!--网页上传头像-->
+        <action name="uploadPhoto" class="actions.user.UploadPhoto" method="uploadPic">
+            <result name="success">/照片上传成功</result>
+            <result name="login">/login.jsp</result>
+            <interceptor-ref name="fileUpload">
+                <!-- 限制2兆大小 -->
+                <param name="maximumSize">2097152</param>
+                <param name="allowedTypes">
+                    image/png, image/jpg, image/jpeg, image/bmp
+                </param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack" />
+        </action>
+        <!--手机上传头像-->
+        <action name="appUploadPhoto" class="actions.user.UploadPhoto" method="appUploadPic">
+            <!--<interceptor-ref name="fileUpload">-->
+                <!--&lt;!&ndash; 限制2兆大小 &ndash;&gt;-->
+                <!--<param name="maximumSize">2097152</param>-->
+                <!--<param name="allowedTypes">-->
+                    <!--image/png, image/jpg, image/jpeg, image/bmp-->
+                <!--</param>-->
+            <!--</interceptor-ref>-->
+            <!--<interceptor-ref name="defaultStack" />-->
+        </action>
+        <!--下载-->
+        <action name="downloadAction" class="actions.com.downloadAction" method="downloadFiles">
+            <result type="stream">
+                <!-- 文件类型 —— application/octet-stream 表示无限制 -->
+                <param name="contentType">application/octet-stream</param>
+                <!-- 流对象名 —— 去找Action中的getInputStream方法 -->
+                <param name="inputName">inputStream</param>
+                <!-- 文件名 —— 将调用该Action中的getFileName方法 -->
+                <param name="contentDisposition">attachment;filename="${fileName}"</param>
+                <param name="bufferSize">4096</param>
+            </result>
+            <result name="login">/kedaya.jpg</result>
+        </action>
+        <!--学生上传代码-->
+        <action name="uploadCode" class="actions.code.codeUploadAction" method="uploadCode">
+            <result name="success">/代码上传成功</result>
+            <interceptor-ref name="fileUpload">
+                <param name="maximumSize">2097152</param>
+            </interceptor-ref>
+        </action>
+        <!--学生上传文件-->
+        <action name="studentUploadFile" class="actions.file.fileUploadAction" method="studentUploadFile">
+            <result name="success">/文件上传成功</result>
+            <!--<interceptor-ref name="fileUpload">-->
+                <!--<param name="maximumSize">50000000</param>-->
+            <!--</interceptor-ref>-->
+        </action>
+
+
+        <!--团队队长申请学校工程实践项目-->
+        <action name="applySchoolPractice" class="actions.team.ApplyProjectAction" method="execute">
+            <result name="success">/QuickTime%20Player.jpg</result>
+            <result name="fail">/index.jsp</result>
+        </action>
+        <!--老师同意团队对于项目的申请-->
+        <action name="teacherAcceptTeam" class="actions.project.TeacherAcceptTeamApply" method="accept">
+            <result name="success">/QuickTime%20Player.jpg</result>
+            <result name="fail">/index.jsp</result>
+        </action>
+
+        <!--新建任务-->
+        <action name="taskCreation" class="actions.task.TaskCreationAction" method="execute">
+            <result name="success">/QuickTime%20Player.jpg</result>
+            <result name="fail">/index.jsp</result>
+        </action>
+
+
+        <action name="modifyAction" class="actions.task.TaskModifyAction" method="execute">
+
+        </action>
+
+
+
+        <!--完成任务-->
+        <action name="taskFinish" class="actions.task.TaskFinishAction" method="setAccess">
+
+        </action>
+        <!--搜索项目-->
+        <action name="searchProject" class="actions.project.SearchProjectAction" method="execute">
+            <result>/newsearch.jsp</result>
+        </action>
+        <!--手机搜索项目-->
+        <action name="appSearchProject" class="actions.project.SearchProjectAction" method="appExecute">
+
+        </action>
+        <!--获取但个学生代码量-->
+        <action name="getStudentCodeRow" class="actions.code.askCodeRows" method="getStudentCodes">
+            <result name="success">/查询成功</result>
+        </action>
+        <!--获取整个团队的代码量-->
+        <action name="getTeamCodeRows" class="actions.code.askCodeRows" method="getTeamCodes">
+            <result name="success">/查询成功</result>
+        </action>
+        <!--获取项目及相关信息-->
+        <action name="getProjectInfo" class="actions.project.getProjectInfoAction" method="execute">
+            <result name="success"></result>
+        </action>
+        <!--手机获取项目及相关信息-->
+        <action name="appGetProjectInfo" class="actions.project.getProjectInfoAction" method="appExecute">
+
+        </action>
+
+
+        <!-- ========================================================================================-->
+        <action name="joinTeam" class="actions.team.JoinTeamAction" method="joinTeam">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <action name="appJoinTeam" class="actions.team.JoinTeamAction" method="appJoinTeam">
+            <result name="success">成功</result>
+            <result name="fail">失败</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <!--获取我加入的所有团队信息-->
+        <action name="getMyJoinTeam" class="actions.team.GetMyJoinTeamsAction" method="getMyJoinTeam">
+            <result name="success">/student_myteam.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appGetMyJoinTeam" class="actions.team.GetMyJoinTeamsAction" method="appGetMyJoinTeam">
+            <result name="success">成功</result>
+            <result name="fail">失败</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <!--根据teamid获取团队信息-->
+        <action name="getTeamInfoByTeamId" class="actions.team.GetTeamInfoAction" method="getTeamInfoByTeamId">
+            <result name="success">/team_info.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appGetTeamInfoByTeamId" class="actions.team.GetTeamInfoAction" method="appGetTeamInfoByTeamId">
+            <result name="success">成功</result>
+            <result name="fail">失败</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <action name="getMyJoinTeamInfo" class="actions.team.GetMyJoinTeamInfoAction" method="getMyJoinTeamInfo">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/login.jsp</result>
+        </action>
+
+        <action name="appGetMyJoinTeamInfo" class="actions.team.GetMyJoinTeamInfoAction" method="appGetMyJoinTeamInfo">
+            <result name="success">成功</result>
+            <result name="fail">失败</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <action name="addStudent" class="actions.student.AddStudentAction" method="addStudent">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <action name="appAddStudent" class="actions.student.AddStudentAction" method="appAddStudent">
+            <result name="success">成功</result>
+            <result name="fail">失败</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <action name="addTeacher" class="actions.teacher.AddTeacherAction" method="addTeacher">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <action name="appAddTeacher" class="actions.teacher.AddTeacherAction" method="appAddTeacher">
+            <result name="success">成功</result>
+            <result name="fail">失败</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <action name="addManager" class="actions.manager.AddManagerAction" method="addManager">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <action name="appAddManager" class="actions.manager.AddManagerAction" method="appAddManager">
+            <result name="success">成功</result>
+            <result name="fail">失败</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <!--老师新建工程实践项目-->
+        <action name="createSchPrcByTeacher" class="actions.project.CreateSchoolProject" method="createSchPrcByTeacher">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appCreateSchPrcByTeacher" class="actions.project.CreateSchoolProject" method="appCreateSchPrcByTeacher">
+            <result name="success">成功</result>
+            <result name="fail">失败</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <!--学生新建工程实践项目-->
+        <action name="createSchPrcByStudent" class="actions.project.CreateSchoolProject" method="createSchPrcByStudent">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appCreateSchPrcByStudent" class="actions.project.CreateSchoolProject" method="appCreateSchPrcByStudent">
+            <result name="success">成功</result>
+            <result name="fail">失败</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <!--接受申请加入团队的请求-->
+        <action name="acceptJoinApply" class="actions.team.DealJoinApplyAction" method="acceptJoinApply">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appAcceptJoinApply" class="actions.team.DealJoinApplyAction" method="appAcceptJoinApply">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <!--拒绝申请加入团队的请求-->
+        <action name="refuseJoinApply" class="actions.team.DealJoinApplyAction" method="refuseJoinApply">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appRefuseJoinApply" class="actions.team.DealJoinApplyAction" method="appRefuseJoinApply">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <!--组长获取申请加入团队的所有学生信息-->
+        <action name="getTeamApplyInfo" class="actions.team.GetTeamApplyInfoAction" method="getTeamApplyInfo">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appGetTeamApplyInfo" class="actions.team.GetTeamApplyInfoAction" method="appGetTeamApplyInfo">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <!--创建个人计划-->
+        <action name="createPlanToSelf" class="actions.plan.CreatePlanToSelfAction" method="createPlanToSelf">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appCreatePlanToSelf" class="actions.plan.CreatePlanToSelfAction" method="appCreatePlanToSelf">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <!--创建团队计划-->
+        <action name="createPlanToTeam" class="actions.plan.CreatePlanToTeamAction" method="createPlanToTeam">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appCreatePlanToTeam" class="actions.plan.CreatePlanToTeamAction" method="appCreatePlanToTeam">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <!--完成计划-->
+        <action name="finishPlan" class="actions.plan.PlanFinishAction" method="finishPlan">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appFinishPlan" class="actions.plan.PlanFinishAction" method="appFinishPlan">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <!--老师修改个人信息-->
+        <action name="modifyTeacherInfo" class="actions.teacher.ModifyTeacherInfoAction" method="modifyTeacherInfo">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appModifyTeacherInfo" class="actions.teacher.ModifyTeacherInfoAction" method="appModifyTeacherInfo">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <!--学生修改个人信息-->
+        <action name="modifyStudentInfo" class="actions.student.ModifyStudentInfoAction" method="modifyStudentInfo">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appModifyStudentInfo" class="actions.student.ModifyStudentInfoAction" method="appModifyStudentInfo">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <!--获取学生参与的所有项目-->
+        <action name="getMyJoinProjectByStudent" class="actions.project.GetMyJoinProjectAction" method="getMyJoinProjectByStudent">
+            <result name="success">/newstudentitem.jsp</result>
+            <result name="fail">/login.jsp</result>
+            <result name="login">/login.jsp</result>
+        </action>
+        <action name="appGetMyJoinProjectByStudent" class="actions.project.GetMyJoinProjectAction" method="appGetMyJoinProjectByStudent">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <!--获取老师参与的所有项目-->
+        <action name="getMyJoinProjectByTeacher" class="actions.project.GetMyJoinProjectAction" method="getMyJoinProjectByTeacher">
+            <result name="success">/newteacheritem.jsp</result>
+            <result name="fail">/login.jsp</result>
+            <result name="login">/login.jsp</result>
+        </action>
+        <action name="appGetMyJoinProjectByTeacher" class="actions.project.GetMyJoinProjectAction" method="appGetMyJoinProjectByTeacher">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <!--web根据项目id获取项目信息-->
+        <action name="getProjectInfoByProjectId" class="actions.project.GetProjectInfoByProjectIdAction" method="getProjectInfoByProjectId">
+            <result name="student">/newstudentvitem.jsp</result>
+            <result name="teacher">/newteachervitem.jsp </result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appGetProjectInfoByProjectId" class="actions.project.GetProjectInfoByProjectIdAction" method="appGetProjectInfoByProjectId">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <!--获取项目的所有任务-->
+        <action name="getTaskList" class="actions.task.GetTaskListAction" method="getTaskList">
+            <result name="student">/newstudentmission.jsp</result>
+            <result name="teacher">/newteachermission.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appGetTaskList" class="actions.task.GetTaskListAction" method="appGetTaskList">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <!--获取任务的详细信息-->
+        <action name="getTaskInfo" class="actions.task.GetTaskInfoAction" method="getTaskInfo">
+            <result name="student">/newstudentmissiondetail.jsp</result>
+            <result name="teacher">/newteachermissiondetail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+        <action name="appGetTaskInfo" class="actions.task.GetTaskInfoAction" method="appGetTaskInfo">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+            <result name="login">/登录界面</result>
+        </action>
+
+        <!--修改计划-->
+        <!--<action name="modifyPlan" class="actions.plan.PlanModifyAction" method="modifyPlan">-->
+            <!--<result name="success">/success.jsp</result>-->
+            <!--<result name="fail">/fail.jsp</result>-->
+            <!--<result name="login">/登录界面</result>-->
+        <!--</action>-->
+        <!--<action name="appModifyPlan" class="actions.plan.PlanModifyAction" method="appModifyPlan">-->
+            <!--<result name="success">/success.jsp</result>-->
+            <!--<result name="fail">/fail.jsp</result>-->
+            <!--<result name="login">/登录界面</result>-->
+        <!--</action>-->
+
+    </package>
+</struts>

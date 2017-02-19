@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE validators PUBLIC
+        "-//Apache Struts//XWork Validator 1.0.2//EN"
+        "http://struts.apache.org/dtds/xwork-validator-1.0.2.dtd">
+
+<validators>
+    <!-- 校验Action的name属性 -->
+    <field name="userName">
+        <!-- 指定name属性必须满足的必填规则 -->
+        <field-validator type="requiredstring">
+            <message>userName is required</message>
+        </field-validator>
+    </field>
+
+    <!-- 校验Action的password属性 -->
+    <field name="passWord">
+        <!-- 指定password属性必须满足必填的规则 -->
+        <field-validator type="requiredstring">
+            <message>password is required</message>
+        </field-validator>
+    </field>
+</validators>

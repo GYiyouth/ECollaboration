@@ -8,28 +8,12 @@ import smallTools.TimeImpl;
  */
 public class CodeBean {
 	private Integer id = null;
+	private String codeName = null;
 	private Integer row = null;
 	private String createDate = null;
 	private String deadDate = null;
 	private Integer downLoadTimes = null;
 	private Integer score = null;
-
-	@Override
-	public String toString() {
-		return "CodeBean{" +
-				"id=" + id +
-				", row=" + row +
-				", createDate='" + createDate + '\'' +
-				", deadDate='" + deadDate + '\'' +
-				", downLoadTimes=" + downLoadTimes +
-				", score=" + score +
-				", path='" + path + '\'' +
-				", studentId=" + studentId +
-				", teamId=" + teamId +
-				", projectId=" + projectId +
-				'}';
-	}
-
 	private String path = null;
 	private Integer studentId = null;
 	private Integer teamId = null;
@@ -63,7 +47,15 @@ public class CodeBean {
 		super();
 		Time time = new TimeImpl();
 		this.createDate = time.getDateStr();
-		this.deadDate = time.getDeadDateStr();
+		this.deadDate = time.getDeadTime();
+	}
+
+	public String getCodeName() {
+		return codeName;
+	}
+
+	public void setCodeName(String codeName) {
+		this.codeName = codeName;
 	}
 
 	public Integer getId() {
@@ -120,5 +112,22 @@ public class CodeBean {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	@Override
+	public String toString() {
+		return "CodeBean{" +
+				"id=" + id +
+				", codeName='" + codeName + '\'' +
+				", row=" + row +
+				", createDate='" + createDate + '\'' +
+				", deadDate='" + deadDate + '\'' +
+				", downLoadTimes=" + downLoadTimes +
+				", score=" + score +
+				", path='" + path + '\'' +
+				", studentId=" + studentId +
+				", teamId=" + teamId +
+				", projectId=" + projectId +
+				'}';
 	}
 }

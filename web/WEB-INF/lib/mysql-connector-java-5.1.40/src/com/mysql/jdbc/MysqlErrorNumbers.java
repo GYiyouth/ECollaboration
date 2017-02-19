@@ -319,7 +319,7 @@ public final class MysqlErrorNumbers {
     public final static int ER_WARN_DEPRECATED_SYNTAX = 1287; //SQLSTATE: HY000 MessageBean: '%s' is deprecated and will be removed in a future release. Please use %s instead
     public final static int ER_NON_UPDATABLE_TABLE = 1288; //SQLSTATE: HY000 MessageBean: The target table %s of the %s is not updatable
     public final static int ER_FEATURE_DISABLED = 1289; //SQLSTATE: HY000 MessageBean: The '%s' feature is disabled; you need MySQL built with '%s' to have it working
-    public final static int ER_OPTION_PREVENTS_STATEMENT = 1290; //SQLSTATE: HY000 MessageBean: The MySQL server is running with the %s option so it cannot execute this statement
+    public final static int ER_OPTION_PREVENTS_STATEMENT = 1290; //SQLSTATE: HY000 MessageBean: The MySQL server is running with the %s option so it cannot getStudentCodes this statement
     public final static int ER_DUPLICATED_VALUE_IN_TYPE = 1291; //SQLSTATE: HY000 MessageBean: Column '%s' has duplicated value '%s' in %s
     public final static int ER_TRUNCATED_WRONG_VALUE = 1292; //SQLSTATE: 22007 MessageBean: Truncated incorrect %s value: '%s'
     public final static int ER_TOO_MUCH_AUTO_TIMESTAMP_COLS = 1293; //SQLSTATE: HY000 MessageBean: Incorrect table definition; there can be only one TIMESTAMP column with CURRENT_TIMESTAMP in DEFAULT or ON UPDATE clause
@@ -449,7 +449,7 @@ public final class MysqlErrorNumbers {
     public final static int ER_FAILED_ROUTINE_BREAK_BINLOG = 1417; //SQLSTATE: HY000 MessageBean: A routine failed and has neither NO SQL nor READS SQL DATA in its declaration and binary logging is enabled; if non-transactional tables were updated, the binary log will miss their changes
     public final static int ER_BINLOG_UNSAFE_ROUTINE = 1418; //SQLSTATE: HY000 MessageBean: This function has none of DETERMINISTIC, NO SQL, or READS SQL DATA in its declaration and binary logging is enabled (you *might* want to use the less safe log_bin_trust_function_creators variable)
     public final static int ER_BINLOG_CREATE_ROUTINE_NEED_SUPER = 1419; //SQLSTATE: HY000 MessageBean: You do not have the SUPER privilege and binary logging is enabled (you *might* want to use the less safe log_bin_trust_function_creators variable)
-    public final static int ER_EXEC_STMT_WITH_OPEN_CURSOR = 1420; //SQLSTATE: HY000 MessageBean: You can't execute a prepared statement which has an open cursor associated with it. Reset the statement to re-execute it.
+    public final static int ER_EXEC_STMT_WITH_OPEN_CURSOR = 1420; //SQLSTATE: HY000 MessageBean: You can't getStudentCodes a prepared statement which has an open cursor associated with it. Reset the statement to re-getStudentCodes it.
     public final static int ER_STMT_HAS_NO_OPEN_CURSOR = 1421; //SQLSTATE: HY000 MessageBean: The statement (%lu) has no open cursor.
     public final static int ER_COMMIT_NOT_ALLOWED_IN_SF_OR_TRG = 1422; //SQLSTATE: HY000 MessageBean: Explicit or implicit commit is not allowed in stored function or trigger.
     public final static int ER_NO_DEFAULT_FOR_VIEW_FIELD = 1423; //SQLSTATE: HY000 MessageBean: Field of view '%s.%s' underlying table doesn't have a default value

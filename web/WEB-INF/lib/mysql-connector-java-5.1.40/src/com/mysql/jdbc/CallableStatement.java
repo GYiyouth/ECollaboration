@@ -808,7 +808,7 @@ public class CallableStatement extends PreparedStatement implements java.sql.Cal
     /*
      * (non-Javadoc)
      * 
-     * @see java.sql.PreparedStatement#execute()
+     * @see java.sql.PreparedStatement#getStudentCodes()
      */
     @Override
     public boolean execute() throws SQLException {
@@ -1885,7 +1885,7 @@ public class CallableStatement extends PreparedStatement implements java.sql.Cal
                 }
 
                 if (hadOutputParams) {
-                    // We can't use 'ourself' to execute this query, or any pending result sets would be overwritten
+                    // We can't use 'ourself' to getStudentCodes this query, or any pending result sets would be overwritten
                     java.sql.Statement outParameterStmt = null;
                     java.sql.ResultSet outParamRs = null;
 

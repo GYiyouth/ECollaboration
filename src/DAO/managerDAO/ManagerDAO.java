@@ -1,51 +1,42 @@
 package DAO.managerDAO;
 
-
-
 import bean.domain.ManagerBean;
 
 import java.sql.SQLException;
 
+/**
+ * Created by GR on 2016/12/5.
+ */
 public interface ManagerDAO {
+    /**
+     * æ·»åŠ ç®¡ç†å‘˜ï¼Œè¿”å›ç®¡ç†å‘˜id
+     * @param managerBean
+     * @return int
+     * @throws SQLException
+     */
+    public boolean addManager(ManagerBean managerBean) throws SQLException;
 
-	/**
-	 * Ìí¼Ó¹ÜÀíÔ±£¬·µ»Ø¹ÜÀíÔ±id
-	 * @param managerBean
-	 * @return int
-	 * @throws SQLException
-	 */
-	public int addManager(ManagerBean managerBean) throws SQLException;
+    /**
+     * ä¿®æ”¹ç®¡ç†å‘˜ä¿¡æ¯
+     * @param managerBean
+     * @return boolean
+     * @throws SQLException
+     */
+    public boolean updateInfo(ManagerBean managerBean) throws SQLException;
 
-	/**
-	 * ¸ù¾İidÑ°ÕÒ¹ÜÀíÔ±£¬·µ»ØManager
-	 * @param managerId
-	 * @return ManagerBean
-	 * @throws SQLException
-	 */
-	public ManagerBean getManagerInfo(int managerId) throws SQLException;
+    /**
+     * åˆ é™¤ç®¡ç†å‘˜
+     * @param managerId
+     * @return boolean
+     * @throws SQLException
+     */
+    public boolean deleteById(int managerId) throws SQLException;
 
-	/**
-	 * ĞŞ¸Ä¹ÜÀíÔ±ĞÅÏ¢
-	 * @param managerBean
-	 * @return boolean
-	 * @throws SQLException
-	 */
-	public boolean updateInfo(ManagerBean managerBean) throws SQLException;
-
-	/**
-	 * É¾³ı¹ÜÀíÔ±
-	 * @param managerId
-	 * @return ManagerBean
-	 * @throws SQLException
-	 */
-	public ManagerBean deleteById(int managerId) throws SQLException;
-	
-	/**
-	 * Í¨¹ıid»ñÈ¡¹ÜÀíÔ±ĞÅÏ¢
-	 * @param managerId
-	 * @return ManagerBean
-	 * @throws SQLException
-	 */
-	public ManagerBean getInfoById(int managerId) throws SQLException;
-	
+    /**
+     * é€šè¿‡idè·å–ç®¡ç†å‘˜ä¿¡æ¯
+     * @param managerId
+     * @return ManagerBean
+     * @throws SQLException
+     */
+    public ManagerBean getInfoById(int managerId) throws SQLException;
 }

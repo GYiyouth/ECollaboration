@@ -14,5 +14,6 @@ public interface Time {
 	public String getSecond();
 	public String getDateStr();
 	public Date getDate();
-	public String getDeadDateStr();
+	public String getDeadTime();
+	public String getTime();
 }

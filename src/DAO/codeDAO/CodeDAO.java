@@ -3,8 +3,10 @@ package DAO.codeDAO;
 import bean.domain.CodeBean;
 
 import java.io.File;
+import java.io.InterruptedIOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * 与student project team 相连
@@ -12,7 +14,7 @@ import java.util.ArrayList;
  */
 public interface CodeDAO {
 	/**
-	 * 添加文件，返回id
+	 * 添加代码，返回id
 	 * @param codeBean
 	 * @return
 	 * @throws SQLException
@@ -20,7 +22,7 @@ public interface CodeDAO {
 	public Integer add(CodeBean codeBean) throws SQLException;
 
 	/**
-	 * 获取文件，通过id
+	 * 获取代码，通过id
 	 * @param codeId
 	 * @return
 	 * @throws SQLException
@@ -28,7 +30,7 @@ public interface CodeDAO {
 	public CodeBean getCodeInfo(int codeId) throws SQLException;
 
 	/**
-	 * 修改文件，通过CodeBean,id
+	 * 修改代码，通过CodeBean,id
 	 * @param codeId
 	 * @param codeBean
 	 * @return
@@ -37,12 +39,20 @@ public interface CodeDAO {
 	public boolean updateCode(CodeBean codeBean, int codeId) throws SQLException;
 
 	/**
-	 * 删除文件，通过id
+	 * 删除代码，通过id
 	 * @param codeId
 	 * @return
 	 * @throws SQLException
 	 */
 	public CodeBean deleteCode(int codeId) throws SQLException;
+
+	/**
+	 * 获取某个学生在某个项目所有的代码行数
+	 * @param studentId
+	 * @param projectId
+	 * @return
+	 */
+	public Integer getCodeRowsSum(int studentId,int projectId) throws SQLException;
 
 	/**
 	 * 获取代码id列表，通过学生id
@@ -104,4 +114,14 @@ public interface CodeDAO {
 	 * @throws SQLException
 	 */
 	public ArrayList<Integer> getCodeIdListByProjectIdTeamIdStudentId(int projectId, int teamId, int studentId)throws SQLException;
+
+	/**
+	 * 获取一个团队在一个项目下的codeBean列表
+	 * 1放队长的
+	 * @param projectId
+	 * @param teamId
+	 * @return
+	 * @throws SQLException
+	 */
+	public HashMap<Integer, CodeBean> getCodeBeans(int projectId, int teamId) throws SQLException;
 }

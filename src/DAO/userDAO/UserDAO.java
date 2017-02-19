@@ -6,6 +6,7 @@ import bean.domain.UserBean;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.SQLException;
 
 public interface UserDAO {
@@ -19,7 +20,7 @@ public interface UserDAO {
 	 * @return User
 	 * @throws SQLException
 	 */
-	public UserBean getLogerInfo(String logName,String passWord) throws SQLException;
+	public UserBean getLogInfo(String logName, String passWord) throws SQLException;
 
 	/**
 	 * 添加用户，内部生成id，返回用户id
@@ -28,7 +29,7 @@ public interface UserDAO {
 	 * @return int
 	 * @throws SQLException
 	 */
-	public int addUser(UserBean user) throws SQLException;
+	public Integer addUser(UserBean user) throws SQLException;
 
 	/**
 	 * 通过id获取用户信息
@@ -52,27 +53,27 @@ public interface UserDAO {
 	 * 删除用户
 	 *
 	 * @param userId
-	 * @return User
+	 * @return boolean
 	 * @throws SQLException
 	 */
-	public UserBean deleteById(int userId) throws SQLException;
+	public boolean deleteById(int userId) throws SQLException;
 
-	/**
-	 * 设置用户头像，根据userBean，file
-	 * @param userBean
-	 * @param file
-	 * @return
-	 * @throws SQLException
-	 */
-	public boolean setUserPhoto(UserBean userBean, File file) throws SQLException, FileNotFoundException;
+//	/**
+//	 * 设置用户头像，根据userBean，file
+//	 * @param userBean
+//	 * @param file
+//	 * @return
+//	 * @throws SQLException
+//	 */
+//	public boolean setUserPhoto(UserBean userBean, File file) throws SQLException, FileNotFoundException;
 
-	/**
-	 * 获取File，头像，通过UserBean
-	 * @param userBean
-	 * @return
-	 * @throws SQLException
-	 */
-	public File getUserPhoto(UserBean userBean) throws SQLException,FileNotFoundException;
+//	/**
+//	 * 获取File，头像，通过UserBean
+//	 * @param userBean
+//	 * @return
+//	 * @throws SQLException
+//	 */
+//	public File getUserPhoto(UserBean userBean) throws SQLException,FileNotFoundException, IOException;
 
 }
 

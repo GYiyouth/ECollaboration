@@ -1,221 +1,246 @@
 package DAO.planDAO;
 
-
-
 import bean.domain.PlanBean;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface PlanDAO {
-	/**
-	 * Ìí¼Ó¼Æ»®£¬»ñÈ¡ĞÂ¼Æ»®id
-	 * @param planBean
-	 * @return
-	 * @throws SQLException
-	 */
-	public Integer addPlan(PlanBean planBean) throws SQLException;
+    /**
+     * æ·»åŠ è®¡åˆ’ï¼Œè·å–æ–°è®¡åˆ’id
+     *
+     * @param planBean
+     * @return planId
+     * @throws SQLException
+     */
+    public Integer addPlan(PlanBean planBean) throws SQLException;
 
-	/**
-	 * É¾³ı¼Æ»®£¬»ñÈ¡´Ë¼Æ»®Plan¶ÔÏó
-	 * @param planId
-	 * @return
-	 * @throws SQLException
-	 */
-	public PlanBean deletePlan(int planId) throws SQLException;
+    /**
+     * æ·»åŠ è®¡åˆ’ç»™æŸä¸ªå­¦ç”Ÿ
+     *
+     * @param planBean,projectId,studentId
+     * @return boolean
+     * @throws SQLException
+     */
+    public boolean addPlanToStudent(PlanBean planBean, int studentId, int projectId) throws SQLException;
 
-	/**
-	 * ĞŞ¸Ä¼Æ»®£¬»ñÈ¡bool±äÁ¿
-	 * @param planBean
-	 * @return
-	 * @throws SQLException
-	 */
-	public boolean updatePlan(PlanBean planBean) throws SQLException;
+    /**
+     * æ·»åŠ è®¡åˆ’ç»™æŸä¸ªé¡¹ç›®(å‘å¸ƒäººåº”è¯¥æ˜¯è€å¸ˆ)
+     *
+     * @param planBean,projectId
+     * @return boolean
+     * @throws SQLException
+     */
+    public boolean addPlanToProject(PlanBean planBean, int projectId) throws SQLException;
 
-	/**
-	 * »ñÈ¡Plan¶ÔÏó£¬Í¨¹ıPlanId
-	 * @param planId
-	 * @return
-	 * @throws SQLException
-	 */
-	public PlanBean getPlanInfo(int planId) throws SQLException;
+    /**
+     * å‘è®¡åˆ’ç»™å›¢é˜Ÿ(ç»„é•¿)
+     *
+     * @param planBean,teamId,projectId
+     * @return boolean
+     * @throws SQLException
+     */
+    public boolean addPlanToTeam(PlanBean planBean, int teamId, int projectId) throws SQLException;
 
+    /**
+     * è·å–Planå¯¹è±¡ï¼Œé€šè¿‡PlanId
+     *
+     * @param planId
+     * @return
+     * @throws SQLException
+     */
+    public PlanBean getPlanInfoByPlanId(int planId) throws SQLException;
 
-	/**
-	 * »ñÈ¡¼Æ»®idÁĞ±í£¬Í¨¹ıÍÅ¶Óid
-	 * @param teamId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getPlanIdListByTeamId(int teamId)throws SQLException;
+    /**
+     * è·å–creatorIdï¼Œé€šè¿‡planId
+     *
+     * @param planId
+     * @return int
+     * @throws SQLException
+     */
+    public Integer getCreatorIdByPlanId(int planId) throws SQLException;
 
-	/**
-	 * »ñÈ¡¼Æ»®idÁĞ±í£¬Í¨¹ı½ÌÊ¦id
-	 * @param teacherId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getPlanIdListByTeacherId(int teacherId) throws SQLException;
+    /**
+     * é€šè¿‡creatorId,è·å–æ‰€æœ‰è®¡åˆ’id
+     *
+     * @param creatorId
+     * @return planId
+     * @throws SQLException
+     */
+    public ArrayList<Integer> getPlanIdByCreatorId(int creatorId) throws SQLException;
 
-	/**
-	 * »ñÈ¡¼Æ»®idÁĞ±í£¬Í¨¹ıÏîÄ¿id
-	 * @param projectId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getPlanIdListByProjectId(int projectId) throws SQLException;
+    /**
+     * é€šè¿‡studentId,è·å–æ‰€æœ‰è®¡åˆ’id
+     *
+     * @param studentId
+     * @return planId
+     * @throws SQLException
+     */
+    public ArrayList<Integer> getPlanIdByStudentId(int studentId) throws SQLException;
 
-	/**
-	 * »ñÈ¡¼Æ»®idÁĞ±í£¬Í¨¹ıÍÅ¶Óid£¬ÏîÄ¿id
-	 * @param teamId
-	 * @param projectId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getPlanIdListByTeamIdProjectId(int teamId, int projectId) throws SQLException;
+    /**
+     * é€šè¿‡studentId,projectId è·å–æ‰€æœ‰è®¡åˆ’id
+     *
+     * @param studentId,projectId
+     * @return planId
+     * @throws SQLException
+     */
+    public ArrayList<Integer> getPlanIdByStudentIdProjectId(int studentId, int projectId) throws SQLException;
 
-	/**
-	 * »ñÈ¡¼Æ»®idÁĞ±í£¬Í¨¹ıÍÅ¶Óid£¬½ÌÊ¦id
-	 * @param teamId
-	 * @param teacherId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getPlanIdListByTeamIdTeacherId(int teamId, int teacherId) throws SQLException;
+    /**
+     * é€šè¿‡projectId,è·å–æ‰€æœ‰è®¡åˆ’id
+     *
+     * @param projectId
+     * @return planId
+     * @throws SQLException
+     */
+    public ArrayList<Integer> getPlanIdByProjectId(int projectId) throws SQLException;
 
-	/**
-	 * »ñÈ¡¼Æ»®Id, Í¨¹ıÏîÄ¿id£¬½ÌÊ¦id
-	 * @param projectId
-	 * @param teacherId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getPlanIdListByProjectIdTeacherId(int projectId, int teacherId) throws SQLException;
+    /**
+     * é€šè¿‡projectId,teacherIdè·å–æ‰€æœ‰è®¡åˆ’id
+     *  è€å¸ˆå‘ç»™æŸä¸ªé¡¹ç›®çš„æ‰€æœ‰planid
+     * @param projectId,teacherId
+     * @return planId
+     * @throws SQLException
+     */
+    public ArrayList<Integer> getPlanIdByProjectIdTeacherId(int projectId, int teacherId) throws SQLException;
 
-	/**
-	 * »ñÈ¡¼Æ»®id£¬Í¨¹ı½ÌÊ¦id£¬ÏîÄ¿id£¬ÍÅ¶Óid
-	 * @param teacherId
-	 * @param projectId
-	 * @param teamId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getPlanIdListByTeacherIdProjectIdTeamId(int teacherId, int projectId, int teamId) throws SQLException;
+    /**
+     * é€šè¿‡teamId,è·å–æ‰€æœ‰è®¡åˆ’id
+     *
+     * @param teamId
+     * @return planId
+     * @throws SQLException
+     */
+    public ArrayList<Integer> getPlanIdByTeamId(int teamId) throws SQLException;
 
+    /**
+     *  ç»„é•¿å‘ç»™æŸä¸ªå›¢é˜Ÿçš„æ‰€æœ‰planid
+     * @param studentId,teamId
+     * @return planId
+     * @throws SQLException
+     */
+    public ArrayList<Integer> getPlanIdByTeamIdStudentId(int teamId, int studentId) throws SQLException;
 
-	/**
-	 * »ñÈ¡ÍÅ¶ÓidÁĞ±í£¬Í¨¹ı¼Æ»®id
-	 * @param planId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getTeamIdList(int planId) throws SQLException;
+    /**
+     * è·å–è®¡åˆ’idåˆ—è¡¨ï¼Œé€šè¿‡å›¢é˜Ÿidï¼Œé¡¹ç›®id
+     *
+     * @param teamId
+     * @param projectId
+     * @return
+     * @throws SQLException
+     */
+    public ArrayList<Integer> getPlanIdListByTeamIdProjectId(int teamId, int projectId) throws SQLException;
 
-	/**
-	 * »ñÈ¡ÍÅ¶ÓidÁĞ±í£¬Í¨¹ı¼Æ»®id,ÏîÄ¿id
-	 * @param planId
-	 * @param projectId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getTeamIdListByProjectId(int planId, int projectId) throws SQLException;
+    /**
+     * åˆ é™¤è®¡åˆ’
+     *
+     * @param planId
+     * @return boolean
+     * @throws SQLException
+     */
+    public boolean deletePlanByPlanId(int planId) throws SQLException;
 
-	/**
-	 * »ñÈ¡ÍÅ¶ÓidÁĞ±í£¬Í¨¹ı¼Æ»®id£¬½ÌÊ¦id
-	 * @param planId
-	 * @param teacherId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getTeamIdListByTeacherId(int planId, int teacherId) throws SQLException;
+    /**
+     * åˆ é™¤student_team_project_planè¡¨ä¸­çš„æŸä¸ªè®¡åˆ’
+     *
+     * @param planId
+     * @return boolean
+     * @throws SQLException
+     */
+    public boolean deletePlanInrelationByPlanId(int planId) throws SQLException;
 
-	/**
-	 * »ñÈ¡ÍÅ¶ÓidÁĞ±í£¬Í¨¹ı¼Æ»®id£¬½ÌÊ¦id£¬ÏîÄ¿id
-	 * @param planId
-	 * @param teacherId
-	 * @param projectId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getTeamIdListByTeacherIdProjectId(int planId, int teacherId, int projectId) throws SQLException;
+    /**
+     * åˆ é™¤å‘ç»™æŸä¸ªé¡¹ç›®æ‰€æœ‰è®¡åˆ’
+     *
+     * @param projectId
+     * @return boolean
+     * @throws SQLException
+     */
+    public boolean deletePlanToProjectByPlanId(int projectId) throws SQLException;
 
-	/**
-	 * »ñÈ¡½ÌÊ¦idÁĞ±í£¬Í¨¹ı¼Æ»®id
-	 * @param planId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getTeacherIdList(int planId) throws SQLException;
+    /**
+     * åˆ é™¤å‘ç»™æŸä¸ªå›¢é˜Ÿæ‰€æœ‰è®¡åˆ’
+     *
+     * @param teamId
+     * @return boolean
+     * @throws SQLException
+     */
+    public boolean deletePlanToTeamByPlanId(int teamId) throws SQLException;
 
-	/**
-	 * »ñÈ¡½ÌÊ¦idÁĞ±í£¬Í¨¹ı¼Æ»®id£¬ÍÅ¶Óid
-	 * @param planId
-	 * @param teamId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getTeacherIdListByTeamId(int planId, int teamId) throws SQLException;
+    /**
+     * åˆ é™¤å‘ç»™æŸä¸ªå­¦ç”Ÿæ‰€æœ‰è®¡åˆ’
+     *
+     * @param studentId
+     * @return boolean
+     * @throws SQLException
+     */
+    public boolean deletePlanToStudentByPlanId(int studentId) throws SQLException;
 
-	/**
-	 * »ñÈ¡½ÌÊ¦idÁĞ±í£¬Í¨¹ı¼Æ»®id£¬ÏîÄ¿id
-	 * @param planId
-	 * @param projectId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getTeacherIdListByProjectId(int planId, int projectId)throws SQLException;
+    /**
+     * ä¿®æ”¹è®¡åˆ’
+     *
+     * @param planBean
+     * @return
+     * @throws SQLException
+     */
+    public boolean updatePlanByPlanBean(PlanBean planBean) throws SQLException;
 
-	/**
-	 * »ñÈ¡½ÌÊ¦idÁĞ±í£¬Í¨¹ı¼Æ»®id£¬ÍÅ¶Óid£¬ÏîÄ¿id
-	 * @param planId
-	 * @param teamId
-	 * @param projectId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getTeacherIdListByTeamIdProjectId(int planId, int teamId, int projectId) throws SQLException;
+    /**
+     * ä¿®æ”¹è®¡åˆ’å‘ç»™æŸä¸ªé¡¹ç›®çš„å­¦ç”Ÿ
+     *
+     * @param planId,projectId,studentId
+     * @return boolean
+     * @throws SQLException
+     */
+    public boolean updatePlanToStudent(int planId, int studentId, int projectId) throws SQLException;
 
-	/**
-	 * »ñÈ¡ÏîÄ¿idÁĞ±í£¬Í¨¹ı¼Æ»®id
-	 * @param planId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getProjectIdList(int planId) throws SQLException;
+    /**
+     * ä¿®æ”¹è®¡åˆ’å‘ç»™æŸä¸ªå›¢é˜Ÿ
+     *
+     * @param planId,projectId,teamId
+     * @return boolean
+     * @throws SQLException
+     */
+    public boolean updatePlanToTeam(int planId, int teamId, int projectId) throws SQLException;
 
-	/**
-	 * »ñÈ¡ÏîÄ¿idÁĞ±í£¬Í¨¹ı¼Æ»®id£¬ÏîÄ¿id
-	 * @param planId
-	 * @param teamId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getProjectIdListByTeamId(int planId, int teamId) throws SQLException;
-	/**
-	 * »ñÈ¡ÏîÄ¿idÁĞ±í£¬Í¨¹ı¼Æ»®id£¬½ÌÊ¦id
-	 * @param planId
-	 * @param teacherId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getProjectIdListByTeacherId(int planId, int teacherId) throws SQLException;
+    /**
+     * ä¿®æ”¹è®¡åˆ’å‘ç»™æŸä¸ªé¡¹ç›®
+     *
+     * @param planId,projectId
+     * @return boolean
+     * @throws SQLException
+     */
+    public boolean updatePlanToProject(int planId, int projectId) throws SQLException;
 
-	/**
-	 * »ñÈ¡ÏîÄ¿idÁĞ±í£¬Í¨¹ı¼Æ»®id£¬ÍÅ¶Óid£¬½ÌÊ¦id
-	 * @param planId
-	 * @param teamId
-	 * @param teacherId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getProjectIdListByTeamIdTeacherId(int planId, int teamId, int teacherId) throws SQLException;
+    /**
+     * è·å–æŸä¸ªæ—¶é—´æ®µä¹‹é—´çš„ï¼ŒæŸä¸ªäººåœ¨æŸä¸ªé¡¹ç›®æ‰€æœ‰å®Œæˆçš„è®¡åˆ’
+     * @param beginTime
+     * @param endTime
+     * @param beginTime
+     * @param endTime
+     * @return
+     */
+    public ArrayList<Integer> getPlanIdBetweenATimeBTime(String beginTime, String endTime,int studentId, int projectId) throws Exception;
 
-	/**
-	 * »ñÈ¡ÏîÄ¿idÁĞ±í£¬Í¨¹ı¼Æ»®id,ÍÅ¶Óid
-	 * @param planId
-	 * @param teamId
-	 * @return
-	 * @throws SQLException
-	 */
-	public ArrayList<Integer> getProjectIdListByTeamIdPlanId(int planId, int teamId)throws SQLException;
+    /**
+     * è·å–æŸäººå®Œæˆçš„æ‰€æœ‰è®¡åˆ’idé›†åˆ
+     * @param studentId
+     * @param projectId
+     * @return
+     * @throws Exception
+     */
+    public ArrayList<Integer> getPlanIdsFinishedByStudentIdProjectId(int studentId, int projectId) throws Exception;
+
+    /**
+     * å®Œæˆè®¡åˆ’
+     *
+     * @param planId,finishDate
+     * @return boolean
+     * @throws SQLException
+     */
+    public boolean finishPlan(int planId, String finishDate) throws SQLException;
 }
+
+

@@ -19,21 +19,6 @@ public interface ECFileDAO {
 	public Integer addFile(ECFileBean ecFileBean) throws SQLException;
 
 	/**
-	 * 添加头像，返回id,通过用户id
-	 * @param ecFileBean, userId
-	 * @return
-	 * @throws SQLException
-	 */
-	public Integer addPhoto(ECFileBean ecFileBean, Integer userId) throws SQLException;
-
-	/**
-	 * 获取头像id，通过用户id
-	 * @param userId
-	 * @return
-	 * @throws SQLException
-	 */
-	public Integer getPhotoId(Integer userId) throws SQLException;
-	/**
 	 * 获取文件，通过文件id
 	 * @param fileId
 	 * @return
@@ -57,25 +42,27 @@ public interface ECFileDAO {
 	 */
 	public ECFileBean deleteFile(Integer fileId) throws SQLException;
 
+
 	/**
-	 * 获取头像id，通过用户id
-	 * @param userId
+	 * 某个学生该项目的文件总数
+	 * @param studentId
+	 * @param projectId
 	 * @return
 	 * @throws SQLException
 	 */
-	public Integer getFileIdByUserId(Integer userId) throws SQLException;
-
+	public Integer getFileSum(int studentId,int projectId) throws SQLException;
 
 	/**
 	 * 获取文件id列表，通过学生id
-	 * @param studentId
+	 * @param creatorId
 	 * @return
 	 * @throws SQLException
 	 */
-	public ArrayList<Integer> getFileIdListByStudentId(Integer studentId) throws SQLException;
+	public ArrayList<Integer> getFileIdListByCreatorId(Integer creatorId) throws SQLException;
 
 	/**
 	 * 获取文件id列表，通过教师id
+	 *
 	 * @param teacherId
 	 * @return
 	 * @throws SQLException
@@ -99,13 +86,13 @@ public interface ECFileDAO {
 	public ArrayList<Integer> getFileIdListByTeamId(Integer teamId) throws SQLException;
 
 	/**
-	 * 获取文件id列表，通过学生id，项目id
-	 * @param studentId
+	 * 获取文件id列表，通过创建者id，项目id
+	 * @param creatorId
 	 * @param projectId
 	 * @return
 	 * @throws SQLException
 	 */
-	public ArrayList<Integer> getFileIdListByStudentIdProjectId(Integer studentId, Integer projectId) throws SQLException;
+	public ArrayList<Integer> getFileIdListByCreatorIdProjectId(Integer creatorId, Integer projectId) throws SQLException;
 
 	/**
 	 * 获取文件列表，通过教师id，项目id

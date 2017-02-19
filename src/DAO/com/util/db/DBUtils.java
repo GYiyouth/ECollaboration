@@ -34,7 +34,7 @@ public class DBUtils {
 	 }
 
 	  //定义数据库连接方式
-	public static Connection getConnetction(){
+	public static Connection getConnection(){
 		Connection connection = null;
 		try {
 			connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
@@ -64,16 +64,4 @@ public class DBUtils {
 			System.out.println("关闭连接失败");
 		}
 	}
-
-//	public static void main(String[] args){
-//		UserDAO userDAO = new UserDAOImpl();
-//		try {
-//
-//			UserBean user = userDAO.findByAccount("1", "2");
-//			System.out.println(user.getId());
-//			System.out.println(userDAO.check("1", "1"));
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//	}
 }

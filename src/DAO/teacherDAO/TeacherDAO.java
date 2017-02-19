@@ -3,49 +3,80 @@ package DAO.teacherDAO;
 import bean.domain.*;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 
 public interface TeacherDAO {
 
 	/**
-	 * Ìí¼ÓÀÏÊ¦£¬·µ»ØÀÏÊ¦id
+	 * æ·»åŠ è€å¸ˆ
 	 * @param teacherBean
-	 * @return Integer
+	 * @return boolean
 	 * @throws SQLException
 	 */
-	public Integer addTeacher(TeacherBean teacherBean) throws SQLException;
-//
-//	/**
-//	 * ¸ù¾İidÑ°ÕÒÀÏÊ¦£¬·µ»ØTeacher
-//	 * @param teacherId
-//	 * @return TeacherBean
-//	 * @throws SQLException
-//	 */
-//	public TeacherBean getTeacherInfo(Integer teacherId) throws SQLException;
+	public boolean addTeacher(TeacherBean teacherBean) throws SQLException;
+
 
 	/**
-	 * ĞŞ¸ÄÀÏÊ¦ĞÅÏ¢
+	 * æ›´æ–°è€å¸ˆä¿¡æ¯
 	 * @param teacherBean
 	 * @return boolean
 	 * @throws SQLException
 	 */
 	public boolean updateInfo(TeacherBean teacherBean) throws SQLException;
 
-	public boolean updateInfoByTeacher(TeacherBean teacherBean) throws SQLException;
 
 	/**
-	 * É¾³ıÀÏÊ¦
+	 * åˆ é™¤è€å¸ˆä¿¡æ¯
 	 * @param teacherId
-	 * @return TeacherBean
+	 * @return boolean
 	 * @throws SQLException
 	 */
-	public TeacherBean deleteById(Integer teacherId) throws SQLException;
+	public boolean deleteById(Integer teacherId) throws SQLException;
 	
 	/**
-	 * Í¨¹ıid»ñÈ¡ÀÏÊ¦ĞÅÏ¢
+	 * è·å–TeacherBeanï¼Œé€šè¿‡teacherId
 	 * @param teacherId
 	 * @return TeacherBean
 	 * @throws SQLException
 	 */
 	public TeacherBean getInfoById(Integer teacherId) throws SQLException;
 
+	/**
+	 * è®¾å®šæ•™å¸ˆé¡¹ç›®å…³ç³»
+	 * @param teacherId
+	 * @param projectId
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean setTeacherProject(int teacherId, int projectId)throws SQLException;
+
+	/**
+	 * åˆ é™¤å…³ç³»ï¼Œé€šè¿‡projectId
+	 * @param projectId
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean deleteProject_Teacher(int projectId) throws SQLException;
+
+	/**
+	 * åˆ é™¤å…³ç³»ï¼Œé€šè¿‡teacherId
+	 * @param teacherId
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean deleteTeacher_Project(int teacherId) throws SQLException;
+
+	/**
+	 * è·å–æ‰€æœ‰è€å¸ˆçš„ä¿¡æ¯ï¼Œå“ˆå¸Œè¡¨ä¸ºid_nameå¯¹
+	 * @return
+	 * @throws SQLException
+	 */
+	public HashMap<Integer, String>getTeacherID_Name() throws SQLException;
+
+	/**
+	 * è·å–æ‰€æœ‰è€å¸ˆçš„ä¿¡æ¯ï¼Œè¿”å›Bean
+	 * @return
+	 * @throws SQLException
+	 */
+	public HashMap<Integer, TeacherBean> getAllTeacher()throws SQLException;
 }

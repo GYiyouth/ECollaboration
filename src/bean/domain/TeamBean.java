@@ -10,7 +10,25 @@ public class TeamBean {
 	private Integer id = null;
 	private String teamName = null;
 	private Integer creatorId = null;
-	private Date createDate = null;
+	private String createDate = null;
+	private Integer memberMax;
+	private String description;
+
+	public Integer getMemberMax() {
+		return memberMax;
+	}
+
+	public void setMemberMax(int memberMax) {
+		this.memberMax = memberMax;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	public TeamBean() {
 		super();
@@ -40,11 +58,21 @@ public class TeamBean {
 		this.creatorId = creatorId;
 	}
 
-	public Date getCreateDate() {
+	public String getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
+	}
+
+	@Override
+	public String toString() {
+		return "TeamBean{" +
+				"id=" + id +
+				", teamName='" + teamName + '\'' +
+				", creatorId=" + creatorId +
+				", createDate='" + createDate + '\'' +
+				'}';
 	}
 }

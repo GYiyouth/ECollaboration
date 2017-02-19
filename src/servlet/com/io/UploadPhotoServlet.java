@@ -9,14 +9,16 @@ import bean.domain.UserBean;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import smallTools.*;
+import smallTools.CheckImg;
+import smallTools.CheckImgImpl;
+import smallTools.Time;
+import smallTools.TimeImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.*;
 import java.io.*;
 import java.sql.SQLException;
 import java.util.List;
@@ -141,18 +143,14 @@ public class UploadPhotoServlet extends HttpServlet {
 
 						//添加新头像，删除旧头像
 						ECFileDAO ecFileDAO = new ECFileDAOImpl();
-						int oldFileId = ecFileDAO.getPhotoId(creatorId);
-						ecFileDAO.addPhoto(ecFileBean, creatorId);
-						ecFileDAO.deleteFile(oldFileId);
+//						int oldFileId = ecFileDAO.getPhotoId(creatorId);
+//						ecFileDAO.addPhoto(ecFileBean, creatorId);
+//						ecFileDAO.deleteFile(oldFileId);
 						//修改user里photo信息
 						UserDAO userDAO = new UserDAOImpl();
 						UserBean userBean = userDAO.getUserInfoById(creatorId);
 						String photo = savePath + filename;
 						userBean.setPhoto(photo);
-
-
-
-
 
 						request.setAttribute("photo", photo);
 

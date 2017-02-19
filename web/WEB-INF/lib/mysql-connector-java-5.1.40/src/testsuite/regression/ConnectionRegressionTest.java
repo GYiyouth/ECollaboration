@@ -857,7 +857,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
      * 
      * 3. node1 is down, node2 is up
      * 
-     * 4. java-program execute a query and fail, but Connector/J's round-robin
+     * 4. java-program getStudentCodes a query and fail, but Connector/J's round-robin
      * fashion failover work and if java-program retry a query it can succeed
      * (connection is change to node2 by Connector/j)
      * 
@@ -865,7 +865,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
      * 
      * 6. node1 is up, node2 is down
      * 
-     * 7. java-program execute a query, but this time Connector/J doesn't work
+     * 7. java-program getStudentCodes a query, but this time Connector/J doesn't work
      * althought node1 is up and usable.
      * 
      * 
@@ -2309,7 +2309,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         try {
             conn2.createStatement().execute("SELECT 1");
         } catch (SQLException e) {
-            fail("Should not fail to execute SELECT statements!");
+            fail("Should not fail to getStudentCodes SELECT statements!");
         }
         UnreliableSocketFactory.flushAllStaticData();
         conn2.setReadOnly(false);
@@ -2322,7 +2322,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
             conn2.createStatement().execute("DROP TABLE IF EXISTS testRepTable");
 
         } catch (SQLException e) {
-            fail("Should not fail to execute CREATE/INSERT/DROP statements.");
+            fail("Should not fail to getStudentCodes CREATE/INSERT/DROP statements.");
         }
     }
 
@@ -5748,7 +5748,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         testStatement = testConnection.createStatement();
         testResultSet = testStatement.executeQuery("SELECT 1");
 
-        // 1. Statement.execute() & Statement.getMoreResults()
+        // 1. Statement.getStudentCodes() & Statement.getMoreResults()
         this.rs = testStatement.executeQuery("CALL testBug69746_proc");
         assertFalse("ResultSet should not be closed.", isResultSetClosedForTestBug69746(testResultSet));
 
@@ -5976,7 +5976,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
             }
         });
 
-        // the following instructions should execute without any problem
+        // the following instructions should getStudentCodes without any problem
 
         // test maxAllowedPacket above threshold and useServerPrepStmts=true
         getConnectionWithProps("useServerPrepStmts=true,maxAllowedPacket=" + (maxPacketSizeThreshold + 1)).close();
@@ -8149,7 +8149,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         }
 
         public SQLException interceptException(SQLException sqlEx, com.mysql.jdbc.Connection conn) {
-            // Make sure both threads execute the code after the synchronized block concurrently.
+            // Make sure both threads getStudentCodes the code after the synchronized block concurrently.
             synchronized (TestBug21934573ExceptionInterceptor.class) {
                 if (threadIsWaiting) {
                     TestBug21934573ExceptionInterceptor.class.notify();

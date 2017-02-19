@@ -1,24 +1,23 @@
 package bean.domain;
 
-import java.util.Date;
-
 /**
  * Created by geyao on 2016/11/7.
  */
 public class ProjectBean {
 	private Integer id = null;
 	private String name = null;
-	private Date endDate = null;
-	private Date finishDate = null;
-	private Date survivalDate = null;
+
+	private String applyBeforeDate = null;
+	private String finishDate = null;
+	private String survivalDate = null;
 	private Integer teamNumber = null;
 	private Integer teamMax = null;
 	private Integer memberMax = null;
-	private Date createDate = null;
+	private String createDate = null;
 	private Integer grade = null;
 	private String keyWord = null;
 	private String info = null;
-	private String require = null;
+	private String requirement = null;
 	private String gain = null;
 	private Integer priority = null;
 	private Integer status = null;
@@ -44,27 +43,27 @@ public class ProjectBean {
 		this.name = name;
 	}
 
-	public Date getEndDate() {
-		return endDate;
+	public String getApplyBeforeDate() {
+		return applyBeforeDate;
 	}
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+	public void setApplyBeforeDate(String applyBeforeDate) {
+		this.applyBeforeDate = applyBeforeDate;
 	}
 
-	public Date getFinishDate() {
+	public String getFinishDate() {
 		return finishDate;
 	}
 
-	public void setFinishDate(Date finishDate) {
+	public void setFinishDate(String finishDate) {
 		this.finishDate = finishDate;
 	}
 
-	public Date getSurvivalDate() {
+	public String getSurvivalDate() {
 		return survivalDate;
 	}
 
-	public void setSurvivalDate(Date survivalDate) {
+	public void setSurvivalDate(String survivalDate) {
 		this.survivalDate = survivalDate;
 	}
 
@@ -92,11 +91,11 @@ public class ProjectBean {
 		this.memberMax = memberMax;
 	}
 
-	public Date getCreateDate() {
+	public String getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
 
@@ -124,12 +123,12 @@ public class ProjectBean {
 		this.info = info;
 	}
 
-	public String getRequire() {
-		return require;
+	public String getRequirement() {
+		return requirement;
 	}
 
-	public void setRequire(String require) {
-		this.require = require;
+	public void setRequirement(String requirement) {
+		this.requirement = requirement;
 	}
 
 	public String getGain() {
@@ -170,5 +169,29 @@ public class ProjectBean {
 
 	public void setTeacherId(Integer teacherId) {
 		this.teacherId = teacherId;
+	}
+
+	@Override
+	public String toString() {
+		return "ProjectBean{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", applyBeforeDate='" + applyBeforeDate + '\'' +
+				", finishDate='" + finishDate + '\'' +
+				", survivalDate='" + survivalDate + '\'' +
+				", teamNumber=" + teamNumber +
+				", teamMax=" + teamMax +
+				", memberMax=" + memberMax +
+				", createDate='" + createDate + '\'' +
+				", grade='" + grade + '\'' +
+				", keyWord='" + keyWord + '\'' +
+				", info='" + info + '\'' +
+				", requirement='" + requirement + '\'' +
+				", gain='" + gain + '\'' +
+				", priority=" + priority +
+				", status=" + status +
+				", creatorId=" + creatorId +
+				", teacherId=" + teacherId +
+				'}';
 	}
 }
