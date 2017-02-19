@@ -1,9 +1,15 @@
 package bean.domain;
 
+import javax.persistence.*;
+
 /**
  * Created by geyao on 2016/11/7.
  */
+@Entity
+@Table(name = "project")
 public class ProjectBean {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id = null;
 	private String name = null;
 

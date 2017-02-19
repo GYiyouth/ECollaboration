@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="connection.url">jdbc:mysql://localhost:3306/ECollaborationWeb?useSSL=false</property>
+    <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="connection.username">root</property>
+    <property name="connection.password">686995</property>
+    <!-- DB schema will be updated if needed -->
+    <!-- <property name="hbm2ddl.auto">update</property> -->
+
+      <!--编码方式-->
+      <property name="connection.useUnicode">true</property>
+      <property name="connection.characterEncoding">UTF-8</property>
+      <!--
+           hiberate解析方言，不同数据库会不一样用MySql的
+           -->
+      <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+      <!--
+       在控制台中显示sql语句
+       -->
+      <property name="hibernate.show_sql">true</property>
+      <property name="hibernate.format_sql">true</property>
+     <mapping class="bean.domain.ApplicationBean"/>
+     <mapping class="bean.domain.TeamBean"/>
+     <mapping class="bean.domain.ProjectBean"/>
+     <mapping class="bean.domain.UserBean"/>
+     <mapping class="bean.domain.StudentBean"/>
+      <mapping class="bean.domain.TeacherBean"/>
+      <mapping class="bean.domain.CodeBean"/>
+      <mapping class="bean.domain.ECFileBean"/>
+      <mapping class="bean.domain.ManagerBean"/>
+      <mapping class="bean.domain.MessageBean"/>
+      <mapping class="bean.domain.NoticeBean"/>
+      <mapping class="bean.domain.PlanBean"/>
+      <mapping class="bean.domain.TaskBean"/>
+  </session-factory>
+</hibernate-configuration>

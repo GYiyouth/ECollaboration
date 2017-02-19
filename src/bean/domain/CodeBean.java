@@ -1,12 +1,22 @@
 package bean.domain;
 
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
 import smallTools.Time;
 import smallTools.TimeImpl;
+
+import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * Created by geyao on 2016/11/8.
  */
+@Entity
+@Table(name = "code")
 public class CodeBean {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id = null;
 	private String codeName = null;
 	private Integer row = null;
@@ -15,7 +25,10 @@ public class CodeBean {
 	private Integer downLoadTimes = null;
 	private Integer score = null;
 	private String path = null;
-	private Integer studentId = null;
+    @ManyToOne(targetEntity = StudentBean.class)
+    @Cascade(CascadeType.ALL)
+    @JoinColumn(name = "studentId", referencedColumnName = "id")
+	private StudentBean studentBean;
 	private Integer teamId = null;
 	private Integer projectId = null;
 
@@ -45,9 +58,6 @@ public class CodeBean {
 
 	public CodeBean() {
 		super();
-		Time time = new TimeImpl();
-		this.createDate = time.getDateStr();
-		this.deadDate = time.getDeadTime();
 	}
 
 	public String getCodeName() {

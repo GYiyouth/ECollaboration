@@ -1,20 +1,29 @@
 package bean.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "teacher")
 public class TeacherBean  extends UserBean{
-	private Integer id = null;
+
 	private String homePageUrl = null;
 	private Integer needStudentsFlag = null;
 
-	public Integer getId() {
-		return id;
-	}
+    public TeacherBean() {
+        super();
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
-	public String getHomePageUrl() {
+    @Override
+    public String toString() {
+        return "TeacherBean{" +
+                "homePageUrl='" + homePageUrl + '\'' +
+                ", needStudentsFlag=" + needStudentsFlag +
+                '}';
+    }
+
+    public String getHomePageUrl() {
 		return homePageUrl;
 	}
 

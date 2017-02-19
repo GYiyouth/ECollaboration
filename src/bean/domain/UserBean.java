@@ -1,6 +1,13 @@
 package bean.domain;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "user")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class UserBean {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String schoolId;
     private String name;

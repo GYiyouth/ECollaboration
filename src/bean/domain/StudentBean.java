@@ -1,10 +1,15 @@
 package bean.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
  * Created by GR on 2016/12/4.
  */
+@Entity
+@Table(name = "student")
 public class StudentBean extends UserBean{
-    private Integer id  ;
+
     private Integer grade  ;
     private Integer isOnProject ;  
     private Integer isNeedProject ;  
@@ -16,13 +21,7 @@ public class StudentBean extends UserBean{
     private Integer presentationScore;
     private Integer finalScore  ;
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Integer getGrade() {
         return grade;
